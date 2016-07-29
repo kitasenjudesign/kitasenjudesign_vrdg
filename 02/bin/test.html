@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<!-- saved from url=(0031)http://393.bz/threejs/test.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>three.js webgl - particles - billboards</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        body {
+            background-color: #9999FF;
+            background: linear-gradient(#579fbc, #FFFFFF);
+            margin: 0px;
+            overflow: hidden;
+            font-family: Monospace;
+            font-size: 13px;
+            text-align: center;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        a {
+            color: #0000CC;
+        }
+
+        #info {
+            color: #333;
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            padding: 5px;
+            z-index: 100;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="info">
+    <p>
+        <a href="http://threejs.org/" target="_blank">three.js</a> - webgl particle spritesheet example
+    </p>
+
+    <p>
+        <a href="http://blawat2015.no-ip.com/~mieki256/diary/201309071.html" target="_blank">mieki256's diary -
+            MMDで出力したモブ子さん動画をゲーム用のキャラ画像に変換</a> - sprite sheet素材
+    </p>
+</div>
+
+<script id="vertexshader" type="x-shader/x-vertex">
+      void main() {
+          gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+          gl_PointSize = 1000.0 / gl_Position.w;
+      }
+</script>
+<script id="fragmentshader" type="x-shader/x-fragment">
+      uniform vec3 color;
+      uniform sampler2D texture;
+      uniform vec2 offset;
+      uniform vec2 repeat;
+      void main() {
+        vec2 uv = vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y);
+        vec4 color0 = texture2D( texture, uv * repeat + offset  );
+        gl_FragColor = color0;
+      }
+</script>
+<script src="./three.min.js"></script>
+<script src="./Detector.js"></script>
+
+
+<script>
+
+    if (!Detector.webgl) Detector.addGetWebGLMessage();
+
+    var container;
+    var annie;
+    var camera, scene, renderer, particles, geometry, material, i, h, uniforms;
+
+    var animationFrameLength = 20; //スプライトシートのコマ数
+
+    var windowHalfX = window.innerWidth / 2;
+    var windowHalfY = window.innerHeight / 2;
+    var clock = new THREE.Clock();
+
+    init();
+    animate();
+
+    function init() {
+
+        container = document.createElement('div');
+        document.body.appendChild(container);
+
+        camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 2, 2000);
+
+        scene = new THREE.Scene();
+        uniforms = {
+            texture: {type: 't', value: THREE.ImageUtils.loadTexture("images/run.png")},
+            offset: {type: 'v2', value: new THREE.Vector2(1/animationFrameLength, 0.0)},
+            repeat: {type: 'v2', value: new THREE.Vector2(1/animationFrameLength, 1.0)}
+        }
+        var shaderMaterial = new THREE.ShaderMaterial({
+            uniforms: uniforms,
+            vertexShader: document.getElementById("vertexshader").textContent,
+            fragmentShader: document.getElementById("fragmentshader").textContent,
+            transparent: true
+        })
+
+        geometry = new THREE.Geometry();
+        for (i = 0; i < 10000; i++) {
+            var vertex = new THREE.Vector3();
+            vertex.x = 300 * (Math.random() - 0.5)
+            vertex.z = 200 * (Math.random() - 0.5)
+            geometry.vertices.push(vertex);
+        }
+        particles = new THREE.PointCloud(geometry, shaderMaterial);
+        particles.sortParticles = true;
+        scene.add(particles);
+
+        var planeGeometry = new THREE.PlaneGeometry(1000,300,1,1)
+        var planeMaterial = new THREE.MeshBasicMaterial({
+            color: 0xEEEEEE,
+            side:THREE.DoubleSide
+        })
+        var plane = new THREE.Mesh(planeGeometry,planeMaterial)
+        scene.add(plane)
+        plane.rotation.x = Math.PI/180 * 90;
+        plane.position.y = -2;
+
+        renderer = new THREE.WebGLRenderer({alpha: true});
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+
+        window.addEventListener('resize', onWindowResize, false);
+		
+    }
+
+    function onWindowResize() {
+        windowHalfX = window.innerWidth / 2;
+        windowHalfY = window.innerHeight / 2;
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        render();
+    }
+
+    function render() {
+        var theta = clock.getElapsedTime()  * 1.5
+        camera.position.y = 2 * Math.cos(theta * 10 * Math.PI / 180) + 3
+        camera.position.z = 34 * Math.sin(theta * 1 * Math.PI / 180) - 34
+
+        var index = ((theta * animationFrameLength % animationFrameLength)) | 0
+        index /= animationFrameLength;
+        uniforms.offset.value =  new THREE.Vector2( index , 0.0)
+
+        renderer.render(scene, camera);
+    }
+</script><div><canvas width="2216" height="1182" style="width: 1108px; height: 591px;"></canvas></div>
+
+
+</body></html>

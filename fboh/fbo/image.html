@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>FBO</title>
+    <style>
+        head, body{
+            width:100%;
+            height:100%;
+            overflow: hidden;
+            top:0;
+            left:0;
+            margin:0;
+            padding:0;
+        }
+    </style>
+</head>
+<body>
+
+    <script src="vendor/three.min.js"></script>
+    <script src="ShaderLoader.js"></script>
+    <script src="fbo.js"></script>
+
+    <script>
+
+        var scene, camera, renderer;
+
+        window.onload = function() {
+
+            var sl = new ShaderLoader();
+            sl.loadShaders({
+                simulation_vs : "",
+                simulation_fs : "",
+                render_vs : "",
+                render_fs : ""
+            }, "./glsl/image/", loadImage );
+
+        };
+
+        function loadImage()
+        {
+            var img = new Image();
+            img.onload = function(e)
+            {
+                init(e.target);
+            };
+            img.crossOrigin = "anonymous";
+            img.src = "img/noise.jpg";
+        }
+
+        function init(img)
+        {
+
+
+            var w = window.innerWidth;
+            var h = window.innerHeight;
+
+            //regular scene creation
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(60,w/h, 1,10000 );
+            camera.position.z = 250;
+
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize( w,h );
+            document.body.appendChild(renderer.domElement);
+
+            //width / height of the FBO
+
+            var width = img.width;
+            var height = img.height;
+
+            var elevation = 64;
+            var data = getImage( img, width, height, elevation );
+            var positions = new THREE.DataTexture( data, width, height, THREE.RGBFormat, THREE.FloatType );
+            positions.needsUpdate = true;
+
+            //this will be used to update the particles' positions
+
+            var simulationShader = new THREE.ShaderMaterial({
+
+                uniforms: {
+                    positions: { type: "t", value: positions }
+                },
+                vertexShader: ShaderLoader.get( "simulation_vs" ),
+                fragmentShader:  ShaderLoader.get( "simulation_fs" )
+            });
+
+
+            //this will be used to represent the particles on screen
+            //note that 'positions' is a texture that will be set and updated during the FBO.update() call
+            var renderShader = new THREE.ShaderMaterial( {
+                uniforms: {
+                    positions: { type: "t", value: null },
+                    pointSize: { type: "f", value: 1 }
+                },
+                vertexShader: ShaderLoader.get( "render_vs" ),
+                fragmentShader: ShaderLoader.get( "render_fs" )
+            } );
+
+            //init the FBO
+            FBO.init( width,height, renderer, simulationShader, renderShader );
+            scene.add( FBO.particles );
+
+            //GO !
+            window.addEventListener( "resize", onResize );
+            onResize();
+            update();
+
+        }
+
+        //returns a Float32Array buffer of 3D points after an image
+        function getImage( img, width, height, elevation ){
+
+            var ctx = getContext( null, width, height );
+            ctx.drawImage(img, 0, 0);
+
+            var imgData = ctx.getImageData(0,0,width,height);
+            var iData = imgData.data;
+
+            var l = (width * height );
+            var data = new Float32Array( l * 3 );
+            for ( var i = 0; i < l; i++ ) {
+
+                var i3 = i * 3;
+                var i4 = i * 4;
+                data[ i3 ]      = ( ( i % width ) - width  * .5 );
+                data[ i3 + 1 ]  = ( iData[i4] / 0xFF * 0.299 +iData[i4+1]/0xFF * 0.587 + iData[i4+2] / 0xFF * 0.114 ) * elevation;
+                data[ i3 + 2 ]  = ( parseInt( i / width ) - height * .5 );
+            }
+            return data;
+        }
+        function getCanvas( w,h ){
+
+            var canvas = document.createElement( "canvas");
+            canvas.width = w || 512;
+            canvas.height = h || 512;
+            return canvas;
+        }
+        function getContext( canvas, w,h ){
+
+            canvas = canvas || getCanvas(w,h);
+            canvas.width = w || canvas.width;
+            canvas.height = h || canvas.height;
+            return canvas.getContext("2d");
+        }
+
+        function onResize()
+        {
+            var w = window.innerWidth;
+            var h = window.innerHeight;
+            renderer.setSize(w,h);
+            camera.aspect = w/h;
+            camera.updateProjectionMatrix();
+        }
+
+        //update loop
+        function update()
+        {
+            requestAnimationFrame(update);
+
+            //update the simulation
+            FBO.update();
+
+            //update mesh
+
+            FBO.particles.position.y = -128;
+            FBO.particles.rotation.y -= Math.PI / 180 * .5;
+            camera.lookAt( FBO.particles.position );
+
+            //render the particles at the new location
+            renderer.render( scene, camera );
+
+        }
+
+    </script>
+
+</body>
+</html>

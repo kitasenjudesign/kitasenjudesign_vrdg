@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Emoji Wall</title>
+	<meta name="description" content="Emoji Camera" />
+
+	<meta property="og:image" content="http://kitasenjudesign.com/work/72/ogp.png">
+	<style type="text/css">
+		
+		body{
+			background-color:#000;
+			margin:0px;
+			padding:0px;
+			overflow:hidden;
+			font-family: sans-serif;
+		}
+		
+		#btn{
+			position:fixed;
+			text-align:center;
+			top:10px;
+			right:10px;
+			color:#fff;
+			margin:0px;
+			padding:8px;
+			border: solid 1px #fff;
+			background-color:rgba(0,0,0,0.5);
+			cursor: pointer;
+		}
+		
+		#info{
+			width:100%;
+			text-align:center;
+			color:#fff;
+			font-size:24px;
+			display:inline-block;
+			margin:15px auto;
+		}
+		
+		#hoge{
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 0;
+		}
+	</style>
+</head>
+
+<body ontouchmove="event.preventDefault()">
+
+	
+	<script src="three.min69.js"></script>
+	<script src="ColladaLoader.js"></script>
+	
+<script src="three/js/postprocessing/EffectComposer.js"></script>
+<script src="three/js/postprocessing/RenderPass.js"></script>
+<script src="three/js/postprocessing/ShaderPass.js"></script>
+<script src="three/js/postprocessing/MaskPass.js"></script>
+<script src="three/js/postprocessing/BloomPass.js"></script>
+<script src="three/js/shaders/CopyShader.js"></script>
+<script src="three/js/shaders/ConvolutionShader.js"></script>	
+		
+	<script src="OrbitControls.js"></script>
+	
+	<script src="Detector.js"></script>
+	<script src="haxe.js"></script>
+	<script src="dat.gui.min.js"></script>
+	<script src="TweenMax.min.js"></script>
+	
+
+</body>
+</html>

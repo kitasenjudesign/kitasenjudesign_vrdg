@@ -2,5 +2,5 @@
 .gruntrc
 node_modules
 *.hxproj
-.jpg
-.png
+*.jpg
+*.png
