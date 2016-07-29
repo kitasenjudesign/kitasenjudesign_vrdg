@@ -1,0 +1,6 @@
+.DS_Store
+.gruntrc
+node_modules
+*.hxproj
+.jpg
+.png
