@@ -123,7 +123,7 @@ class Main3d
 		
 		//Dat.gui.add(this, "goFullScreen");
 		Dat.gui.add(_camera, "amp").listen();
-		Dat.gui.add(_pp, "flash");
+		//Dat.gui.add(_pp, "flash");
 		Dat.gui.add(this, "_change");
 	}
 	

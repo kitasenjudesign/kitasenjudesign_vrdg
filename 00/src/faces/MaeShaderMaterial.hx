@@ -18,6 +18,7 @@ class MaeShaderMaterial extends ShaderMaterial
 	private var ff:String = "
 		//uniform 変数としてテクスチャのデータを受け取る
 		uniform sampler2D texture;
+		uniform sampler2D colTexture;
 		uniform vec3 _lightPosition; //光源位置座標
 		uniform float _wireframe;
 		// vertexShaderで処理されて渡されるテクスチャ座標
@@ -25,7 +26,7 @@ class MaeShaderMaterial extends ShaderMaterial
 		varying vec3 vNormal;
 		varying vec3 vPos;
 		varying vec4 vLight;
-		
+		varying vec4 vAbs;
 		
 		void main()
 		{
@@ -56,6 +57,20 @@ class MaeShaderMaterial extends ShaderMaterial
 				//拡散色の決定
 				vec3 diffuse = col.xyz * dotNL * 0.3 + col.xyz * 0.7;
 				
+				//diffuse = diffuse * vAbs.xyz;
+				
+				
+						vec2 pp = vec2( 0.5, fract( length(vAbs) ) );
+						//vec2 pp = vec2( fract(vUv.x+vAbs.x*0.03), fract(vUv.y+vAbs.z*0.03) );
+						vec4 out1 = texture2D( colTexture, pp );
+						
+						diffuse = out1.xyz * dotNL * 0.3 + out1.xyz * 0.7;
+						//diffuse.x += out1.x;
+						//diffuse.y += out1.y;
+						//diffuse.z += out1.z;
+			
+				
+				
 				gl_FragColor = vec4( diffuse, 1.0);			
 			
 			}
@@ -72,6 +87,7 @@ varying vec2 vUv;
 varying vec3 vPos;
 varying vec3 vNormal;
 varying vec4 vLight;
+varying vec4 vAbs;
 
 uniform float _noise;
 uniform float _count;
@@ -149,7 +165,10 @@ void main()
 	vec4 mvPosition = modelViewMatrix * vec4(hoge, 1.0);//vec4(vv, 1.0);    
 	
 	//vLight =  projectionMatrix * viewMatrix * vec4( _lightPosition, 0.0);
-	
+	vAbs = vec4(0.0);
+	vAbs.x = hoge.x - position.x;
+	vAbs.y = hoge.y - position.y;
+	vAbs.z = hoge.z - position.z;
 
 	// 変換：カメラ座標 → 画面座標
 	gl_Position = projectionMatrix * mvPosition;
@@ -205,8 +224,10 @@ void main()
 	
 	
 	private static var _texture1:Texture;
+	private static var _colorTextures:Array<Texture>;
 	private var _indecies:Array<Int>;
 	private var _freq:Array<Int>;
+	private var _currentTexture:Texture;
 	/**
 	 * new
 	 * @param	tt
@@ -225,11 +246,13 @@ void main()
 			_freq[i] = 0;
 		}
 		
+		changeTexture();
 		super({
 				vertexShader: vv,
 				fragmentShader: ff,
 				uniforms: {
 					texture: { type: 't', 		value: _texture1 },
+					colTexture:  { type: 't', 		value: _currentTexture },
 					_noise: { type: 'f', 		value: 1.5+Math.random() },
 					_freqByteData:{type:"fv1",	value:MyAudio.a.freqByteDataAry},//Uint8Array
 					_count: { type:'f', 		value:100 * Math.random() },					
@@ -241,6 +264,21 @@ void main()
 		this.wireframe = true;
 		//this.side = Three.DoubleSide;
 		//this.wireframe = true;
+		
+	}
+	
+	public function changeTexture():Void {
+		
+		if ( _colorTextures == null ) {
+			_colorTextures = [
+				ImageUtils.loadTexture("grade.png"),
+				ImageUtils.loadTexture("grade2.png"),
+				ImageUtils.loadTexture("grade3.png"),
+				ImageUtils.loadTexture("grade4.png"),
+				ImageUtils.loadTexture("grade8.png")
+			];
+		}
+		_currentTexture = _colorTextures[Math.floor(_colorTextures.length*Math.random())];
 		
 	}
 	
@@ -263,7 +301,8 @@ void main()
 			uniforms._wireframe.value = 0;			
 			this.wireframe = false;			
 		}
-		
+		this.wireframe = true;
+		this.wireframeLinewidth = 0;
 	}
 	
 	

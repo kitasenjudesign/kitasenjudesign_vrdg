@@ -98,7 +98,7 @@ class DeDeLines extends Object3D
 		MyPointCloud.cloud.setRandom(isRandomLine);
 		
 		var speed:Float = 2 + 2 * Math.random();
-		var space:Float = 3+7*Math.random();// + 18 * Math.random();
+		var space:Float = 3 + 7 * Math.random();// + 18 * Math.random();
 
 		
 		//全部同じ

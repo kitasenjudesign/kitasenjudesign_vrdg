@@ -151,7 +151,7 @@ class MaeFace extends Object3D
 		
 		switch(_rotMode) {
 			case ROT_MODE_A:
-				this.rotation.y += _speedRotX;
+				this.rotation.y += _vx;// _speedRotX;
 			case ROT_MODE_B:
 				this.rotation.y += _vy;
 				_vy *= 0.96;

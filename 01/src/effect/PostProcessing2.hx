@@ -1,5 +1,6 @@
 package effect;
 import effect.pass.DisplacementPass;
+import effect.pass.XLoopPass;
 import effect.shaders.CopyShader;
 import sound.MyAudio;
 import three.PerspectiveCamera;
@@ -22,7 +23,7 @@ class PostProcessing2
 	//public var vig		:ShaderPass;
 	//public var tilt		:ShaderPass;
 	public var dhiza	:ShaderPass;
-	public var color	:DisplacementPass;
+	public var color	:XLoopPass;
 	
 	private var _scene	:Scene;
 	private var _camera	:PerspectiveCamera;
@@ -55,7 +56,8 @@ class PostProcessing2
 		_composer.addPass( _renderPass );
 		
 		
-		color = new DisplacementPass(); //new ShaderPass(DisplaceShader.getObject(_textures[0]));
+		//color = new DisplacementPass(); //new ShaderPass(DisplaceShader.getObject(_textures[0]));
+		color = new XLoopPass();
 		_composer.addPass(color);
 		//_composer.addPass(tilt);
 		//_composer.addPass(vig);
