@@ -125,10 +125,8 @@ class Main3d
 		);
 		_scene.add(mesh);
 		*/
-		
-		var geo:Geometry = dae.geometry;
 		_maeFaces = new MaeFaces();
-		_maeFaces.init( geo );
+		_maeFaces.init();
 		_scene.add(_maeFaces);
 		
 		StageRef.setCenter();

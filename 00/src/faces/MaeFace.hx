@@ -13,16 +13,10 @@ import three.Object3D;
 class MaeFace extends Object3D
 {
 	
-	public static inline var ROT_MODE_A:Int = 0;
-	public static inline var ROT_MODE_B:Int = 1;
-	public static inline var ROT_MODE_C:Int = 2;
 	
-	
-	private var _rotMode	:Int = 0;
-	
-	private var _geometry	:Geometry;
-	private var _material	:MaeShaderMaterial;
-	private var _face		:Mesh;
+	//private var _geometry	:Geometry;
+	//private var _material	:MaeShaderMaterial;
+	private var _face		:MaeFaceMesh;
 	private var _gauge		:MaeGauge;
 	private var _plate		:MaePlate;
 	private var _bg			:MaeBg;
@@ -30,10 +24,6 @@ class MaeFace extends Object3D
 	private var _life		:Int = 0;
 	private var _lifeRatio	:Float = 0;
 
-	private var _vx:Float = 0;
-	private var _vy:Float = 0;
-	private var _vz:Float = 0;
-	
 	//
 	public var randomIndex:Array<Int>;	
 	public var enabled		:Bool = true;
@@ -45,9 +35,11 @@ class MaeFace extends Object3D
 	 * new
 	 * @param	g
 	 */
-	public function new(g:Geometry) 
+	public function new() 
 	{
 		super();
+		
+		
 		
 		randomIndex = [];
 		for (i in 0...16) {
@@ -55,13 +47,12 @@ class MaeFace extends Object3D
 				Math.floor( Math.random() * 20 ) 
 			);
 		}		
-		_material = new MaeShaderMaterial();
-		_geometry = g;
+		//_material = new MaeShaderMaterial();
+		//_geometry = g;
 		
-		_face = new Mesh(_geometry, _material);
-		_face.scale.set(10, 10, 10);
-		//_face.scale.set(0.1, 0.1, 0.1);
+		visible = Math.random()<0.5 ? false : true;
 		
+		_face = new MaeFaceMesh();
 		add( _face );
 		
 		_gauge = new MaeGauge(20, 5);
@@ -79,7 +70,6 @@ class MaeFace extends Object3D
 		
 		_bg = new MaeBg();
 		_bg.position.z = 0;
-		
 		add(_bg);
 		
 		//yokoni nagarete iku
@@ -101,17 +91,12 @@ class MaeFace extends Object3D
 	public function addForce(f:Float):Void {
 		
 		//_material.setWireframe( Math.random() < 0.5 ? true : false);
-		
 		//_force = f;
 		if(!enabled){
-			
 			_bg.flash();
 			_life = 0;
 			enabled = true;/////////////////////////enabled = true;
-			_vx += 0.3 * ( Math.random() - 0.5 );
-			_vy += 0.3 * ( Math.random() - 0.5 );
-			_vz += 0.3 * ( Math.random() - 0.5 );
-			
+			_face.addForce(f);
 		}	
 		
 	}
@@ -128,49 +113,25 @@ class MaeFace extends Object3D
 			enabled = false;
 		}
 		_calcLifeRatio();
-		_updateRot();
-		//_face.rotation.x += _vx;
-		_face.rotation.y += _vy;
-		//_face.rotation.z += _vz;
 		
-		_vx *= 0.97;
-		_vy *= 0.97;
-		_vz *= 0.97;
-		//_updateRot();
-		
-		_material.update(audio, _lifeRatio);
+		_face.update(audio, _lifeRatio);
 		_gauge.update(audio, _lifeRatio);
 		
 	}
 	
 	
-	//public function setRotMode
+	//public function setRotMode	
 	
-	
-	private function _updateRot():Void {
+	public function setRotMode(mode:Int):Void {
 		
-		switch(_rotMode) {
-			case ROT_MODE_A:
-				this.rotation.y += _vx;// _speedRotX;
-			case ROT_MODE_B:
-				this.rotation.y += _vy;
-				_vy *= 0.96;
-			case ROT_MODE_C:
-				this.rotation.x += _vx * 1.2;
-				this.rotation.y += _vy;
-				this.rotation.z += _vz;
-				_vx *= 0.98;
-				_vy *= 0.96;
-				_vz *= 0.96;
-		}
+		_face.setRotMode(mode);
 		
 	}
 	
-	
 	public function setMaterial(type:Int):Void
 	{
-		
-		_material.setWireframe(type == 0);
+		//_material
+		_face.setWireframe(type == 0);
 		
 	}
 	

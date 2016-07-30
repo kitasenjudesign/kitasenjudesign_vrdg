@@ -63,14 +63,17 @@ class MaeLines extends Object3D
 		_line.geometry.verticesNeedUpdate = true;		
 		_line.geometry.colorsNeedUpdate = true;
 		
+		var offY:Float = -120;
+		
 		for (i in 0..._faces.length) {
 			
-			if ( audio.freqByteDataAry[ _faces[i].randomIndex[0] ] > 15 ) {
+			//閾値を超えた時
+			if ( audio.freqByteDataAry[ _faces[i].randomIndex[0] ] > 15 && _faces[i].visible ) {
 				
 				_faces[i].addForce(1);
 				_connectLine(
 					_faces[i].position, 
-					new Vector3(100*(Math.random()-0.5), -100, 0),
+					new Vector3(100*(Math.random()-0.5), offY, 0),
 					Math.random()
 				);
 				

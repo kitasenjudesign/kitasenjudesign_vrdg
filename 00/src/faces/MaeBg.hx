@@ -1,4 +1,5 @@
 package faces;
+import three.BoxGeometry;
 import three.Mesh;
 import three.PlaneBufferGeometry;
 import three.ShaderMaterial;

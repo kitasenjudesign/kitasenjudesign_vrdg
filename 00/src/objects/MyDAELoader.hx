@@ -27,7 +27,7 @@ class MyDAELoader extends Object3D
 	private var _texture3:Texture;
 	
 	public var dae:Object3D;
-	public var geometry:Geometry;
+	public static var geometry:Geometry;
 	public var material:MyShaderMaterial;
 	public var baseGeo:Array<Vector3>;
 	

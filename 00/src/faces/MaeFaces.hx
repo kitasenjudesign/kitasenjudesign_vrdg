@@ -13,10 +13,11 @@ import three.Object3D;
 class MaeFaces extends Object3D
 {
 
-	public static inline var P3:Int = 3;
-	public static inline var P2:Int = 2;
-	public static inline var P1:Int = 1;
+	public static inline var FORMATION1:Int = 1;
+	public static inline var FORMATION2:Int = 2;
+	public static inline var FORMATION3:Int = 3;
 	
+	private var _currentForm:Int = 1;
 	private var _offsetY:Float = 0;
 	private var _faces:Array<MaeFace> = [];
 	private var _lines:MaeLines;
@@ -31,7 +32,7 @@ class MaeFaces extends Object3D
 	 * @param	geo
 	 * pattern ya layout
 	 */ 
-	public function init(geo:Geometry):Void {
+	public function init():Void {
 		
 		Tracer.debug("init");
 		//Tracer
@@ -44,11 +45,16 @@ class MaeFaces extends Object3D
 			
 			var xx:Float = i % ww - (ww-1)/2;
 			var yy:Float = Math.floor(i / ww) - (hh - 1) / 2;
-			var ff:MaeFace = new MaeFace(geo);
+			var ff:MaeFace = new MaeFace();
 			ff.enabled = true;
 			ff.position.x = xx * 50;
 			ff.position.y = yy * 50;
-			ff.position.z = 100 * (Math.random() - 0.5);
+			ff.position.z = 0;// (Math.random() < 0.5) ? 0 : 100;// * (Math.random() - 0.5);
+			/*
+			ff.position.x = xx * 50;
+			ff.position.y = 0;
+			ff.position.z = yy * 50;//(Math.random() < 0.5) ? 0 : 100;// * (Math.random() - 0.5);
+			*/
 			_faces.push(ff);			
 			add(ff);
 			
@@ -58,10 +64,12 @@ class MaeFaces extends Object3D
 		_lines.init(_faces);
 		add(_lines);
 		
-		Key.board.addEventListener("keydown" , _KeyDownFunc);
+		Key.board.addEventListener("keydown" , _keyDownFunc);
 	}
 	
-	private function _KeyDownFunc(e):Void 
+	
+	
+	private function _keyDownFunc(e):Void 
 	{
 		
 		switch( Std.parseInt( e.keyCode ) ) {
@@ -71,7 +79,12 @@ class MaeFaces extends Object3D
 	}
 	
 	
-	
+	private function _setFormation():Void {
+		
+		//koko ni kaku
+		
+		
+	}
 	
 	
 	/**
@@ -86,11 +99,16 @@ class MaeFaces extends Object3D
 	private function _setMaterial():Void {
 		
 		var type:Int = Math.random() < 0.5 ? 0 : 1;
+		var mode:Int = Math.floor( Math.random() * 3 );
+		
 		for (i in 0..._faces.length) {
 			_faces[i].setMaterial(type);
+			_faces[i].setRotMode( mode );
 		}
 		
 	}
+	
+	
 	
 	
 	/**
@@ -100,9 +118,6 @@ class MaeFaces extends Object3D
 		
 		for (i in 0..._faces.length) {
 			
-			//if( _faces[i].enabled ){
-			//}
-			
 			_faces[i].update(audio);
 			_faces[i].position.x -= 0.5;
 			if ( _faces[i].position.x < -500) {
@@ -111,6 +126,7 @@ class MaeFaces extends Object3D
 			
 		}
 		_lines.update(audio);
+		
 		
 	}
 	

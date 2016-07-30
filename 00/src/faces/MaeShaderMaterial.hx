@@ -302,7 +302,7 @@ void main()
 			this.wireframe = false;			
 		}
 		this.wireframe = true;
-		this.wireframeLinewidth = 0;
+		this.wireframeLinewidth = 0.1;
 	}
 	
 	
