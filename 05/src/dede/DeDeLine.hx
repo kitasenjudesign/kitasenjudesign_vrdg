@@ -25,6 +25,7 @@ class DeDeLine extends Object3D
 	private var _font:Int = 0;
 	private var _text:String;
 	private var _textIndex:Int = 0;
+	private var _sec:Int = 0;
 	
 	public function new() 
 	{
@@ -105,12 +106,19 @@ class DeDeLine extends Object3D
 	/**
 	 * setSec,,,
 	 */
-	public function setSec(rr:Float, boost:Bool):Void {
-		trace(rr);
+	public function setSec(r:Float):Void {
+		//
 		for (i in 0..._digits.length) {
-			_digits[i].setSec( rr,boost );
+			_digits[i].setSec( r );
 		}
 	}	
+	public function setRandomSec():Void {
+		//
+		for (i in 0..._digits.length) {
+			_digits[i].setSec( Math.random() );
+		}
+		
+	}
 	
 	
 	public function addSec(dx:Float, boost:Bool):Void {

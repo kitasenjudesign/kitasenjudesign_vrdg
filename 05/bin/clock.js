@@ -328,6 +328,48 @@ Three.requestAnimationFrame = function(f) {
 Three.cancelAnimationFrame = function(f) {
 	window.cancelAnimationFrame(id);
 };
+var Tracer = function() {
+};
+Tracer.assert = function(condition,p1,p2,p3,p4,p5) {
+};
+Tracer.clear = function(p1,p2,p3,p4,p5) {
+};
+Tracer.count = function(p1,p2,p3,p4,p5) {
+};
+Tracer.debug = function(p1,p2,p3,p4,p5) {
+};
+Tracer.dir = function(p1,p2,p3,p4,p5) {
+};
+Tracer.dirxml = function(p1,p2,p3,p4,p5) {
+};
+Tracer.error = function(p1,p2,p3,p4,p5) {
+};
+Tracer.group = function(p1,p2,p3,p4,p5) {
+};
+Tracer.groupCollapsed = function(p1,p2,p3,p4,p5) {
+};
+Tracer.groupEnd = function() {
+};
+Tracer.info = function(p1,p2,p3,p4,p5) {
+};
+Tracer.log = function(p1,p2,p3,p4,p5) {
+};
+Tracer.markTimeline = function(p1,p2,p3,p4,p5) {
+};
+Tracer.profile = function(title) {
+};
+Tracer.profileEnd = function(title) {
+};
+Tracer.time = function(title) {
+};
+Tracer.timeEnd = function(title,p1,p2,p3,p4,p5) {
+};
+Tracer.timeStamp = function(p1,p2,p3,p4,p5) {
+};
+Tracer.trace = function(p1,p2,p3,p4,p5) {
+};
+Tracer.warn = function(p1,p2,p3,p4,p5) {
+};
 var camera = {};
 camera.DoubleCamera = function() {
 	this._type = 0;
@@ -583,7 +625,6 @@ clock.DotDigit.prototype = $extend(THREE.Object3D.prototype,{
 		}
 	}
 	,setStrokes: function(str,scale,space,font) {
-		this._font = font;
 		this._space = space;
 		this._strokes = typo.StrokeUtil.getStrokes(str,scale,font);
 		this._dots = [];
@@ -606,12 +647,13 @@ clock.DotDigit.prototype = $extend(THREE.Object3D.prototype,{
 			}
 		}
 		if(this._numDots >= this._geoMax) console.log("====koeteru==== ");
-		if(this._moji != str) {
+		if(this._moji != str || font != this._font) {
 			if(this._outline != null) this.remove(this._outline);
-			this._outline = BeyondCodeGeo.getMesh(str,this._font);
+			this._outline = BeyondCodeGeo.getMesh(str,font);
 			this._outline.position.z = -1;
 			this.add(this._outline);
 		}
+		this._font = font;
 		this._moji = str;
 		this.update(2);
 	}
@@ -954,7 +996,7 @@ dede.DeDeCuts.prototype = {
 		common.Key.board.addEventListener("keydown",$bind(this,this._onKeyDown));
 	}
 	,_onKeyDown: function(e) {
-		console.log("_onKeyDown");
+		Tracer.log("_onKeyDown");
 		if(Std.parseInt(e.keyCode) == 67) {
 			this._currentCut = this._cuts[this._cutIndex % this._cuts.length];
 			this._currentCut.start();
@@ -1078,17 +1120,13 @@ dede.DeDeDigit.prototype = $extend(THREE.Object3D.prototype,{
 	,setSpeed: function(spd) {
 		this._rotSpeed = spd;
 	}
-	,setSec: function(rr,boost) {
+	,setSec: function(rr) {
 		this._sec = rr % 1;
-		if(boost) this._counter += this._rotSpeed * 140;
-		this._vx += Math.random() - 0.5;
-		this._vy += Math.random() - 0.5;
-		this._vz += Math.random() - 0.5;
 	}
 	,addSec: function(rr,boost) {
 		this._sec += rr;
 		this._sec = Math.abs(this._sec) % 1;
-		if(boost) this._counter += this._rotSpeed * 160;
+		if(boost) this._counter += this._rotSpeed * 140;
 		this._vx += Math.random() - 0.5;
 		this._vy += Math.random() - 0.5;
 		this._vz += Math.random() - 0.5;
@@ -1098,13 +1136,16 @@ dede.DeDeDigit.prototype = $extend(THREE.Object3D.prototype,{
 			this.rotation.x += this._vx;
 			this.rotation.y += this._vy;
 			this.rotation.z += this._vz;
+			this.rotation.x = this.rotation.x % (Math.PI * 2);
+			this.rotation.y = this.rotation.y % (Math.PI * 2);
+			this.rotation.z = this.rotation.z % (Math.PI * 2);
 			this._vx *= 0.93;
 			this._vy *= 0.93;
 			this._vz *= 0.93;
 		} else {
-			this.rotation.x += (0 - this.rotation.x) / 10;
-			this.rotation.y += (0 - this.rotation.y) / 10;
-			this.rotation.z += (0 - this.rotation.z) / 10;
+			this.rotation.x += (0 - this.rotation.x) / 14;
+			this.rotation.y += (0 - this.rotation.y) / 14;
+			this.rotation.z += (0 - this.rotation.z) / 14;
 		}
 		var rr = this._sec * 2;
 		if(rr > 1) {
@@ -1223,6 +1264,7 @@ dede.DeDeDigitLine.update = function(dts,isRandom) {
 	}
 };
 dede.DeDeLine = function() {
+	this._sec = 0;
 	this._textIndex = 0;
 	this._font = 0;
 	this._width = 0;
@@ -1284,13 +1326,20 @@ dede.DeDeLine.prototype = $extend(THREE.Object3D.prototype,{
 			this._digits[i].setType(type,isRotate);
 		}
 	}
-	,setSec: function(rr,boost) {
-		console.log(rr);
+	,setSec: function(r) {
 		var _g1 = 0;
 		var _g = this._digits.length;
 		while(_g1 < _g) {
 			var i = _g1++;
-			this._digits[i].setSec(rr,boost);
+			this._digits[i].setSec(r);
+		}
+	}
+	,setRandomSec: function() {
+		var _g1 = 0;
+		var _g = this._digits.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this._digits[i].setSec(Math.random());
 		}
 	}
 	,addSec: function(dx,boost) {
@@ -1387,13 +1436,12 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 	,countUp: function() {
 		this._sec += 0.0333333333333333329;
 		this._sec = this._sec % 1;
-		console.log("countup " + this._sec);
 		var _g1 = 0;
 		var _g = this._lines.length;
 		while(_g1 < _g) {
 			var i = _g1++;
 			var line = this._lines[i];
-			line.setSec(this._sec,true);
+			line.addSec(0.0333333333333333329,true);
 		}
 		this._flash();
 	}
@@ -1408,10 +1456,13 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 		if(Math.random() < 0.2) isRandomLine = true; else isRandomLine = false;
 		var isRotate;
 		if(Math.random() < 0.2) isRotate = true; else isRotate = false;
-		if(isRandomLine) isRotate = true;
+		if(isRandomLine) if(Math.random() < 0.7) isRotate = true; else isRotate = false;
+		var isRandomStartSec;
+		if(Math.random() < 0.5) isRandomStartSec = true; else isRandomStartSec = false;
+		var startSec = Math.random();
 		MyPointCloud.cloud.setRandom(isRandomLine);
 		var speed = 2 + 2 * Math.random();
-		var space = 3 + 18 * Math.random();
+		var space = 3 + 7 * Math.random();
 		if(isAllSame) {
 			var _g1 = 0;
 			var _g = this._lines.length;
@@ -1421,6 +1472,7 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 				var type = Math.floor(Math.random() * 6);
 				if(isRandomLine) type = Math.floor(Math.random() * 2);
 				line.reset(txt,type,isRotate,font,speed,space);
+				line.setSec(startSec);
 			}
 		} else {
 			var type1 = Math.floor(Math.random() * 6);
@@ -1431,6 +1483,8 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 				var i1 = _g11++;
 				var line1 = this._lines[i1];
 				line1.reset(txt,type1,isRotate,font,speed,space);
+				var startSec1 = Math.random();
+				if(isRandomStartSec) line1.setRandomSec(); else line1.setSec(startSec1);
 			}
 		}
 	}
@@ -1603,7 +1657,7 @@ dede.cuts.DeDeCut0.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		this._vrdg.setGeoMax(300);
 	}
 	,next: function() {
-		console.log("next");
+		Tracer.log("next");
 		this._vrdg.next();
 	}
 	,update: function(audio) {
@@ -1617,7 +1671,7 @@ dede.cuts.DeDeCut1.__super__ = dede.cuts.DeDeCutBase;
 dede.cuts.DeDeCut1.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 	start: function() {
 		this._lines.visible = true;
-		this._lines.setGeoMax(150,[true,true,false]);
+		this._lines.setGeoMax(150,[true,true,true]);
 		this._vrdg.visible = false;
 		this._vrdg.setGeoMax(1);
 		this._cam.setZoom(0.7);
@@ -2900,5 +2954,3 @@ typo.StrokeUtil.VRDG = 0;
 typo.StrokeUtil.FUTURA = 1;
 Main.main();
 })();
-
-//# sourceMappingURL=clock.js.map

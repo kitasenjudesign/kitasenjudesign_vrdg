@@ -211,25 +211,18 @@ class DeDeDigit extends Object3D
 	 * 
 	 * @param	sec 0-1
 	 */
-	public function setSec(rr:Float,boost:Bool):Void {
+	public function setSec(rr:Float):Void {
 		
 		_sec = rr % 1;
+		/*
 		if(boost){
 			_counter += _rotSpeed * 140;
 		}
-		/*
-		if(_sec==0){
-			//na
-		}else if( _sec < 30 ){
-			_counter -= 0.1;///////counter susumu
-		}else {
-			_counter += 0.1;//////counter tomaru
-		}*/		
 		
 		_vx += 1 * ( Math.random() - 0.5 );
 		_vy += 1 * ( Math.random() - 0.5 );
 		_vz += 1 * ( Math.random() - 0.5 );		
-		
+		*/
 		//isRotate = Math.random() < 0.5 ? true : false;
 		
 	}
@@ -239,7 +232,7 @@ class DeDeDigit extends Object3D
 		_sec += rr;
 		_sec = Math.abs(_sec) % 1;
 		if(boost){
-			_counter += _rotSpeed * 160;
+			_counter += _rotSpeed * 140;
 		}		
 		
 		_vx += 1 * ( Math.random() - 0.5 );

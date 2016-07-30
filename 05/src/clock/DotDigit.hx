@@ -95,7 +95,7 @@ class DotDigit extends Object3D
 		
 		//var m:Mesh = new Mesh(new BoxGeometry(10, 10, 10, 1, 1, 1), new MeshBasicMaterial( { color:0x00ff00 } ));
 		//add(m);
-		_font = font;
+		
 		_space = space;
 		
 		//trace("==init2");
@@ -128,16 +128,17 @@ class DotDigit extends Object3D
 	
 		
 		/////////////////////////////////outline
-		if (_moji != str) {
+		if (_moji != str || font!=_font) {
 			if (_outline != null) {
 				remove(_outline);
 			}
-			_outline = BeyondCodeGeo.getMesh(str,_font);
+			_outline = BeyondCodeGeo.getMesh(str,font);
 			_outline.position.z = -1;
 			
 			add(_outline);
 		}
 		
+		_font = font;
 		_moji = str;
 		update(2);
 	}

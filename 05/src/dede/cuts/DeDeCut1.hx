@@ -18,8 +18,7 @@ class DeDeCut1  extends DeDeCutBase
 		_lines.visible = true;
 		
 		
-		_lines.setGeoMax(150,[true,true,false]);
-		
+		_lines.setGeoMax(150,[true,true,true]);
 		
 		_vrdg.visible = false;
 		_vrdg.setGeoMax(1);

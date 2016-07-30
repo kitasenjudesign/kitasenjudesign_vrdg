@@ -48,11 +48,11 @@ class DeDeLines extends Object3D
 		//_lines.addSec(0.05, true);	
 		_sec += 1/30;
 		_sec = _sec % 1;
-		Tracer.log("countup " + _sec);
+		//Tracer.log("countup " + _sec);
 		
 		for (i in 0..._lines.length) {
 			var line:DeDeLine = _lines[i];
-			line.setSec(_sec, true);
+			line.addSec(1/30, true);
 		}
 		
 		_flash();
@@ -90,13 +90,15 @@ class DeDeLines extends Object3D
 		var isRandomLine:Bool = Math.random() < 0.2 ? true : false;
 		var isRotate:Bool = Math.random() < 0.2 ? true : false;
 		if ( isRandomLine ) {
-			isRotate = true;
+			isRotate = Math.random()<0.7 ? true : false;
 		}
+		var isRandomStartSec:Bool = Math.random() < 0.5 ? true : false;
+		var startSec:Float = Math.random();
 		
 		MyPointCloud.cloud.setRandom(isRandomLine);
 		
 		var speed:Float = 2 + 2 * Math.random();
-		var space:Float = 3 + 18 * Math.random();
+		var space:Float = 3+7*Math.random();// + 18 * Math.random();
 
 		
 		//全部同じ
@@ -109,6 +111,7 @@ class DeDeLines extends Object3D
 					type = Math.floor(Math.random() * 2);
 				}
 				line.reset( txt, type, isRotate, font, speed, space );
+				line.setSec(startSec);
 			}
 			
 		}else{
@@ -121,6 +124,12 @@ class DeDeLines extends Object3D
 			for (i in 0..._lines.length) {
 				var line:DeDeLine = _lines[i];
 				line.reset( txt, type, isRotate, font, speed, space );
+				var startSec:Float = Math.random();
+				if (isRandomStartSec) {
+					line.setRandomSec();
+				}else{
+					line.setSec(startSec);
+				}
 			}
 			
 		}
