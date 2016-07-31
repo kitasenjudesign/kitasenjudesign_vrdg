@@ -8,7 +8,7 @@ import tween.TweenMax;
 import tween.TweenMaxHaxe;
 
 /**
- * ...
+ * VrdgLines
  * @author watanabe
  */
 class VrdgLines extends DeDeLines

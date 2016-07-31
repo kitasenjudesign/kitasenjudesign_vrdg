@@ -1,0 +1,302 @@
+[
+    {
+      "date":"2014.10.25",
+      "tags":["2014","WEBGL"],
+        "title": "TYPO FISH", 
+        "url": "http://kitasenjudesign.com/work/44/"
+    },
+
+
+    {
+      "date":"2014.09.25",
+      "tags":["2014","WEBGL"],
+        "title": "EYEBALLS", 
+        "url": "http://kitasenjudesign.com/work/43/"
+    },
+
+    {
+      "date":"2014.09.25",
+      "tags":["2014","CANVAS"],
+        "title": "MOTION MAKER", 
+        "url": "http://kitasenjudesign.com/dmm/01/"
+    },
+    
+
+    {
+      "date":"2014.09.25",
+      "tags":["2014","CANVAS"],
+        "title": "KUMONOSU TYPO", 
+        "url": "http://kitasenjudesign.com/work/41/"
+    },
+    {
+      "date":"2014.08.04",
+      "tags":["2014","WEBGL"],
+        "title": "HELVETICA CLOCK", 
+        "url": "http://kitasenjudesign.com/work/39/"
+    },
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2014", 
+            "CANVAS"
+        ], 
+        "title": "BOIDS 1", 
+        "url": "http://kitasenjudesign.com/work/31/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2014", 
+            "WEBGL"
+        ], 
+        "title": "BOIDS 2", 
+        "url": "http://kitasenjudesign.com/work/34/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2014", 
+            "WEBGL"
+        ], 
+        "title": "BOIDS SPHERE", 
+        "url": "http://kitasenjudesign.com/work/40/"
+    },
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2014", 
+            "WEBGL"
+        ], 
+        "title": "HEAD DANCE", 
+        "url": "http://kitasenjudesign.com/work/32/"
+    },
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2014", 
+            "CANVAS"
+        ], 
+        "title": "Lissajous Curve", 
+        "url": "http://kitasenjudesign.com/work/35/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2014", 
+            "CANVAS"
+        ], 
+        "title": "RANDOM", 
+        "url": "http://kitasenjudesign.com/dmm/02/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2014", 
+            "FLASH"
+        ], 
+        "title": "BLENDMODE", 
+        "url": "http://kitasenjudesign.com/work/33/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2013", 
+            "FLASH", 
+            "STAGE3D"
+        ], 
+        "title": "TAMAKIROY 1", 
+        "url": "http://kitasenjudesign.com/work/19/roy.html"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2013", 
+            "FLASH", 
+            "STAGE3D"
+        ], 
+        "title": "TAMAKIROY 2", 
+        "url": "http://kitasenjudesign.com/work/22/"
+    },
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2012", 
+            "FLASH"
+        ], 
+        "title": "Bane Grid", 
+        "url": "http://kitasenjudesign.com/work/36/"
+    },	
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2013", 
+            "BOOK", 
+            "CANVAS"
+        ], 
+        "title": "ILLUST BOOK", 
+        "url": "http://kitasenjudesign.com/work/27/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2011", 
+            "FLASH"
+        ], 
+        "title": "Perfume (locus)", 
+        "url": "http://kitasenjudesign.com/perfume/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2011", 
+            "FLASH"
+        ], 
+        "title": "Perfume (locus2)", 
+        "url": "http://kitasenjudesign.com/perfume/2/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2011", 
+            "FLASH"
+        ], 
+        "title": "Perfume (motion vector)", 
+        "url": "http://kitasenjudesign.com/perfume/3/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2011", 
+            "FLASH"
+        ], 
+        "title": "DOT TYPO", 
+        "url": "http://kitasenjudesign.com/work/04/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "FLASH"
+        ], 
+        "title": "DOT CLOCK", 
+        "url": "http://kitasenjudesign.com/work/05/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "FLASH",
+			"WEBCAM"
+        ], 
+        "title": "SLIT SCAN CAM", 
+        "url": "http://kitasenjudesign.com/work/06/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2012", 
+            "FLASH",
+			"WEBCAM"
+        ], 
+        "title": "PALETTE MAP CAM", 
+        "url": "http://kitasenjudesign.com/work/37/"
+    },	
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2011", 
+            "FLASH"
+        ], 
+        "title": "OUTLINE 1", 
+        "url": "http://kitasenjudesign.com/work/08/"
+    },
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2013", 
+            "FLASH"
+        ], 
+        "title": "OUTLINE2", 
+        "url": "http://kitasenjudesign.com/work/18/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2013", 
+            "FLASH"
+        ], 
+        "title": "OUTLINE3", 
+        "url": "http://kitasenjudesign.com/work/28/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2012", 
+            "FLASH"
+        ], 
+        "title": "PERLIN NOISE", 
+        "url": "http://kitasenjudesign.com/work/09/"
+    },
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2012", 
+            "FLASH"
+        ], 
+        "title": "MOMENT1", 
+        "url": "http://kitasenjudesign.com/work/11/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2012", 
+            "FLASH"
+        ], 
+        "title": "MOMENT2", 
+        "url": "http://kitasenjudesign.com/work/12/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2012", 
+            "FLASH"
+        ], 
+        "title": "MOMENT3", 
+        "url": "http://kitasenjudesign.com/work/13/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2012", 
+            "FLASH"
+        ], 
+        "title": "MOMENT4", 
+        "url": "http://kitasenjudesign.com/work/15/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2012", 
+            "FLASH"
+        ], 
+        "title": "OKEYA2", 
+        "url": "http://kitasenjudesign.com/work/16/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2013", 
+            "IMAGE"
+        ], 
+        "title": "MOSAIC", 
+        "url": "http://kitasenjudesign.com/work/21/"
+    }, 
+    {
+        "date": "2014.05.05", 
+        "tags": [
+            "2013", 
+            "FLASH", 
+            "STAGE3D"
+        ], 
+        "title": "RAIN OF PAIN", 
+        "url": "http://kitasenjudesign.com/work/29/"
+    }
+]

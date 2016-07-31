@@ -16,6 +16,10 @@ class DeDeLogo extends PrimitiveBase
 	//face wo load
 	private var _loader:MyDAELoader;
 	
+	private var _dede1:Object3D;
+	private var _dede2:Object3D;
+	private var _dede3:Object3D;
+	
 	public function new() 
 	{
 		super();
@@ -55,15 +59,24 @@ class DeDeLogo extends PrimitiveBase
 		_loader.dae.scale.y = 0.3;
 		_loader.dae.scale.z = 0.3;
 		add( _loader.dae );
+		_dede1 = _loader.dae;
+		
+		_dede2 = _loader.dae.clone();
+		add(_dede2);
+		_dede2.position.x = 200;
+		
+		_dede3 = _loader.dae.clone();
+		add(_dede3);
+		_dede3.position.x = -200;
 		
 	}
 	
 
 	override public function update(a:MyAudio,rotV:Vector3):Void {
 	
-		
-		
-		this.rotation.y += rotV.y * 0.5 + 0.01;
+		_dede1.rotation.y += rotV.y * 0.5 + 0.01;
+		_dede2.rotation.y = _dede1.rotation.y;
+		_dede3.rotation.y = _dede1.rotation.y;
 		
 		//super.update(a, rotV);
 		

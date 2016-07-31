@@ -31,6 +31,8 @@ class EmojiShader
 				
 				vec3 cn = curlNoise(position * seed + counter);
 				vec3 pp = position + vec3( cn.x * strength, cn.y * strength, cn.z * strength );
+				//vec3 pp = position + vec3( cn.x, cn.y, cn.z ) * 10.0;
+				
 				gl_Position = projectionMatrix * modelViewMatrix * vec4( pp * posScale, 1.0 );
 				gl_PointSize = 22000.0 * scale / gl_Position.w;
 			}
