@@ -19,7 +19,7 @@ class DeDeCut2  extends DeDeCutBase
 		
 		
 		_lines.setGeoMax(150,[true,true,true]);
-		_lines.setSpeedX( DeDeLine.SPEEDX1 );
+		//_lines.setSpeedX( DeDeLine.SPEEDX1 );
 		
 		
 		_vrdg.visible = false;

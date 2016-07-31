@@ -1,5 +1,6 @@
 package dede;
 import clock.DotDigit;
+import dede.cuts.DeDeParam;
 import sound.MyAudio;
 import three.Mesh;
 import three.MeshBasicMaterial;
@@ -16,22 +17,21 @@ class DeDeLine extends Object3D
 	
 	public static inline var SPEEDX0:Float = -0.5;
 	public static inline var SPEEDX1:Float = -2;
-	
+	public static inline var WIDTH:Float = 2400;
 	public static inline var SPACE_R:Float = 0.65 * 2;
-	//public static inline var SPACE:Float = 50;
 	public static inline var SCALE:Float = 0.65;
-	
-	
+
 	private var _digits:Array<DeDeDigit>;
-	private var _speed:Float;
-	private var _space:Float;
-	private var _spaceX:Float = 50;
+	//private var _speed:Float;
+	//private var _space:Float;
+	//private var _spaceX:Float = 50;
 	private var _width:Float = 0;
-	private var _font:Int = 0;
-	private var _text:String;
+	//private var _font:Int = 0;
+	//private var _text:String;
 	private var _textIndex:Int = 0;
 	private var _sec:Int = 0;
-	private var _speedX:Float = -2;
+	//private var _speedX:Float = -2;
+	private var _data:DeDeParam;
 	
 	public function new() 
 	{
@@ -45,13 +45,12 @@ class DeDeLine extends Object3D
 		
 		_digits = [];
 		var num:Int = 20;
-		_width = 2400;// num * SPACE;
+		_width = WIDTH;// num * SPACE;
 		
 		for (i in 0...num) {
 			var digit:DeDeDigit = new DeDeDigit();
-			add(digit);
-			
-			digit.position.x = _spaceX * i - _spaceX * (num-1)/2;
+			add(digit);			
+			//digit.position.x = _spaceX * i - _spaceX * (num-1)/2;
 			digit.init();
 			digit.setGeoMax(240);
 			//digit.setStrokes(nn.substr(i,1),_scale,_space);
@@ -60,7 +59,8 @@ class DeDeLine extends Object3D
 		}		
 		
 		//
-		reset("A", 0, false, 0, 2 + 2 * Math.random(), 3 + 18 * Math.random(),_spaceX);
+		//reset("A", 0, false, 0, 2 + 2 * Math.random(), 3 + 18 * Math.random(),_spaceX);
+		reset(0, DeDeParam.getParam());
 	}
 	
 	
@@ -71,30 +71,31 @@ class DeDeLine extends Object3D
 	}
 	
 	public function reset(
-		txt:String, type:Int, isRotate:Bool, font:Int, speed:Float, space:Float, spaceX:Float
+		//txt:String, type:Int, isRotate:Bool, font:Int, speed:Float, space:Float, spaceX:Float, startX:Float = 0
+		type:Int, data:DeDeParam
 	):Void
 	{
 		//
-		_spaceX = spaceX;
-		_speed = speed;// 2 + 2 * Math.random();
-		_space = space;// 3 + 18 * Math.random();
-		
-		_font = font;
-		_text = txt;
+		_data = data;
+		//_spaceX = data.spaceX;
+		//_speed = data.speed;// 2 + 2 * Math.random();
+		//_space = data.space;// 3 + 18 * Math.random();
+		//_font = data.font;
+		//_text = data.txt;
 		_textIndex = 0;
 		
-		var ox:Float = -_width / 2;// _digits[0].position.x;
+		var ox:Float = -_width / 2 + data.startX;// _digits[0].position.x;
 		for (i in 0..._digits.length) {
 			
 			var t:String = _getNextText();//txt.substr(i % txt.length, 1);
 			//trace(i+" "+t);
-			var ww:Float = StrokeUtil.getWidth(t,font) * SPACE_R;
+			var ww:Float = StrokeUtil.getWidth(t,data.font) * SPACE_R;
 			_digits[i].position.x = ox + ww/2;// - _width / 2;
-			_digits[i].setStrokes(t, SCALE, _space, _font);//////////////////////////
+			_digits[i].setStrokes(t, SCALE, _data.space, _data.font);//////////////////////////
 			_digits[i].reset();
-			_digits[i].setType( type,isRotate );
+			_digits[i].setType( type,data.isRotate );
 			_digits[i].update(2);
-			ox += (ww + _spaceX);
+			ox += (ww + data.spaceX);
 			
 		}
 		
@@ -134,16 +135,16 @@ class DeDeLine extends Object3D
 		}		
 	}
 	
-	public function setSpeedX(spdX:Float):Void {
-		_speedX = spdX;
-	}
+	//public function setSpeedX(spdX:Float):Void {
+	//	_speedX = spdX;
+	//}
 	
 	public function update(audio:MyAudio):Void {
 		
 		if (!visible) return;
 		
 		for (i in 0..._digits.length) {
-			_digits[i].position.x += _speedX;
+			_digits[i].position.x += _data.speedX;
 			_digits[i].update(4);
 		}
 		_updateLimit();
@@ -180,11 +181,11 @@ class DeDeLine extends Object3D
 				
 				var idx:Int = _getMaxPosIndex();
 
-				_digits[i].setStrokes(_getNextText(), SCALE, _space, _font);//////////////////////////
+				_digits[i].setStrokes(_getNextText(), SCALE, _data.space, _data.font);//////////////////////////
 								
-				var ww:Float = StrokeUtil.getWidth( _digits[idx].getMoji(), _font);
-				var pos:Float = _digits[idx].position.x + ww * SPACE_R / 2 + _spaceX;
-				var ww2:Float = StrokeUtil.getWidth( _digits[i].getMoji(),_font );
+				var ww:Float = StrokeUtil.getWidth( _digits[idx].getMoji(), _data.font);
+				var pos:Float = _digits[idx].position.x + ww * SPACE_R / 2 + _data.spaceX;
+				var ww2:Float = StrokeUtil.getWidth( _digits[i].getMoji(),_data.font );
 				_digits[i].position.x = pos + ww2 * SPACE_R / 2;
 				//
 				//_digits[i].setStrokes(
@@ -210,7 +211,7 @@ class DeDeLine extends Object3D
 	
 	private function _getNextText():String {
 		
-		var out:String = _text.substr(_textIndex%_text.length, 1);
+		var out:String = _data.txt.substr(_textIndex%_data.txt.length, 1);
 		_textIndex++;
 		return out;
 		

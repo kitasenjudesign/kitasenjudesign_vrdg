@@ -1,4 +1,5 @@
 package dede;
+import dede.cuts.DeDeParam;
 import sound.MyAudio;
 import three.BoxGeometry;
 import three.LineBasicMaterial;
@@ -60,7 +61,13 @@ class VrdgLine extends DeDeLine
 		//add(vrdg);
 		
 		//_digits[i].setStrokes(t, SCALE, _space);
-		reset("VRDGTH", Math.floor(Math.random() * 4), false, 0, 0, 0, 50);
+		var data:DeDeParam = new DeDeParam();
+		data.txt = "VRDGTH";
+		data.speed = 2+2*Math.random();
+		data.space = 3+18*Math.random();
+		//data.spaceX = data.spaceX;
+		//reset("VRDGTH", Math.floor(Math.random() * 4), false, 0, 0, 0, 50);
+		reset( Math.floor(Math.random() * 4), data);
 	}
 	
 	/**
@@ -69,13 +76,16 @@ class VrdgLine extends DeDeLine
 	 * @param	type
 	 * @param	isRotate
 	 */
-	override public function reset(txt:String,type:Int,isRotate:Bool,font:Int,speed:Float,space:Float,spaceX:Float):Void
+	override public function reset(type:Int,data:DeDeParam):Void
 	{
+		/*
 		_speed = 2+2*Math.random();
 		_space = 3+18*Math.random();
-		_spaceX = spaceX;
+		_spaceX = data.spaceX;
+		*/
 		
-		setDotType( type, isRotate);
+		
+		setDotType( type, data.isRotate);
 		
 		var ox:Float = -_width / 2;// _digits[0].position.x;
 		for (i in 0..._digits.length) {

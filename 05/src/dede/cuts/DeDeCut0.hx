@@ -21,6 +21,9 @@ class DeDeCut0 extends DeDeCutBase
 		
 		_vrdg.visible = true;
 		_vrdg.setGeoMax(300);
+		
+		_cam.setZoom(2);
+		
 	}
 
 	/**

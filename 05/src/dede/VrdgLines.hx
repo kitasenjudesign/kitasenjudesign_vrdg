@@ -1,5 +1,6 @@
 package dede;
 import common.Dat;
+import dede.cuts.DeDeParam;
 import sound.MyAudio;
 import three.LineBasicMaterial;
 import three.Object3D;
@@ -28,10 +29,27 @@ class VrdgLines extends DeDeLines
 		add( _vrdg );
 		_lines.push( _vrdg );
 		
-		Dat.gui.add(this, "_sec").listen();
+		//Dat.gui.add(this, "_sec").listen();
 		
 	}
 	
+	override public function next():Void {
+		
+		//super.next();
+		var data:DeDeParam = new DeDeParam();
+		data.txt = "VRDGTH";
+		data.speed = 2+2*Math.random();
+		data.space = 3 + 10 * Math.random();
+		data.startSec = Math.random();
+		
+		//data.isRandomLine
+		//data.type = Math.floor(Math.random() * 6);
+		//data.spaceX = data.spaceX;
+		//reset("VRDGTH", Math.floor(Math.random() * 4), false, 0, 0, 0, 50);
+		//reset( Math.floor(Math.random() * 4), data);
+		
+		changeType( data );
+	}
 	
 	//suuji kaunto up
 	/*
