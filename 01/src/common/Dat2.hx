@@ -76,7 +76,7 @@ class Dat2
 		gui.domElement.style.position = "absolute";
 		gui.domElement.style.right = "0px";
 		gui.domElement.style.top = "0px";
-		gui.domElement.style.opacity = 0.5;
+		gui.domElement.style.opacity = 0.6;
 		gui.domElement.style.zIndex = 999999;
 
 		//StatsGUI.init();

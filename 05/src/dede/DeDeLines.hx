@@ -75,6 +75,9 @@ class DeDeLines extends Object3D
 	*/
 		
 	
+	/**
+	 * _changeType
+	 */
 	private function _changeType():Void {
 		
 		_sec = Math.random();
@@ -83,9 +86,10 @@ class DeDeLines extends Object3D
 		
 		var data:DeDeString = DeDeString.getData();
 		
-		var txt:String = data.text;
-		var font:Int = data.font;
-
+		var txt:String 		= data.text;
+		var font:Int 		= data.font;
+		var spaceX:Float 	= data.spaceX;
+		
 		var isAllSame:Bool = Math.random() < 0.5 ? true : false;
 		var isRandomLine:Bool = Math.random() < 0.2 ? true : false;
 		var isRotate:Bool = Math.random() < 0.2 ? true : false;
@@ -110,7 +114,7 @@ class DeDeLines extends Object3D
 				if (isRandomLine) {
 					type = Math.floor(Math.random() * 2);
 				}
-				line.reset( txt, type, isRotate, font, speed, space );
+				line.reset( txt, type, isRotate, font, speed, space, spaceX );
 				line.setSec(startSec);
 			}
 			
@@ -123,7 +127,7 @@ class DeDeLines extends Object3D
 			
 			for (i in 0..._lines.length) {
 				var line:DeDeLine = _lines[i];
-				line.reset( txt, type, isRotate, font, speed, space );
+				line.reset( txt, type, isRotate, font, speed, space, spaceX );
 				var startSec:Float = Math.random();
 				if (isRandomStartSec) {
 					line.setRandomSec();
@@ -173,6 +177,12 @@ class DeDeLines extends Object3D
 			}
 		}
 		
+	}
+	
+	public function setSpeedX(spdX:Float):Void {
+		for (i in 0..._lines.length) {
+			_lines[i].setSpeedX(spdX);
+		}
 	}
 	
 	

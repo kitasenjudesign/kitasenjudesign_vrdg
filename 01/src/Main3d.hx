@@ -165,10 +165,13 @@ class Main3d
 		_renderer.setSize(W, H);
 		_camera.aspect = W / H;// , 10, 50000);
 		_camera.updateProjectionMatrix();
+		_pp.resize(W, H);
 		
 	}
 	
-	
+	/**
+	 * 
+	 */
 	private function _run():Void
 	{
 		if (_audio != null) {

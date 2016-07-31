@@ -115,5 +115,10 @@ class PostProcessing2
 		}*/
 	}
 	
+	public function resize(w:Int, h:Int) 
+	{
+		_composer.setSize(w, h);
+	}
+	
 	
 }

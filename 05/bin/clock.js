@@ -844,6 +844,7 @@ common.Config.prototype = {
 		common.Config.host = data.host;
 		var win = window;
 		win.host = common.Config.host;
+		common.Config.canvasOffsetY = data.canvasOffsetY;
 		if(this._callback != null) this._callback();
 	}
 };
@@ -944,8 +945,9 @@ common.StageRef = function() {
 common.StageRef.setCenter = function() {
 	if(!common.Dat.bg) {
 		var dom = window.document.getElementById("webgl");
+		var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
 		dom.style.position = "absolute";
-		dom.style.top = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + "px";
+		dom.style.top = Math.round(yy) + "px";
 	}
 };
 common.StageRef.get_stageWidth = function() {
@@ -998,9 +1000,9 @@ dede.DeDeCuts.prototype = {
 	,_onKeyDown: function(e) {
 		Tracer.log("_onKeyDown");
 		if(Std.parseInt(e.keyCode) == 67) {
+			this._cutIndex++;
 			this._currentCut = this._cuts[this._cutIndex % this._cuts.length];
 			this._currentCut.start();
-			this._cutIndex++;
 		}
 		if(Std.parseInt(e.keyCode) == 39) this._currentCut.next();
 		if(Std.parseInt(e.keyCode) == 38) {
@@ -1073,12 +1075,10 @@ dede.DeDeDigit.prototype = $extend(THREE.Object3D.prototype,{
 			}
 		}
 		if(this._numDots >= this._geoMax) console.log("====koeteru==== ");
-		if(this._moji != str) {
-			if(this.outline != null) this.remove(this.outline);
-			this.outline = BeyondCodeGeo.getMesh(str,this._font);
-			this.outline.position.z = 0;
-			this.add(this.outline);
-		}
+		if(this.outline != null) this.remove(this.outline);
+		this.outline = BeyondCodeGeo.getMesh(str,this._font);
+		this.outline.position.z = 0;
+		this.add(this.outline);
 		this._moji = str;
 		this.update(2);
 	}
@@ -1264,10 +1264,12 @@ dede.DeDeDigitLine.update = function(dts,isRandom) {
 	}
 };
 dede.DeDeLine = function() {
+	this._speedX = -2;
 	this._sec = 0;
 	this._textIndex = 0;
 	this._font = 0;
 	this._width = 0;
+	this._spaceX = 50;
 	THREE.Object3D.call(this);
 };
 dede.DeDeLine.__super__ = THREE.Object3D;
@@ -1281,12 +1283,12 @@ dede.DeDeLine.prototype = $extend(THREE.Object3D.prototype,{
 			var i = _g++;
 			var digit = new dede.DeDeDigit();
 			this.add(digit);
-			digit.position.x = 50 * i - 50 * (num - 1) / 2;
+			digit.position.x = this._spaceX * i - this._spaceX * (num - 1) / 2;
 			digit.init();
 			digit.setGeoMax(240);
 			this._digits.push(digit);
 		}
-		this.reset("A",0,false,0,2 + 2 * Math.random(),3 + 18 * Math.random());
+		this.reset("A",0,false,0,2 + 2 * Math.random(),3 + 18 * Math.random(),this._spaceX);
 	}
 	,resetGeoMax: function(n) {
 		var _g1 = 0;
@@ -1296,7 +1298,8 @@ dede.DeDeLine.prototype = $extend(THREE.Object3D.prototype,{
 			this._digits[i].setGeoMax(n);
 		}
 	}
-	,reset: function(txt,type,isRotate,font,speed,space) {
+	,reset: function(txt,type,isRotate,font,speed,space,spaceX) {
+		this._spaceX = spaceX;
 		this._speed = speed;
 		this._space = space;
 		this._font = font;
@@ -1314,7 +1317,7 @@ dede.DeDeLine.prototype = $extend(THREE.Object3D.prototype,{
 			this._digits[i].reset();
 			this._digits[i].setType(type,isRotate);
 			this._digits[i].update(2);
-			ox += ww + 50;
+			ox += ww + this._spaceX;
 		}
 		this._updateLimit();
 	}
@@ -1350,13 +1353,16 @@ dede.DeDeLine.prototype = $extend(THREE.Object3D.prototype,{
 			this._digits[i].addSec(dx,boost);
 		}
 	}
+	,setSpeedX: function(spdX) {
+		this._speedX = spdX;
+	}
 	,update: function(audio) {
 		if(!this.visible) return;
 		var _g1 = 0;
 		var _g = this._digits.length;
 		while(_g1 < _g) {
 			var i = _g1++;
-			this._digits[i].position.x -= 2;
+			this._digits[i].position.x += this._speedX;
 			this._digits[i].update(4);
 		}
 		this._updateLimit();
@@ -1386,7 +1392,7 @@ dede.DeDeLine.prototype = $extend(THREE.Object3D.prototype,{
 				var idx = this._getMaxPosIndex();
 				this._digits[i].setStrokes(this._getNextText(),0.65,this._space,this._font);
 				var ww = typo.StrokeUtil.getWidth(this._digits[idx].getMoji(),this._font);
-				var pos = this._digits[idx].position.x + ww * 1.3 / 2 + 50;
+				var pos = this._digits[idx].position.x + ww * 1.3 / 2 + this._spaceX;
 				var ww2 = typo.StrokeUtil.getWidth(this._digits[i].getMoji(),this._font);
 				this._digits[i].position.x = pos + ww2 * 1.3 / 2;
 			}
@@ -1450,6 +1456,7 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 		var data = dede.cuts.DeDeString.getData();
 		var txt = data.text;
 		var font = data.font;
+		var spaceX = data.spaceX;
 		var isAllSame;
 		if(Math.random() < 0.5) isAllSame = true; else isAllSame = false;
 		var isRandomLine;
@@ -1471,7 +1478,7 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 				var line = this._lines[i];
 				var type = Math.floor(Math.random() * 6);
 				if(isRandomLine) type = Math.floor(Math.random() * 2);
-				line.reset(txt,type,isRotate,font,speed,space);
+				line.reset(txt,type,isRotate,font,speed,space,spaceX);
 				line.setSec(startSec);
 			}
 		} else {
@@ -1482,7 +1489,7 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 			while(_g11 < _g2) {
 				var i1 = _g11++;
 				var line1 = this._lines[i1];
-				line1.reset(txt,type1,isRotate,font,speed,space);
+				line1.reset(txt,type1,isRotate,font,speed,space,spaceX);
 				var startSec1 = Math.random();
 				if(isRandomStartSec) line1.setRandomSec(); else line1.setSec(startSec1);
 			}
@@ -1510,6 +1517,14 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 				this._lines[i].resetGeoMax(1);
 				this._lines[i].visible = false;
 			}
+		}
+	}
+	,setSpeedX: function(spdX) {
+		var _g1 = 0;
+		var _g = this._lines.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this._lines[i].setSpeedX(spdX);
 		}
 	}
 	,showOutline: function() {
@@ -1574,11 +1589,12 @@ dede.VrdgLine.prototype = $extend(dede.DeDeLine.prototype,{
 			digit.setStrokes(HxOverrides.substr(nn,i,1),ss,space,0);
 			this._digits.push(digit);
 		}
-		this.reset("VRDGTH",Math.floor(Math.random() * 4),false,0,0,0);
+		this.reset("VRDGTH",Math.floor(Math.random() * 4),false,0,0,0,50);
 	}
-	,reset: function(txt,type,isRotate,font,speed,space) {
+	,reset: function(txt,type,isRotate,font,speed,space,spaceX) {
 		this._speed = 2 + 2 * Math.random();
 		this._space = 3 + 18 * Math.random();
+		this._spaceX = spaceX;
 		this.setDotType(type,isRotate);
 		var ox = -this._width / 2;
 		var _g1 = 0;
@@ -1671,10 +1687,11 @@ dede.cuts.DeDeCut1.__super__ = dede.cuts.DeDeCutBase;
 dede.cuts.DeDeCut1.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 	start: function() {
 		this._lines.visible = true;
-		this._lines.setGeoMax(150,[true,true,true]);
+		this._lines.setGeoMax(300,[false,true,false]);
+		this._lines.setSpeedX(-0.5);
 		this._vrdg.visible = false;
 		this._vrdg.setGeoMax(1);
-		this._cam.setZoom(0.7);
+		this._cam.setZoom(2);
 	}
 	,next: function() {
 		this._lines.next();
@@ -1688,21 +1705,28 @@ dede.cuts.DeDeCut2 = function() {
 };
 dede.cuts.DeDeCut2.__super__ = dede.cuts.DeDeCutBase;
 dede.cuts.DeDeCut2.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
-	next: function() {
-		this._lines.next();
-	}
-	,start: function() {
+	start: function() {
 		this._lines.visible = true;
-		this._lines.setGeoMax(200);
+		this._lines.setGeoMax(150,[true,true,true]);
+		this._lines.setSpeedX(-2);
 		this._vrdg.visible = false;
 		this._vrdg.setGeoMax(1);
+		this._cam.setZoom(0.7);
+	}
+	,next: function() {
+		this._lines.next();
+	}
+	,update: function(audio) {
+		this._lines.update(audio);
 	}
 });
 dede.cuts.DeDeString = function(o) {
+	this.spaceX = 0;
 	this.font = 0;
 	this.text = "";
 	this.text = o.text;
 	this.font = o.font;
+	this.spaceX = o.spaceX;
 };
 dede.cuts.DeDeString.getData = function() {
 	var data = new dede.cuts.DeDeString(dede.cuts.DeDeString.texts[Math.floor(Math.random() * dede.cuts.DeDeString.texts.length)]);
@@ -2891,6 +2915,7 @@ clock.DotDigit.TYPE_LINE_CONTINUE = 3;
 clock.DotDigit.TYPE_RANDOM_MONOSPACE = 4;
 clock.DotDigit.TYPE_RANDOM_CONTINUE = 5;
 clock.DotDigit.NUM_TYPE = 4;
+common.Config.canvasOffsetY = 0;
 common.Dat.UP = 38;
 common.Dat.DOWN = 40;
 common.Dat.LEFT = 37;
@@ -2942,10 +2967,11 @@ dede.DeDeDigit.TYPE_LINE_CONTINUE = 3;
 dede.DeDeDigit.TYPE_RANDOM_MONOSPACE = 4;
 dede.DeDeDigit.TYPE_RANDOM_CONTINUE = 5;
 dede.DeDeDigit.NUM_TYPE = 4;
+dede.DeDeLine.SPEEDX0 = -0.5;
+dede.DeDeLine.SPEEDX1 = -2;
 dede.DeDeLine.SPACE_R = 1.3;
-dede.DeDeLine.SPACE = 50;
 dede.DeDeLine.SCALE = 0.65;
-dede.cuts.DeDeString.texts = [{ text : "VRDG3", font : 0},{ text : "NIGHT VOICE ", font : 1},{ text : "DEDEMOUSE", font : 1},{ text : "DEDE", font : 1},{ text : "KITASENJUDESIGN", font : 1},{ text : "デデデデデデ", font : 0},{ text : "デデマウス", font : 0}];
+dede.cuts.DeDeString.texts = [{ text : "VRDG3", font : 0, spaceX : 50},{ text : "NIGHT VOICE ", font : 1, spaceX : 50},{ text : "DEDEMOUSE", font : 1, spaceX : 20},{ text : "DEDE", font : 1, spaceX : 50},{ text : "KITASENJUDESIGN", font : 1, spaceX : 50},{ text : "デデデデデデ", font : 0, spaceX : 10},{ text : "デデマウス", font : 0, spaceX : 50}];
 sound.MyAudio.FFTSIZE = 64;
 three._WebGLRenderer.RenderPrecision_Impl_.highp = "highp";
 three._WebGLRenderer.RenderPrecision_Impl_.mediump = "mediump";

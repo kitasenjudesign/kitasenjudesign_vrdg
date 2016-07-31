@@ -1,6 +1,7 @@
 package fbo;
 import camera.ExCamera;
 import common.Dat;
+import common.StageRef;
 import emoji.Emoji;
 import js.Browser;
 import sound.MyAudio;
@@ -43,6 +44,7 @@ class FboMain
 	
 	private function _onInit2():Void
 	{
+		
 		_audio = new MyAudio();
 		_audio.init(_onAudio);	
 	}
@@ -59,6 +61,8 @@ class FboMain
 		);
 		Browser.document.body.appendChild( _renderer.domElement );
 		_renderer.setSize(Browser.window.innerWidth,Browser.window.innerHeight);
+		_renderer.domElement.id = "webgl";
+		StageRef.setCenter();
 		
 		_scene = new Scene();
 		_camera = new ExCamera(40, Browser.window.innerWidth / Browser.window.innerHeight, 1, 10000);
@@ -106,6 +110,8 @@ class FboMain
 			_emoji.update();
 		}
 		
+		
+		
 		_camera.radX += Math.PI / 180;
 		_camera.update();
 		_renderer.render(_scene, _camera);
@@ -113,6 +119,25 @@ class FboMain
 		//Timer.delay(_run, Math.floor(1000 / 30));
 		Three.requestAnimationFrame( untyped update);		
 
+		Browser.window.onresize = _onResize;
+		_onResize(null);
+				
 	}
+
+	public function _onResize(e):Void {
+		
+		var ww:Int = StageRef.stageWidth;
+		var hh:Int = StageRef.stageHeight;
+		_renderer.domElement.width = ww;// + "px";
+		_renderer.domElement.height = hh;// + "px";		
+		_renderer.setSize(ww, hh);
+		_camera.aspect = ww / hh;// , 10, 50000);
+		_camera.updateProjectionMatrix();
+		//_pp.resize(W, H);		
+		
+		
+		
+	}
+	
 	
 }

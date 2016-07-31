@@ -44,7 +44,6 @@ class Main3d
 	
 	public function init() 
 	{
-		
 		Dat.init(_onInit);
 	}
 	

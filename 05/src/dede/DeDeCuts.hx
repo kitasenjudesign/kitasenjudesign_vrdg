@@ -70,9 +70,11 @@ class DeDeCuts
 		
 		//mode wo kaeru
 		if (Std.parseInt(e.keyCode) == Dat.C) {
+			
+			_cutIndex++;
 			_currentCut = _cuts[_cutIndex%_cuts.length];
 			_currentCut.start();
-			_cutIndex++;
+			
 		}
 		
 		

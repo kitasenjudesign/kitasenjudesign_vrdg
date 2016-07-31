@@ -218,6 +218,7 @@ common.Config.prototype = {
 		common.Config.host = data.host;
 		var win = window;
 		win.host = common.Config.host;
+		common.Config.canvasOffsetY = data.canvasOffsetY;
 		if(this._callback != null) this._callback();
 	}
 };
@@ -302,6 +303,23 @@ common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
 		this.dispatchEvent({ type : "keydown", keyCode : n});
 	}
 });
+common.StageRef = function() {
+};
+common.StageRef.setCenter = function() {
+	if(!common.Dat.bg) {
+		var dom = window.document.getElementById("webgl");
+		var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
+		dom.style.position = "absolute";
+		dom.style.top = Math.round(yy) + "px";
+	}
+};
+common.StageRef.get_stageWidth = function() {
+	return window.innerWidth;
+};
+common.StageRef.get_stageHeight = function() {
+	if(common.Dat.bg) return window.innerHeight;
+	return Math.floor(window.innerWidth * 576 / 1920);
+};
 common.WSocket = function() {
 };
 common.WSocket.prototype = {
@@ -488,6 +506,8 @@ fbo.FboMain.prototype = {
 		this._renderer = new THREE.WebGLRenderer({ antialias : false, devicePixelRatio : 1, logarithmicDepthBuffer : true});
 		window.document.body.appendChild(this._renderer.domElement);
 		this._renderer.setSize(window.innerWidth,window.innerHeight);
+		this._renderer.domElement.id = "webgl";
+		common.StageRef.setCenter();
 		this._scene = new THREE.Scene();
 		this._camera = new camera.ExCamera(40,window.innerWidth / window.innerHeight,1,10000);
 		this._camera.init(this._renderer.domElement);
@@ -510,6 +530,17 @@ fbo.FboMain.prototype = {
 		this._camera.update();
 		this._renderer.render(this._scene,this._camera);
 		window.requestAnimationFrame($bind(this,this.update));
+		window.onresize = $bind(this,this._onResize);
+		this._onResize(null);
+	}
+	,_onResize: function(e) {
+		var ww = common.StageRef.get_stageWidth();
+		var hh = common.StageRef.get_stageHeight();
+		this._renderer.domElement.width = ww;
+		this._renderer.domElement.height = hh;
+		this._renderer.setSize(ww,hh);
+		this._camera.aspect = ww / hh;
+		this._camera.updateProjectionMatrix();
 	}
 };
 fbo.RenderShaderMat = function() {
@@ -916,6 +947,7 @@ Three.RGBA_S3TC_DXT3_Format = 2003;
 Three.RGBA_S3TC_DXT5_Format = 2004;
 Three.LineStrip = 0;
 Three.LinePieces = 1;
+common.Config.canvasOffsetY = 0;
 common.Dat.UP = 38;
 common.Dat.DOWN = 40;
 common.Dat.LEFT = 37;

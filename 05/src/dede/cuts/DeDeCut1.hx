@@ -17,13 +17,14 @@ class DeDeCut1  extends DeDeCutBase
 				
 		_lines.visible = true;
 		
-		
-		_lines.setGeoMax(150,[true,true,true]);
+		//mongon wo kimeru
+		_lines.setGeoMax(300,[false,true,false]);
+		_lines.setSpeedX( DeDeLine.SPEEDX0 );
 		
 		_vrdg.visible = false;
 		_vrdg.setGeoMax(1);
 		
-		_cam.setZoom(0.7);
+		_cam.setZoom(2);
 		
 	}
 	
@@ -32,6 +33,7 @@ class DeDeCut1  extends DeDeCutBase
 	 */
 	override public function next():Void
 	{
+		//set dot type
 		_lines.next();
 	}	
 	

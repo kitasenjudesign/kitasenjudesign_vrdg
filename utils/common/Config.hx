@@ -14,6 +14,7 @@ class Config
 	private var _callback:Void->Void;
 	
 	public static var host:String;
+	public static var canvasOffsetY:Float = 0;
 	
 	public function new() 
 	{
@@ -34,9 +35,11 @@ class Config
 		host = data.host;
 		//Browser.window.alert("" + host);
 		
+		//host
 		var win:Dynamic = Browser.window;
-		win.host = host;
-		
+		win.host = host;	
+		canvasOffsetY = data.canvasOffsetY;
+	
 		if ( _callback != null ) {
 			_callback();
 		}

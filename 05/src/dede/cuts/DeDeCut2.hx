@@ -1,4 +1,5 @@
 package dede.cuts;
+import sound.MyAudio;
 
 /**
  * ...
@@ -12,6 +13,22 @@ class DeDeCut2  extends DeDeCutBase
 		super();
 	}
 	
+	override public function start():Void {
+				
+		_lines.visible = true;
+		
+		
+		_lines.setGeoMax(150,[true,true,true]);
+		_lines.setSpeedX( DeDeLine.SPEEDX1 );
+		
+		
+		_vrdg.visible = false;
+		_vrdg.setGeoMax(1);
+		
+		_cam.setZoom(0.7);
+		
+	}
+	
 	/**
 	 * next
 	 */
@@ -21,15 +38,17 @@ class DeDeCut2  extends DeDeCutBase
 	}	
 	
 	
-	override public function start():Void {
-
-		_lines.visible = true;
-		_lines.setGeoMax(200);
+	/**
+	 * update
+	 * @param	audio
+	 */
+	override public function update(audio:MyAudio):Void {
 		
-		_vrdg.visible = false;
-		_vrdg.setGeoMax(1);		
+		//_lines.up
+		_lines.update(audio);
 		
-	}
+	}		
+	
 	
 	
 }

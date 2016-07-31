@@ -20,9 +20,12 @@ class StageRef
 	public static function setCenter():Void {
 		
 		if (!Dat.bg) {
+			
 			var dom:Element = Browser.document.getElementById("webgl");
+			var yy:Float = (Browser.window.innerHeight / 2 - StageRef.stageHeight / 2) + Config.canvasOffsetY;
 			dom.style.position = "absolute";
-			dom.style.top = (Browser.window.innerHeight / 2 - StageRef.stageHeight / 2) + "px";
+			dom.style.top = Math.round(yy) + "px";
+			
 		}
 				
 		

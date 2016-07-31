@@ -82,9 +82,7 @@ class Dat
 	
 	private static function _onInit():Void {
 		
-		
 		bg = (Browser.location.hash == "#bg");
-		
 		
 		gui = untyped __js__("new dat.GUI({ autoPlace: false })");
 		//gui.domElement.id = "ddgui";// "datgui"
@@ -96,6 +94,8 @@ class Dat
 		gui.domElement.style.opacity = 0.7;
 		gui.domElement.style.zIndex = 999999;
 
+		
+		
 		//StatsGUI.init();
 		//Browser.document.onkeydown = _onDown;
 		//gui.add(main.camera, "amp").step(0.01).listen();

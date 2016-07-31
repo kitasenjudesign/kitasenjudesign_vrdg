@@ -60,7 +60,7 @@ class VrdgLine extends DeDeLine
 		//add(vrdg);
 		
 		//_digits[i].setStrokes(t, SCALE, _space);
-		reset("VRDGTH", Math.floor(Math.random() * 4), false, 0, 0, 0);
+		reset("VRDGTH", Math.floor(Math.random() * 4), false, 0, 0, 0, 50);
 	}
 	
 	/**
@@ -69,10 +69,11 @@ class VrdgLine extends DeDeLine
 	 * @param	type
 	 * @param	isRotate
 	 */
-	override public function reset(txt:String,type:Int,isRotate:Bool,font:Int,speed:Float,space:Float):Void
+	override public function reset(txt:String,type:Int,isRotate:Bool,font:Int,speed:Float,space:Float,spaceX:Float):Void
 	{
 		_speed = 2+2*Math.random();
 		_space = 3+18*Math.random();
+		_spaceX = spaceX;
 		
 		setDotType( type, isRotate);
 		

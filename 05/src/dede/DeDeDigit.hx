@@ -133,7 +133,7 @@ class DeDeDigit extends Object3D
 	
 		
 		/////////////////////////////////outline
-		if (_moji != str) {
+		//if (_moji != str) {
 			if (outline != null) {
 				remove(outline);
 			}
@@ -141,7 +141,7 @@ class DeDeDigit extends Object3D
 			outline.position.z = 0;// -1;
 			
 			add(outline);
-		}
+		//}
 		
 		_moji = str;
 		update(2);

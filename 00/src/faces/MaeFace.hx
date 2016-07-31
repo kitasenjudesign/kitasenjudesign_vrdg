@@ -50,7 +50,7 @@ class MaeFace extends Object3D
 		//_material = new MaeShaderMaterial();
 		//_geometry = g;
 		
-		visible = Math.random()<0.5 ? false : true;
+		//visible = Math.random()<0.5 ? false : true;
 		
 		_face = new MaeFaceMesh();
 		add( _face );

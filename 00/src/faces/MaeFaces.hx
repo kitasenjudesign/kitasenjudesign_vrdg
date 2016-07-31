@@ -1,6 +1,7 @@
 package faces;
 import common.Dat;
 import common.Key;
+import faces.data.MaeFormation;
 import sound.MyAudio;
 import three.Geometry;
 import three.Mesh;
@@ -13,9 +14,9 @@ import three.Object3D;
 class MaeFaces extends Object3D
 {
 
-	public static inline var FORMATION1:Int = 1;
-	public static inline var FORMATION2:Int = 2;
-	public static inline var FORMATION3:Int = 3;
+	//public static inline var FORMATION1:Int = 1;
+	//public static inline var FORMATION2:Int = 2;
+	//public static inline var FORMATION3:Int = 3;
 	
 	private var _currentForm:Int = 1;
 	private var _offsetY:Float = 0;
@@ -34,7 +35,7 @@ class MaeFaces extends Object3D
 	 */ 
 	public function init():Void {
 		
-		Tracer.debug("init");
+		Tracer.log("init");
 		//Tracer
 		_faces = [];
 		
@@ -60,6 +61,8 @@ class MaeFaces extends Object3D
 			
 		}	
 		
+		_setFormation(0);
+		
 		_lines = new MaeLines();
 		_lines.init(_faces);
 		add(_lines);
@@ -75,14 +78,14 @@ class MaeFaces extends Object3D
 		switch( Std.parseInt( e.keyCode ) ) {
 			case Dat.RIGHT:
 				_setMaterial();
+				_setFormation(Math.floor(Math.random() * 2));
 		}
 	}
 	
 	
-	private function _setFormation():Void {
+	private function _setFormation(type:Int):Void {
 		
-		//koko ni kaku
-		
+		MaeFormation.setFormation(type,_faces);
 		
 	}
 	

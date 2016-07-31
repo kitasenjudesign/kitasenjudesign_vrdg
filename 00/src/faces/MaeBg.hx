@@ -60,7 +60,7 @@ void main()
 	 */
 	public function flash():Void {
 		//
-		Tracer.debug("flash");
+		Tracer.log("flash");
 		_light = 1;
 		if (_twn != null) {
 			_twn.kill();

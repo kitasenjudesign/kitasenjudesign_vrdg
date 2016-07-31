@@ -95,32 +95,29 @@ class XLoopPass extends ShaderPass
 					texel = texture2D( tDiffuse, axis );
 						
 						
-						//vec4 texel = texture2D( colTexture, axis );
 						
-						//vec3 luma = vec3( 0.299, 0.587, 0.114 );
-						//float v = dot( texel.xyz, luma );//akarusa
-						//vec2 axis = vec2( 0.5,v );						
+						vec3 luma = vec3( 0.299, 0.587, 0.114 );
+						float v = dot( texel.xyz, luma );//akarusa
+						axis = vec2( 0.5,v );						
+						vec4 out1 = texture2D( colTexture, axis );
 						
 						//position
 					
 						
-						/*
-						if ( texel.x == 0.0 || mod( floor( texel.x * 1000.0 + counter ),2.0) == 0.0 ) {
-							texel.x = 0.0;
-							texel.y = 0.0;
-							texel.z = 0.0;							
-						}else {
-							texel.x = out1.x;//1.0;
-							texel.y = out1.y;//1.0;
-							texel.z = out1.z;//1.0;														
-						}*/
+						
+						if ( texel.x == 0.0 ) {
+							out1.x = 0.0;
+							out1.y = 0.0;
+							out1.z = 0.0;							
+						}
+						
 						/*
 							texel.x = out1.x;//1.0;
 							texel.y = out1.y;//1.0;
 							texel.z = out1.z;//1.0;							
 						*/
 						
-						gl_FragColor = texel;
+						gl_FragColor = out1;
 						//gl_FragColor =  out1;// texel;
 					}
 	";
