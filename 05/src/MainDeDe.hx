@@ -3,6 +3,7 @@ package ;
 import camera.DoubleCamera;
 import common.Dat;
 import common.StageRef;
+import dede.BlinkPlane;
 import dede.DeDeCuts;
 import dede.DeDeLines;
 import dede.VrdgLines;
@@ -32,6 +33,7 @@ class MainDeDe
 	private var _points		:MyPointCloud;
 	private var _cuts		:DeDeCuts;
 	private var _audio		:MyAudio;
+	private var _bg:BlinkPlane;
 	
 	
 	public function new() {
@@ -64,7 +66,9 @@ class MainDeDe
 		_audio = new MyAudio();
 		_audio.init( _init2 );
 		
-		
+		_bg = new BlinkPlane();
+		_bg.position.z = -50;
+		_scene.add(_bg);
 		
 		//
 		StageRef.setCenter();
@@ -78,6 +82,9 @@ class MainDeDe
 		//Browser.window.alert("_onKeyDown");
 		
 		//mode wo kaeru
+		if (Std.parseInt(e.keyCode) == Dat.RIGHT) {
+			_bg.flash();
+		}
 		if (Std.parseInt(e.keyCode) == Dat.O) {
 			_camera.setCamType(DoubleCamera.TYPE_O);
 		}

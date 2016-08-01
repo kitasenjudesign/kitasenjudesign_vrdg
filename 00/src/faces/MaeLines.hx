@@ -63,7 +63,7 @@ class MaeLines extends Object3D
 		_line.geometry.verticesNeedUpdate = true;		
 		_line.geometry.colorsNeedUpdate = true;
 		
-		var offY:Float = -120;
+		var offY:Float = -150;
 		
 		for (i in 0..._faces.length) {
 			
@@ -73,7 +73,7 @@ class MaeLines extends Object3D
 				_faces[i].addForce(1);
 				_connectLine(
 					_faces[i].position, 
-					new Vector3(100*(Math.random()-0.5), offY, 0),
+					new Vector3(100*(Math.random()-0.5), offY, -100),
 					Math.random()
 				);
 				

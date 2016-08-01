@@ -19,6 +19,8 @@ Test3d.prototype = {
 		this._scene = new THREE.Scene();
 		this._renderer.setSize(1280,720);
 		window.document.body.appendChild(this._renderer.domElement);
+		this._renderer.domElement.id = "webgl";
+		common.StageRef.setCenter();
 		this._camera = new camera.ExCamera(60,1.77777777777777768,10,50000);
 		this._camera.init(this._renderer.domElement);
 		window.onresize = $bind(this,this._onResize);
@@ -30,8 +32,8 @@ Test3d.prototype = {
 		window.requestAnimationFrame($bind(this,this._run));
 	}
 	,_onResize: function(object) {
-		var W = window.innerWidth;
-		var H = window.innerHeight;
+		var W = common.StageRef.get_stageWidth();
+		var H = common.StageRef.get_stageHeight();
 		this._renderer.domElement.width = W;
 		this._renderer.domElement.height = H;
 		this._renderer.setSize(W,H);
@@ -47,7 +49,9 @@ CanvasTest3d.__super__ = Test3d;
 CanvasTest3d.prototype = $extend(Test3d.prototype,{
 	init: function() {
 		Test3d.prototype.init.call(this);
-		common.Dat.init();
+		common.Dat.init($bind(this,this.initA));
+	}
+	,initA: function() {
 		logo.Logos.init($bind(this,this.initB));
 	}
 	,initB: function() {
@@ -64,6 +68,7 @@ CanvasTest3d.prototype = $extend(Test3d.prototype,{
 		this._scene.fog = new THREE.Fog(0,1000,7000);
 		this._run();
 		common.Dat.gui.add(this._camera,"amp").listen();
+		this._onResize(null);
 		window.document.addEventListener("keydown",$bind(this,this._onKeyDown));
 	}
 	,_onKeyDown: function(e) {
@@ -94,6 +99,10 @@ CanvasTest3d.prototype = $extend(Test3d.prototype,{
 		if(this._camera != null) this._camera.update();
 		this._pp.render();
 		window.requestAnimationFrame($bind(this,this._run));
+	}
+	,_onResize: function(object) {
+		Test3d.prototype._onResize.call(this,object);
+		if(this._pp != null) this._pp.resize(common.StageRef.get_stageWidth(),common.StageRef.get_stageHeight());
 	}
 });
 var Cube = function() {
@@ -164,12 +173,35 @@ HxOverrides.cca = function(s,index) {
 	if(x != x) return undefined;
 	return x;
 };
+var Lambda = function() { };
+Lambda.exists = function(it,f) {
+	var $it0 = it.iterator();
+	while( $it0.hasNext() ) {
+		var x = $it0.next();
+		if(f(x)) return true;
+	}
+	return false;
+};
+var List = function() {
+	this.length = 0;
+};
+List.prototype = {
+	iterator: function() {
+		return { h : this.h, hasNext : function() {
+			return this.h != null;
+		}, next : function() {
+			if(this.h == null) return null;
+			var x = this.h[0];
+			this.h = this.h[1];
+			return x;
+		}};
+	}
+};
 var Main = function() { };
 Main.main = function() {
 	window.onload = Main._onLoad;
 };
 Main._onLoad = function(e) {
-	console.log("_onLoad");
 	var test = new CanvasTest3d();
 	test.init();
 };
@@ -354,12 +386,33 @@ camera.ExCamera.prototype = $extend(THREE.PerspectiveCamera.prototype,{
 	}
 });
 var common = {};
+common.Config = function() {
+};
+common.Config.prototype = {
+	load: function(callback) {
+		this._callback = callback;
+		this._http = new haxe.Http("../../config.json");
+		this._http.onData = $bind(this,this._onData);
+		this._http.request();
+	}
+	,_onData: function(str) {
+		var data = JSON.parse(str);
+		common.Config.host = data.host;
+		var win = window;
+		win.host = common.Config.host;
+		common.Config.canvasOffsetY = data.canvasOffsetY;
+		if(this._callback != null) this._callback();
+	}
+};
 common.Dat = function() {
 };
-common.Dat.init = function() {
+common.Dat.init = function(callback) {
+	common.Dat._callback = callback;
+	common.Dat._config = new common.Config();
+	common.Dat._config.load(common.Dat._onInit);
+};
+common.Dat._onInit = function() {
 	common.Dat.bg = window.location.hash == "#bg";
-	common.Dat.socket = new common.WSocket();
-	common.Dat.socket.init();
 	common.Dat.gui = new dat.GUI({ autoPlace: false });
 	window.document.body.appendChild(common.Dat.gui.domElement);
 	common.Dat.gui.domElement.style.position = "absolute";
@@ -367,14 +420,15 @@ common.Dat.init = function() {
 	common.Dat.gui.domElement.style.top = "0px";
 	common.Dat.gui.domElement.style.opacity = 0.7;
 	common.Dat.gui.domElement.style.zIndex = 999999;
-	window.document.addEventListener("keydown",common.Dat._onKeyDown);
+	common.Key.init();
+	common.Key.board.addEventListener("keydown",common.Dat._onKeyDown);
 	common.Dat.show();
+	if(common.Dat._callback != null) common.Dat._callback();
 };
 common.Dat._onKeyDown = function(e) {
 	var _g = Std.parseInt(e.keyCode);
 	switch(_g) {
 	case 65:
-		common.Dat.socket.send("UNKO " + Math.random());
 		break;
 	case 68:
 		if(common.Dat.gui.domElement.style.display == "block") common.Dat.hide(); else common.Dat.show();
@@ -405,21 +459,69 @@ common.Dat.show = function() {
 common.Dat.hide = function() {
 	common.Dat.gui.domElement.style.display = "none";
 };
+common.Key = function() {
+	THREE.EventDispatcher.call(this);
+};
+common.Key.init = function() {
+	if(common.Key.board == null) {
+		common.Key.board = new common.Key();
+		common.Key.board.init2();
+	}
+};
+common.Key.__super__ = THREE.EventDispatcher;
+common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
+	init2: function() {
+		window.document.addEventListener("keydown",$bind(this,this._onKeyDown));
+		this._socket = new common.WSocket();
+		this._socket.init();
+		if(common.Dat.bg) this._socket.addCallback($bind(this,this._onKeyDown));
+	}
+	,_onKeyDown: function(e) {
+		var n = Std.parseInt(e.keyCode);
+		this._dispatch(n);
+	}
+	,_dispatch: function(n) {
+		if(!common.Dat.bg) this._socket.send(n);
+		this.dispatchEvent({ type : "keydown", keyCode : n});
+	}
+});
+common.StageRef = function() {
+};
+common.StageRef.setCenter = function() {
+	if(!common.Dat.bg) {
+		var dom = window.document.getElementById("webgl");
+		var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
+		dom.style.position = "absolute";
+		dom.style.top = Math.round(yy) + "px";
+	}
+};
+common.StageRef.get_stageWidth = function() {
+	return window.innerWidth;
+};
+common.StageRef.get_stageHeight = function() {
+	if(common.Dat.bg) return window.innerHeight;
+	return Math.floor(window.innerWidth * 576 / 1920);
+};
 common.WSocket = function() {
 };
 common.WSocket.prototype = {
 	init: function() {
 		var win = window;
 		if(win.io != null) {
-			this._socket = io.connect();
+			this._socket = io.connect(window.host);
 			this._socket.on("server_to_client",$bind(this,this._onRecieve));
 		} else {
 		}
 	}
-	,send: function(msg) {
-		if(this._socket != null) this._socket.emit("client_to_server",{ value : msg});
+	,send: function(key) {
+		if(this._socket != null) this._socket.emit("client_to_server",{ value : key});
+	}
+	,addCallback: function(callback) {
+		this._callback = callback;
 	}
 	,_onRecieve: function(data) {
+		data.keyCode = data.value;
+		if(this._callback != null) this._callback(data);
 	}
 };
 var effect = {};
@@ -461,6 +563,9 @@ effect.PostProcessing2.prototype = {
 	}
 	,update: function(audio) {
 	}
+	,resize: function(ww,hh) {
+		this._composer.setSize(ww,hh);
+	}
 };
 effect.shaders = {};
 effect.shaders.CopyShader = function() {
@@ -488,6 +593,95 @@ effect.shaders.VignetteShader = function() {
 };
 effect.shaders.VignetteShader.getObject = function() {
 	return { uniforms : { tDiffuse : { type : "t", value : null}, offset : { type : "f", value : 1.0}, darkness : { type : "f", value : 1.2}}, vertexShader : "varying vec2 vUv;\r\n\t\t\t\tvoid main() {\r\n\t\t\t\t\tvUv = uv;\r\n\t\t\t\t\tgl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\r\n\t\t\t\t}", fragmentShader : "uniform float offset;\r\n\t\t\t\tuniform float darkness;\r\n\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\tvoid main() {\r\n\t\t\t\t\tvec4 texel = texture2D( tDiffuse, vUv );\r\n\t\t\t\t\tvec2 uv = ( vUv - vec2( 0.5 ) ) * vec2( offset );\r\n\t\t\t\t\tgl_FragColor = vec4( mix( texel.rgb, vec3( 1.0 - darkness ), dot( uv, uv ) ), texel.a );\r\n\t\t\t\t}"};
+};
+var haxe = {};
+haxe.Http = function(url) {
+	this.url = url;
+	this.headers = new List();
+	this.params = new List();
+	this.async = true;
+};
+haxe.Http.prototype = {
+	request: function(post) {
+		var me = this;
+		me.responseData = null;
+		var r = this.req = js.Browser.createXMLHttpRequest();
+		var onreadystatechange = function(_) {
+			if(r.readyState != 4) return;
+			var s;
+			try {
+				s = r.status;
+			} catch( e ) {
+				s = null;
+			}
+			if(s == undefined) s = null;
+			if(s != null) me.onStatus(s);
+			if(s != null && s >= 200 && s < 400) {
+				me.req = null;
+				me.onData(me.responseData = r.responseText);
+			} else if(s == null) {
+				me.req = null;
+				me.onError("Failed to connect or resolve host");
+			} else switch(s) {
+			case 12029:
+				me.req = null;
+				me.onError("Failed to connect to host");
+				break;
+			case 12007:
+				me.req = null;
+				me.onError("Unknown host");
+				break;
+			default:
+				me.req = null;
+				me.responseData = r.responseText;
+				me.onError("Http Error #" + r.status);
+			}
+		};
+		if(this.async) r.onreadystatechange = onreadystatechange;
+		var uri = this.postData;
+		if(uri != null) post = true; else {
+			var $it0 = this.params.iterator();
+			while( $it0.hasNext() ) {
+				var p = $it0.next();
+				if(uri == null) uri = ""; else uri += "&";
+				uri += encodeURIComponent(p.param) + "=" + encodeURIComponent(p.value);
+			}
+		}
+		try {
+			if(post) r.open("POST",this.url,this.async); else if(uri != null) {
+				var question = this.url.split("?").length <= 1;
+				r.open("GET",this.url + (question?"?":"&") + uri,this.async);
+				uri = null;
+			} else r.open("GET",this.url,this.async);
+		} catch( e1 ) {
+			me.req = null;
+			this.onError(e1.toString());
+			return;
+		}
+		if(!Lambda.exists(this.headers,function(h) {
+			return h.header == "Content-Type";
+		}) && post && this.postData == null) r.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+		var $it1 = this.headers.iterator();
+		while( $it1.hasNext() ) {
+			var h1 = $it1.next();
+			r.setRequestHeader(h1.header,h1.value);
+		}
+		r.send(uri);
+		if(!this.async) onreadystatechange(null);
+	}
+	,onData: function(data) {
+	}
+	,onError: function(msg) {
+	}
+	,onStatus: function(status) {
+	}
+};
+var js = {};
+js.Browser = function() { };
+js.Browser.createXMLHttpRequest = function() {
+	if(typeof XMLHttpRequest != "undefined") return new XMLHttpRequest();
+	if(typeof ActiveXObject != "undefined") return new ActiveXObject("Microsoft.XMLHTTP");
+	throw "Unable to create XMLHttpRequest object.";
 };
 var logo = {};
 logo.LogoData = function(o) {
@@ -1700,6 +1894,7 @@ Three.LineStrip = 0;
 Three.LinePieces = 1;
 camera.ExCamera.POS_NORMAL = "MODE_NORMAL";
 camera.ExCamera.POS_FOLLOW = "MODE_FOLLOW";
+common.Config.canvasOffsetY = 0;
 common.Dat.UP = 38;
 common.Dat.DOWN = 40;
 common.Dat.LEFT = 37;
@@ -1754,3 +1949,5 @@ typo.data.CutParams._params = [];
 typo.data.CutParams._count = -1;
 Main.main();
 })();
+
+//# sourceMappingURL=TypoCanvas.js.map

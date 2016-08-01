@@ -98,6 +98,11 @@ class XLoopPass extends ShaderPass
 						
 						vec3 luma = vec3( 0.299, 0.587, 0.114 );
 						float v = dot( texel.xyz, luma );//akarusa
+						v = fract( v*20.0 + counter * 0.01 ) * 2.0;
+						if (v > 1.0) {
+							v = 1.0 - (v - 1.0);
+						}
+							
 						axis = vec2( 0.5,v );						
 						vec4 out1 = texture2D( colTexture, axis );
 						
@@ -110,6 +115,18 @@ class XLoopPass extends ShaderPass
 							out1.y = 0.0;
 							out1.z = 0.0;							
 						}
+						
+						/*
+						if ( texel.x == 0.0 || mod( floor( texel.x * 1000.0 + counter ),2.0) == 0.0 ) {
+							out1.x = 0.0;
+							out1.y = 0.0;
+							out1.z = 0.0;							
+						}else {
+							out1.x = out1.x;// 1.0;
+							out1.y = out1.y;// 1.0;
+							out1.z = out1.z;// 1.0;														
+						}*/
+												
 						
 						/*
 							texel.x = out1.x;//1.0;

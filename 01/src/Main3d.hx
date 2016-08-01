@@ -73,7 +73,6 @@ class Main3d
 		//_dummy.init();
 		//_scene.add(_dummy);
 		
-		
 		var light:AmbientLight = new AmbientLight(0x999999);//new AmbientLight(0xaaaaaa);
 		_scene.add(light);
 		

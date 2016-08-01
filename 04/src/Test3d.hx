@@ -1,6 +1,7 @@
 package ;
 
 import camera.ExCamera;
+import common.StageRef;
 import haxe.Timer;
 import js.Browser;
 import three.Line;
@@ -45,9 +46,11 @@ class Test3d
         
 		//_renderer.setClearColor(0x000000, 1);
         _renderer.setSize(1280, 720);
-        
 		Browser.document.body.appendChild(_renderer.domElement);
-	
+        _renderer.domElement.id = "webgl";
+		
+		StageRef.setCenter();
+		
 		_camera = new ExCamera(60, 1280/720, 10, 50000);
 		_camera.init(_renderer.domElement);
 		
@@ -71,15 +74,17 @@ class Test3d
 		//Timer.delay(_run, Math.floor(1000 / 48));// 33);
 	}
 	
-	function _onResize(object):Void
+	private function _onResize(object:Dynamic):Void
 	{
-		var W:Int = Browser.window.innerWidth;
-		var H:Int = Browser.window.innerHeight;
+		
+		var W:Int = StageRef.stageWidth;
+		var H:Int = StageRef.stageHeight;
 		_renderer.domElement.width = W;// + "px";
 		_renderer.domElement.height = H;// + "px";		
 		_renderer.setSize(W, H);
 		_camera.aspect = W / H;// , 10, 50000);
 		_camera.updateProjectionMatrix();		
+		
 		
 		//_camera = new PerspectiveCamera( 50, Browser.window.innerWidth / Browser.window.innerHeight, 10, 50000);
 		//_renderer.setSize(Browser.window.innerWidth, Browser.window.innerHeight);	

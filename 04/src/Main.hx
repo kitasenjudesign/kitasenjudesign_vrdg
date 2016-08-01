@@ -22,11 +22,8 @@ class Main
 	 */
 	static private function _onLoad(e):Void
 	{
-		
-		trace("_onLoad");
 		var test:CanvasTest3d = new CanvasTest3d();
 		test.init();
-		
 	}
 	
 	

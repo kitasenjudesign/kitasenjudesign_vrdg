@@ -122,7 +122,7 @@ class MaeFaces extends Object3D
 		for (i in 0..._faces.length) {
 			
 			_faces[i].update(audio);
-			_faces[i].position.x -= 0.5;
+			_faces[i].position.x -= 0.25;
 			if ( _faces[i].position.x < -500) {
 				_faces[i].position.x = 500;
 			}			

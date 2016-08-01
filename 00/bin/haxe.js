@@ -792,7 +792,7 @@ faces.MaeFaces.prototype = $extend(THREE.Object3D.prototype,{
 		while(_g1 < _g) {
 			var i = _g1++;
 			this._faces[i].update(audio);
-			this._faces[i].position.x -= 0.5;
+			this._faces[i].position.x -= 0.25;
 			if(this._faces[i].position.x < -500) this._faces[i].position.x = 500;
 		}
 		this._lines.update(audio);
@@ -852,14 +852,14 @@ faces.MaeLines.prototype = $extend(THREE.Object3D.prototype,{
 		this._resetLine();
 		this._line.geometry.verticesNeedUpdate = true;
 		this._line.geometry.colorsNeedUpdate = true;
-		var offY = -120;
+		var offY = -150;
 		var _g1 = 0;
 		var _g = this._faces.length;
 		while(_g1 < _g) {
 			var i = _g1++;
 			if(audio.freqByteDataAry[this._faces[i].randomIndex[0]] > 15 && this._faces[i].visible) {
 				this._faces[i].addForce(1);
-				this._connectLine(this._faces[i].position,new THREE.Vector3(100 * (Math.random() - 0.5),offY,0),Math.random());
+				this._connectLine(this._faces[i].position,new THREE.Vector3(100 * (Math.random() - 0.5),offY,-100),Math.random());
 			}
 		}
 	}
@@ -1053,6 +1053,7 @@ faces.data.MaeFormation._setForm0 = function(faces) {
 		ff.visible = true;
 		ff.position.x = xx * 50;
 		ff.position.y = yy * 50;
+		ff.position.z = 0;
 	}
 };
 faces.data.MaeFormation._setForm1 = function(faces) {
@@ -1070,7 +1071,8 @@ faces.data.MaeFormation._setForm1 = function(faces) {
 			ff.enabled = true;
 			ff.visible = true;
 			ff.position.x = xx * 50;
-			ff.position.y = yy * 50;
+			ff.position.y = 5;
+			ff.position.z = 230;
 		} else {
 			ff.visible = false;
 			ff.enabled = false;
@@ -1090,7 +1092,8 @@ faces.data.MaeFormation._setForm2 = function(faces) {
 			var yy = Math.floor(i / ww) - (hh - 1) / 2;
 			ff.enabled = true;
 			ff.position.x = xx * 50;
-			ff.position.y = yy * 50;
+			ff.position.y = 0;
+			ff.position.z = 500;
 		} else ff.visible = false;
 	}
 };
@@ -1281,7 +1284,7 @@ objects.MySphere = function() {
 	this._count = 0;
 	THREE.Object3D.call(this);
 	var texture = THREE.ImageUtils.loadTexture("R0010035.JPG");
-	this._textures = [texture,THREE.ImageUtils.loadTexture("bg/R0010042.jpg"),THREE.ImageUtils.loadTexture("bg/R0010046.jpg"),THREE.ImageUtils.loadTexture("bg/R0010047.jpg"),THREE.ImageUtils.loadTexture("bg/R0010048.jpg"),THREE.ImageUtils.loadTexture("bg/R0010051.jpg"),THREE.ImageUtils.loadTexture("bg/R0010053.jpg"),THREE.ImageUtils.loadTexture("bg/R0010053.jpg"),THREE.ImageUtils.loadTexture("bg/R0010055.jpg"),THREE.ImageUtils.loadTexture("bg/R0010057.jpg"),THREE.ImageUtils.loadTexture("bg/R0010059.jpg"),THREE.ImageUtils.loadTexture("bg/R0010061.jpg"),THREE.ImageUtils.loadTexture("bg/R0010062.jpg"),THREE.ImageUtils.loadTexture("bg/R0010063.jpg"),THREE.ImageUtils.loadTexture("bg/R0010065.jpg"),THREE.ImageUtils.loadTexture("bg/R0010066.jpg"),THREE.ImageUtils.loadTexture("bg/R0010068.jpg"),THREE.ImageUtils.loadTexture("bg/R0010069.jpg"),THREE.ImageUtils.loadTexture("img/IMG_5796B.jpg"),THREE.ImageUtils.loadTexture("img/IMG_5796.jpg"),THREE.ImageUtils.loadTexture("img/a.jpg"),THREE.ImageUtils.loadTexture("img/b.jpg"),THREE.ImageUtils.loadTexture("img/hoge.jpg"),THREE.ImageUtils.loadTexture("img/fuga.jpg"),THREE.ImageUtils.loadTexture("bg/white.png")];
+	this._textures = [texture,THREE.ImageUtils.loadTexture("bg/dedebg.jpg"),THREE.ImageUtils.loadTexture("bg/R0010042.jpg"),THREE.ImageUtils.loadTexture("bg/R0010046.jpg"),THREE.ImageUtils.loadTexture("bg/R0010047.jpg"),THREE.ImageUtils.loadTexture("bg/R0010048.jpg"),THREE.ImageUtils.loadTexture("bg/R0010051.jpg"),THREE.ImageUtils.loadTexture("bg/R0010053.jpg"),THREE.ImageUtils.loadTexture("bg/R0010053.jpg"),THREE.ImageUtils.loadTexture("bg/R0010055.jpg"),THREE.ImageUtils.loadTexture("bg/R0010057.jpg"),THREE.ImageUtils.loadTexture("bg/R0010059.jpg"),THREE.ImageUtils.loadTexture("bg/R0010061.jpg"),THREE.ImageUtils.loadTexture("bg/R0010062.jpg"),THREE.ImageUtils.loadTexture("bg/R0010063.jpg"),THREE.ImageUtils.loadTexture("bg/R0010065.jpg"),THREE.ImageUtils.loadTexture("bg/R0010066.jpg"),THREE.ImageUtils.loadTexture("bg/R0010068.jpg"),THREE.ImageUtils.loadTexture("bg/R0010069.jpg"),THREE.ImageUtils.loadTexture("img/IMG_5796B.jpg"),THREE.ImageUtils.loadTexture("img/IMG_5796.jpg"),THREE.ImageUtils.loadTexture("img/a.jpg"),THREE.ImageUtils.loadTexture("img/b.jpg"),THREE.ImageUtils.loadTexture("img/hoge.jpg"),THREE.ImageUtils.loadTexture("img/fuga.jpg"),THREE.ImageUtils.loadTexture("bg/white.png")];
 	this.mate = new THREE.MeshBasicMaterial({ map : texture});
 	var g = new THREE.SphereGeometry(1000,60,30);
 	this.mesh = new THREE.Mesh(g,this.mate);

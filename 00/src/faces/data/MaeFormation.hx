@@ -51,6 +51,7 @@ class MaeFormation
 			ff.visible = true;
 			ff.position.x = xx * 50;
 			ff.position.y = yy * 50;	
+			ff.position.z = 0;
 			
 		}
 	}
@@ -70,7 +71,8 @@ class MaeFormation
 				ff.enabled = true;
 				ff.visible = true;
 				ff.position.x = xx * 50;
-				ff.position.y = yy * 50;	
+				ff.position.y = 5;
+				ff.position.z = 230;
 			}else {
 				ff.visible = false;
 				ff.enabled = false;
@@ -91,7 +93,9 @@ class MaeFormation
 				var yy:Float = Math.floor(i / ww) - (hh - 1) / 2;
 				ff.enabled = true;
 				ff.position.x = xx * 50;
-				ff.position.y = yy * 50;	
+				ff.position.y = 0;
+				ff.position.z = 500;				
+
 			}else {
 				ff.visible = false;
 			}

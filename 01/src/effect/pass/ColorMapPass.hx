@@ -50,6 +50,7 @@ class ColorMapPass extends ShaderPass
 							out1 = vec4(0.0, 0.0, 0.0, 1.0);
 						}
 						
+						//bakibaki
 						if ( texel.x == 0.0 || mod( floor( texel.x * 10000.0 + counter ),2.0) == 0.0 ) {
 							texel.x = 0.0;
 							texel.y = 0.0;

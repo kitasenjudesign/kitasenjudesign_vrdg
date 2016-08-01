@@ -119,10 +119,14 @@ MainDeDe.prototype = {
 		window.document.body.appendChild(this._renderer.domElement);
 		this._audio = new sound.MyAudio();
 		this._audio.init($bind(this,this._init2));
+		this._bg = new dede.BlinkPlane();
+		this._bg.position.z = -50;
+		this._scene.add(this._bg);
 		common.StageRef.setCenter();
 		window.document.addEventListener("keydown",$bind(this,this._onKeyDown));
 	}
 	,_onKeyDown: function(e) {
+		if(Std.parseInt(e.keyCode) == 39) this._bg.flash();
 		if(Std.parseInt(e.keyCode) == 79) this._camera.setCamType(0);
 		if(Std.parseInt(e.keyCode) == 80) this._camera.setCamType(1);
 	}
@@ -938,6 +942,23 @@ common.WSocket.prototype = {
 	}
 };
 var dede = {};
+dede.BlinkPlane = function() {
+	this._light = 0;
+	this._geo = new THREE.PlaneBufferGeometry(common.StageRef.get_stageWidth(),common.StageRef.get_stageHeight(),1,1);
+	this._mat = new THREE.MeshBasicMaterial({ color : 0});
+	THREE.Mesh.call(this,this._geo,this._mat);
+};
+dede.BlinkPlane.__super__ = THREE.Mesh;
+dede.BlinkPlane.prototype = $extend(THREE.Mesh.prototype,{
+	flash: function() {
+		if(this._twn != null) this._twn.kill();
+		this._light = 1;
+		this._twn = TweenMax.to(this,0.5,{ _light : 0, ease : Power0.easeInOut, onUpdate : $bind(this,this._onUpdate)});
+	}
+	,_onUpdate: function() {
+		this._mat.color.setRGB(this._light,this._light,this._light);
+	}
+});
 dede.DeDeCuts = function() {
 	this._cutIndex = 0;
 };

@@ -1,5 +1,6 @@
 package ;
 import common.Dat;
+import common.StageRef;
 import effect.PostProcessing2;
 import js.Browser;
 import logo.Logos;
@@ -33,7 +34,11 @@ class CanvasTest3d extends Test3d
 	override public function init():Void
 	{
 		super.init();
-		Dat.init();
+		Dat.init(initA);
+		
+	}
+	
+	private function initA():Void{
 		Logos.init(initB);
 	}
 	
@@ -59,6 +64,7 @@ class CanvasTest3d extends Test3d
 		
 		Dat.gui.add(_camera, "amp").listen();
 
+		_onResize(null);
 		Browser.document.addEventListener("keydown", _onKeyDown);
 	}
 	
@@ -110,6 +116,29 @@ class CanvasTest3d extends Test3d
 		Three.requestAnimationFrame( untyped _run);	
 		//Timer.delay(_run, Math.floor( 1000 / 30 ) );
 	}
+	
+	
+	override private function _onResize(object:Dynamic):Void
+	{
+		super._onResize(object);
+		
+		/*
+		var W:Int = StageRef.stageWidth;
+		var H:Int = StageRef.stageHeight;
+		_renderer.domElement.width = W;// + "px";
+		_renderer.domElement.height = H;// + "px";		
+		_renderer.setSize(W, H);
+		_camera.aspect = W / H;// , 10, 50000);
+		_camera.updateProjectionMatrix();		
+		*/
+		if(_pp!=null){
+			_pp.resize( StageRef.stageWidth, StageRef.stageHeight);
+		}
+		//_camera = new PerspectiveCamera( 50, Browser.window.innerWidth / Browser.window.innerHeight, 10, 50000);
+		//_renderer.setSize(Browser.window.innerWidth, Browser.window.innerHeight);	
+		
+	}	
+
 
 	
 	

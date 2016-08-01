@@ -51,6 +51,8 @@ class MySphere extends Object3D
 
 		_textures = [
 			texture,
+			ImageUtils.loadTexture( 'bg/dedebg.jpg' ),
+			
 			ImageUtils.loadTexture( 'bg/R0010042.jpg' ),
 			ImageUtils.loadTexture( 'bg/R0010046.jpg' ),
 			ImageUtils.loadTexture( 'bg/R0010047.jpg' ),

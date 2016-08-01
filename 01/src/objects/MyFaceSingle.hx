@@ -98,12 +98,14 @@ class MyFaceSingle extends Object3D
 		
 		_base = d.baseGeo;
 
-		
+		//this.rotation.z = Math.PI / 2;
 		vr = (Math.random()-0.5) * Math.PI / 140;
 	}
 	
 
 	public function updateMaterial(matMode:Int):Void {
+		
+		if (Dat.bg) return;
 		
 		switch( matMode ) {
 			case MyFace.MAT_DEFAULT:
