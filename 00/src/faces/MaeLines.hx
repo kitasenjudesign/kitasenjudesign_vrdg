@@ -19,6 +19,8 @@ class MaeLines extends Object3D
 	private var _line:LineSegments;
 	private var _faces:Array<MaeFace>;
 	private var _lineIdx:Int=0;
+	public var startY:Float = -150;
+	
 	
 	public function new() 
 	{
@@ -63,7 +65,7 @@ class MaeLines extends Object3D
 		_line.geometry.verticesNeedUpdate = true;		
 		_line.geometry.colorsNeedUpdate = true;
 		
-		var offY:Float = -150;
+		var offY:Float = startY;// -150;
 		
 		for (i in 0..._faces.length) {
 			

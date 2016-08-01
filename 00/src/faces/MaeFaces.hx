@@ -18,10 +18,15 @@ class MaeFaces extends Object3D
 	//public static inline var FORMATION2:Int = 2;
 	//public static inline var FORMATION3:Int = 3;
 	
+	public static inline var MAX:Int = 150;
+	
 	private var _currentForm:Int = 1;
 	private var _offsetY:Float = 0;
 	private var _faces:Array<MaeFace> = [];
 	private var _lines:MaeLines;
+	private var _formation:MaeFormation;
+	private var _main:Main3d;
+	
 	
 	public function new() 
 	{
@@ -33,16 +38,17 @@ class MaeFaces extends Object3D
 	 * @param	geo
 	 * pattern ya layout
 	 */ 
-	public function init():Void {
+	public function init(main3d:Main3d):Void {
 		
 		Tracer.log("init");
 		//Tracer
+		_main = main3d;
 		_faces = [];
 		
 		//60
 		var ww:Int = 20;
 		var hh:Int = 3;
-		for (i in 0...60) {
+		for (i in 0...MAX) {
 			
 			var xx:Float = i % ww - (ww-1)/2;
 			var yy:Float = Math.floor(i / ww) - (hh - 1) / 2;
@@ -61,11 +67,15 @@ class MaeFaces extends Object3D
 			
 		}	
 		
-		_setFormation(0);
-		
 		_lines = new MaeLines();
 		_lines.init(_faces);
-		add(_lines);
+		add(_lines);		
+		
+		_formation = new MaeFormation();
+		_formation.init(_main, _lines);
+		_formation.setFormation(0,_faces);
+		
+		
 		
 		Key.board.addEventListener("keydown" , _keyDownFunc);
 	}
@@ -78,14 +88,14 @@ class MaeFaces extends Object3D
 		switch( Std.parseInt( e.keyCode ) ) {
 			case Dat.RIGHT:
 				_setMaterial();
-				_setFormation(Math.floor(Math.random() * 2));
+				_setFormation(Math.floor(Math.random() * 3));
 		}
 	}
 	
 	
 	private function _setFormation(type:Int):Void {
 		
-		MaeFormation.setFormation(type,_faces);
+		_formation.setFormation(type,_faces);
 		
 	}
 	
@@ -122,35 +132,19 @@ class MaeFaces extends Object3D
 		for (i in 0..._faces.length) {
 			
 			_faces[i].update(audio);
-			_faces[i].position.x -= 0.25;
-			if ( _faces[i].position.x < -500) {
-				_faces[i].position.x = 500;
-			}			
+			
+			//_faces[i].position.x -= 0.25;
+			//if ( _faces[i].position.x < -500) {
+			//	_faces[i].position.x = 500;
+			//}			
 			
 		}
+		_formation.update(_faces);
+		
 		_lines.update(audio);
 		
 		
 	}
-	
-	
-	
-	
-	/*
-	private function _updateH(a:MyAudio):Void {
-		for ( i in 0...worlds.length) {
-		
-			worlds[i].position.x -= speedX;
-			if ( worlds[i].position.x < -spaceX2 * 3 ) {
-				
-				worlds[i].position.x = spaceX2 * 3;//xx
-				worlds[i].reset();//parameter wo kaeru
-				
-			}
-			
-			worlds[i].update(a);
-		}
-	}*/
 	
 	
 	

@@ -26,9 +26,9 @@ class Main3d
 	public static var H:Int = 800;// 768;// 1920;
 	
 	
-	private  var _scene			:Scene;
-	private  var _camera		:ExCamera;
-	private  var _renderer		:WebGLRenderer;
+	public  var scene			:Scene;
+	public  var camera			:ExCamera;
+	public  var renderer		:WebGLRenderer;
 	//private var _container:Object3D;
 	private var dae:MyDAELoader;
 	private var _pp:PostProcessing2;
@@ -65,40 +65,40 @@ class Main3d
 		W = StageRef.stageWidth;
 		H = StageRef.stageHeight;
 		
-		_scene = new Scene();
-		_camera = new ExCamera(45, W / H, 10, 5000);
+		scene = new Scene();
+		camera = new ExCamera(45, W / H, 10, 5000);
 		//_camera.bure = _bure;
 		
-		_camera.near = 5;
-		_camera.far = 40000;
+		camera.near = 5;
+		camera.far = 40000;
 		
 		var d:DirectionalLight = new DirectionalLight(0xffffff, 1);
-		d.castShadow = true;
-		_scene.add(d);
+		//d.castShadow = true;
+		scene.add(d);
 		d.position.set(0, 500, 20);
 		
 		//_renderer
-		_renderer = new WebGLRenderer( { devicePixelRatio:1, preserveDrawingBuffer: true } );
-		_renderer.domElement.id = "webgl";
+		renderer = new WebGLRenderer( { devicePixelRatio:1, preserveDrawingBuffer: true } );
+		renderer.domElement.id = "webgl";
 		//_renderer.setPixelRatio(1);
 		//_renderer.shadowMapEnabled = true;
-		_renderer.setSize(W, H);
+		renderer.setSize(W, H);
 	
-		_camera.init(_renderer.domElement);
+		camera.init(renderer.domElement);
 		
-        Browser.document.body.appendChild(_renderer.domElement);
+        Browser.document.body.appendChild(renderer.domElement);
 		Browser.window.onresize = _onResize;
 		_onResize(null);
 		
-		_camera.amp = 300;
-		_camera.radX = 0;
-		_camera.radY = 0;
+		camera.amp = 300;
+		camera.radX = 0;
+		camera.radY = 0;
 
 		dae = new MyDAELoader();
 		dae.load(_onLoadDAE);
 		//_scene.add(dae);
 		//Dat.gui.add(this, "goFullScreen");
-		Dat.gui.add(_camera, "amp").listen();
+		Dat.gui.add(camera, "amp").listen();
 		
 	}
 	
@@ -107,10 +107,6 @@ class Main3d
 		
 	}
 	
-	//body dake
-	private function goFullScreen():Void {
-		untyped Browser.document.body.webkitRequestFullscreen();
-	}
 	
 	/**
 	 * _onLoadDAE
@@ -125,8 +121,8 @@ class Main3d
 		_scene.add(mesh);
 		*/
 		_maeFaces = new MaeFaces();
-		_maeFaces.init();
-		_scene.add(_maeFaces);
+		_maeFaces.init(this);
+		scene.add(_maeFaces);
 		
 		StageRef.setCenter();
 		_run();
@@ -134,7 +130,7 @@ class Main3d
 	
 	private function fullscreen() 
 	{
-		_renderer.domElement.requestFullscreen();
+		renderer.domElement.requestFullscreen();
 	}
 	
 	function _onResize(e) 
@@ -143,11 +139,11 @@ class Main3d
 		W = StageRef.stageWidth;
 		H = StageRef.stageHeight;
 		
-		_renderer.domElement.width = W;// + "px";
-		_renderer.domElement.height = H;// + "px";		
-		_renderer.setSize(W, H);
-		_camera.aspect = W / H;// , 10, 50000);
-		_camera.updateProjectionMatrix();
+		renderer.domElement.width = W;// + "px";
+		renderer.domElement.height = H;// + "px";		
+		renderer.setSize(W, H);
+		camera.aspect = W / H;// , 10, 50000);
+		camera.updateProjectionMatrix();
 		
 	}
 	
@@ -165,10 +161,10 @@ class Main3d
 		}
 		
 		//_bure.update();
-		_camera.update();
-		_camera.lookAt(new Vector3());
+		camera.update();
+		camera.lookAt(new Vector3());
 		
-		_renderer.render(_scene, _camera);
+		renderer.render(scene, camera);
 		
 		Three.requestAnimationFrame( untyped _run);
 	}

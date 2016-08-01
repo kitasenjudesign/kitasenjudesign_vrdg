@@ -39,8 +39,6 @@ class MaeFace extends Object3D
 	{
 		super();
 		
-		
-		
 		randomIndex = [];
 		for (i in 0...16) {
 			randomIndex.push( 
@@ -49,7 +47,6 @@ class MaeFace extends Object3D
 		}		
 		//_material = new MaeShaderMaterial();
 		//_geometry = g;
-		
 		//visible = Math.random()<0.5 ? false : true;
 		
 		_face = new MaeFaceMesh();
@@ -79,9 +76,6 @@ class MaeFace extends Object3D
 	 * init
 	 */
 	public function init():Void {
-		
-		
-		
 		
 	}
 	

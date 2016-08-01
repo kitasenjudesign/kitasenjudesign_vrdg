@@ -24,6 +24,7 @@ class CanvasTest3d extends Test3d
 	private var _audio	:MyAudio;
 	private var _isWhite:Bool = false;
 	private var _pp		:PostProcessing2;
+	private var _isPP:Bool=false;
 	
 	
 	public function new() 
@@ -55,15 +56,15 @@ class CanvasTest3d extends Test3d
 		_pp = new PostProcessing2();
 		_pp.init(_scene,_camera,_renderer);
 		
-		
 		_dots = new Dots();
 		_dots.init(1280, 720);
 		_scene.add(_dots);
-		_scene.fog = new Fog(0x000000, 1000, 7000);
+		_scene.fog = new Fog(0x000000, 1000, 10000);
 		_run();
 		
 		Dat.gui.add(_camera, "amp").listen();
-
+		Dat.gui.add(this, "_isPP").listen();
+		
 		_onResize(null);
 		Browser.document.addEventListener("keydown", _onKeyDown);
 	}
@@ -110,8 +111,11 @@ class CanvasTest3d extends Test3d
 			_camera.update();
 		}
 		
-		//_renderer.render(_scene, _camera);
-		_pp.render();
+		if (_isPP) {
+			_pp.render();
+		}else{
+			_renderer.render(_scene, _camera);
+		}	
 		
 		Three.requestAnimationFrame( untyped _run);	
 		//Timer.delay(_run, Math.floor( 1000 / 30 ) );

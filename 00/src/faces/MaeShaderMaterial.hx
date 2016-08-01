@@ -27,6 +27,7 @@ class MaeShaderMaterial extends ShaderMaterial
 		varying vec3 vPos;
 		varying vec4 vLight;
 		varying vec4 vAbs;
+		varying vec4 vVertex;
 		
 		void main()
 		{
@@ -69,7 +70,9 @@ class MaeShaderMaterial extends ShaderMaterial
 						//diffuse.y += out1.y;
 						//diffuse.z += out1.z;
 			
-				
+				//diffuse.x *= vVertex.z / 5000.0;
+				//diffuse.y *= vVertex.z / 5000.0;
+				//diffuse.z *= vVertex.z / 5000.0;
 				
 				gl_FragColor = vec4( diffuse, 1.0);			
 			
@@ -88,7 +91,7 @@ varying vec3 vPos;
 varying vec3 vNormal;
 varying vec4 vLight;
 varying vec4 vAbs;
-
+varying vec4 vVertex;
 uniform float _noise;
 uniform float _count;
 uniform float _freqByteData[32];
@@ -169,7 +172,9 @@ void main()
 	vAbs.x = hoge.x - position.x;
 	vAbs.y = hoge.y - position.y;
 	vAbs.z = hoge.z - position.z;
-
+	
+	
+	vVertex = mvPosition;
 	// 変換：カメラ座標 → 画面座標
 	gl_Position = projectionMatrix * mvPosition;
 	
@@ -179,49 +184,6 @@ void main()
 	";
 	
 
-	
-	
-	/*
-		freqByteData
-		
-		_nejireX = Math.pow(_audio.freqByteData[16] / 255, 1.5) * 10;
-		_nejireY = Math.pow(_audio.freqByteData[18] / 255, 2) * Math.PI * 2;// * 0.5;
-				
-		_noise = Math.pow(_audio.freqByteData[12] / 255,1) * 4.5;
-		_speed = Math.pow( _audio.freqByteData[8] / 255, 2) * 0.5;
-		_sphere = Math.pow( _audio.freqByteData[4]/255, 5);
-		_noiseSpeed = 0.1 + Math.pow( _audio.freqByteData[19] / 255, 4) * 0.05;
-		_scale = 1 + Math.pow(_audio.freqByteData[1] / 255, 3) * 0.4;				
-				
-		_yokoRatio =  Math.pow(_audio.freqByteData[5] / 255, 2);
-		_yokoSpeed =  Math.pow(_audio.freqByteData[13] / 255, 2) * 4;
-		_zengoRatio =  Math.pow(_audio.freqByteData[19] / 255, 2);	
-	
-	*/
-	
-	
-	/*
-			var vv:Vector3 = _base[i];
-
-			var a:Float = Math.sqrt( vv.x * vv.x + vv.y * vv.y + vv.z * vv.z);
-			var radX:Float = -Math.atan2(vv.z, vv.x) + vv.y * Math.sin(_count) * _nejireX;//横方向の角度
-			var radY:Float = Math.asin(vv.y / a);// + _nejireY;// * Math.sin(_count * 0.8);//縦方向の角度
-
-			var amp:Float = (1-_sphere) * a + (_sphere) * 1;
-			amp += Math.sin(_count * 0.7) * _getNoise(vv.x, vv.y + _count * _noiseSpeed, vv.z) * _noise;
-
-			var yoko:Float = Math.sin( 0.5*( vv.y * 2 * Math.PI ) + _count * _yokoSpeed ) * _yokoRatio;
-			var zengo:Float = Math.cos( 0.5*( vv.y * 2 * Math.PI ) + _count * 3 ) * 0.2 * _zengoRatio;
-			
-			var tgtX:Float = amp * Math.sin( radX ) * Math.cos(radY) + zengo;//横
-			var tgtY:Float = amp * Math.sin( radY );//縦
-			var tgtZ:Float = amp * Math.cos( radX ) * Math.cos(radY) + yoko;//横	
-			
-			g.vertices[i].x += ( tgtX - g.vertices[i].x) / 2; 
-			g.vertices[i].y += ( tgtY - g.vertices[i].y) / 2;
-			g.vertices[i].z += ( tgtZ - g.vertices[i].z) / 2;	
-	*/
-	
 	
 	private static var _texture1:Texture;
 	private static var _colorTextures:Array<Texture>;

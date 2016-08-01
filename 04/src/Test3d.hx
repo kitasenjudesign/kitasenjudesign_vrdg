@@ -51,7 +51,7 @@ class Test3d
 		
 		StageRef.setCenter();
 		
-		_camera = new ExCamera(60, 1280/720, 10, 50000);
+		_camera = new ExCamera(60, 1280/720, 10, 10000);
 		_camera.init(_renderer.domElement);
 		
 		

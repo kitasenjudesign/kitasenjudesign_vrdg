@@ -614,9 +614,9 @@ canvas.primitives.DeDeLogo.prototype = $extend(canvas.primitives.PrimitiveBase.p
 		this._dede3.position.x = -200;
 	}
 	,update: function(a,rotV) {
-		this._dede1.rotation.y += rotV.y * 0.5 + 0.01;
-		this._dede2.rotation.y = this._dede1.rotation.y;
-		this._dede3.rotation.y = this._dede1.rotation.y;
+		if(this._dede1 != null) this._dede1.rotation.y += rotV.y * 0.5 + 0.01;
+		if(this._dede2 != null) this._dede2.rotation.y = this._dede1.rotation.y;
+		if(this._dede3 != null) this._dede3.rotation.y = this._dede1.rotation.y;
 	}
 	,__class__: canvas.primitives.DeDeLogo
 });

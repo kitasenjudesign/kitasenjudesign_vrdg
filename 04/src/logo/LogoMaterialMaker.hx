@@ -54,8 +54,8 @@ class LogoMaterialMaker
 				tt.magFilter = Three.NearestFilter;
 				
 				
-			var lumi:Int = Math.floor( 220 + 35 * Math.random());
-			var lumi2:Int = Math.floor( 120 + 35 * Math.random());
+			var lumi:Int = 255;// Math.floor( 240 + 25 * Math.random());
+			var lumi2:Int = 210;// Math.floor( 200 + 25 * Math.random());
 			
 			var rgbA:Int = (lumi << 16 | lumi << 8 | lumi);
 			var rgbB:Int = (lumi2 << 16 | lumi2 << 8 | lumi2);

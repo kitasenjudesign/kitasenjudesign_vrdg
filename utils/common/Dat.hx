@@ -1,6 +1,7 @@
 package common;
 import js.Browser;
 import js.html.CanvasElement;
+import js.html.DivElement;
 import js.html.Element;
 
 /**
@@ -65,6 +66,7 @@ class Dat
 	//public static var graph:Dynamic;
 	private static var _showing:Bool = true;
 	private static var _config:Config;
+	private static var _cover:DivElement;
 	static private var _callback:Void->Void;
 	
 	public function new() 
@@ -73,6 +75,8 @@ class Dat
 	}
 	
 	public static function init(callback:Void->Void):Void {
+		
+		StageRef.fadeIn();
 		
 		_callback = callback;
 		_config = new Config();

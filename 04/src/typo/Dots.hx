@@ -65,7 +65,7 @@ class Dots extends Object3D
 		
 		_cube = new Cube();
 		_cube.init();
-		add(_cube);		
+		//add(_cube);		
 		
 		_balance=new Mesh(
 			new BoxGeometry(4, 4, 4),

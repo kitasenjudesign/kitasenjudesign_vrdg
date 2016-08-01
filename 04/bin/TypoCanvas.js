@@ -21,7 +21,7 @@ Test3d.prototype = {
 		window.document.body.appendChild(this._renderer.domElement);
 		this._renderer.domElement.id = "webgl";
 		common.StageRef.setCenter();
-		this._camera = new camera.ExCamera(60,1.77777777777777768,10,50000);
+		this._camera = new camera.ExCamera(60,1.77777777777777768,10,10000);
 		this._camera.init(this._renderer.domElement);
 		window.onresize = $bind(this,this._onResize);
 		this._onResize(null);
@@ -42,6 +42,7 @@ Test3d.prototype = {
 	}
 };
 var CanvasTest3d = function() {
+	this._isPP = false;
 	this._isWhite = false;
 	Test3d.call(this);
 };
@@ -65,9 +66,10 @@ CanvasTest3d.prototype = $extend(Test3d.prototype,{
 		this._dots = new typo.Dots();
 		this._dots.init(1280,720);
 		this._scene.add(this._dots);
-		this._scene.fog = new THREE.Fog(0,1000,7000);
+		this._scene.fog = new THREE.Fog(0,1000,10000);
 		this._run();
 		common.Dat.gui.add(this._camera,"amp").listen();
+		common.Dat.gui.add(this,"_isPP").listen();
 		this._onResize(null);
 		window.document.addEventListener("keydown",$bind(this,this._onKeyDown));
 	}
@@ -97,7 +99,7 @@ CanvasTest3d.prototype = $extend(Test3d.prototype,{
 		if(this._audio != null) this._audio.update();
 		if(this._dots != null) this._dots.update(this._audio,this._camera);
 		if(this._camera != null) this._camera.update();
-		this._pp.render();
+		if(this._isPP) this._pp.render(); else this._renderer.render(this._scene,this._camera);
 		window.requestAnimationFrame($bind(this,this._run));
 	}
 	,_onResize: function(object) {
@@ -407,6 +409,7 @@ common.Config.prototype = {
 common.Dat = function() {
 };
 common.Dat.init = function(callback) {
+	common.StageRef.fadeIn();
 	common.Dat._callback = callback;
 	common.Dat._config = new common.Config();
 	common.Dat._config.load(common.Dat._onInit);
@@ -459,6 +462,20 @@ common.Dat.show = function() {
 common.Dat.hide = function() {
 	common.Dat.gui.domElement.style.display = "none";
 };
+common.FadeSheet = function(ee) {
+	this.opacity = 1;
+	this.element = ee;
+};
+common.FadeSheet.prototype = {
+	fadeIn: function() {
+		this.element.style.opacity = "0";
+		this.opacity = 0;
+		TweenMax.to(this,1.0,{ opacity : 1, delay : 0.2, ease : Power0.easeInOut, onUpdate : $bind(this,this._onUpdate)});
+	}
+	,_onUpdate: function() {
+		this.element.style.opacity = "" + this.opacity;
+	}
+};
 common.Key = function() {
 	THREE.EventDispatcher.call(this);
 };
@@ -486,6 +503,10 @@ common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
 	}
 });
 common.StageRef = function() {
+};
+common.StageRef.fadeIn = function() {
+	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
+	common.StageRef.sheet.fadeIn();
 };
 common.StageRef.setCenter = function() {
 	if(!common.Dat.bg) {
@@ -720,8 +741,8 @@ logo.LogoMaterialMaker.prototype = {
 			tt.repeat.y = data.h / hh;
 			tt.minFilter = 1003;
 			tt.magFilter = 1003;
-			var lumi = Math.floor(220 + 35 * Math.random());
-			var lumi2 = Math.floor(120 + 35 * Math.random());
+			var lumi = 255;
+			var lumi2 = 210;
 			var rgbA = lumi << 16 | lumi << 8 | lumi;
 			var rgbB = lumi2 << 16 | lumi2 << 8 | lumi2;
 			var mate1 = new THREE.MeshBasicMaterial({ map : tt, side : 0, transparent : true, color : rgbA, alphaTest : 0.9});
@@ -741,7 +762,7 @@ logo.LogoMaterialMaker.prototype = {
 logo.LogoParam = function() {
 };
 logo.LogoParam.getParam = function() {
-	return { frames : [{ filename : "abc0000", frame : { x : 2, y : 2, w : 165, h : 64}, rotated : false, trimmed : true, spriteSourceSize : { x : 0, y : 0, w : 314, h : 83}, sourceSize : { w : 314, h : 83}},{ filename : "abc0001", frame : { x : 169, y : 2, w : 273, h : 83}, rotated : false, trimmed : true, spriteSourceSize : { x : 0, y : 0, w : 314, h : 83}, sourceSize : { w : 314, h : 83}},{ filename : "abc0002", frame : { x : 2, y : 87, w : 314, h : 66}, rotated : false, trimmed : true, spriteSourceSize : { x : 0, y : 0, w : 314, h : 83}, sourceSize : { w : 314, h : 83}},{ filename : "abc0003", frame : { x : 318, y : 87, w : 165, h : 66}, rotated : false, trimmed : true, spriteSourceSize : { x : 0, y : 0, w : 314, h : 83}, sourceSize : { w : 314, h : 83}},{ filename : "abc0004", frame : { x : 2, y : 155, w : 296, h : 66}, rotated : false, trimmed : true, spriteSourceSize : { x : 0, y : 0, w : 314, h : 83}, sourceSize : { w : 314, h : 83}},{ filename : "abc0005", frame : { x : 2, y : 223, w : 228, h : 66}, rotated : false, trimmed : true, spriteSourceSize : { x : 0, y : 0, w : 314, h : 83}, sourceSize : { w : 314, h : 83}},{ filename : "abc0006", frame : { x : 2, y : 2, w : 165, h : 64}, rotated : false, trimmed : true, spriteSourceSize : { x : 0, y : 0, w : 314, h : 83}, sourceSize : { w : 314, h : 83}},{ filename : "abc0007", frame : { x : 232, y : 223, w : 204, h : 64}, rotated : false, trimmed : true, spriteSourceSize : { x : 0, y : 0, w : 314, h : 83}, sourceSize : { w : 314, h : 83}},{ filename : "abc0008", frame : { x : 2, y : 291, w : 234, h : 66}, rotated : false, trimmed : true, spriteSourceSize : { x : 0, y : 0, w : 314, h : 83}, sourceSize : { w : 314, h : 83}}], meta : { app : "Adobe Flash Professional", version : "15.0.0.173", image : "hoge.png", format : "RGBA8888", size : { w : 512, h : 512}, scale : "1"}};
+	return { frames : [{ filename : "sheet0000", frame : { x : 4, y : 4, w : 337, h : 88}, rotated : false, trimmed : false, spriteSourceSize : { x : 0, y : 0, w : 337, h : 88}, sourceSize : { w : 337, h : 88}}], meta : { app : "Adobe Animate", version : "15.1.1.13", image : "sheet1.png", format : "RGBA8888", size : { w : 512, h : 512}, scale : "1"}};
 };
 logo.Logos = function() {
 };
@@ -1040,7 +1061,6 @@ typo.Dots.prototype = $extend(THREE.Object3D.prototype,{
 	init: function(w,h) {
 		this._cube = new Cube();
 		this._cube.init();
-		this.add(this._cube);
 		this._balance = new THREE.Mesh(new THREE.BoxGeometry(4,4,4),new THREE.MeshBasicMaterial({ color : 16777215}));
 		this.add(this._balance);
 		var g = new THREE.Geometry();
@@ -1938,6 +1958,7 @@ common.Dat.Z = 90;
 common.Dat.hoge = 0;
 common.Dat.bg = false;
 common.Dat._showing = true;
+common.StageRef.$name = "webgl";
 sound.MyAudio.FFTSIZE = 64;
 three._WebGLRenderer.RenderPrecision_Impl_.highp = "highp";
 three._WebGLRenderer.RenderPrecision_Impl_.mediump = "mediump";
@@ -1949,5 +1970,3 @@ typo.data.CutParams._params = [];
 typo.data.CutParams._count = -1;
 Main.main();
 })();
-
-//# sourceMappingURL=TypoCanvas.js.map

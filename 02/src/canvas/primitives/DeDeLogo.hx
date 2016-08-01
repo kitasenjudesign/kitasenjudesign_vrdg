@@ -74,10 +74,15 @@ class DeDeLogo extends PrimitiveBase
 
 	override public function update(a:MyAudio,rotV:Vector3):Void {
 	
-		_dede1.rotation.y += rotV.y * 0.5 + 0.01;
-		_dede2.rotation.y = _dede1.rotation.y;
-		_dede3.rotation.y = _dede1.rotation.y;
-		
+		if(_dede1!=null){
+			_dede1.rotation.y += rotV.y * 0.5 + 0.01;
+		}
+		if(_dede2!=null){
+			_dede2.rotation.y = _dede1.rotation.y;
+		}
+		if(_dede3!=null){
+			_dede3.rotation.y = _dede1.rotation.y;
+		}
 		//super.update(a, rotV);
 		
 	}	
