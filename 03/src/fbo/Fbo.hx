@@ -1,5 +1,6 @@
 package fbo;
 import js.html.Float32Array;
+import sound.MyAudio;
 import three.BufferAttribute;
 import three.BufferGeometry;
 import three.Line;
@@ -132,7 +133,7 @@ class Fbo
         //create the particles geometry
         var geometry:BufferGeometry = new BufferGeometry();
         geometry.addAttribute( 'position',  new BufferAttribute( vertices, 3 ) );
-		geometry.addAttribute( 'aOffset', new BufferAttribute( aOffsets, 2 ) );
+		geometry.addAttribute( 'aOffset', new BufferAttribute( aOffsets, 2 ) );//koko
 		//geometry.addAttribute( 'life',  new BufferAttribute( life, 1 ) );
 		//geometry.addAttribute( 'life', new BufferAttribute( life, 1 ) );
 			
@@ -151,9 +152,9 @@ class Fbo
 	/**
 	 * update
 	 */
-	public function update(render:WebGLRenderer):Void {
+	public function update(audio:MyAudio, render:WebGLRenderer):Void {
 		
-		_simuShaderMat.uniforms.timer.value += 0.001;
+		_simuShaderMat.update( audio );
 		//_renderShaderMat.uniforms.timer.value += 0.01;
 		//_renderGeo.attributes.life += 0.01;
         //フレームごとにrtt,rtt2を入れ替え

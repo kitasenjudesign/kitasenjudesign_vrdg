@@ -84,10 +84,12 @@ class MaeFaceMesh extends Mesh
 				this.rotation.x += _vx * 1.2;
 				this.rotation.y += _vy;
 				this.rotation.z += _vz;
-				_vx *= 0.98;
-				_vy *= 0.96;
-				_vz *= 0.96;
+				
 		}
+		
+		_vx *= 0.98;
+		_vy *= 0.96;
+		_vz *= 0.96;		
 		
 	}
 	

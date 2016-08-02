@@ -19,8 +19,6 @@ class CanvasTest3d extends Test3d
 {
 
 	private var _dots	:Dots;
-	private var _ground	:Mesh;
-	private var _light	:DirectionalLight;
 	private var _audio	:MyAudio;
 	private var _isWhite:Bool = false;
 	private var _pp		:PostProcessing2;

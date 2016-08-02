@@ -1,6 +1,7 @@
 package typo;
 import camera.ExCamera;
 import common.Dat;
+import common.Key;
 import js.Browser;
 import sound.MyAudio;
 import three.BoxGeometry;
@@ -77,7 +78,7 @@ class Dots extends Object3D
 		g.vertices.push(new Vector3(0, 0, 0));
 		g.vertices.push(new Vector3(0, 0, 0));
 		_line = new Line(g,new MeshBasicMaterial({color:0xffffff}));
-		add(_line);
+		//add(_line);
 		
 		
 		CutParams.init();
@@ -134,7 +135,7 @@ class Dots extends Object3D
 		calcMotion();
 		
 		//param1();
-		Browser.document.addEventListener("keydown", _onKeyDown);
+		Key.board.addEventListener("keydown", _onKeyDown);
 
 	}
 	

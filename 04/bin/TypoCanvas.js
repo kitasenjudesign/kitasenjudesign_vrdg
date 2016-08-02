@@ -1102,7 +1102,6 @@ typo.Dots.prototype = $extend(THREE.Object3D.prototype,{
 		g.vertices.push(new THREE.Vector3(0,0,0));
 		g.vertices.push(new THREE.Vector3(0,0,0));
 		this._line = new THREE.Line(g,new THREE.MeshBasicMaterial({ color : 16777215}));
-		this.add(this._line);
 		typo.data.CutParams.init();
 		this._activeNum = this.number_of_points;
 		this.targetObj = new typo.CamTarget();

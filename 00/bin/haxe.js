@@ -765,7 +765,24 @@ faces.MaeFace.prototype = $extend(THREE.Object3D.prototype,{
 		this._face.setRotMode(mode);
 	}
 	,setMaterial: function(type) {
-		this._face.setWireframe(type == 0);
+		switch(type) {
+		case 0:
+			this._face.setWireframe(false);
+			this._face.setColor(false);
+			break;
+		case 1:
+			this._face.setWireframe(false);
+			this._face.setColor(true);
+			break;
+		case 2:
+			this._face.setWireframe(true);
+			this._face.setColor(false);
+			break;
+		case 3:
+			this._face.setWireframe(true);
+			this._face.setColor(true);
+			break;
+		}
 	}
 	,_calcLifeRatio: function() {
 		var nn = this._life / 20;
@@ -785,12 +802,18 @@ faces.MaeFaceMesh = function() {
 };
 faces.MaeFaceMesh.__super__ = THREE.Mesh;
 faces.MaeFaceMesh.prototype = $extend(THREE.Mesh.prototype,{
-	setWireframe: function(b) {
+	setColor: function(b) {
+		this._material.setColor(b);
+	}
+	,setWireframe: function(b) {
 		this._material.setWireframe(b);
 	}
 	,setRotMode: function(n) {
 		this._rotMode = n;
 		this.rotation.set(0,0,0);
+		this._vx = 0;
+		this._vy = 0;
+		this._vz = 0;
 	}
 	,addForce: function(f) {
 		this._vx += 0.1 * (Math.random() - 0.5);
@@ -812,11 +835,11 @@ faces.MaeFaceMesh.prototype = $extend(THREE.Mesh.prototype,{
 			this.rotation.x += this._vx * 1.2;
 			this.rotation.y += this._vy;
 			this.rotation.z += this._vz;
-			this._vx *= 0.98;
-			this._vy *= 0.96;
-			this._vz *= 0.96;
 			break;
 		}
+		this._vx *= 0.98;
+		this._vy *= 0.96;
+		this._vz *= 0.96;
 	}
 });
 faces.MaeFaces = function() {
@@ -870,9 +893,8 @@ faces.MaeFaces.prototype = $extend(THREE.Object3D.prototype,{
 		this._formation.setFormation(type,this._faces);
 	}
 	,_setMaterial: function() {
-		var type;
-		if(Math.random() < 0.5) type = 0; else type = 1;
-		var mode = Math.floor(Math.random() * 3);
+		var type = Math.floor(Math.random() * 4);
+		var mode = Math.floor(Math.random() * 4);
 		var _g1 = 0;
 		var _g = this._faces.length;
 		while(_g1 < _g) {
@@ -1090,15 +1112,16 @@ faces.MaeShaderMaterial.prototype = $extend(THREE.ShaderMaterial.prototype,{
 		}
 		return ary;
 	}
+	,setColor: function(b) {
+		if(b) this.uniforms._isColor.value = 1; else this.uniforms._isColor.value = 0;
+	}
 	,setWireframe: function(b) {
 		if(b) {
 			this.uniforms._wireframe.value = 1;
-			this.uniforms._isColor.value = 1;
 			this.wireframe = true;
 			this.wireframeLinewidth = 0;
 		} else {
 			this.uniforms._wireframe.value = 0;
-			this.uniforms._isColor.value = 0;
 			this.wireframe = false;
 		}
 	}
@@ -1940,6 +1963,10 @@ common.WebfontLoader.ROBOTO_CONDENSED_700400 = "Roboto+Condensed:700,400:latin";
 common.WebfontLoader.ROBOTO_CONDENSED_400300 = "Roboto+Condensed:400,300:latin";
 common.WebfontLoader._loading = false;
 common.WebfontLoader._complete = false;
+faces.MaeFace.MAT_NORMAL = 0;
+faces.MaeFace.MAT_COLOR = 1;
+faces.MaeFace.MAT_WIRE_WHITE = 2;
+faces.MaeFace.MAT_WIRE_COLOR = 3;
 faces.MaeFaceMesh.ROT_MODE_A = 0;
 faces.MaeFaceMesh.ROT_MODE_B = 1;
 faces.MaeFaceMesh.ROT_MODE_C = 2;

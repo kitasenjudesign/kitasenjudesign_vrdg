@@ -1,6 +1,7 @@
 package fbo;
 import js.html.Float32Array;
 import objects.shaders.CurlNoise;
+import sound.MyAudio;
 import three.DataTexture;
 import three.Mapping;
 import three.ShaderMaterial;
@@ -43,6 +44,7 @@ uniform float timer;
 uniform float frequency;
 uniform float amplitude;
 uniform float maxDistance;
+uniform float freqByteData[32];
 
 
 void main() {
@@ -53,12 +55,17 @@ void main() {
     //float d = length( pos-tar ) / maxDistance;
     //pos = mix( pos, tar, pow( d, 5. ) );
 	float rr = 0.1*sin(timer*0.1);
-	vec3 vv = curlNoise(pos * rr);
+	vec3 vv = curlNoise(pos * rr);/////koko
+	vv.x *= freqByteData[1] / 255.0 * 10.0;
+	vv.y *= freqByteData[5] / 255.0 * 10.0;
+	vv.z *= freqByteData[8] / 255.0 * 10.0;
+    //pos = pos + vv * 2.5;
+	pos = pos + vv;// * freqByteData[3] / 255.0 * 10.0;
 	
-    pos = pos + vv * 2.5;
     //pos.y += hoge.y * 2.1;
     //pos.z += hoge.z * 2.1;
 	float nn = fract( timer + vLife );
+	
 	
 	if ( nn > 0.95 ) {
 		//if (length(pos) > 500.0) {
@@ -100,11 +107,20 @@ void main() {
                     timer: { type: "f", value: 0},
                     frequency: { type: "f", value: 0.01 },
                     amplitude: { type: "f", value: 96 },
-                    maxDistance: { type: "f", value: 48 }
+                    maxDistance: { type: "f", value: 48 },
+					freqByteData:{type:"fv1",	value:MyAudio.a.freqByteDataAry},//Uint8Array
+					
                 },
                 vertexShader: _vertex,
                 fragmentShader:  _fragment
         });		
+		
+	}
+	
+	public function update(a:MyAudio):Void {
+		
+		uniforms.timer.value += 0.001;
+		uniforms.freqByteData.value = a.freqByteDataAry;
 		
 	}
 	

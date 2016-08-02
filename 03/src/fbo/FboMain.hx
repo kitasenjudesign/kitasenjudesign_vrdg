@@ -2,11 +2,13 @@ package fbo;
 import camera.ExCamera;
 import common.Dat;
 import common.StageRef;
+import effect.PostProcessing2;
 import emoji.Emoji;
 import js.Browser;
 import sound.MyAudio;
 import three.BoxGeometry;
 import three.Color;
+import three.Line;
 import three.Mesh;
 import three.MeshBasicMaterial;
 import three.Points;
@@ -24,13 +26,15 @@ class FboMain
 	private var _camera		:ExCamera;
 	private var _scene		:Scene;
 	private var _fbo		:Fbo;
-	private var _emoji		:Emoji;
+	//private var _emoji		:Emoji;
 	private var _particles	:Points;
 	private var _audio		:MyAudio;
+	private var _pp			:PostProcessing2;
+	private var _line		:Line;
 	
 	public function new() 
 	{
-		
+		//
 	}
 	
 	
@@ -38,30 +42,33 @@ class FboMain
 	 * init
 	 */
 	public function init():Void {
-		Dat.init(_onInit2);
-	}
-	
-	
-	private function _onInit2():Void
-	{
 		
-		_audio = new MyAudio();
-		_audio.init(_onAudio);	
-	}
-	
-	private function _onAudio():Void{
-	
 		_renderer = new WebGLRenderer(
 			{
 			/*preserveDrawingBuffer: true,*/ 
 				antialias:false, 
-				devicePixelRatio:1,
-				logarithmicDepthBuffer: true
+				devicePixelRatio:1
+				//logarithmicDepthBuffer: true
 			}
 		);
-		Browser.document.body.appendChild( _renderer.domElement );
-		_renderer.setSize(Browser.window.innerWidth,Browser.window.innerHeight);
 		_renderer.domElement.id = "webgl";
+		Browser.document.body.appendChild( _renderer.domElement );		
+		
+		Dat.init(_onInit2);
+	}
+	
+	
+	/**
+	 * _onInit2
+	 */
+	private function _onInit2():Void
+	{
+		_audio = new MyAudio();
+		_audio.init(_onAudio);	
+	}
+	
+	private function _onAudio():Void {
+		
 		StageRef.setCenter();
 		
 		_scene = new Scene();
@@ -72,13 +79,17 @@ class FboMain
 		//_renderer.shadowMapEnabled = true;
 		_renderer.setClearColor(new Color(0x000000));
 		
+		_pp = new PostProcessing2();
+		_pp.init(_scene, _camera, _renderer);
+		
 		
 		_fbo = new Fbo();
 		var num:Int = 128;
 		_fbo.init(num, num);
 		_particles = _fbo.getParticles();
 		_scene.add(_particles);
-		_scene.add(_fbo.getLine());
+		_line = _fbo.getLine();
+		_scene.add(_line);
 		//_scene.add(_fbo.getMesh());
 		//_emoji = new Emoji();
 		//_emoji.init();
@@ -90,12 +101,23 @@ class FboMain
 		);
 		//_scene.add(mesh);
 		
+		Browser.window.onresize = _onResize;
+		_onResize(null);
+		
+		Dat.gui.add(this, "change");
 		
 		update();
 	}
 	
+	public function change():Void {
+		
+		_pp.change(false, true);
+		_line.visible = Math.random() < 0.5 ? true : false;
+		
+	}
+	
 	/**
-	 * 
+	 * update
 	 */
 	public function update():Void {
 		
@@ -104,23 +126,17 @@ class FboMain
 		}		
 		
 		if (_fbo != null) {
-			_fbo.update(_renderer);
-		}
-		if ( _emoji != null ) {
-			_emoji.update();
+			_fbo.update(_audio,_renderer);
 		}
 		
-		
-		
-		_camera.radX += Math.PI / 180;
+		_camera.radX += Math.PI / 720;// 180;
 		_camera.update();
-		_renderer.render(_scene, _camera);
-		//_pp.render();	
-		//Timer.delay(_run, Math.floor(1000 / 30));
+		
+		_pp.update(_audio);
+		
 		Three.requestAnimationFrame( untyped update);		
 
-		Browser.window.onresize = _onResize;
-		_onResize(null);
+		
 				
 	}
 
@@ -133,10 +149,7 @@ class FboMain
 		_renderer.setSize(ww, hh);
 		_camera.aspect = ww / hh;// , 10, 50000);
 		_camera.updateProjectionMatrix();
-		//_pp.resize(W, H);		
-		
-		
-		
+		_pp.resize(ww, hh);		
 	}
 	
 	

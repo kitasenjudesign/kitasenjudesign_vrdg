@@ -117,13 +117,13 @@ class DisplacementPass extends ShaderPass
 		
 		_textures = [];
 		for (i in 1...11) {	
-			_textures.push( ImageUtils.loadTexture("displace" +(i)+".png") );
+			_textures.push( ImageUtils.loadTexture("displace/displace" +(i)+".png") );
 		}
 		_colors = [
-			ImageUtils.loadTexture("grade.png"),
-			ImageUtils.loadTexture("grade2.png"),
-			ImageUtils.loadTexture("grade3.png"),
-			ImageUtils.loadTexture("grade4.png")
+			ImageUtils.loadTexture("grade/grade.png"),
+			ImageUtils.loadTexture("grade/grade2.png"),
+			ImageUtils.loadTexture("grade/grade3.png"),
+			ImageUtils.loadTexture("grade/grade4.png")
 		];
 		
 		
@@ -140,7 +140,6 @@ class DisplacementPass extends ShaderPass
 			},		
 			vertexShader: _vertex,
 			fragmentShader: _fragment
-			
 		});
 		
 	}
