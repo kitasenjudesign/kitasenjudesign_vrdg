@@ -52,6 +52,7 @@ class Logos {
 			
 		}
 		
+		//Browser.window.alert("num -> " + _logos.length);
 	}
 
 	
@@ -62,10 +63,11 @@ class Logos {
 	
 	public static function getRandom():LogoData {
 		
-		return _logos[ Math.floor(Math.random() * _logos.length) ];
+		return _logos[ 0 ];// Math.floor(Math.random() * _logos.length) ];
 		
 	}
 
+	/*
 	public static function getRandom2(isWhite:Bool):LogoData {
 		
 		if (isWhite) {
@@ -74,7 +76,7 @@ class Logos {
 		
 		return _logos[ Math.floor(Math.random() * _logos.length/2) ];
 		
-	}
+	}*/
 	
 	
 	public static function getTextureByName(s:String):LogoData {

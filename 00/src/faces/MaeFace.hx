@@ -13,6 +13,11 @@ import three.Object3D;
 class MaeFace extends Object3D
 {
 	
+	public static inline var MAT_NORMAL:Int = 0;
+	public static inline var MAT_COLOR:Int = 1;	
+	public static inline var MAT_WIRE_WHITE:Int = 2;
+	public static inline var MAT_WIRE_COLOR:Int = 3;
+	
 	
 	//private var _geometry	:Geometry;
 	//private var _material	:MaeShaderMaterial;
@@ -124,8 +129,29 @@ class MaeFace extends Object3D
 	
 	public function setMaterial(type:Int):Void
 	{
+		
+		switch(type) {
+			case MAT_NORMAL:
+				_face.setWireframe(false);
+				_face.setColor(false);
+				
+			case MAT_COLOR:
+				_face.setWireframe(false);
+				_face.setColor(true);
+				
+			case MAT_WIRE_WHITE:
+				_face.setWireframe(true);
+				_face.setColor(false);		
+				
+			case MAT_WIRE_COLOR:
+				_face.setWireframe(true);
+				_face.setColor(true);			
+		}
+		
 		//_material
-		_face.setWireframe(type == 0);
+		
+		
+		//setWireframe
 		
 	}
 	

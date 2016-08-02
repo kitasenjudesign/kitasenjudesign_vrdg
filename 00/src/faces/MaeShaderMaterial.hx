@@ -21,6 +21,8 @@ class MaeShaderMaterial extends ShaderMaterial
 		uniform sampler2D colTexture;
 		uniform vec3 _lightPosition; //光源位置座標
 		uniform float _wireframe;
+		uniform float _isColor;
+		
 		// vertexShaderで処理されて渡されるテクスチャ座標
 		varying vec2 vUv;                                             
 		varying vec3 vNormal;
@@ -60,7 +62,7 @@ class MaeShaderMaterial extends ShaderMaterial
 				
 				//diffuse = diffuse * vAbs.xyz;
 				
-				
+				if( _isColor == 1.0 ){
 						vec2 pp = vec2( 0.5, fract( length(vAbs) ) );
 						//vec2 pp = vec2( fract(vUv.x+vAbs.x*0.03), fract(vUv.y+vAbs.z*0.03) );
 						vec4 out1 = texture2D( colTexture, pp );
@@ -69,7 +71,8 @@ class MaeShaderMaterial extends ShaderMaterial
 						//diffuse.x += out1.x;
 						//diffuse.y += out1.y;
 						//diffuse.z += out1.z;
-			
+				}
+				
 				//diffuse.x *= vVertex.z / 5000.0;
 				//diffuse.y *= vVertex.z / 5000.0;
 				//diffuse.z *= vVertex.z / 5000.0;
@@ -214,12 +217,13 @@ void main()
 				fragmentShader: ff,
 				uniforms: {
 					texture: { type: 't', 		value: _texture1 },
-					colTexture:  { type: 't', 		value: _currentTexture },
+					colTexture:  { type: 't', 	value: _currentTexture },
 					_noise: { type: 'f', 		value: 1.5+Math.random() },
 					_freqByteData:{type:"fv1",	value:MyAudio.a.freqByteDataAry},//Uint8Array
 					_count: { type:'f', 		value:100 * Math.random() },					
 					_lightPosition: { type: "v3", value: new Vector3(0, 100, 50) },
-					_wireframe: {type:"f",value:1}
+					_wireframe: { type:"f",		value:1 },
+					_isColor: { type:"f",		value:1 }
 				}
 		});
 		
@@ -253,18 +257,29 @@ void main()
 		return ary;
 	}
 	
+	public function setColor(b:Bool):Void {
+		
+		if (b) {
+			uniforms._isColor.value = 1;//colorful
+		}else {
+			uniforms._isColor.value = 0;//normal
+		}
+		
+	}
+	
 	
 	public function setWireframe(b:Bool):Void {
 		
 		if (b) {
 			uniforms._wireframe.value = 1;
 			this.wireframe = true;
+			this.wireframeLinewidth = 0;
 		}else {
-			uniforms._wireframe.value = 0;			
+			uniforms._wireframe.value = 0;		
 			this.wireframe = false;			
 		}
-		this.wireframe = true;
-		this.wireframeLinewidth = 0.1;
+		//this.wireframe = true;
+		
 	}
 	
 	

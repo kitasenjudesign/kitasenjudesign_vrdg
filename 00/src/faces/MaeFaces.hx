@@ -84,11 +84,16 @@ class MaeFaces extends Object3D
 	
 	private function _keyDownFunc(e):Void 
 	{
+		Tracer.log("_keyDownFunc ");
 		
 		switch( Std.parseInt( e.keyCode ) ) {
+			
 			case Dat.RIGHT:
-				_setMaterial();
-				_setFormation(Math.floor(Math.random() * 3));
+				_setFormation(Math.floor(Math.random() * 3));//
+
+			case Dat.UP:
+				_setMaterial();//
+				
 		}
 	}
 	
@@ -99,29 +104,20 @@ class MaeFaces extends Object3D
 		
 	}
 	
-	
 	/**
-	 * 
+	 * 	_setMaterial
 	 */
-	private function _setPos():Void {
-		
-		
-		
-	}
-	
 	private function _setMaterial():Void {
 		
-		var type:Int = Math.random() < 0.5 ? 0 : 1;
-		var mode:Int = Math.floor( Math.random() * 3 );
+		var type:Int = Math.floor( Math.random() * 4 ); //Math.random() < 0.5 ? 0 : 1;
+		var mode:Int = Math.floor( Math.random() * 4 );
 		
 		for (i in 0..._faces.length) {
-			_faces[i].setMaterial(type);
+			_faces[i].setMaterial( type );
 			_faces[i].setRotMode( mode );
 		}
 		
 	}
-	
-	
 	
 	
 	/**
@@ -133,16 +129,9 @@ class MaeFaces extends Object3D
 			
 			_faces[i].update(audio);
 			
-			//_faces[i].position.x -= 0.25;
-			//if ( _faces[i].position.x < -500) {
-			//	_faces[i].position.x = 500;
-			//}			
-			
 		}
 		_formation.update(_faces);
-		
 		_lines.update(audio);
-		
 		
 	}
 	

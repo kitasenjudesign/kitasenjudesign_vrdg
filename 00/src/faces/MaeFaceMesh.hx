@@ -35,16 +35,24 @@ class MaeFaceMesh extends Mesh
 
 	}
 	
-
+	public function setColor(b:Bool):Void
+	{
+		_material.setColor(b);	
+	}
+	
 	public function setWireframe(b:Bool):Void
 	{
 		_material.setWireframe(b);
 	}
 	
+	
 	public function setRotMode(n:Int):Void {
 		
 		_rotMode = n;
-		
+		this.rotation.set(0, 0, 0);
+		_vx = 0;
+		_vy = 0;
+		_vz = 0;
 	}
 	
 	public function addForce(f:Float) 

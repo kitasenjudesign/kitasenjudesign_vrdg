@@ -66,7 +66,7 @@ class TypoCanvasPlane extends Object3D
 		_index = Math.floor( Logos.getLength() * Math.random() );
 		
 		
-		var data:LogoData = Logos.getRandom2(false);//getTexture(_index);
+		var data:LogoData = Logos.getRandom();//getTexture(_index);
 		//_scale = 2;// +1.5 * Math.random();
 		_spaceX = data.w * _scale / SEG_X;//
 		
@@ -85,7 +85,7 @@ class TypoCanvasPlane extends Object3D
 
 	public function changeMat(isWhite:Bool):Void {
 		
-		var data:LogoData = Logos.getRandom2(isWhite);//Logos.getTexture(_index);
+		var data:LogoData = Logos.getRandom();//Logos.getTexture(_index);
 		//_scale = 2;// +1.5 * Math.random();
 		_spaceX = data.w * _scale / SEG_X;//
 		

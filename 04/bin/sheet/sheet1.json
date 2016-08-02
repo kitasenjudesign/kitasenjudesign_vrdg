@@ -2,11 +2,27 @@
 
 {
 	"filename": "sheet0000",
-	"frame": {"x":4,"y":4,"w":337,"h":88},
+	"frame": {"x":4,"y":4,"w":438,"h":114},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":337,"h":88},
-	"sourceSize": {"w":337,"h":88}
+	"spriteSourceSize": {"x":0,"y":0,"w":438,"h":114},
+	"sourceSize": {"w":438,"h":114}
+}
+,{
+	"filename": "sheet0001",
+	"frame": {"x":4,"y":122,"w":438,"h":114},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":438,"h":114},
+	"sourceSize": {"w":438,"h":114}
+}
+,{
+	"filename": "sheet0002",
+	"frame": {"x":4,"y":240,"w":438,"h":114},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":438,"h":114},
+	"sourceSize": {"w":438,"h":114}
 }],
 "meta": {
 	"app": "Adobe Animate",

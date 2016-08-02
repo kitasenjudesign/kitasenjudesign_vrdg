@@ -52,7 +52,7 @@ class LogoMaterialMaker
 				tt.repeat.y = data.h / hh;
 				tt.minFilter = Three.NearestFilter;
 				tt.magFilter = Three.NearestFilter;
-				
+				//tt.generateMipmaps = false;
 				
 			var lumi:Int = 255;// Math.floor( 240 + 25 * Math.random());
 			var lumi2:Int = 210;// Math.floor( 200 + 25 * Math.random());

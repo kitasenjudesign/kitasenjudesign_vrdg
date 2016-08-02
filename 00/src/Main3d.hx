@@ -44,6 +44,10 @@ class Main3d
 	
 	public function init() 
 	{
+		renderer = new WebGLRenderer( { antialias:true, devicePixelRatio:1/*, preserveDrawingBuffer: true*/ } );
+		renderer.domElement.id = StageRef.name;	
+		Browser.document.body.appendChild(renderer.domElement);
+		 
 		Dat.init(_onInit);
 	}
 	
@@ -77,16 +81,9 @@ class Main3d
 		scene.add(d);
 		d.position.set(0, 500, 20);
 		
-		//_renderer
-		renderer = new WebGLRenderer( { devicePixelRatio:1, preserveDrawingBuffer: true } );
-		renderer.domElement.id = "webgl";
-		//_renderer.setPixelRatio(1);
-		//_renderer.shadowMapEnabled = true;
 		renderer.setSize(W, H);
-	
 		camera.init(renderer.domElement);
 		
-        Browser.document.body.appendChild(renderer.domElement);
 		Browser.window.onresize = _onResize;
 		_onResize(null);
 		
@@ -113,13 +110,6 @@ class Main3d
 	 */
 	private function _onLoadDAE():Void
 	{
-		/*
-		var mesh:Mesh = new Mesh(
-			new BoxGeometry(30, 30, 30, 1, 1, 1), 
-			new MeshBasicMaterial( { color:0xff0000,wireframe:true } )
-		);
-		_scene.add(mesh);
-		*/
 		_maeFaces = new MaeFaces();
 		_maeFaces.init(this);
 		scene.add(_maeFaces);
@@ -128,10 +118,6 @@ class Main3d
 		_run();
 	}
 	
-	private function fullscreen() 
-	{
-		renderer.domElement.requestFullscreen();
-	}
 	
 	function _onResize(e) 
 	{

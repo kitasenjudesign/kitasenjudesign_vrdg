@@ -388,6 +388,13 @@ camera.ExCamera.prototype = $extend(THREE.PerspectiveCamera.prototype,{
 	}
 });
 var common = {};
+common.Callback = function() {
+};
+common.Callback.create = function(scope,func,args) {
+	return function() {
+		func.apply(scope,args);
+	};
+};
 common.Config = function() {
 };
 common.Config.prototype = {
@@ -403,6 +410,7 @@ common.Config.prototype = {
 		var win = window;
 		win.host = common.Config.host;
 		common.Config.canvasOffsetY = data.canvasOffsetY;
+		common.Config.globalVol = data.globalVol;
 		if(this._callback != null) this._callback();
 	}
 };
@@ -437,24 +445,45 @@ common.Dat._onKeyDown = function(e) {
 		if(common.Dat.gui.domElement.style.display == "block") common.Dat.hide(); else common.Dat.show();
 		break;
 	case 49:
-		window.location.href = "../../01/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL1);
 		break;
 	case 50:
-		window.location.href = "../../02/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL2);
 		break;
 	case 51:
-		window.location.href = "../../03/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL3);
 		break;
 	case 52:
-		window.location.href = "../../04/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL4);
 		break;
 	case 53:
-		window.location.href = "../../05/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL5);
 		break;
 	case 54:
-		window.location.href = "../../06/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL6);
 		break;
 	}
+};
+common.Dat._goURL1 = function() {
+	common.Dat._goURL("../../01/bin/");
+};
+common.Dat._goURL2 = function() {
+	common.Dat._goURL("../../02/bin/");
+};
+common.Dat._goURL3 = function() {
+	common.Dat._goURL("../../03/bin/");
+};
+common.Dat._goURL4 = function() {
+	common.Dat._goURL("../../04/bin/");
+};
+common.Dat._goURL5 = function() {
+	common.Dat._goURL("../../05/bin/");
+};
+common.Dat._goURL6 = function() {
+	common.Dat._goURL("../../06/bin/");
+};
+common.Dat._goURL = function(url) {
+	window.location.href = url;
 };
 common.Dat.show = function() {
 	common.Dat.gui.domElement.style.display = "block";
@@ -470,7 +499,12 @@ common.FadeSheet.prototype = {
 	fadeIn: function() {
 		this.element.style.opacity = "0";
 		this.opacity = 0;
-		TweenMax.to(this,1.0,{ opacity : 1, delay : 0.2, ease : Power0.easeInOut, onUpdate : $bind(this,this._onUpdate)});
+		if(this._twn != null) this._twn.kill();
+		this._twn = TweenMax.to(this,0.8,{ opacity : 1, delay : 0.2, ease : Power0.easeInOut, onUpdate : $bind(this,this._onUpdate)});
+	}
+	,fadeOut: function(callback) {
+		if(this._twn != null) this._twn.kill();
+		this._twn = TweenMax.to(this,0.5,{ opacity : 0, ease : Power0.easeInOut, onUpdate : $bind(this,this._onUpdate), onComplete : callback});
 	}
 	,_onUpdate: function() {
 		this.element.style.opacity = "" + this.opacity;
@@ -507,6 +541,10 @@ common.StageRef = function() {
 common.StageRef.fadeIn = function() {
 	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
 	common.StageRef.sheet.fadeIn();
+};
+common.StageRef.fadeOut = function(callback) {
+	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
+	common.StageRef.sheet.fadeOut(callback);
 };
 common.StageRef.setCenter = function() {
 	if(!common.Dat.bg) {
@@ -762,7 +800,7 @@ logo.LogoMaterialMaker.prototype = {
 logo.LogoParam = function() {
 };
 logo.LogoParam.getParam = function() {
-	return { frames : [{ filename : "sheet0000", frame : { x : 4, y : 4, w : 337, h : 88}, rotated : false, trimmed : false, spriteSourceSize : { x : 0, y : 0, w : 337, h : 88}, sourceSize : { w : 337, h : 88}}], meta : { app : "Adobe Animate", version : "15.1.1.13", image : "sheet1.png", format : "RGBA8888", size : { w : 512, h : 512}, scale : "1"}};
+	return { frames : [{ filename : "sheet0000", frame : { x : 4, y : 4, w : 438, h : 114}, rotated : false, trimmed : false, spriteSourceSize : { x : 0, y : 0, w : 438, h : 114}, sourceSize : { w : 438, h : 114}},{ filename : "sheet0001", frame : { x : 4, y : 122, w : 438, h : 114}, rotated : false, trimmed : false, spriteSourceSize : { x : 0, y : 0, w : 438, h : 114}, sourceSize : { w : 438, h : 114}},{ filename : "sheet0002", frame : { x : 4, y : 240, w : 438, h : 114}, rotated : false, trimmed : false, spriteSourceSize : { x : 0, y : 0, w : 438, h : 114}, sourceSize : { w : 438, h : 114}}], meta : { app : "Adobe Animate", version : "15.1.1.13", image : "sheet1.png", format : "RGBA8888", size : { w : 512, h : 512}, scale : "1"}};
 };
 logo.Logos = function() {
 };
@@ -788,11 +826,7 @@ logo.Logos.getBaseTexture = function() {
 	return logo.Logos._texture;
 };
 logo.Logos.getRandom = function() {
-	return logo.Logos._logos[Math.floor(Math.random() * logo.Logos._logos.length)];
-};
-logo.Logos.getRandom2 = function(isWhite) {
-	if(isWhite) return logo.Logos._logos[Math.floor(Math.random() * logo.Logos._logos.length / 2 + logo.Logos._logos.length / 2)];
-	return logo.Logos._logos[Math.floor(Math.random() * logo.Logos._logos.length / 2)];
+	return logo.Logos._logos[0];
 };
 logo.Logos.getTextureByName = function(s) {
 	var _g1 = 0;
@@ -817,6 +851,7 @@ sound.MyAudio = function() {
 };
 sound.MyAudio.prototype = {
 	init: function(callback) {
+		this.globalVolume = common.Config.globalVol;
 		this._callback = callback;
 		sound.MyAudio.a = this;
 		var nav = window.navigator;
@@ -1391,7 +1426,7 @@ typo.TypoCanvasPlane.prototype = $extend(THREE.Object3D.prototype,{
 		this._distance = [[],[]];
 		this._cubes = [];
 		this._index = Math.floor(logo.Logos.getLength() * Math.random());
-		var data = logo.Logos.getRandom2(false);
+		var data = logo.Logos.getRandom();
 		this._spaceX = data.w * this._scale / this.SEG_X;
 		this.geo = new THREE.PlaneBufferGeometry(data.w * this._scale,data.h * this._scale,this.SEG_X,this.SEG_Y);
 		this._geoPos = this.geo.attributes.position.array;
@@ -1401,7 +1436,7 @@ typo.TypoCanvasPlane.prototype = $extend(THREE.Object3D.prototype,{
 		this.add(this._plane2);
 	}
 	,changeMat: function(isWhite) {
-		var data = logo.Logos.getRandom2(isWhite);
+		var data = logo.Logos.getRandom();
 		this._spaceX = data.w * this._scale / this.SEG_X;
 		data.setWhite(isWhite);
 		this._plane.material = data.mate1;
@@ -1915,6 +1950,7 @@ Three.LinePieces = 1;
 camera.ExCamera.POS_NORMAL = "MODE_NORMAL";
 camera.ExCamera.POS_FOLLOW = "MODE_FOLLOW";
 common.Config.canvasOffsetY = 0;
+common.Config.globalVol = 1.0;
 common.Dat.UP = 38;
 common.Dat.DOWN = 40;
 common.Dat.LEFT = 37;
