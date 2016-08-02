@@ -5,7 +5,7 @@ import sound.MyAudio;
  * ...
  * @author watanabe
  */
-class DeDeCut2  extends DeDeCutBase
+class DeDeCutMultiLine  extends DeDeCutBase
 {
 
 	public function new() 
@@ -34,7 +34,11 @@ class DeDeCut2  extends DeDeCutBase
 	 */
 	override public function next():Void
 	{
-		_lines.next();
+		
+		var data:DeDeParam = DeDeParam.getParam();
+		data.speedX = -5;
+		_lines.changeType(data);
+		
 	}	
 	
 	
@@ -45,6 +49,13 @@ class DeDeCut2  extends DeDeCutBase
 	override public function update(audio:MyAudio):Void {
 		
 		//_lines.up
+		_counter++;
+		if ( audio.subFreqByteData[5] > 10 && _counter > 15 ) {
+			_counter = 0;
+			var addVal:Float = 1 / 30;
+			_lines.countUp( addVal );// Math.random());
+		}
+		
 		_lines.update(audio);
 		
 	}		

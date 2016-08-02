@@ -1,13 +1,16 @@
 package dede.cuts;
 import sound.MyAudio;
+import typo.StrokeUtil;
 
 /**
  * ...
  * @author watanabe
  */
-class DeDeCut1  extends DeDeCutBase
+class DeDeCutOneLine  extends DeDeCutBase
 {
 
+	
+	
 	public function new() 
 	{
 		super();
@@ -27,10 +30,14 @@ class DeDeCut1  extends DeDeCutBase
 		_cam.setZoom(2);
 		
 		var data:DeDeParam = DeDeParam.getParam();
-		data.txt = "VRDG3 DEDEMOUSE KITASENJUDESIGN ";
+		data.txt = "DEDEMOUSE KTSNJDESIGN ";
+		data.font = StrokeUtil.FUTURA;
 		data.speedX = DeDeLine.SPEEDX0;
 		data.spaceX = 20;
 		data.startX = DeDeLine.WIDTH / 2;
+		
+		//data.isRandomLine = true;
+		
 		_lines.changeType( data );
 
 	}
@@ -42,8 +49,6 @@ class DeDeCut1  extends DeDeCutBase
 	{
 		//set dot type
 		//_lines.next();
-		
-		
 		var type:Int = Math.floor( 6 * Math.random() );
 		var isRotate:Bool = Math.random() < 0.5 ? true : false;
 		_lines.setDotType( type, isRotate );
@@ -59,6 +64,13 @@ class DeDeCut1  extends DeDeCutBase
 	override public function update(audio:MyAudio):Void {
 		
 		//_lines.up
+		_counter++;
+		if ( audio.subFreqByteData[5] > 10 && _counter > 15 ) {
+			_counter = 0;
+			var addVal:Float = 1 / 30;
+			_lines.countUp( addVal );// Math.random());
+		}
+		
 		_lines.update(audio);
 		
 	}		

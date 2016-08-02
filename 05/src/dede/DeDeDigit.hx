@@ -232,7 +232,7 @@ class DeDeDigit extends Object3D
 		_sec += rr;
 		_sec = Math.abs(_sec) % 1;
 		if(boost){
-			_counter += _rotSpeed * 140;
+			_counter += _rotSpeed * 100;
 		}		
 		
 		_vx += 1 * ( Math.random() - 0.5 );

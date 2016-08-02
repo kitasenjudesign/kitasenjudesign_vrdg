@@ -85,6 +85,9 @@ var Main3d = function() {
 Main3d.__name__ = true;
 Main3d.prototype = {
 	init: function() {
+		Main3d.renderer = new THREE.WebGLRenderer({ devicePixelRatio : 1, antialias : false, preserveDrawingBuffer : true, alpha : false});
+		window.document.body.appendChild(Main3d.renderer.domElement);
+		Main3d.renderer.domElement.id = "webgl";
 		common.Dat.init($bind(this,this._onInit0));
 	}
 	,_onInit0: function() {
@@ -93,10 +96,7 @@ Main3d.prototype = {
 	}
 	,_onInit: function() {
 		this.scene = new THREE.Scene();
-		Main3d.renderer = new THREE.WebGLRenderer({ devicePixelRatio : 1, antialias : false, preserveDrawingBuffer : true, alpha : false});
 		Main3d.renderer.setSize(Main3d.W,Main3d.H);
-		window.document.body.appendChild(Main3d.renderer.domElement);
-		Main3d.renderer.domElement.id = "webgl";
 		Main3d.renderer.domElement.style.position = "absolute";
 		Main3d.renderer.domElement.style.zIndex = "2002";
 		Main3d.renderer.domElement.style.width = "" + Main3d.W;
@@ -1033,6 +1033,7 @@ common.Dat = function() {
 };
 common.Dat.__name__ = true;
 common.Dat.init = function(callback) {
+	common.StageRef.fadeIn();
 	common.Dat._callback = callback;
 	common.Dat._config = new common.Config();
 	common.Dat._config.load(common.Dat._onInit);
@@ -1088,6 +1089,22 @@ common.Dat.hide = function() {
 common.Dat.prototype = {
 	__class__: common.Dat
 };
+common.FadeSheet = function(ee) {
+	this.opacity = 1;
+	this.element = ee;
+};
+common.FadeSheet.__name__ = true;
+common.FadeSheet.prototype = {
+	fadeIn: function() {
+		this.element.style.opacity = "0";
+		this.opacity = 0;
+		TweenMax.to(this,1.0,{ opacity : 1, delay : 0.2, ease : Power0.easeInOut, onUpdate : $bind(this,this._onUpdate)});
+	}
+	,_onUpdate: function() {
+		this.element.style.opacity = "" + this.opacity;
+	}
+	,__class__: common.FadeSheet
+};
 common.Key = function() {
 	THREE.EventDispatcher.call(this);
 };
@@ -1119,6 +1136,10 @@ common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
 common.StageRef = function() {
 };
 common.StageRef.__name__ = true;
+common.StageRef.fadeIn = function() {
+	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
+	common.StageRef.sheet.fadeIn();
+};
 common.StageRef.setCenter = function() {
 	if(!common.Dat.bg) {
 		var dom = window.document.getElementById("webgl");
@@ -3032,6 +3053,7 @@ common.Dat.Z = 90;
 common.Dat.hoge = 0;
 common.Dat.bg = false;
 common.Dat._showing = true;
+common.StageRef.$name = "webgl";
 data.TextureData.emo2048 = new data.TextureData("emo2048.png",2048,2048);
 data.TextureData.emo128 = new data.TextureData("emo128.png",2048,2048);
 emoji.EmojiSpritePos.EMOJI_MAX1 = 845;

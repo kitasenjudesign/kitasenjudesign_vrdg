@@ -65,6 +65,10 @@ class Main3d
 	
 	public function init():Void
 	{
+		renderer = new WebGLRenderer({devicePixelRatio:1, antialias: false, preserveDrawingBuffer: true, alpha:false});
+		Browser.document.body.appendChild(renderer.domElement);
+		renderer.domElement.id = "webgl";// .position = "absolute";
+		
 		Dat.init(_onInit0);
 	}
 	
@@ -79,10 +83,8 @@ class Main3d
 		
 		scene = new Scene();
 		
-        renderer = new WebGLRenderer({devicePixelRatio:1, antialias: false, preserveDrawingBuffer: true, alpha:false});
         renderer.setSize(W, H);
-        Browser.document.body.appendChild(renderer.domElement);
-		renderer.domElement.id = "webgl";// .position = "absolute";
+        
 		renderer.domElement.style.position = "absolute";
 		renderer.domElement.style.zIndex = "2002";
 		renderer.domElement.style.width = "" + W;

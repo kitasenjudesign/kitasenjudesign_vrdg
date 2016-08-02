@@ -12,7 +12,7 @@ import three.Scene;
  */
 class DeDeCutBase
 {
-
+	private var _counter:Int = 0;
 	private var _cam:DoubleCamera;
 	private var _lines:DeDeLines;
 	private var _vrdg:VrdgLines;

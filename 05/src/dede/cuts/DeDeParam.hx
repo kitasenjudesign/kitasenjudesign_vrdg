@@ -27,7 +27,7 @@ class DeDeParam
 		var speed:Float = 2 + 2 * Math.random();
 		var space:Float = 3 + 7 * Math.random();// + 18 * Math.random();
 	*/
-	
+		
 	public var txt:String = "";
 	public var startX:Float = 0;
 	public var font:Int = 0;
@@ -71,7 +71,7 @@ class DeDeParam
 		
 		//MyPointCloud.cloud.setRandom(isRandomLine);
 		
-		data.speed = 2 + 2 * Math.random();
+		data.speed = 2;// + 2 * Math.random();
 		data.space = 3 + 7 * Math.random();// + 18 * Math.random();
 	
 		return data;

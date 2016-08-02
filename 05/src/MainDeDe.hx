@@ -41,7 +41,11 @@ class MainDeDe
 	
 	public function init():Void
 	{
-		//Browser.window.alert( Browser.location.hash );
+
+		_renderer = new WebGLRenderer( { antialias:true, devicePixelRatio:1 } );
+		_renderer.domElement.id = "webgl";
+        Browser.document.body.appendChild(_renderer.domElement);
+		
 		StrokeUtil.init();
 		Dat.init(_onInit);	
 	}
@@ -51,23 +55,20 @@ class MainDeDe
 	 */
 	private function _onInit():Void{
 		
-		_renderer = new WebGLRenderer(
-			{ /*preserveDrawingBuffer: true,*/ antialias:true, devicePixelRatio:1 } 
-		);
 		//_renderer.autoClear = false;
 
 		_scene = new Scene();
 		_camera = new DoubleCamera();
 		_camera.init(_renderer.domElement);
 		_renderer.setSize(StageRef.stageWidth, StageRef.stageHeight);
-		_renderer.domElement.id = "webgl";
-        Browser.document.body.appendChild(_renderer.domElement);
+		
 
 		_audio = new MyAudio();
 		_audio.init( _init2 );
 		
 		_bg = new BlinkPlane();
-		_bg.position.z = -50;
+		_bg.position.z = -40;
+		_bg.scale.set(2, 2, 2);
 		_scene.add(_bg);
 		
 		//

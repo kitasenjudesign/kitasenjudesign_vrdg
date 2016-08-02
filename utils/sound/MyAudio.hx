@@ -1,4 +1,5 @@
 package sound;
+import common.Config;
 import common.Dat;
 import js.Browser;
 import js.html.audio.AnalyserNode;
@@ -42,6 +43,8 @@ class MyAudio
 	public function init(callback:Void->Void):Void {
 		
 		//Tracer.debug("init");
+		globalVolume = Config.globalVol;
+		
 		_callback = callback;
 		a = this;
 		var nav:Dynamic = Browser.navigator;

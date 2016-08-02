@@ -1,4 +1,5 @@
 {
 	"host":"http://localhost:3000/",
-	"canvasOffsetY":0
+	"canvasOffsetY":0,
+	"globalVol":0.876
 }

@@ -44,7 +44,7 @@ class DeDeLines extends Object3D
 	
 	
 	//suuji kaunto up
-	public function countUp():Void {
+	public function countUp(addX:Float):Void {
 		
 		//_lines.addSec(0.05, true);	
 		//_sec += 1/30;
@@ -53,7 +53,7 @@ class DeDeLines extends Object3D
 		
 		for (i in 0..._lines.length) {
 			var line:DeDeLine = _lines[i];
-			line.addSec(1/30, true);
+			line.addSec(addX, true);
 		}
 		
 		_flash();
@@ -109,12 +109,12 @@ class DeDeLines extends Object3D
 			for (i in 0..._lines.length) {
 				var line:DeDeLine = _lines[i];
 				line.reset( type, data );// txt, type, isRotate, font, speed, space, spaceX );
-				var startSec:Float = Math.random();
-				if (data.isRandomStartSec) {
-					line.setRandomSec();
-				}else{
+				//var startSec:Float = Math.random();
+				//if (data.isRandomStartSec) {
+				//	line.setRandomSec();
+				//}else{
 					line.setSec(data.startSec);
-				}
+				//}
 			}
 			
 		}
@@ -198,13 +198,13 @@ class DeDeLines extends Object3D
 		}
 	}	
 	
+	/*
 	public function next():Void {
 		
 		//tsu gi no typo
-		var data:DeDeParam = DeDeParam.getParam();
-		changeType(data);
 		
-	}
+		
+	}*/
 	
 	
 	public function update(audio:MyAudio):Void {
@@ -214,9 +214,9 @@ class DeDeLines extends Object3D
 		_counter++;
 		//trace(_counter);
 		
-		if ( _counter % 60 == 0 ) {
-			countUp();
-		}
+		//if ( _counter % 60 == 0 ) {
+		//	countUp();
+		//}
 		
 		for( i in 0..._lines.length ){
 			_lines[i].update(audio);

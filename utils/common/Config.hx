@@ -15,6 +15,7 @@ class Config
 	
 	public static var host:String;
 	public static var canvasOffsetY:Float = 0;
+	public static var globalVol:Float = 1.0;
 	
 	public function new() 
 	{
@@ -39,6 +40,7 @@ class Config
 		var win:Dynamic = Browser.window;
 		win.host = host;	
 		canvasOffsetY = data.canvasOffsetY;
+		globalVol = data.globalVol;
 	
 		if ( _callback != null ) {
 			_callback();

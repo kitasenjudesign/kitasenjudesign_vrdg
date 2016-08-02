@@ -3,8 +3,8 @@ import camera.DoubleCamera;
 import common.Dat;
 import common.Key;
 import dede.cuts.DeDeCut0;
-import dede.cuts.DeDeCut1;
-import dede.cuts.DeDeCut2;
+import dede.cuts.DeDeCutOneLine;
+import dede.cuts.DeDeCutMultiLine;
 import dede.cuts.DeDeCutBase;
 import dede.VrdgLine;
 import js.Browser;
@@ -18,8 +18,8 @@ class DeDeCuts
 {
 
 	private var _cut0		:DeDeCut0;
-	private var _cut1		:DeDeCut1;
-	private var _cut2		:DeDeCut2;
+	private var _cut1		:DeDeCutOneLine;
+	private var _cut2		:DeDeCutMultiLine;
 	private var _cuts		:Array<DeDeCutBase>;
 	private var _cutIndex	:Int = 0;
 	private var _currentCut	:DeDeCutBase;
@@ -41,8 +41,8 @@ class DeDeCuts
 		//Browser.window.alert("unko");
 		
 		_cut0 = new DeDeCut0();
-		_cut1 = new DeDeCut1();
-		_cut2 = new DeDeCut2();
+		_cut1 = new DeDeCutOneLine();
+		_cut2 = new DeDeCutMultiLine();
 		_cut0.init(main);
 		_cut1.init(main);
 		_cut2.init(main);

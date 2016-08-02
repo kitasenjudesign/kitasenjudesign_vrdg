@@ -33,6 +33,7 @@ class VrdgLines extends DeDeLines
 		
 	}
 	
+	/*
 	override public function next():Void {
 		
 		//super.next();
@@ -49,7 +50,7 @@ class VrdgLines extends DeDeLines
 		//reset( Math.floor(Math.random() * 4), data);
 		
 		changeType( data );
-	}
+	}*/
 	
 	//suuji kaunto up
 	/*
@@ -98,17 +99,6 @@ class VrdgLines extends DeDeLines
 	override public function update(audio:MyAudio):Void {
 
 		if (!visible) return;
-		
-		_counter++;
-		//if ( audio.subFreqByteData[5] > 10 && _counter>30 ) {
-		if ( _counter%60==0 ) {
-			countUp();
-		}		
-
-		if ( _counter%600==0 ) {
-			next();
-		}		
-		
 		
 		for( i in 0..._lines.length ){
 			_lines[i].update(audio);

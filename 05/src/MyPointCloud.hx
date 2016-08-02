@@ -166,7 +166,9 @@ class MyPointCloud extends Object3D
 		}
 	}
 	
-	
+	/**
+	 * _isRandom=trueだとこれが炸裂する
+	 */
 	public function connectRandomLine():Void {
 		
 		if (!_isRandom) return;
@@ -180,20 +182,24 @@ class MyPointCloud extends Object3D
 			}
 		}
 		
+		var index2:Int = Math.floor(Math.random() * 6000);
+		
 		
 		for (i in 0...okDots.length) {
 			var lines:Array<Vector3> = getNextLine();
 			
 			var vv:ExVector3 = cast _cloud.geometry.vertices[ okDots[i].rIndex ];
+			//connectしたい人がenable のとき
 			if (vv.enabled) {
 				lines[0].copy( okDots[i] );
 				//lines[0].z = 0;
 				lines[1].copy( vv );
 				//lines[1].z = 0;			
 			}else {
-				lines[0].copy( okDots[(i+33)%okDots.length] );
+				
+				lines[0].copy( okDots[i] );//okDots[(i+33)%okDots.length] );
 				//lines[0].z = 0;
-				lines[1].copy( okDots[(i+6555)%okDots.length] );
+				lines[1].copy( okDots[(i+100)%okDots.length] );
 				//lines[1].z = 0;
 			}
 			
