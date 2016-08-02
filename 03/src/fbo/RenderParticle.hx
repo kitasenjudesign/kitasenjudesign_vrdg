@@ -11,22 +11,28 @@ import three.Vector2;
  */
 class RenderParticle extends Points
 {
-
-	public function new() 
+	
+	private var _renderShaderMat:RenderShaderMat;
+	private var _particleGeo:BufferGeometry;
+	private var _width:Int;
+	private var _height:Int;
+	public function new(ww:Int, hh:Int) 
 	{
-		
-		var particleGeo:BufferGeometry = _getParticleGeo();
+		_width = ww;
+		_height = hh;
+		_renderShaderMat = new RenderShaderMat();
+		_particleGeo = _getParticleGeo();
 		
         //the rendermaterial is used to render the particles
-        _particles = new Points( cast particleGeo, _renderShaderMat );
+       // _particles = new Points( cast particleGeo, _renderShaderMat );
         //_line = new Line( cast particleGeo, _renderShaderMat );
         //_mesh = new Mesh( cast particleGeo, _renderShaderMat );
 
-		super();
+		super(cast _particleGeo, _renderShaderMat);
 		
 	}
 	
-	private function _getParticleGeo() 
+	private function _getParticleGeo():BufferGeometry
 	{
         var l:Int = (_width * _height );
         var vertices = new Float32Array( l * 3 );
@@ -40,7 +46,7 @@ class RenderParticle extends Points
 		var aOffsets:Float32Array = new Float32Array( l * 2 );
         for ( i in 0...l) {
             var i2:Int = i * 2;
-			var pos:Vector2 = getIconPos(Math.floor(Math.random() * 845));
+			var pos:Vector2 = _getIconPos(Math.floor(Math.random() * 845));
             aOffsets[ i2 ] = pos.x;
             aOffsets[ i2 + 1 ] = pos.y;
         }
@@ -60,15 +66,21 @@ class RenderParticle extends Points
 		
 	}
 	
-	public function getIconPos(index:Int):Vector2 {
+	private function _getIconPos(index:Int):Vector2 {
 		
+		var nn:Int = RenderShaderMat.animationFrameLength;
 		index = index % 845;
-		var xx:Int = (index) % animationFrameLength;
-		var yy:Int = animationFrameLength - 1 - Math.floor( index / animationFrameLength );		
+		var xx:Int = (index) % nn;
+		var yy:Int = nn - 1 - Math.floor( index / nn );		
 		
-		return new Vector2(xx / animationFrameLength, yy / animationFrameLength);
+		return new Vector2(xx / nn, yy / nn);
 	}			
 	
-	
+	public function getGeometry():BufferGeometry {
+		return _particleGeo;
+	}
+	public function getMaterial():RenderShaderMat {
+		return _renderShaderMat;
+	}
 	
 }

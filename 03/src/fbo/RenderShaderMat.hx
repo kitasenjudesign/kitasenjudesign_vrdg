@@ -12,7 +12,7 @@ import three.Vector3;
  */
 class RenderShaderMat extends ShaderMaterial
 {
-	private var animationFrameLength	:Int = 32;
+	public static inline var animationFrameLength	:Int = 32;
 
 	private var _vertex:String  = "
 //float texture containing the positions of each particle

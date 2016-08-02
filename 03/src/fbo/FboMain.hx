@@ -105,14 +105,19 @@ class FboMain
 		_onResize(null);
 		
 		Dat.gui.add(this, "change");
-		
+		Dat.gui.add(this, "changeLine");
 		update();
+	}
+	
+	public function changeLine():Void {
+
+		_line.visible = !_line.visible;
+		
 	}
 	
 	public function change():Void {
 		
 		_pp.change(false, true);
-		_line.visible = Math.random() < 0.5 ? true : false;
 		
 	}
 	
