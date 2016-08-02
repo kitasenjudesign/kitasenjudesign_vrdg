@@ -22,12 +22,17 @@ class StageRef
 	
 
 	public static function fadeIn():Void {
-		
 		if(sheet == null){	
 			sheet = new FadeSheet(Browser.document.getElementById(name));
 		}
-		sheet.fadeIn();
-		
+		sheet.fadeIn();		
+	}
+	
+	public static function fadeOut(callback:Void->Void):Void {
+		if(sheet == null){	
+			sheet = new FadeSheet(Browser.document.getElementById(name));
+		}
+		sheet.fadeOut(callback);		
 	}
 	
 	

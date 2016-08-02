@@ -78,11 +78,6 @@ class PostProcessing2
 		_xLoopPass.enabled = true;
 		_composer.addPass(_xLoopPass);
 		
-		//_colorPass = new ColorMapPass();
-		//_colorPass.enabled = true;
-		//_composer.addPass(_colorPass);
-		
-		
 		_composer.addPass( _copyPass );
 		_copyPass.clear = true;
 		_copyPass.renderToScreen = true;
@@ -97,7 +92,6 @@ class PostProcessing2
 	//color 
 	//displace1
 	//displace2
-	
 	public function change(isColor:Bool,isDisplace:Bool):Void {
 		
 		_xLoopPass.setTexture(isColor,isDisplace);

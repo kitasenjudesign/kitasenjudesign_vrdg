@@ -1009,6 +1009,17 @@ canvas.primitives.font.FontTest.prototype = {
 	__class__: canvas.primitives.font.FontTest
 };
 var common = {};
+common.Callback = function() {
+};
+common.Callback.__name__ = true;
+common.Callback.create = function(scope,func,args) {
+	return function() {
+		func.apply(scope,args);
+	};
+};
+common.Callback.prototype = {
+	__class__: common.Callback
+};
 common.Config = function() {
 };
 common.Config.__name__ = true;
@@ -1025,6 +1036,7 @@ common.Config.prototype = {
 		var win = window;
 		win.host = common.Config.host;
 		common.Config.canvasOffsetY = data.canvasOffsetY;
+		common.Config.globalVol = data.globalVol;
 		if(this._callback != null) this._callback();
 	}
 	,__class__: common.Config
@@ -1061,24 +1073,45 @@ common.Dat._onKeyDown = function(e) {
 		if(common.Dat.gui.domElement.style.display == "block") common.Dat.hide(); else common.Dat.show();
 		break;
 	case 49:
-		window.location.href = "../../01/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL1);
 		break;
 	case 50:
-		window.location.href = "../../02/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL2);
 		break;
 	case 51:
-		window.location.href = "../../03/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL3);
 		break;
 	case 52:
-		window.location.href = "../../04/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL4);
 		break;
 	case 53:
-		window.location.href = "../../05/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL5);
 		break;
 	case 54:
-		window.location.href = "../../06/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL6);
 		break;
 	}
+};
+common.Dat._goURL1 = function() {
+	common.Dat._goURL("../../01/bin/");
+};
+common.Dat._goURL2 = function() {
+	common.Dat._goURL("../../02/bin/");
+};
+common.Dat._goURL3 = function() {
+	common.Dat._goURL("../../03/bin/");
+};
+common.Dat._goURL4 = function() {
+	common.Dat._goURL("../../04/bin/");
+};
+common.Dat._goURL5 = function() {
+	common.Dat._goURL("../../05/bin/");
+};
+common.Dat._goURL6 = function() {
+	common.Dat._goURL("../../06/bin/");
+};
+common.Dat._goURL = function(url) {
+	window.location.href = url;
 };
 common.Dat.show = function() {
 	common.Dat.gui.domElement.style.display = "block";
@@ -1098,7 +1131,12 @@ common.FadeSheet.prototype = {
 	fadeIn: function() {
 		this.element.style.opacity = "0";
 		this.opacity = 0;
-		TweenMax.to(this,1.0,{ opacity : 1, delay : 0.2, ease : Power0.easeInOut, onUpdate : $bind(this,this._onUpdate)});
+		if(this._twn != null) this._twn.kill();
+		this._twn = TweenMax.to(this,0.8,{ opacity : 1, delay : 0.2, ease : Power0.easeInOut, onUpdate : $bind(this,this._onUpdate)});
+	}
+	,fadeOut: function(callback) {
+		if(this._twn != null) this._twn.kill();
+		this._twn = TweenMax.to(this,0.5,{ opacity : 0, ease : Power0.easeInOut, onUpdate : $bind(this,this._onUpdate), onComplete : callback});
 	}
 	,_onUpdate: function() {
 		this.element.style.opacity = "" + this.opacity;
@@ -1139,6 +1177,10 @@ common.StageRef.__name__ = true;
 common.StageRef.fadeIn = function() {
 	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
 	common.StageRef.sheet.fadeIn();
+};
+common.StageRef.fadeOut = function(callback) {
+	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
+	common.StageRef.sheet.fadeOut(callback);
 };
 common.StageRef.setCenter = function() {
 	if(!common.Dat.bg) {
@@ -2719,6 +2761,7 @@ sound.MyAudio = function() {
 sound.MyAudio.__name__ = true;
 sound.MyAudio.prototype = {
 	init: function(callback) {
+		this.globalVolume = common.Config.globalVol;
 		this._callback = callback;
 		sound.MyAudio.a = this;
 		var nav = window.navigator;
@@ -3010,6 +3053,7 @@ Three.LinePieces = 1;
 canvas.CanvasSrc.W = 200;
 canvas.CanvasSrc.H = 50;
 common.Config.canvasOffsetY = 0;
+common.Config.globalVol = 1.0;
 common.Dat.UP = 38;
 common.Dat.DOWN = 40;
 common.Dat.LEFT = 37;

@@ -1,4 +1,6 @@
 package common;
+//import jp.jingod.common.Callback;
+import common.Callback;
 import js.Browser;
 import js.html.CanvasElement;
 import js.html.DivElement;
@@ -132,22 +134,48 @@ class Dat
 				//untyped Browser.document.body.webkitRequestFullscreen();
 
 			case Dat.K1 :
-				Browser.window.location.href = "../../01/bin/";				
+				StageRef.fadeOut( _goURL1 );		
 			case Dat.K2 :
-				Browser.window.location.href = "../../02/bin/";
+				StageRef.fadeOut( _goURL2 );		
 			case Dat.K3 :
-				Browser.window.location.href = "../../03/bin/";				
+				StageRef.fadeOut( _goURL3 );						
 			case Dat.K4 :
-				Browser.window.location.href = "../../04/bin/";
+				StageRef.fadeOut( _goURL4 );		
 			case Dat.K5 :
-				Browser.window.location.href = "../../05/bin/";				
+				StageRef.fadeOut( _goURL5 );				
 			case Dat.K6 :
-				Browser.window.location.href = "../../06/bin/";
+				StageRef.fadeOut( _goURL6 );		
 				
 		}
 		
 	}
 	
+	private static function _goURL1():Void {
+		_goURL( "../../01/bin/" );
+	}
+	private static function _goURL2():Void {
+		_goURL( "../../02/bin/" );
+	}	
+	private static function _goURL3():Void {
+		_goURL( "../../03/bin/" );
+	}	
+	private static function _goURL4():Void {
+		_goURL( "../../04/bin/" );
+	}	
+	private static function _goURL5():Void {
+		_goURL( "../../05/bin/" );
+	}	
+	private static function _goURL6():Void {
+		_goURL( "../../06/bin/" );
+	}	
+	
+	
+	
+	private static function _goURL(url:String):Void {
+		
+		Browser.window.location.href = url;
+		
+	}
 	
 	
 
