@@ -74,6 +74,9 @@ var Main3d = function() {
 };
 Main3d.prototype = {
 	init: function() {
+		this._renderer = new THREE.WebGLRenderer({ antialias : true, devicePixelRatio : 1});
+		this._renderer.domElement.id = "webgl";
+		window.document.body.appendChild(this._renderer.domElement);
 		common.Dat.init($bind(this,this._onInit2));
 	}
 	,_onInit2: function() {
@@ -91,12 +94,9 @@ Main3d.prototype = {
 		d.castShadow = true;
 		this._scene.add(d);
 		d.position.set(0,500,20);
-		this._renderer = new THREE.WebGLRenderer({ antialias : true, devicePixelRatio : 1});
-		this._renderer.domElement.id = "webgl";
 		this._renderer.domElement.width = common.StageRef.get_stageWidth();
 		this._renderer.domElement.height = common.StageRef.get_stageHeight();
 		this._camera.init(this._renderer.domElement);
-		window.document.body.appendChild(this._renderer.domElement);
 		common.StageRef.setCenter();
 		this._pp = new effect.PostProcessing2();
 		this._pp.init(this._scene,this._camera,this._renderer,$bind(this,this._onLoadDAE0));
@@ -105,28 +105,18 @@ Main3d.prototype = {
 		this._cubeCamera = new THREE.CubeCamera(1,2000,256);
 		this._cubeCamera.renderTarget.minFilter = 1008;
 		this._scene.add(this._cubeCamera);
-		window.onresize = $bind(this,this._onResize);
-		this._onResize(null);
 		this._camera.radY = 0;
 		this.dae = new objects.MyDAELoader();
 		this.dae.load($bind(this,this._onLoadDAE),this._cubeCamera);
 		common.Dat.gui.add(this._camera,"amp").listen();
-		common.Dat.gui.add(this,"_change");
-	}
-	,_change: function() {
-	}
-	,goFullScreen: function() {
-		window.document.body.webkitRequestFullscreen();
+		window.onresize = $bind(this,this._onResize);
+		this._onResize(null);
 	}
 	,_onLoadDAE: function() {
-		console.log("onLoadDAE");
 		this._world = new objects.MyWorld();
 		this._world.init(this.dae,this._cubeCamera,this._camera,this._pp);
 		this._scene.add(this._world);
 		this._run();
-	}
-	,fullscreen: function() {
-		this._renderer.domElement.requestFullscreen();
 	}
 	,_onResize: function(e) {
 		Main3d.W = common.StageRef.get_stageWidth();
@@ -146,10 +136,7 @@ Main3d.prototype = {
 		this._world.update(this._audio);
 		this._world.faceVisible(false);
 		this._world.faceVisible(true);
-		if(common.Dat.bg) this._renderer.render(this._scene,this._camera); else {
-			this._pp.update(this._audio);
-			this._pp.render();
-		}
+		if(common.Dat.bg) this._renderer.render(this._scene,this._camera); else this._pp.update(this._audio);
 		window.requestAnimationFrame($bind(this,this._run));
 	}
 };
@@ -312,12 +299,14 @@ common.Config.prototype = {
 		var win = window;
 		win.host = common.Config.host;
 		common.Config.canvasOffsetY = data.canvasOffsetY;
+		common.Config.globalVol = data.globalVol;
 		if(this._callback != null) this._callback();
 	}
 };
 common.Dat = function() {
 };
 common.Dat.init = function(callback) {
+	common.StageRef.fadeIn();
 	common.Dat._callback = callback;
 	common.Dat._config = new common.Config();
 	common.Dat._config.load(common.Dat._onInit);
@@ -370,6 +359,20 @@ common.Dat.show = function() {
 common.Dat.hide = function() {
 	common.Dat.gui.domElement.style.display = "none";
 };
+common.FadeSheet = function(ee) {
+	this.opacity = 1;
+	this.element = ee;
+};
+common.FadeSheet.prototype = {
+	fadeIn: function() {
+		this.element.style.opacity = "0";
+		this.opacity = 0;
+		TweenMax.to(this,1.0,{ opacity : 1, delay : 0.2, ease : Power0.easeInOut, onUpdate : $bind(this,this._onUpdate)});
+	}
+	,_onUpdate: function() {
+		this.element.style.opacity = "" + this.opacity;
+	}
+};
 common.Key = function() {
 	THREE.EventDispatcher.call(this);
 };
@@ -397,6 +400,10 @@ common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
 	}
 });
 common.StageRef = function() {
+};
+common.StageRef.fadeIn = function() {
+	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
+	common.StageRef.sheet.fadeIn();
 };
 common.StageRef.setCenter = function() {
 	if(!common.Dat.bg) {
@@ -439,6 +446,8 @@ var effect = {};
 effect.PostProcessing2 = function() {
 	this.strength = 0;
 	this._rad = 0;
+	this._mode = 0;
+	this._modeList = ["MODE_NORMAL","MODE_DISPLACEMENT_A","MODE_DISPLACEMENT_B","MODE_COLOR"];
 };
 effect.PostProcessing2.prototype = {
 	init: function(scene,camera,renderer,callback) {
@@ -450,29 +459,56 @@ effect.PostProcessing2.prototype = {
 		this._copyPass = new THREE.ShaderPass(effect.shaders.CopyShader.getObject());
 		this._composer = new THREE.EffectComposer(renderer);
 		this._composer.addPass(this._renderPass);
-		this.color = new effect.pass.XLoopPass();
-		this._composer.addPass(this.color);
+		this._displacePass = new effect.pass.DisplacementPass();
+		this._displacePass.enabled = true;
+		this._composer.addPass(this._displacePass);
+		this._xLoopPass = new effect.pass.XLoopPass();
+		this._xLoopPass.enabled = true;
+		this._composer.addPass(this._xLoopPass);
 		this._composer.addPass(this._copyPass);
 		this._copyPass.clear = true;
 		this._copyPass.renderToScreen = true;
 		if(this._callback != null) this._callback();
 	}
 	,change: function(isColor,isDisplace) {
-		this.color.setTexture(isColor,isDisplace);
-	}
-	,render: function() {
-		this._composer.render();
+		this._xLoopPass.setTexture(isColor,isDisplace);
+		this._displacePass.setTexture(isColor,isDisplace);
 	}
 	,update: function(audio) {
-		this.color.update(audio);
+		this._xLoopPass.update(audio);
+		this._displacePass.update(audio);
+		this._composer.render();
 	}
 	,resize: function(w,h) {
 		this._composer.setSize(w,h);
 	}
 };
 effect.pass = {};
+effect.pass.ColorMapPass = function() {
+	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\tuniform sampler2D texture;\r\n\t\t\t\t\tuniform sampler2D colTexture;\r\n\t\t\t\t\tuniform float strengthX;\r\n\t\t\t\t\tuniform float strengthY;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 col = texture2D( texture, vUv);\r\n\t\t\t\t\t\tfloat f1 = strengthX * sin(counter);// pow(counter, 2.0 + 3.0 * col.x);//sin(counter * 3.9) * 0.23;\r\n\t\t\t\t\t\tfloat f2 = strengthY * sin(counter*0.92);// pow(counter, 2.0 + 3.0 * col.x) * 0.001;// pow(counter, 2.0 + 3.0 * col.y);//cos(counter * 3.7) * 0.23;\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec2 axis = vec2( \r\n\t\t\t\t\t\t\tvUv.x + (col.y-0.5)*f1, vUv.y + (col.z-0.5)*f2\r\n\t\t\t\t\t\t);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 texel = texture2D( tDiffuse, axis );\r\n\t\t\t\t\t\t//vec4 texel = texture2D( colTexture, axis );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//vec3 luma = vec3( 0.299, 0.587, 0.114 );\r\n\t\t\t\t\t\t//float v = dot( texel.xyz, luma );//akarusa\r\n\t\t\t\t\t\t//vec2 axis = vec2( 0.5,v );\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec2 pp = vec2( 0.5, fract( texel.x + counter * 100.0 ) );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 out1 = texture2D( colTexture, pp );\r\n\t\t\t\t\t\tif ( texel.x == 0.0 ) {\r\n\t\t\t\t\t\t\tout1 = vec4(0.0, 0.0, 0.0, 1.0);\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//bakibaki\r\n\t\t\t\t\t\tif ( texel.x == 0.0 || mod( floor( texel.x * 10000.0 + counter ),2.0) == 0.0 ) {\r\n\t\t\t\t\t\t\ttexel.x = 0.0;\r\n\t\t\t\t\t\t\ttexel.y = 0.0;\r\n\t\t\t\t\t\t\ttexel.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\ttexel.x = out1.x;// 1.0;\r\n\t\t\t\t\t\t\ttexel.y = out1.y;// 1.0;\r\n\t\t\t\t\t\t\ttexel.z = out1.z;// 1.0;\t\t\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tgl_FragColor = texel;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
+	this._vertex = "\r\n\t\tvarying vec2 vUv;\r\n\t\tvoid main() {\r\n\t\t\tvUv = uv;\r\n\t\t\tgl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\r\n\t\t}\t\t\r\n\t";
+	this._textures = [];
+	var _g = 1;
+	while(_g < 11) {
+		var i = _g++;
+		this._textures.push(THREE.ImageUtils.loadTexture("displace" + i + ".png"));
+	}
+	THREE.ShaderPass.call(this,{ uniforms : { tDiffuse : { type : "t", value : null}, texture : { type : "t", value : this._textures[0]}, colTexture : { type : "t", value : this._textures[1]}, strengthX : { type : "f", value : 0}, strengthY : { type : "f", value : 0}, counter : { type : "f", value : 0}}, vertexShader : this._vertex, fragmentShader : this._fragment});
+};
+effect.pass.ColorMapPass.__super__ = THREE.ShaderPass;
+effect.pass.ColorMapPass.prototype = $extend(THREE.ShaderPass.prototype,{
+	update: function(audio) {
+		this.uniforms.strengthX.value = Math.pow(audio.freqByteData[3] / 255,4);
+		this.uniforms.strengthY.value = Math.pow(audio.freqByteData[7] / 255,4);
+		this.uniforms.counter.value += audio.freqByteData[3] / 255 * 0.8;
+	}
+	,setTexture: function() {
+		this.uniforms.texture.value = this._textures[Math.floor(Math.random() * this._textures.length)];
+		this.uniforms.colTexture.value = this._textures[Math.floor(Math.random() * this._textures.length)];
+	}
+});
 effect.pass.DisplacementPass = function() {
-	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\tuniform sampler2D disTexture;\r\n\t\t\t\t\tuniform sampler2D colTexture;\r\n\t\t\t\t\tuniform float strengthX;\r\n\t\t\t\t\tuniform float strengthY;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tuniform float isDisplace;\r\n\t\t\t\t\tuniform float isColor;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//dispace\r\n\t\t\t\t\t\tvec4 texel = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tif(isDisplace == 1.0){\r\n\t\t\t\t\t\t\tvec4 col = texture2D( disTexture, vUv);\r\n\t\t\t\t\t\t\tfloat f1 = strengthX * sin(counter*0.17);// pow(counter, 2.0 + 3.0 * col.x);//sin(counter * 3.9) * 0.23;\r\n\t\t\t\t\t\t\tfloat f2 = strengthY * sin(counter*0.22);// pow(counter, 2.0 + 3.0 * col.x) * 0.001;// pow(counter, 2.0 + 3.0 * col.y);//cos(counter * 3.7) * 0.23;\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\tvec2 axis = vec2( \r\n\t\t\t\t\t\t\t\tvUv.x + (col.y-0.5)*f1, vUv.y + (col.z-0.5)*f2\r\n\t\t\t\t\t\t\t);\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\ttexel = texture2D( tDiffuse, axis );\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\ttexel = texture2D( tDiffuse, vUv );\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//vec4 texel = texture2D( colTexture, axis );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//vec3 luma = vec3( 0.299, 0.587, 0.114 );\r\n\t\t\t\t\t\t//float v = dot( texel.xyz, luma );//akarusa\r\n\t\t\t\t\t\t//vec2 axis = vec2( 0.5,v );\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//position\r\n\t\t\t\t\t\tvec4 out1 = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tif( isColor == 1.0){\r\n\t\t\t\t\t\t\tvec2 pp = vec2( 0.5, fract( texel.x + counter ) );\r\n\t\t\t\t\t\t\tif ( pp.y < 0.5) {\r\n\t\t\t\t\t\t\t\tpp.y = pp.y * 2.0;\r\n\t\t\t\t\t\t\t\tout1 = texture2D( colTexture, pp );\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\t\tpp.y = (1.0 - (pp.y - 0.5) * 2.0);\t\t\t\t\r\n\t\t\t\t\t\t\t\tout1 = texture2D( colTexture, pp );\r\n\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\tif ( texel.x == 0.0 ) {\r\n\t\t\t\t\t\t\t\tout1 = vec4(0.0, 0.0, 0.0, 1.0);\r\n\t\t\t\t\t\t\t}\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\tout1 = texel;\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\t\r\n\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\tif ( texel.x == 0.0 || mod( floor( texel.x * 1000.0 + counter ),2.0) == 0.0 ) {\r\n\t\t\t\t\t\t\ttexel.x = 0.0;\r\n\t\t\t\t\t\t\ttexel.y = 0.0;\r\n\t\t\t\t\t\t\ttexel.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\ttexel.x = out1.x;//1.0;\r\n\t\t\t\t\t\t\ttexel.y = out1.y;//1.0;\r\n\t\t\t\t\t\t\ttexel.z = out1.z;//1.0;\t\t\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}*/\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\t\ttexel.x = out1.x;//1.0;\r\n\t\t\t\t\t\t\ttexel.y = out1.y;//1.0;\r\n\t\t\t\t\t\t\ttexel.z = out1.z;//1.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t*/\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tgl_FragColor = out1;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
+	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\tuniform sampler2D disTexture;\r\n\t\t\t\t\tuniform sampler2D colTexture;\r\n\t\t\t\t\tuniform float strengthX;\r\n\t\t\t\t\tuniform float strengthY;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tuniform float isDisplace;\r\n\t\t\t\t\tuniform float isColor;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\t\r\n\t\t\t\t\tvec4 getColor(vec4 texel) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 out1 = vec4(0.0);\r\n\t\t\t\t\t\tvec2 pp = vec2( 0.5, fract( texel.x + counter ) );\r\n\t\t\t\t\t\t\tif ( pp.y < 0.5) {\r\n\t\t\t\t\t\t\t\tpp.y = pp.y * 2.0;\r\n\t\t\t\t\t\t\t\tout1 = texture2D( colTexture, pp );\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\t\tpp.y = (1.0 - (pp.y - 0.5) * 2.0);\t\t\t\t\r\n\t\t\t\t\t\t\t\tout1 = texture2D( colTexture, pp );\r\n\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\tif ( texel.x == 0.0 ) {\r\n\t\t\t\t\t\t\t\tout1 = vec4(0.0, 0.0, 0.0, 1.0);\r\n\t\t\t\t\t\t\t}\t\t\r\n\t\t\t\t\t\t\treturn out1;\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//dispace\r\n\t\t\t\t\t\tvec4 texel = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tif(isDisplace == 1.0){\r\n\t\t\t\t\t\t\tvec4 col = texture2D( disTexture, vUv);\r\n\t\t\t\t\t\t\tfloat f1 = strengthX * sin(counter*0.17);// pow(counter, 2.0 + 3.0 * col.x);//sin(counter * 3.9) * 0.23;\r\n\t\t\t\t\t\t\tfloat f2 = strengthY * sin(counter*0.22);// pow(counter, 2.0 + 3.0 * col.x) * 0.001;// pow(counter, 2.0 + 3.0 * col.y);//cos(counter * 3.7) * 0.23;\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\tvec2 axis = vec2( \r\n\t\t\t\t\t\t\t\tvUv.x + (col.y-0.5)*f1, vUv.y + (col.z-0.5)*f2\r\n\t\t\t\t\t\t\t);\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\ttexel = texture2D( tDiffuse, axis );\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\ttexel = texture2D( tDiffuse, vUv );\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//vec4 texel = texture2D( colTexture, axis );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//vec3 luma = vec3( 0.299, 0.587, 0.114 );\r\n\t\t\t\t\t\t//float v = dot( texel.xyz, luma );//akarusa\r\n\t\t\t\t\t\t//vec2 axis = vec2( 0.5,v );\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//position\r\n\t\t\t\t\t\tvec4 out1 = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tif( isColor == 1.0){\r\n\t\t\t\t\t\t\tout1 = getColor(texel);\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\tout1 = texel;\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\t\r\n\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\tif ( texel.x == 0.0 || mod( floor( texel.x * 1000.0 + counter ),2.0) == 0.0 ) {\r\n\t\t\t\t\t\t\ttexel.x = 0.0;\r\n\t\t\t\t\t\t\ttexel.y = 0.0;\r\n\t\t\t\t\t\t\ttexel.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\ttexel.x = out1.x;//1.0;\r\n\t\t\t\t\t\t\ttexel.y = out1.y;//1.0;\r\n\t\t\t\t\t\t\ttexel.z = out1.z;//1.0;\t\t\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}*/\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\t\ttexel.x = out1.x;//1.0;\r\n\t\t\t\t\t\t\ttexel.y = out1.y;//1.0;\r\n\t\t\t\t\t\t\ttexel.z = out1.z;//1.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t*/\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tgl_FragColor = out1;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
 	this._vertex = "\r\n\t\tvarying vec2 vUv;\r\n\t\tvoid main() {\r\n\t\t\tvUv = uv;\r\n\t\t\tgl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\r\n\t\t}\t\t\r\n\t";
 	this._textures = [];
 	var _g = 1;
@@ -486,6 +522,7 @@ effect.pass.DisplacementPass = function() {
 effect.pass.DisplacementPass.__super__ = THREE.ShaderPass;
 effect.pass.DisplacementPass.prototype = $extend(THREE.ShaderPass.prototype,{
 	update: function(audio) {
+		if(!this.enabled) return;
 		this.uniforms.strengthX.value = Math.pow(audio.freqByteData[3] / 255,4) * 0.75;
 		this.uniforms.strengthY.value = Math.pow(audio.freqByteData[7] / 255,4) * 0.75;
 		this.uniforms.counter.value += audio.freqByteData[3] / 255 * 0.8;
@@ -498,7 +535,7 @@ effect.pass.DisplacementPass.prototype = $extend(THREE.ShaderPass.prototype,{
 	}
 });
 effect.pass.XLoopPass = function() {
-	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\tuniform sampler2D disTexture;\r\n\t\t\t\t\tuniform sampler2D colTexture;\r\n\t\t\t\t\tuniform float strengthX;\r\n\t\t\t\t\tuniform float strengthY;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tuniform float isDisplace;\r\n\t\t\t\t\tuniform float isColor;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\t\r\n\t\t\t\t\tfloat yama(float rr, float beki) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tfloat hoge = 0.5 + 0.5 * sin(rr * 3.14 - 3.14 * 0.5);\r\n\t\t\t\t\t\t//out = pow(out, beki);\r\n\t\t\t\t\t\treturn hoge;// out;\r\n\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t\tfloat yama2(float rr, float beki) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tfloat hoge = rr * 2.0;\r\n\t\t\t\t\t\tif ( hoge < 1.0) {\r\n\t\t\t\t\t\t\thoge = pow(hoge, 1./beki) * 0.5;\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\thoge = pow(hoge-1.0, beki) * 0.5 + 0.5;\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t//out = pow(out, beki);\r\n\t\t\t\t\t\treturn hoge;// out;\r\n\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//dispace\r\n\t\t\t\t\t\tvec4 texel = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//0.4-0.6 no hani wo kurikaesu\r\n\t\t\t\t\t\tfloat minX = 0.45;\r\n\t\t\t\t\t\tfloat maxX = 0.55;\r\n\t\t\t\t\t\tfloat amp = maxX - minX;\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//float xx = clamp( vUv.x, minX, maxX );\r\n\t\t\t\t\t\t//xx = (xx - minX) / len;//0-1\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tfloat nn = 10. * sin( counter * 0.07 );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tfloat xx = minX + amp * (0.5 + 0.5 * sin(yama2(vUv.x, 2.0) * nn * 3.14 - 3.14 * 0.5));\r\n\t\t\t\t\tfloat minA = 0.3;// 1;\r\n\t\t\t\t\tfloat maxA = 0.7;// 9;\r\n\t\t\t\t\t\r\n\t\t\t\t\tif (vUv.x < minA) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\txx = xx * pow(vUv.x / minA, 0.2);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t}else if (vUv.x > maxA) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\txx = mix(xx, vUv.x, pow((vUv.x - maxA) / (1.0 - maxA), 7.0));\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\tfloat yy = vUv.y + 0.05 * sin(vUv.x * 6.0 * 3.14);\r\n\t\t\t\t\t\r\n\t\t\t\t\txx = mix(vUv.x, xx, 0.5+0.5*sin(counter * 0.1) );\r\n\t\t\t\t\tyy = mix(vUv.y, yy, 0.5+0.5*sin(counter * 0.1) );\r\n\t\t\t\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t//xx = 0.5+0.5*sin( 2.*3.14*vUv.x -3.14/2.0);\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t//xx = 0.5 + 0.5 * sin(xx * 2.0 * 3.14 * 5.0);\r\n\t\t\t\t\t\t//vUv.x\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tvec2 axis = vec2( xx, yy );\r\n\t\t\t\t\ttexel = texture2D( tDiffuse, axis );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec3 luma = vec3( 0.299, 0.587, 0.114 );\r\n\t\t\t\t\t\tfloat v = dot( texel.xyz, luma );//akarusa\r\n\t\t\t\t\t\tv = fract( v*20.0 + counter * 0.01 ) * 2.0;\r\n\t\t\t\t\t\tif (v > 1.0) {\r\n\t\t\t\t\t\t\tv = 1.0 - (v - 1.0);\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\taxis = vec2( 0.5,v );\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 out1 = texture2D( colTexture, axis );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//position\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tif ( texel.x == 0.0 ) {\r\n\t\t\t\t\t\t\tout1.x = 0.0;\r\n\t\t\t\t\t\t\tout1.y = 0.0;\r\n\t\t\t\t\t\t\tout1.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\tif ( texel.x == 0.0 || mod( floor( texel.x * 1000.0 + counter ),2.0) == 0.0 ) {\r\n\t\t\t\t\t\t\tout1.x = 0.0;\r\n\t\t\t\t\t\t\tout1.y = 0.0;\r\n\t\t\t\t\t\t\tout1.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\tout1.x = out1.x;// 1.0;\r\n\t\t\t\t\t\t\tout1.y = out1.y;// 1.0;\r\n\t\t\t\t\t\t\tout1.z = out1.z;// 1.0;\t\t\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}*/\r\n\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\t\ttexel.x = out1.x;//1.0;\r\n\t\t\t\t\t\t\ttexel.y = out1.y;//1.0;\r\n\t\t\t\t\t\t\ttexel.z = out1.z;//1.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t*/\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tgl_FragColor = out1;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
+	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\tuniform sampler2D disTexture;\r\n\t\t\t\t\tuniform sampler2D colTexture;\r\n\t\t\t\t\tuniform float strengthX;\r\n\t\t\t\t\tuniform float strengthY;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tuniform float isDisplace;\r\n\t\t\t\t\tuniform float isColor;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\t\r\n\t\t\t\t\tfloat yama(float rr, float beki) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tfloat hoge = 0.5 + 0.5 * sin(rr * 3.14 - 3.14 * 0.5);\r\n\t\t\t\t\t\t//out = pow(out, beki);\r\n\t\t\t\t\t\treturn hoge;// out;\r\n\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t\tfloat yama2(float rr, float beki) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tfloat hoge = rr * 2.0;\r\n\t\t\t\t\t\tif ( hoge < 1.0) {\r\n\t\t\t\t\t\t\thoge = pow(hoge, 1./beki) * 0.5;\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\thoge = pow(hoge-1.0, beki) * 0.5 + 0.5;\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t//out = pow(out, beki);\r\n\t\t\t\t\t\treturn hoge;// out;\r\n\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//dispace\r\n\t\t\t\t\t\tvec4 texel = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//0.4-0.6 no hani wo kurikaesu\r\n\t\t\t\t\t\tfloat minX = 0.45;\r\n\t\t\t\t\t\tfloat maxX = 0.55;\r\n\t\t\t\t\t\tfloat amp = maxX - minX;\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//float xx = clamp( vUv.x, minX, maxX );\r\n\t\t\t\t\t\t//xx = (xx - minX) / len;//0-1\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tfloat nn = 10. * sin( counter * 0.07 );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tfloat xx = minX + amp * (0.5 + 0.5 * sin(yama2(vUv.x, 2.0) * nn * 3.14 - 3.14 * 0.5));\r\n\t\t\t\t\tfloat minA = 0.3;// 1;\r\n\t\t\t\t\tfloat maxA = 0.7;// 9;\r\n\t\t\t\t\t\r\n\t\t\t\t\tif (vUv.x < minA) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\txx = xx * pow(vUv.x / minA, 0.2);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t}else if (vUv.x > maxA) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\txx = mix(xx, vUv.x, pow((vUv.x - maxA) / (1.0 - maxA), 7.0));\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\tfloat yy = vUv.y + 0.05 * sin(vUv.x * 6.0 * 3.14);\r\n\t\t\t\t\t\r\n\t\t\t\t\txx = mix(vUv.x, xx, 0.5+0.5*sin(counter * 0.1) );\r\n\t\t\t\t\tyy = mix(vUv.y, yy, 0.5+0.5*sin(counter * 0.1) );\r\n\t\t\t\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t//xx = 0.5+0.5*sin( 2.*3.14*vUv.x -3.14/2.0);\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t//xx = 0.5 + 0.5 * sin(xx * 2.0 * 3.14 * 5.0);\r\n\t\t\t\t\t\t//vUv.x\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tvec2 axis = vec2( xx, yy );\r\n\t\t\t\t\ttexel = texture2D( tDiffuse, axis );\r\n\t\t\t\t\tvec4 out1 = texel;\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t//color\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\tvec3 luma = vec3( 0.299, 0.587, 0.114 );\r\n\t\t\t\t\t\tfloat v = dot( texel.xyz, luma );//akarusa\r\n\t\t\t\t\t\tv = fract( v*20.0 + counter * 0.01 ) * 2.0;\r\n\t\t\t\t\t\tif (v > 1.0) {\r\n\t\t\t\t\t\t\tv = 1.0 - (v - 1.0);\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\taxis = vec2( 0.5,v );\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 out1 = texture2D( colTexture, axis );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tif ( texel.x == 0.0 ) {\r\n\t\t\t\t\t\t\tout1.x = 0.0;\r\n\t\t\t\t\t\t\tout1.y = 0.0;\r\n\t\t\t\t\t\t\tout1.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}*/\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\tif ( texel.x == 0.0 || mod( floor( texel.x * 1000.0 + counter ),2.0) == 0.0 ) {\r\n\t\t\t\t\t\t\tout1.x = 0.0;\r\n\t\t\t\t\t\t\tout1.y = 0.0;\r\n\t\t\t\t\t\t\tout1.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\tout1.x = out1.x;// 1.0;\r\n\t\t\t\t\t\t\tout1.y = out1.y;// 1.0;\r\n\t\t\t\t\t\t\tout1.z = out1.z;// 1.0;\t\t\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}*/\r\n\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\t\ttexel.x = out1.x;//1.0;\r\n\t\t\t\t\t\t\ttexel.y = out1.y;//1.0;\r\n\t\t\t\t\t\t\ttexel.z = out1.z;//1.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t*/\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tgl_FragColor = out1;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
 	this._vertex = "\r\n\t\tvarying vec2 vUv;\r\n\t\tvoid main() {\r\n\t\t\tvUv = uv;\r\n\t\t\tgl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\r\n\t\t}\t\t\r\n\t";
 	this._textures = [];
 	var _g = 1;
@@ -512,6 +549,7 @@ effect.pass.XLoopPass = function() {
 effect.pass.XLoopPass.__super__ = THREE.ShaderPass;
 effect.pass.XLoopPass.prototype = $extend(THREE.ShaderPass.prototype,{
 	update: function(audio) {
+		if(!this.enabled) return;
 		this.uniforms.strengthX.value = Math.pow(audio.freqByteData[3] / 255,4) * 0.75;
 		this.uniforms.strengthY.value = Math.pow(audio.freqByteData[7] / 255,4) * 0.75;
 		this.uniforms.counter.value += audio.freqByteData[3] / 255 * 0.8;
@@ -1036,10 +1074,6 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 		case 81:
 			this._nextSingle();
 			break;
-		case 39:
-			this._nextSingle();
-			this._updateMaterial();
-			break;
 		case 87:
 			this.changeMode2();
 			this.sphere.changeBg();
@@ -1052,9 +1086,12 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 			this.sphere.changeBg();
 			this._impulese();
 			break;
+		case 39:
+			this._nextEffect();
+			break;
 		}
 	}
-	,_updateMaterial: function() {
+	,_nextEffect: function() {
 		var isColor;
 		if(Math.random() < 0.5) isColor = true; else isColor = false;
 		var isDisplace;
@@ -1258,6 +1295,7 @@ sound.MyAudio = function() {
 };
 sound.MyAudio.prototype = {
 	init: function(callback) {
+		this.globalVolume = common.Config.globalVol;
 		this._callback = callback;
 		sound.MyAudio.a = this;
 		var nav = window.navigator;
@@ -1513,6 +1551,7 @@ Three.RGBA_S3TC_DXT5_Format = 2004;
 Three.LineStrip = 0;
 Three.LinePieces = 1;
 common.Config.canvasOffsetY = 0;
+common.Config.globalVol = 1.0;
 common.Dat.UP = 38;
 common.Dat.DOWN = 40;
 common.Dat.LEFT = 37;
@@ -1556,6 +1595,11 @@ common.Dat.Z = 90;
 common.Dat.hoge = 0;
 common.Dat.bg = false;
 common.Dat._showing = true;
+common.StageRef.$name = "webgl";
+effect.PostProcessing2.MODE_NORMAL = "MODE_NORMAL";
+effect.PostProcessing2.MODE_DISPLACEMENT_A = "MODE_DISPLACEMENT_A";
+effect.PostProcessing2.MODE_DISPLACEMENT_B = "MODE_DISPLACEMENT_B";
+effect.PostProcessing2.MODE_COLOR = "MODE_COLOR";
 objects.MyDAELoader.MAX_Y = 1.36578;
 objects.MyDAELoader.MIN_Y = -1.13318;
 objects.MyFace.MAT_DEFAULT = 0;
@@ -1570,5 +1614,3 @@ three._WebGLRenderer.RenderPrecision_Impl_.mediump = "mediump";
 three._WebGLRenderer.RenderPrecision_Impl_.lowp = "lowp";
 Main.main();
 })();
-
-//# sourceMappingURL=haxe.js.map

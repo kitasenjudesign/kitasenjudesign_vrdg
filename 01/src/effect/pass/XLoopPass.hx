@@ -93,9 +93,10 @@ class XLoopPass extends ShaderPass
 						
 					vec2 axis = vec2( xx, yy );
 					texel = texture2D( tDiffuse, axis );
+					vec4 out1 = texel;	
 						
-						
-						
+					//color	
+						/*
 						vec3 luma = vec3( 0.299, 0.587, 0.114 );
 						float v = dot( texel.xyz, luma );//akarusa
 						v = fract( v*20.0 + counter * 0.01 ) * 2.0;
@@ -106,15 +107,11 @@ class XLoopPass extends ShaderPass
 						axis = vec2( 0.5,v );						
 						vec4 out1 = texture2D( colTexture, axis );
 						
-						//position
-					
-						
-						
 						if ( texel.x == 0.0 ) {
 							out1.x = 0.0;
 							out1.y = 0.0;
 							out1.z = 0.0;							
-						}
+						}*/
 						
 						/*
 						if ( texel.x == 0.0 || mod( floor( texel.x * 1000.0 + counter ),2.0) == 0.0 ) {
@@ -181,6 +178,8 @@ class XLoopPass extends ShaderPass
 	//
 	public function update(audio:MyAudio):Void {
 	
+		if (!enabled) return;
+		
 		uniforms.strengthX.value = Math.pow( audio.freqByteData[3] / 255, 4) * 0.75;
 		uniforms.strengthY.value = Math.pow( audio.freqByteData[7] / 255, 4) * 0.75;
 		uniforms.counter.value += audio.freqByteData[3] / 255 * 0.8;		

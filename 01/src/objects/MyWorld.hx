@@ -91,9 +91,6 @@ class MyWorld extends Object3D
 			
 			case Dat.Q:
 				_nextSingle();
-			case Dat.RIGHT:
-				_nextSingle();
-				_updateMaterial();
 			case Dat.W:
 				changeMode2();			
 				sphere.changeBg();
@@ -107,7 +104,8 @@ class MyWorld extends Object3D
 				sphere.changeBg();
 				_impulese();
 							
-				
+			case Dat.RIGHT:	
+				_nextEffect();///////////////////////////////
 
 		}
 		
@@ -115,9 +113,9 @@ class MyWorld extends Object3D
 	
 	
 	/**
-	 * _updateMaterial
+	 * _nextEffect
 	 */
-	public function _updateMaterial():Void {
+	public function _nextEffect():Void {
 		
 		var isColor		:Bool = Math.random() < 0.5 ? true : false;
 		var isDisplace	:Bool = Math.random() < 0.5 ? true : false;

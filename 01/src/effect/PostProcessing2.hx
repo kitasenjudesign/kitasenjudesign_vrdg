@@ -1,4 +1,5 @@
 package effect;
+import effect.pass.ColorMapPass;
 import effect.pass.DisplacementPass;
 import effect.pass.XLoopPass;
 import effect.shaders.CopyShader;
@@ -17,13 +18,25 @@ import three.WebGLRenderer;
 class PostProcessing2
 {
 
+	public static inline var MODE_NORMAL			:String = "MODE_NORMAL";
+	public static inline var MODE_DISPLACEMENT_A	:String = "MODE_DISPLACEMENT_A";
+	public static inline var MODE_DISPLACEMENT_B	:String = "MODE_DISPLACEMENT_B";
+	public static inline var MODE_COLOR				:String = "MODE_COLOR";
+	
+	private var _modeList:Array<String> = [
+		MODE_NORMAL,
+		MODE_DISPLACEMENT_A,
+		MODE_DISPLACEMENT_B,
+		MODE_COLOR
+	];
+	
+	private var _mode:Int = 0;
 	private var _renderPass:RenderPass;
 	private var _composer:EffectComposer;
 	
-	//public var vig		:ShaderPass;
-	//public var tilt		:ShaderPass;
-	public var dhiza	:ShaderPass;
-	public var color	:XLoopPass;
+	private var _xLoopPass		:XLoopPass;
+	private var _displacePass	:DisplacementPass;
+	private var _colorPass		:ColorMapPass;
 	
 	private var _scene	:Scene;
 	private var _camera	:PerspectiveCamera;
@@ -55,18 +68,22 @@ class PostProcessing2
 		_composer = new EffectComposer( renderer );
 		_composer.addPass( _renderPass );
 		
+		//
+		_displacePass = new DisplacementPass();
+		_displacePass.enabled = true;
+		_composer.addPass( _displacePass );
 		
-		//color = new DisplacementPass(); //new ShaderPass(DisplaceShader.getObject(_textures[0]));
-		color = new XLoopPass();
-		_composer.addPass(color);
-		//_composer.addPass(tilt);
-		//_composer.addPass(vig);
+		//passes
+		_xLoopPass = new XLoopPass();
+		_xLoopPass.enabled = true;
+		_composer.addPass(_xLoopPass);
 		
-		//_composer.addPass(dhiza);
+		//_colorPass = new ColorMapPass();
+		//_colorPass.enabled = true;
+		//_composer.addPass(_colorPass);
+		
+		
 		_composer.addPass( _copyPass );
-		
-		//color.renderToScreen = true;
-		
 		_copyPass.clear = true;
 		_copyPass.renderToScreen = true;
 		
@@ -76,35 +93,44 @@ class PostProcessing2
 		
 	}
 	
+	
+	//color 
+	//displace1
+	//displace2
+	
 	public function change(isColor:Bool,isDisplace:Bool):Void {
 		
-		color.setTexture(isColor,isDisplace);
+		_xLoopPass.setTexture(isColor,isDisplace);
+		_displacePass.setTexture(isColor, isDisplace);
 		
 	}
 	
-	//public function flash():Void {
+	//changeMode 
+	/*
+	public function changeMode():Void {
 		
-	//	change();
+		var s:String = _modeList[_mode % _modeList.length];
+		switch(s) {
+			case MODE_NORMAL:
+				trace("a");
+			case MODE_DISPLACEMENT_A:
+				trace("b");
+			case MODE_DISPLACEMENT_B:
+				trace("c");				
+			case MODE_COLOR:
+				trace("d");			
+		}
 		
-	//}
+		_mode++;
+	}*/
 	
-	public function render():Void {
-		
-		
-		//color.uniforms.counter.value = counter;
-		//_digital.uniforms.seed_x.value = Math.random();
-		
-	//	v.uniforms.offset.value = 1.0;// Math.random();
-		//v.uniforms.darkness.value = 1.0;
-		
-		_composer.render();//render2
-		
-		
-	}
 	
 	public function update(audio:MyAudio) 
 	{
-		color.update(audio);
+		_xLoopPass.update(audio);
+		_displacePass.update(audio);
+		
+		_composer.render();
 		
 		/*
 		tilt.uniforms.v.value = 2 / 512 + 1 / 512 * Math.sin(_rad);

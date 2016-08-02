@@ -110,6 +110,7 @@ class MyFaceSingle extends Object3D
 		switch( matMode ) {
 			case MyFace.MAT_DEFAULT:
 				dae.material = cast _daeLoader.material;
+				
 			case MyFace.MAT_DEPTH:
 				dae.material = cast new MeshDepthMaterial();
 			

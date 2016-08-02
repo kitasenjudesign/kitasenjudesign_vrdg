@@ -28,6 +28,24 @@ class DisplacementPass extends ShaderPass
 					uniform float isDisplace;
 					uniform float isColor;
 					varying vec2 vUv;
+					
+					vec4 getColor(vec4 texel) {
+						
+						vec4 out1 = vec4(0.0);
+						vec2 pp = vec2( 0.5, fract( texel.x + counter ) );
+							if ( pp.y < 0.5) {
+								pp.y = pp.y * 2.0;
+								out1 = texture2D( colTexture, pp );						
+							}else {
+								pp.y = (1.0 - (pp.y - 0.5) * 2.0);				
+								out1 = texture2D( colTexture, pp );
+							}
+							if ( texel.x == 0.0 ) {
+								out1 = vec4(0.0, 0.0, 0.0, 1.0);
+							}		
+							return out1;
+					}
+					
 					void main() {
 						
 						//dispace
@@ -59,17 +77,7 @@ class DisplacementPass extends ShaderPass
 						vec4 out1 = vec4(0.0);
 						
 						if( isColor == 1.0){
-							vec2 pp = vec2( 0.5, fract( texel.x + counter ) );
-							if ( pp.y < 0.5) {
-								pp.y = pp.y * 2.0;
-								out1 = texture2D( colTexture, pp );						
-							}else {
-								pp.y = (1.0 - (pp.y - 0.5) * 2.0);				
-								out1 = texture2D( colTexture, pp );
-							}
-							if ( texel.x == 0.0 ) {
-								out1 = vec4(0.0, 0.0, 0.0, 1.0);
-							}							
+							out1 = getColor(texel);
 						}else {
 							out1 = texel;
 						}
@@ -140,6 +148,8 @@ class DisplacementPass extends ShaderPass
 	//
 	public function update(audio:MyAudio):Void {
 	
+		if (!enabled) return;
+		
 		uniforms.strengthX.value = Math.pow( audio.freqByteData[3] / 255, 4) * 0.75;
 		uniforms.strengthY.value = Math.pow( audio.freqByteData[7] / 255, 4) * 0.75;
 		uniforms.counter.value += audio.freqByteData[3] / 255 * 0.8;		
