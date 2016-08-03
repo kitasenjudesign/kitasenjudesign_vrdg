@@ -68,10 +68,9 @@ class BePoints
 			}
 			oy = -letter.getHeight(moji) / 2;
 		}
-			
-			
-		trace( moji );
-		trace( letter );
+		
+		
+		trace( moji );// + " " + letter );
 		var len:Int = motif.length;
 		for (i in 0...len){
 			switch (motif[i][0]){

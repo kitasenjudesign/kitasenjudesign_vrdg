@@ -89,8 +89,8 @@ class DeDeDigit extends Object3D
 			var v:ExVector3 = MyPointCloud.cloud.getNextPoint();
 			v.enabled = false;
 			_factory.push( v );
-			
 		}
+		
 	}
 	
 	/**
@@ -104,7 +104,7 @@ class DeDeDigit extends Object3D
 		_space = space;
 		
 		//trace("==init2");
-		_strokes = StrokeUtil.getStrokes(str, scale, font);
+		_strokes = StrokeUtil.getStrokes(str, scale, _font);
 
 		//分類する
 		_dots = [];
@@ -215,6 +215,10 @@ class DeDeDigit extends Object3D
 		
 		_sec = rr % 1;
 		_counter = 0;// 0.1;
+		var len:Int = _factory.length;
+		for (i in 0...len) {
+			_factory[i].r = 0;
+		}
 		/*
 		if(boost){
 			_counter += _rotSpeed * 140;
@@ -249,6 +253,7 @@ class DeDeDigit extends Object3D
 	public function update(speed:Float):Void {
 
 		if( isRotate ){
+			
 			this.rotation.x += _vx;// 0.012;
 			this.rotation.y += _vy;// 0.015;
 			this.rotation.z += _vz;// 0.018;
@@ -261,9 +266,11 @@ class DeDeDigit extends Object3D
 			_vz *= 0.93;
 			
 		}else {
-			this.rotation.x += ( 0 -this.rotation.x) / 14;
-			this.rotation.y += ( 0 -this.rotation.y) / 14;
-			this.rotation.z += ( 0 -this.rotation.z) / 14;			
+			
+			this.rotation.x += ( 0 -this.rotation.x) / 6;
+			this.rotation.y += ( 0 -this.rotation.y) / 6;
+			this.rotation.z += ( 0 -this.rotation.z) / 6;			
+			
 		}
 		
 		var rr:Float = _sec*2;//0-1

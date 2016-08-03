@@ -1092,7 +1092,7 @@ dede.DeDeDigit.prototype = $extend(THREE.Object3D.prototype,{
 	,setStrokes: function(str,scale,space,font) {
 		this._font = font;
 		this._space = space;
-		this._strokes = typo.StrokeUtil.getStrokes(str,scale,font);
+		this._strokes = typo.StrokeUtil.getStrokes(str,scale,this._font);
 		this._dots = [];
 		this._numDots = 0;
 		var _g1 = 0;
@@ -1161,6 +1161,12 @@ dede.DeDeDigit.prototype = $extend(THREE.Object3D.prototype,{
 	,setSec: function(rr) {
 		this._sec = rr % 1;
 		this._counter = 0;
+		var len = this._factory.length;
+		var _g = 0;
+		while(_g < len) {
+			var i = _g++;
+			this._factory[i].r = 0;
+		}
 	}
 	,addSec: function(rr,boost) {
 		this._sec += rr;
@@ -1182,9 +1188,9 @@ dede.DeDeDigit.prototype = $extend(THREE.Object3D.prototype,{
 			this._vy *= 0.93;
 			this._vz *= 0.93;
 		} else {
-			this.rotation.x += (0 - this.rotation.x) / 14;
-			this.rotation.y += (0 - this.rotation.y) / 14;
-			this.rotation.z += (0 - this.rotation.z) / 14;
+			this.rotation.x += (0 - this.rotation.x) / 6;
+			this.rotation.y += (0 - this.rotation.y) / 6;
+			this.rotation.z += (0 - this.rotation.z) / 6;
 		}
 		var rr = this._sec * 2;
 		if(rr > 1) {
@@ -1502,7 +1508,7 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 				var i1 = _g21++;
 				var line1 = this._lines[i1];
 				var type1 = Math.floor(Math.random() * 6);
-				line1.reset(type1,data,true);
+				line1.reset(type1,data,false);
 				line1.setSec(data.startSec);
 			}
 			break;
@@ -1783,7 +1789,7 @@ dede.cuts.DeDeCutOneLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 	,next: function() {
 		var type = Math.floor(6 * Math.random());
 		var isRotate;
-		if(this._nextCounter % 5 == 0) isRotate = true; else isRotate = false;
+		if(this._nextCounter % 5 == 4) isRotate = true; else isRotate = false;
 		this._lines.setDotType(type,isRotate);
 		this._nextCounter++;
 	}
@@ -2677,7 +2683,6 @@ typo.BePoints.prototype = {
 			oy = -letter.getHeight(moji) / 2;
 		}
 		console.log(moji);
-		console.log(letter);
 		var len = motif.length;
 		var _g = 0;
 		while(_g < len) {
@@ -3084,7 +3089,7 @@ dede.DeDeLine.SCALE = 0.65;
 dede.cuts.DeDeParam.SAME_ALL = 0;
 dede.cuts.DeDeParam.SAME_LINE = 1;
 dede.cuts.DeDeParam.SAME_DIFF = 2;
-dede.cuts.DeDeString.texts = [{ text : "VRDG3@DMMVRTHATHRE", font : 0, spaceX : 50},{ text : "NIGHT VOICE ", font : 1, spaceX : 50},{ text : "DEDEMOUSE", font : 1, spaceX : 30},{ text : "DEDE", font : 1, spaceX : 50},{ text : "KITASENJUDESIGN", font : 1, spaceX : 50},{ text : "デデデデデデ", font : 0, spaceX : 30},{ text : "デデマウス", font : 0, spaceX : 50}];
+dede.cuts.DeDeString.texts = [{ text : "VRDG3DMMVRTHATHRE", font : 0, spaceX : 50},{ text : "NIGHT VOICE ", font : 1, spaceX : 50},{ text : "DEDEMOUSE", font : 1, spaceX : 30},{ text : "DEDE", font : 1, spaceX : 50},{ text : "KITASENJUDESIGN", font : 1, spaceX : 50},{ text : "デデデデデデ", font : 0, spaceX : 30},{ text : "デデマウス", font : 0, spaceX : 50}];
 sound.MyAudio.FFTSIZE = 64;
 three._WebGLRenderer.RenderPrecision_Impl_.highp = "highp";
 three._WebGLRenderer.RenderPrecision_Impl_.mediump = "mediump";

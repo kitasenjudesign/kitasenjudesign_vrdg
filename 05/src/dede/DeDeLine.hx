@@ -182,6 +182,7 @@ class DeDeLine extends Object3D
 				
 				var idx:Int = _getMaxPosIndex();
 
+				//reset suru
 				_digits[i].setStrokes(_getNextText(), SCALE, _data.space, _data.font);//////////////////////////
 								
 				var ww:Float = StrokeUtil.getWidth( _digits[idx].getMoji(), _data.font);

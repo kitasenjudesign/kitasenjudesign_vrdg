@@ -89,7 +89,7 @@ class DeDeLines extends Object3D
 				var type:Int = Math.floor(Math.random() * 6);
 				for (i in 0..._lines.length) {
 					var line:DeDeLine = _lines[i];
-					line.reset( type, data,false );
+					line.reset( type, data,false );//
 					line.setSec(data.startSec);
 				}
 				
@@ -97,7 +97,7 @@ class DeDeLines extends Object3D
 				for (i in 0..._lines.length) {
 					var line:DeDeLine = _lines[i];
 					var type:Int = Math.floor(Math.random() * 6);
-					line.reset( type, data,true );// txt, type, isRotate, font, speed, space, spaceX );
+					line.reset( type, data, false );// txt, type, isRotate, font, speed, space, spaceX );
 					line.setSec(data.startSec);
 				}	
 				

@@ -53,6 +53,7 @@ class StrokeUtil
 		}
 		
 		if (_map.get(s) != null) {
+			//get
 			return _map.get(fontIndex+"_"+s);
 		}
 		
@@ -65,6 +66,7 @@ class StrokeUtil
 		var pp:Array<Array<Vector2>> = bpoints.getLetterPoints(s, true, scale, _font, true);
 		var strokes:Array<Stroke> = bpoints.getStrokes(pp);
 		
+		//seg
 		_map.set(fontIndex+"_"+s, strokes);
 
 		return strokes;

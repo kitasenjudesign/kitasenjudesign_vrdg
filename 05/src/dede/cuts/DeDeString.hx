@@ -10,8 +10,9 @@ class DeDeString
 	public var text:String = "";
 	public var font:Int = 0;
 	public var spaceX:Float = 0;
+	public var type:Int = -1;
 	public static var texts:Array<Dynamic> = [
-		{ text:"VRDG3@DMMVRTHATHRE", font:0, spaceX:50 },
+		{ text:"VRDG3DMMVRTHATHRE", font:0, spaceX:50 },
 		{ text:"NIGHT VOICE ", font:1, spaceX:50 },		
 		{ text:"DEDEMOUSE", font:1, spaceX:30 },
 		{ text:"DEDE", font:1, spaceX:50 },
