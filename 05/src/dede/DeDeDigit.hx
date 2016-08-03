@@ -214,6 +214,7 @@ class DeDeDigit extends Object3D
 	public function setSec(rr:Float):Void {
 		
 		_sec = rr % 1;
+		_counter = 0;// 0.1;
 		/*
 		if(boost){
 			_counter += _rotSpeed * 140;

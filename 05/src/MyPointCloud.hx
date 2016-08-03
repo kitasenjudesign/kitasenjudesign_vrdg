@@ -13,6 +13,9 @@ import three.Object3D;
 import three.PointCloud;
 import three.PointCloudMaterial;
 import three.Vector3;
+import tween.easing.Power0;
+import tween.TweenMax;
+import tween.TweenMaxHaxe;
 
 /**
  * ...
@@ -28,10 +31,11 @@ class MyPointCloud extends Object3D
 	private var _mat:PointCloudMaterial;
 	private var _isRandom:Bool = false;
 	private var _lineMat:LineBasicMaterial;
+	var _twn:TweenMaxHaxe;
 	
 	public var _cloud:PointCloud;
 	public var _line:LineSegments;
-	
+	public var _offsetIndex:Int = 0;
 	public static var cloud:MyPointCloud;
 	
 	
@@ -158,13 +162,23 @@ class MyPointCloud extends Object3D
 	public function setRandom(b:Bool):Void {
 		_isRandom = b;
 		if (_isRandom) {
-			_lineMat.opacity = 0.6;
+			_lineMat.opacity = 0.9;
 			_lineMat.transparent = true;			
 		}else {
 			_lineMat.opacity = 1;
 			_lineMat.transparent = false;
 		}
+		
+		_offsetIndex = Math.floor( 1000 * Math.random() );
+		/*
+		TweenMax.to(this, 1, {
+			delay:1,
+			ease:Power0.easeInOut,
+			_offsetIndex:10
+		});
+		*/
 	}
+	
 	
 	/**
 	 * _isRandom=trueだとこれが炸裂する
@@ -189,7 +203,8 @@ class MyPointCloud extends Object3D
 			var lines:Array<Vector3> = getNextLine();
 			
 			var vv:ExVector3 = cast _cloud.geometry.vertices[ okDots[i].rIndex ];
-			//connectしたい人がenable のとき
+
+			//random ni tsunagu
 			if (vv.enabled) {
 				lines[0].copy( okDots[i] );
 				//lines[0].z = 0;
@@ -199,9 +214,26 @@ class MyPointCloud extends Object3D
 				
 				lines[0].copy( okDots[i] );//okDots[(i+33)%okDots.length] );
 				//lines[0].z = 0;
-				lines[1].copy( okDots[(i+100)%okDots.length] );
+				lines[1].copy( okDots[(i+Math.floor(_offsetIndex))%okDots.length] );
 				//lines[1].z = 0;
+				
 			}
+			
+			//connectしたい人がenable のとき
+			/*
+			if (vv.enabled) {
+				lines[0].copy( okDots[i] );
+				//lines[0].z = 0;
+				lines[1].copy( vv );
+				//lines[1].z = 0;			
+			}else {
+				
+				lines[0].copy( okDots[i] );//okDots[(i+33)%okDots.length] );
+				//lines[0].z = 0;
+				lines[1].copy( okDots[(i+Math.floor(_offsetIndex))%okDots.length] );
+				//lines[1].z = 0;
+				
+			}*/
 			
 		}
 		

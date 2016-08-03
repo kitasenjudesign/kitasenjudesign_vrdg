@@ -565,6 +565,7 @@ fbo.Fbo.prototype = {
 	}
 	,update: function(audio,render) {
 		this._simuShaderMat.update(audio);
+		this._particles.updateIconPos(525);
 		if(this._flag) {
 			render.render(this._simScene,this._simCam,this._posRttA,true);
 			this._particles.getMaterial().uniforms.positions.value = this._posRttA;
@@ -685,6 +686,19 @@ fbo.RenderParticle.prototype = $extend(THREE.Points.prototype,{
 		geometry.addAttribute("position",new THREE.BufferAttribute(vertices,3));
 		geometry.addAttribute("aOffset",new THREE.BufferAttribute(aOffsets,2));
 		return geometry;
+	}
+	,updateIconPos: function(idx) {
+		this._particleGeo.attributes.aOffset.needsUpdate = true;
+		var ary = this._particleGeo.attributes.aOffset.array;
+		var l = this._width * this._height;
+		var _g = 0;
+		while(_g < l) {
+			var i = _g++;
+			var i2 = i * 2;
+			var pos = this._getIconPos(idx);
+			ary[i2] = pos.x;
+			ary[i2 + 1] = pos.y;
+		}
 	}
 	,_getIconPos: function(index) {
 		var nn = 32;

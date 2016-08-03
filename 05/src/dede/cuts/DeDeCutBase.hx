@@ -17,6 +17,8 @@ class DeDeCutBase
 	private var _lines:DeDeLines;
 	private var _vrdg:VrdgLines;
 	private var _scene:Scene;
+	private var _nextCounter:Int = 0;
+	private var _isLine:Bool = false;
 	
 	public function new() 
 	{
@@ -46,13 +48,28 @@ class DeDeCutBase
 	
 	public function countUp():Void {
 		
+		_lines.countUp(1/30);
+		_vrdg.countUp(1/30);
 		
 	}
 	
 	public function coundDown():Void {
-	
+		
+		
 		
 	}
+	
+	/**
+	 * 
+	 * @param	sec
+	 */
+	public function setRandomLine():Void {
+	
+		_isLine = !_isLine;
+		MyPointCloud.cloud.setRandom(_isLine);
+		
+	}
+	
 	
 	public function next():Void
 	{

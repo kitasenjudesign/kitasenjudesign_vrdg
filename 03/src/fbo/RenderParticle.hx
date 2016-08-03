@@ -66,6 +66,23 @@ class RenderParticle extends Points
 		
 	}
 	
+	
+	public function updateIconPos(idx:Int):Void {
+		
+		_particleGeo.attributes.aOffset.needsUpdate = true;
+		var ary:Array<Dynamic> = _particleGeo.attributes.aOffset.array;
+		
+		var l:Int = _width * _height;
+		for ( i in 0...l) {
+            var i2:Int = i * 2;
+			var pos:Vector2 = _getIconPos(idx);
+			ary[ i2 ] = pos.x;
+			ary[ i2 + 1 ] = pos.y;
+        }
+		
+	}
+	
+	
 	private function _getIconPos(index:Int):Vector2 {
 		
 		var nn:Int = RenderShaderMat.animationFrameLength;

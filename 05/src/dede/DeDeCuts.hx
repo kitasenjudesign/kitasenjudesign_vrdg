@@ -82,10 +82,11 @@ class DeDeCuts
 			_currentCut.next();
 		}
 		if (Std.parseInt(e.keyCode) == Dat.UP) {
-			//_currentCut.countUp();
+			_currentCut.countUp();
 		}
-		if (Std.parseInt(e.keyCode) == Dat.DOWN) {
+		if (Std.parseInt(e.keyCode) == Dat.LEFT) {
 			//_currentCut.countDown();
+			_currentCut.setRandomLine();
 		}		
 		
 		

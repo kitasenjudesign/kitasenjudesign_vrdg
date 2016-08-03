@@ -122,12 +122,12 @@ MainDeDe.prototype = {
 		this._bg = new dede.BlinkPlane();
 		this._bg.position.z = -40;
 		this._bg.scale.set(2,2,2);
-		this._scene.add(this._bg);
 		common.StageRef.setCenter();
 		window.document.addEventListener("keydown",$bind(this,this._onKeyDown));
 	}
 	,_onKeyDown: function(e) {
-		if(Std.parseInt(e.keyCode) == 39) this._bg.flash();
+		if(Std.parseInt(e.keyCode) == 39) {
+		}
 		if(Std.parseInt(e.keyCode) == 79) this._camera.setCamType(0);
 		if(Std.parseInt(e.keyCode) == 80) this._camera.setCamType(1);
 	}
@@ -176,6 +176,7 @@ MyColor.getColor = function() {
 	return new THREE.Color(16777215);
 };
 var MyPointCloud = function() {
+	this._offsetIndex = 0;
 	this._isRandom = false;
 	this._countL = 0;
 	this._count = 0;
@@ -252,12 +253,13 @@ MyPointCloud.prototype = $extend(THREE.Object3D.prototype,{
 	,setRandom: function(b) {
 		this._isRandom = b;
 		if(this._isRandom) {
-			this._lineMat.opacity = 0.6;
+			this._lineMat.opacity = 0.9;
 			this._lineMat.transparent = true;
 		} else {
 			this._lineMat.opacity = 1;
 			this._lineMat.transparent = false;
 		}
+		this._offsetIndex = Math.floor(1000 * Math.random());
 	}
 	,connectRandomLine: function() {
 		if(!this._isRandom) return;
@@ -281,7 +283,7 @@ MyPointCloud.prototype = $extend(THREE.Object3D.prototype,{
 				lines[1].copy(vv);
 			} else {
 				lines[0].copy(okDots[i1]);
-				lines[1].copy(okDots[(i1 + 100) % okDots.length]);
+				lines[1].copy(okDots[(i1 + Math.floor(this._offsetIndex)) % okDots.length]);
 			}
 		}
 	}
@@ -794,6 +796,13 @@ clock.DotDigitLine.__super__ = THREE.Object3D;
 clock.DotDigitLine.prototype = $extend(THREE.Object3D.prototype,{
 });
 var common = {};
+common.Callback = function() {
+};
+common.Callback.create = function(scope,func,args) {
+	return function() {
+		func.apply(scope,args);
+	};
+};
 common.Config = function() {
 };
 common.Config.prototype = {
@@ -844,24 +853,45 @@ common.Dat._onKeyDown = function(e) {
 		if(common.Dat.gui.domElement.style.display == "block") common.Dat.hide(); else common.Dat.show();
 		break;
 	case 49:
-		window.location.href = "../../01/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL1);
 		break;
 	case 50:
-		window.location.href = "../../02/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL2);
 		break;
 	case 51:
-		window.location.href = "../../03/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL3);
 		break;
 	case 52:
-		window.location.href = "../../04/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL4);
 		break;
 	case 53:
-		window.location.href = "../../05/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL5);
 		break;
 	case 54:
-		window.location.href = "../../06/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL6);
 		break;
 	}
+};
+common.Dat._goURL1 = function() {
+	common.Dat._goURL("../../01/bin/");
+};
+common.Dat._goURL2 = function() {
+	common.Dat._goURL("../../02/bin/");
+};
+common.Dat._goURL3 = function() {
+	common.Dat._goURL("../../03/bin/");
+};
+common.Dat._goURL4 = function() {
+	common.Dat._goURL("../../04/bin/");
+};
+common.Dat._goURL5 = function() {
+	common.Dat._goURL("../../05/bin/");
+};
+common.Dat._goURL6 = function() {
+	common.Dat._goURL("../../06/bin/");
+};
+common.Dat._goURL = function(url) {
+	window.location.href = url;
 };
 common.Dat.show = function() {
 	common.Dat.gui.domElement.style.display = "block";
@@ -888,7 +918,12 @@ common.FadeSheet.prototype = {
 	fadeIn: function() {
 		this.element.style.opacity = "0";
 		this.opacity = 0;
-		TweenMax.to(this,1.0,{ opacity : 1, delay : 0.2, ease : Power0.easeInOut, onUpdate : $bind(this,this._onUpdate)});
+		if(this._twn != null) this._twn.kill();
+		this._twn = TweenMax.to(this,0.8,{ opacity : 1, delay : 0.2, ease : Power0.easeInOut, onUpdate : $bind(this,this._onUpdate)});
+	}
+	,fadeOut: function(callback) {
+		if(this._twn != null) this._twn.kill();
+		this._twn = TweenMax.to(this,0.5,{ opacity : 0, ease : Power0.easeInOut, onUpdate : $bind(this,this._onUpdate), onComplete : callback});
 	}
 	,_onUpdate: function() {
 		this.element.style.opacity = "" + this.opacity;
@@ -925,6 +960,10 @@ common.StageRef = function() {
 common.StageRef.fadeIn = function() {
 	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
 	common.StageRef.sheet.fadeIn();
+};
+common.StageRef.fadeOut = function(callback) {
+	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
+	common.StageRef.sheet.fadeOut(callback);
 };
 common.StageRef.setCenter = function() {
 	if(!common.Dat.bg) {
@@ -1006,10 +1045,8 @@ dede.DeDeCuts.prototype = {
 			this._currentCut.start();
 		}
 		if(Std.parseInt(e.keyCode) == 39) this._currentCut.next();
-		if(Std.parseInt(e.keyCode) == 38) {
-		}
-		if(Std.parseInt(e.keyCode) == 40) {
-		}
+		if(Std.parseInt(e.keyCode) == 38) this._currentCut.countUp();
+		if(Std.parseInt(e.keyCode) == 37) this._currentCut.setRandomLine();
 	}
 	,update: function(audio) {
 		if(this._currentCut != null) this._currentCut.update(audio);
@@ -1123,6 +1160,7 @@ dede.DeDeDigit.prototype = $extend(THREE.Object3D.prototype,{
 	}
 	,setSec: function(rr) {
 		this._sec = rr % 1;
+		this._counter = 0;
 	}
 	,addSec: function(rr,boost) {
 		this._sec += rr;
@@ -1295,7 +1333,10 @@ dede.DeDeLine.prototype = $extend(THREE.Object3D.prototype,{
 			this._digits[i].setGeoMax(n);
 		}
 	}
-	,reset: function(type,data) {
+	,resetRandom: function() {
+	}
+	,reset: function(type,data,isTypeRandom) {
+		if(isTypeRandom == null) isTypeRandom = false;
 		this._data = data;
 		this._textIndex = 0;
 		var ox = -this._width / 2 + data.startX;
@@ -1308,6 +1349,7 @@ dede.DeDeLine.prototype = $extend(THREE.Object3D.prototype,{
 			this._digits[i].position.x = ox + ww / 2;
 			this._digits[i].setStrokes(t,0.65,this._data.space,this._data.font);
 			this._digits[i].reset();
+			if(isTypeRandom) type = Math.floor(Math.random() * 6);
 			this._digits[i].setType(type,data.isRotate);
 			this._digits[i].update(2);
 			ox += ww + data.spaceX;
@@ -1439,29 +1481,42 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 		this._flash();
 	}
 	,changeType: function(data) {
-		MyPointCloud.cloud.setRandom(data.isRandomLine);
-		if(data.isAllSame) {
-			var _g1 = 0;
-			var _g = this._lines.length;
-			while(_g1 < _g) {
-				var i = _g1++;
+		var _g = data.sameType;
+		switch(_g) {
+		case 0:
+			window.alert("allsame!!");
+			var type = Math.floor(Math.random() * 6);
+			var _g2 = 0;
+			var _g1 = this._lines.length;
+			while(_g2 < _g1) {
+				var i = _g2++;
 				var line = this._lines[i];
-				var type = Math.floor(Math.random() * 6);
-				if(data.isRandomLine) type = Math.floor(Math.random() * 2);
-				line.reset(type,data);
+				line.reset(type,data,false);
 				line.setSec(data.startSec);
 			}
-		} else {
-			var type1 = Math.floor(Math.random() * 6);
-			if(data.isRandomLine) type1 = Math.floor(Math.random() * 2);
-			var _g11 = 0;
-			var _g2 = this._lines.length;
-			while(_g11 < _g2) {
-				var i1 = _g11++;
+			break;
+		case 1:
+			var _g21 = 0;
+			var _g11 = this._lines.length;
+			while(_g21 < _g11) {
+				var i1 = _g21++;
 				var line1 = this._lines[i1];
-				line1.reset(type1,data);
+				var type1 = Math.floor(Math.random() * 6);
+				line1.reset(type1,data,true);
 				line1.setSec(data.startSec);
 			}
+			break;
+		case 2:
+			var type2 = Math.floor(Math.random() * 6);
+			var _g22 = 0;
+			var _g12 = this._lines.length;
+			while(_g22 < _g12) {
+				var i2 = _g22++;
+				var line2 = this._lines[i2];
+				line2.reset(type2,data,true);
+				line2.setSec(data.startSec);
+			}
+			break;
 		}
 	}
 	,_flash: function() {
@@ -1478,6 +1533,14 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 		while(_g1 < _g) {
 			var i = _g1++;
 			this._lines[i].setDotType(type,isRotate);
+		}
+	}
+	,setSec: function(f) {
+		var _g1 = 0;
+		var _g = this._lines.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this._lines[i].setSec(f);
 		}
 	}
 	,setGeoMax: function(n,enables) {
@@ -1560,7 +1623,8 @@ dede.VrdgLine.prototype = $extend(dede.DeDeLine.prototype,{
 		data.space = 3 + 18 * Math.random();
 		this.reset(Math.floor(Math.random() * 4),data);
 	}
-	,reset: function(type,data) {
+	,reset: function(type,data,isTypeRandom) {
+		if(isTypeRandom == null) isTypeRandom = false;
 		this.setDotType(type,data.isRotate);
 		var ox = -this._width / 2;
 		var _g1 = 0;
@@ -1604,6 +1668,8 @@ dede.VrdgLines.prototype = $extend(dede.DeDeLines.prototype,{
 });
 dede.cuts = {};
 dede.cuts.DeDeCutBase = function() {
+	this._isLine = false;
+	this._nextCounter = 0;
 	this._counter = 0;
 };
 dede.cuts.DeDeCutBase.prototype = {
@@ -1616,8 +1682,14 @@ dede.cuts.DeDeCutBase.prototype = {
 	,start: function() {
 	}
 	,countUp: function() {
+		this._lines.countUp(0.0333333333333333329);
+		this._vrdg.countUp(0.0333333333333333329);
 	}
 	,coundDown: function() {
+	}
+	,setRandomLine: function() {
+		this._isLine = !this._isLine;
+		MyPointCloud.cloud.setRandom(this._isLine);
 	}
 	,next: function() {
 	}
@@ -1672,10 +1744,11 @@ dede.cuts.DeDeCutMultiLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		this._vrdg.visible = false;
 		this._vrdg.setGeoMax(1);
 		this._cam.setZoom(0.7);
+		this.next();
 	}
 	,next: function() {
 		var data = dede.cuts.DeDeParam.getParam();
-		data.speedX = -5;
+		data.speedX = -1;
 		this._lines.changeType(data);
 	}
 	,update: function(audio) {
@@ -1710,8 +1783,9 @@ dede.cuts.DeDeCutOneLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 	,next: function() {
 		var type = Math.floor(6 * Math.random());
 		var isRotate;
-		if(Math.random() < 0.5) isRotate = true; else isRotate = false;
+		if(this._nextCounter % 5 == 0) isRotate = true; else isRotate = false;
 		this._lines.setDotType(type,isRotate);
+		this._nextCounter++;
 	}
 	,update: function(audio) {
 		this._counter++;
@@ -1724,14 +1798,13 @@ dede.cuts.DeDeCutOneLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 	}
 });
 dede.cuts.DeDeParam = function() {
+	this.sameType = 0;
 	this.speedX = -2;
 	this.isRandomStartSec = false;
 	this.space = 0;
 	this.speed = 0;
 	this.startSec = 0;
 	this.isRotate = false;
-	this.isRandomLine = false;
-	this.isAllSame = false;
 	this.spaceX = 0;
 	this.font = 0;
 	this.startX = 0;
@@ -1743,10 +1816,8 @@ dede.cuts.DeDeParam.getParam = function() {
 	data.txt = str.text;
 	data.font = str.font;
 	data.spaceX = str.spaceX;
-	if(Math.random() < 0.5) data.isAllSame = true; else data.isAllSame = false;
-	if(Math.random() < 0.2) data.isRandomLine = true; else data.isRandomLine = false;
+	data.sameType = Math.floor(3 * Math.random());
 	if(Math.random() < 0.2) data.isRotate = true; else data.isRotate = false;
-	if(data.isRandomLine) if(Math.random() < 0.7) data.isRotate = true; else data.isRotate = false;
 	if(Math.random() < 0.5) data.isRandomStartSec = true; else data.isRandomStartSec = false;
 	data.startSec = Math.random();
 	data.speed = 2;
@@ -2605,6 +2676,8 @@ typo.BePoints.prototype = {
 			if(moji == "1") ox += 5;
 			oy = -letter.getHeight(moji) / 2;
 		}
+		console.log(moji);
+		console.log(letter);
 		var len = motif.length;
 		var _g = 0;
 		while(_g < len) {
@@ -3008,7 +3081,10 @@ dede.DeDeLine.SPEEDX1 = -2;
 dede.DeDeLine.WIDTH = 2400;
 dede.DeDeLine.SPACE_R = 1.3;
 dede.DeDeLine.SCALE = 0.65;
-dede.cuts.DeDeString.texts = [{ text : "VRDG3", font : 0, spaceX : 50},{ text : "NIGHT VOICE ", font : 1, spaceX : 50},{ text : "DEDEMOUSE", font : 1, spaceX : 20},{ text : "DEDE", font : 1, spaceX : 50},{ text : "KITASENJUDESIGN", font : 1, spaceX : 50},{ text : "デデデデデデ", font : 0, spaceX : 10},{ text : "デデマウス", font : 0, spaceX : 50}];
+dede.cuts.DeDeParam.SAME_ALL = 0;
+dede.cuts.DeDeParam.SAME_LINE = 1;
+dede.cuts.DeDeParam.SAME_DIFF = 2;
+dede.cuts.DeDeString.texts = [{ text : "VRDG3@DMMVRTHATHRE", font : 0, spaceX : 50},{ text : "NIGHT VOICE ", font : 1, spaceX : 50},{ text : "DEDEMOUSE", font : 1, spaceX : 30},{ text : "DEDE", font : 1, spaceX : 50},{ text : "KITASENJUDESIGN", font : 1, spaceX : 50},{ text : "デデデデデデ", font : 0, spaceX : 30},{ text : "デデマウス", font : 0, spaceX : 50}];
 sound.MyAudio.FFTSIZE = 64;
 three._WebGLRenderer.RenderPrecision_Impl_.highp = "highp";
 three._WebGLRenderer.RenderPrecision_Impl_.mediump = "mediump";

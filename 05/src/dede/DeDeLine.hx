@@ -70,18 +70,16 @@ class DeDeLine extends Object3D
 		}
 	}
 	
+	public function resetRandom():Void {
+		
+	}
+	
 	public function reset(
-		//txt:String, type:Int, isRotate:Bool, font:Int, speed:Float, space:Float, spaceX:Float, startX:Float = 0
-		type:Int, data:DeDeParam
+		type:Int, data:DeDeParam, isTypeRandom:Bool = false
 	):Void
 	{
 		//
 		_data = data;
-		//_spaceX = data.spaceX;
-		//_speed = data.speed;// 2 + 2 * Math.random();
-		//_space = data.space;// 3 + 18 * Math.random();
-		//_font = data.font;
-		//_text = data.txt;
 		_textIndex = 0;
 		
 		var ox:Float = -_width / 2 + data.startX;// _digits[0].position.x;
@@ -93,6 +91,9 @@ class DeDeLine extends Object3D
 			_digits[i].position.x = ox + ww/2;// - _width / 2;
 			_digits[i].setStrokes(t, SCALE, _data.space, _data.font);//////////////////////////
 			_digits[i].reset();
+			if (isTypeRandom) {
+				type = Math.floor(Math.random() * 6);
+			}
 			_digits[i].setType( type,data.isRotate );
 			_digits[i].update(2);
 			ox += (ww + data.spaceX);

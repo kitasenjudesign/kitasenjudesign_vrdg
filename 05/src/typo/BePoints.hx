@@ -70,6 +70,8 @@ class BePoints
 		}
 			
 			
+		trace( moji );
+		trace( letter );
 		var len:Int = motif.length;
 		for (i in 0...len){
 			switch (motif[i][0]){

@@ -17,16 +17,15 @@ class DeDeCutMultiLine  extends DeDeCutBase
 				
 		_lines.visible = true;
 		
-		
 		_lines.setGeoMax(150,[true,true,true]);
 		//_lines.setSpeedX( DeDeLine.SPEEDX1 );
-		
 		
 		_vrdg.visible = false;
 		_vrdg.setGeoMax(1);
 		
 		_cam.setZoom(0.7);
 		
+		next();
 	}
 	
 	/**
@@ -34,11 +33,11 @@ class DeDeCutMultiLine  extends DeDeCutBase
 	 */
 	override public function next():Void
 	{
-		
 		var data:DeDeParam = DeDeParam.getParam();
-		data.speedX = -5;
+		data.speedX = -1;
+		//data.spaceX = 
 		_lines.changeType(data);
-		
+		//MyPointCloud.cloud.setRandomLine();
 	}	
 	
 	

@@ -32,8 +32,8 @@ class DeDeParam
 	public var startX:Float = 0;
 	public var font:Int = 0;
 	public var spaceX:Float = 0;
-	public var isAllSame:Bool = false;
-	public var isRandomLine:Bool = false;
+	//public var isAllSame:Bool = false;
+	//public var isRandomLine:Bool = false;
 	public var isRotate:Bool = false;
 	public var startSec:Float = 0;
 	public var speed:Float = 0;
@@ -41,6 +41,11 @@ class DeDeParam
 	public var isRandomStartSec:Bool = false;
 	public var speedX:Float = -2;
 	
+	public static inline var SAME_ALL:Int = 0;// "SAME_ALL";
+	public static inline var SAME_LINE:Int = 1;// "SAME_LINE";
+	public static inline var SAME_DIFF:Int = 2;// = "SAME_DIFF";
+	
+	public var sameType:Int = 0;// = "";
 	
 	public function new() 
 	{
@@ -60,12 +65,18 @@ class DeDeParam
 		data.font 		= str.font;
 		data.spaceX 	= str.spaceX;
 		
-		data.isAllSame = Math.random() < 0.5 ? true : false;
-		data.isRandomLine = Math.random() < 0.2 ? true : false;
+		data.sameType = Math.floor(3 * Math.random());
+		
+		//isAllSame
+		//lineSame
+		//allDifferant
+		//3pattern
+		//data.isAllSame = Math.random() < 0.5 ? true : false;
+		//data.isRandomLine = Math.random() < 0.2 ? true : false;
 		data.isRotate = Math.random() < 0.2 ? true : false;
-		if ( data.isRandomLine ) {
-			data.isRotate = Math.random()<0.7 ? true : false;
-		}
+		//if ( data.isRandomLine ) {
+		//	data.isRotate = Math.random()<0.7 ? true : false;
+		//}
 		data.isRandomStartSec = Math.random() < 0.5 ? true : false;
 		data.startSec = Math.random();
 		

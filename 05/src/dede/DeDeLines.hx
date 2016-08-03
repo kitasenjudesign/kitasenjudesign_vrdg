@@ -1,6 +1,7 @@
 package dede;
 import dede.cuts.DeDeParam;
 import dede.cuts.DeDeString;
+import js.Browser;
 import sound.MyAudio;
 import three.LineBasicMaterial;
 import three.Object3D;
@@ -46,11 +47,6 @@ class DeDeLines extends Object3D
 	//suuji kaunto up
 	public function countUp(addX:Float):Void {
 		
-		//_lines.addSec(0.05, true);	
-		//_sec += 1/30;
-		//_sec = _sec % 1;
-		//Tracer.log("countup " + _sec);
-		
 		for (i in 0..._lines.length) {
 			var line:DeDeLine = _lines[i];
 			line.addSec(addX, true);
@@ -83,40 +79,36 @@ class DeDeLines extends Object3D
 		
 		//_sec = Math.random();
 		
-		MyPointCloud.cloud.setRandom(data.isRandomLine);
-		//全部同じ
-		if ( data.isAllSame ) {
-			
-			for (i in 0..._lines.length) {
-				
-				var line:DeDeLine = _lines[i];
-				var type:Int = Math.floor(Math.random() * 6);
-				if (data.isRandomLine) {
-					type = Math.floor(Math.random() * 2);
-				}
-				line.reset( type, data );// txt, type, isRotate, font, speed, space, spaceX );
-				line.setSec(data.startSec);
-				
-			}
-			
-		}else{
+		//MyPointCloud.cloud.setRandom(data.isRandomLine);
 		
-			var type:Int = Math.floor(Math.random() * 6);
-			if (data.isRandomLine) {
-				type = Math.floor(Math.random() * 2);
-			}			
+		//全部同じ
+		switch(data.sameType) {
 			
-			for (i in 0..._lines.length) {
-				var line:DeDeLine = _lines[i];
-				line.reset( type, data );// txt, type, isRotate, font, speed, space, spaceX );
-				//var startSec:Float = Math.random();
-				//if (data.isRandomStartSec) {
-				//	line.setRandomSec();
-				//}else{
+			case DeDeParam.SAME_ALL:
+				Browser.window.alert("allsame!!");
+				var type:Int = Math.floor(Math.random() * 6);
+				for (i in 0..._lines.length) {
+					var line:DeDeLine = _lines[i];
+					line.reset( type, data,false );
 					line.setSec(data.startSec);
-				//}
-			}
-			
+				}
+				
+			case DeDeParam.SAME_LINE:
+				for (i in 0..._lines.length) {
+					var line:DeDeLine = _lines[i];
+					var type:Int = Math.floor(Math.random() * 6);
+					line.reset( type, data,true );// txt, type, isRotate, font, speed, space, spaceX );
+					line.setSec(data.startSec);
+				}	
+				
+			case DeDeParam.SAME_DIFF:
+				var type:Int = Math.floor(Math.random() * 6);
+				for (i in 0..._lines.length) {
+					var line:DeDeLine = _lines[i];
+					line.reset( type, data, true );
+					line.setSec(data.startSec);
+				}					
+				
 		}
 		
 	}
@@ -142,12 +134,17 @@ class DeDeLines extends Object3D
 	}
 	
 	public function setDotType(type:Int,isRotate:Bool):Void {
-		
 		for (i in 0..._lines.length) {
 			_lines[i].setDotType(type, isRotate);
 		}
-		
 	}
+
+	public function setSec(f:Float):Void {
+		for (i in 0..._lines.length) {
+			_lines[i].setSec(f);
+		}
+	}
+	
 	
 	public function setGeoMax(n:Int,enables:Array<Bool>=null):Void {
 			

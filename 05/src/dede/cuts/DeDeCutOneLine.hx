@@ -36,7 +36,7 @@ class DeDeCutOneLine  extends DeDeCutBase
 		data.spaceX = 20;
 		data.startX = DeDeLine.WIDTH / 2;
 		
-		//data.isRandomLine = true;
+		//data.isRandomLine = false;
 		
 		_lines.changeType( data );
 
@@ -47,13 +47,17 @@ class DeDeCutOneLine  extends DeDeCutBase
 	 */
 	override public function next():Void
 	{
+		
 		//set dot type
 		//_lines.next();
 		var type:Int = Math.floor( 6 * Math.random() );
-		var isRotate:Bool = Math.random() < 0.5 ? true : false;
+		var isRotate:Bool = _nextCounter%5==0 ? true : false;
+		
 		_lines.setDotType( type, isRotate );
+		_nextCounter++;
 		
-		
+		//test
+		//MyPointCloud.cloud.setRandomLine();
 	}	
 	
 	

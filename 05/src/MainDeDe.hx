@@ -69,7 +69,7 @@ class MainDeDe
 		_bg = new BlinkPlane();
 		_bg.position.z = -40;
 		_bg.scale.set(2, 2, 2);
-		_scene.add(_bg);
+		//_scene.add(_bg);
 		
 		//
 		StageRef.setCenter();
@@ -84,7 +84,7 @@ class MainDeDe
 		
 		//mode wo kaeru
 		if (Std.parseInt(e.keyCode) == Dat.RIGHT) {
-			_bg.flash();
+			//_bg.flash();
 		}
 		if (Std.parseInt(e.keyCode) == Dat.O) {
 			_camera.setCamType(DoubleCamera.TYPE_O);
@@ -107,8 +107,7 @@ class MainDeDe
 		_points = new MyPointCloud();
 		_points.init();
 		_scene.add(_points);
-		
-		
+				
 		_lines = new DeDeLines();
 		_lines.init();
 		_scene.add(_lines);
@@ -119,7 +118,6 @@ class MainDeDe
 		
 		_cuts = new DeDeCuts();
 		_cuts.init(this);
-		
 		
 		_run();
 		

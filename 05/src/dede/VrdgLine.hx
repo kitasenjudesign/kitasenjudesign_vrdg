@@ -76,7 +76,7 @@ class VrdgLine extends DeDeLine
 	 * @param	type
 	 * @param	isRotate
 	 */
-	override public function reset(type:Int,data:DeDeParam):Void
+	override public function reset(type:Int,data:DeDeParam,isTypeRandom:Bool=false):Void
 	{
 		/*
 		_speed = 2+2*Math.random();
