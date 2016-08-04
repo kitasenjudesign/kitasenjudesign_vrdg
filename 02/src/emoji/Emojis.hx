@@ -50,7 +50,7 @@ class Emojis extends Object3D
 	private var _isBlackPixel	:Bool = true;
 	private var _isDepth		:Bool = false;// false;
 	private var _isRotate		:Bool = false;
-	private var _isCurl:Bool;
+	private var _isCurl:Bool = false;
 	private var _depthDir:Float = 1;
 	
 	
@@ -125,7 +125,11 @@ class Emojis extends Object3D
 		if ( !isActive ) return;
 		
 		var keyCode:Int = Std.parseInt( e.keyCode );
-		if ( keyCode == Dat.RIGHT ) {
+		
+		if ( keyCode == Dat.N) {
+			_isCurl = !_isCurl;// Math.random() < 0.5 ? true : false;
+			
+		}else if ( keyCode == Dat.RIGHT ) {
 		
 			_canvas.next(true);//random
 			_pos.setRange(
@@ -134,7 +138,7 @@ class Emojis extends Object3D
 			);
 			
 			_isBlackPixel = (Math.random() < 0.5) ? true : false;
-			_isCurl = Math.random() < 0.5 ? true : false;
+			
 			_depthDir = Math.random() < 0.2 ? -1 : 1;
 			//_camera.radX = 0;
 			

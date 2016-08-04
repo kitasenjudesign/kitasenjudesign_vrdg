@@ -1,5 +1,6 @@
 package emoji;
 import canvas.CanvasSrc;
+import common.Config;
 import data.TextureData;
 import emoji.shader.CurlNoise;
 import three.ImageUtils;
@@ -21,6 +22,7 @@ class EmojiShader
 			uniform float strength;
 			uniform float seed;
 			uniform float scale;
+			uniform float scale1;
 			uniform vec3 posScale;
 			uniform float counter;
 			attribute vec2 aOffset;
@@ -34,7 +36,7 @@ class EmojiShader
 				//vec3 pp = position + vec3( cn.x, cn.y, cn.z ) * 10.0;
 				
 				gl_Position = projectionMatrix * modelViewMatrix * vec4( pp * posScale, 1.0 );
-				gl_PointSize = 22000.0 * scale / gl_Position.w;
+				gl_PointSize = scale1 * scale / gl_Position.w;
 			}
 	';
 		
@@ -86,7 +88,8 @@ class EmojiShader
             seed:	{ type: 'f', value: 0.0 },
             counter:	{ type: 'f', value: 0 },
 			texture:	 { type: 't', value: tex },
-			scale: 		{ type: 'f', value: 3000.0 },
+			scale1: 	{ type: 'f', value: 22000 },
+			scale: 		{ type: 'f', value: 1.0 },
 			posScale: 	{type: 'v3', value: new Vector3(1.0, 1.0, 1.0)},
             offset: 	{type: 'v2', value: new Vector2(1/animationFrameLength, 0.0)},
             repeat: 	{type: 'v2', value: new Vector2(1/animationFrameLength, 1/animationFrameLength)}

@@ -21,7 +21,7 @@ import tween.TweenMax;
 class MyFaceSingle extends Object3D
 {
 	
-	
+	public var s:Float = 1;//effect strength
 	
 	public var dae:Mesh;// Object3D;
 	//public var dae2:Mesh;
@@ -149,29 +149,18 @@ class MyFaceSingle extends Object3D
 			
 			if(_audio.freqByteData.length>19){
 			
-				/*
-				_nejireX = Math.pow(_audio.freqByteData[_idxNejireX] / 255, 3.5) * 10;
-				_nejireY = Math.pow(_audio.freqByteData[_idxNejireY] / 255, 5) * Math.PI * 2;// * 0.5;
+				_nejireX = Math.pow(s * _audio.freqByteData[16] / 255, 1.5) * 10;
+				_nejireY = Math.pow(s * _audio.freqByteData[18] / 255, 2) * Math.PI * 2;// * 0.5;
 				
-				_noise = Math.pow(_audio.freqByteData[_idxNejireNoise] / 255,3) * 4.5;
-				_speed = 0.01+ Math.pow( _audio.freqByteData[_idxSpeedNoise] / 255, 4) * 0.5;
-				_sphere = Math.pow( _audio.freqByteData[_idxSphereNoise]/255, 15);
-				_noiseSpeed = 0.1 + Math.pow( _audio.freqByteData[_idxNoiseSpeed] / 255, 15) * 0.05;
-				_scale = 1 + Math.pow(_audio.freqByteData[1] / 255, 5) * 0.4;
-				*/
+				_noise = Math.pow(s * _audio.freqByteData[12] / 255,1) * 4.5;
+				_speed = Math.pow( s * _audio.freqByteData[8] / 255, 2) * 0.5;
+				_sphere = Math.pow( s * _audio.freqByteData[4]/255, 5);
+				_noiseSpeed = 0.1 + Math.pow( s * _audio.freqByteData[19] / 255, 4) * 0.05;
+				_scale = 1 + Math.pow(s * _audio.freqByteData[1] / 255, 3) * 0.4;				
 				
-				_nejireX = Math.pow(_audio.freqByteData[16] / 255, 1.5) * 10;
-				_nejireY = Math.pow(_audio.freqByteData[18] / 255, 2) * Math.PI * 2;// * 0.5;
-				
-				_noise = Math.pow(_audio.freqByteData[12] / 255,1) * 4.5;
-				_speed = Math.pow( _audio.freqByteData[8] / 255, 2) * 0.5;
-				_sphere = Math.pow( _audio.freqByteData[4]/255, 5);
-				_noiseSpeed = 0.1 + Math.pow( _audio.freqByteData[19] / 255, 4) * 0.05;
-				_scale = 1 + Math.pow(_audio.freqByteData[1] / 255, 3) * 0.4;				
-				
-				_yokoRatio =  Math.pow(_audio.freqByteData[5] / 255, 2);
-				_yokoSpeed =  Math.pow(_audio.freqByteData[13] / 255, 2) * 4;
-				_zengoRatio =  Math.pow(_audio.freqByteData[19] / 255, 2);
+				_yokoRatio =  Math.pow(s * _audio.freqByteData[5] / 255, 2);
+				_yokoSpeed =  Math.pow(s * _audio.freqByteData[13] / 255, 2) * 4;
+				_zengoRatio =  Math.pow(s * _audio.freqByteData[19] / 255, 2);
 				
 			}
 		}else {
@@ -215,9 +204,6 @@ class MyFaceSingle extends Object3D
 			//g.faces[i].vertexColors
 		}
 		
-		if(_audio!=null && _audio.freqByteData.length>15){
-			//cam.up.set(Math.pow( _audio.freqByteData[14]/255,4), 1, Math.pow( _audio.freqByteData[8]/255,4));
-		}
 		
 		//g.colorsNeedUpdate = true;
 		//dae2.geometry.computeVertexNormals();

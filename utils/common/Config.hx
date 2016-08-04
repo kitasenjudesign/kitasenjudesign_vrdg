@@ -16,6 +16,7 @@ class Config
 	public static var host:String;
 	public static var canvasOffsetY:Float = 0;
 	public static var globalVol:Float = 1.0;
+	public static var particleSize:Float = 3000;
 	
 	public function new() 
 	{
@@ -41,7 +42,8 @@ class Config
 		win.host = host;	
 		canvasOffsetY = data.canvasOffsetY;
 		globalVol = data.globalVol;
-	
+		particleSize = data.particleSize;
+		
 		if ( _callback != null ) {
 			_callback();
 		}

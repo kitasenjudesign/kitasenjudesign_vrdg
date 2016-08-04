@@ -5,7 +5,6 @@ import common.Dat;
 import common.StageRef;
 import effect.PostProcessing2;
 import js.Browser;
-import objects.MyCATLoader;
 import objects.MyDAELoader;
 import objects.MySphere;
 import objects.MyWorld;
@@ -14,7 +13,6 @@ import sound.MyAudio;
 import three.AmbientLight;
 import three.CubeCamera;
 import three.DirectionalLight;
-import three.MeshDepthMaterial;
 import three.Scene;
 import three.Vector3;
 import three.WebGLRenderer;
@@ -29,7 +27,6 @@ class Main3d
 	public static var W:Int = 1280;// 1024;// 1280;
 	public static var H:Int = 800;// 768;// 1920;
 	
-	
 	private  var _scene			:Scene;
 	private  var _camera		:ExCamera;
 	private  var _renderer		:WebGLRenderer;
@@ -40,7 +37,7 @@ class Main3d
 	private var _pp:PostProcessing2;
 	private var _audio:MyAudio;
 	private var _world:MyWorld;
-	private var _dummy:DummyBars;
+	
 	
 	public function new() 
 	{

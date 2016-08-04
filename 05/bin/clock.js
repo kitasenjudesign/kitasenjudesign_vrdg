@@ -336,6 +336,48 @@ Three.requestAnimationFrame = function(f) {
 Three.cancelAnimationFrame = function(f) {
 	window.cancelAnimationFrame(id);
 };
+var Tracer = function() {
+};
+Tracer.assert = function(condition,p1,p2,p3,p4,p5) {
+};
+Tracer.clear = function(p1,p2,p3,p4,p5) {
+};
+Tracer.count = function(p1,p2,p3,p4,p5) {
+};
+Tracer.debug = function(p1,p2,p3,p4,p5) {
+};
+Tracer.dir = function(p1,p2,p3,p4,p5) {
+};
+Tracer.dirxml = function(p1,p2,p3,p4,p5) {
+};
+Tracer.error = function(p1,p2,p3,p4,p5) {
+};
+Tracer.group = function(p1,p2,p3,p4,p5) {
+};
+Tracer.groupCollapsed = function(p1,p2,p3,p4,p5) {
+};
+Tracer.groupEnd = function() {
+};
+Tracer.info = function(p1,p2,p3,p4,p5) {
+};
+Tracer.log = function(p1,p2,p3,p4,p5) {
+};
+Tracer.markTimeline = function(p1,p2,p3,p4,p5) {
+};
+Tracer.profile = function(title) {
+};
+Tracer.profileEnd = function(title) {
+};
+Tracer.time = function(title) {
+};
+Tracer.timeEnd = function(title,p1,p2,p3,p4,p5) {
+};
+Tracer.timeStamp = function(p1,p2,p3,p4,p5) {
+};
+Tracer.trace = function(p1,p2,p3,p4,p5) {
+};
+Tracer.warn = function(p1,p2,p3,p4,p5) {
+};
 var camera = {};
 camera.DoubleCamera = function() {
 	this._type = 0;
@@ -819,6 +861,7 @@ common.Config.prototype = {
 		win.host = common.Config.host;
 		common.Config.canvasOffsetY = data.canvasOffsetY;
 		common.Config.globalVol = data.globalVol;
+		common.Config.particleSize = data.particleSize;
 		if(this._callback != null) this._callback();
 	}
 };
@@ -955,6 +998,16 @@ common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
 		this.dispatchEvent({ type : "keydown", keyCode : n});
 	}
 });
+common.MathUtil = function() {
+};
+common.MathUtil.getOtherInt = function(n,num) {
+	var nn = -1;
+	while(true) {
+		nn = Math.floor(Math.random() * num);
+		if(nn != n) break;
+	}
+	return nn;
+};
 common.StageRef = function() {
 };
 common.StageRef.fadeIn = function() {
@@ -1038,7 +1091,7 @@ dede.DeDeCuts.prototype = {
 		common.Key.board.addEventListener("keydown",$bind(this,this._onKeyDown));
 	}
 	,_onKeyDown: function(e) {
-		console.log("_onKeyDown");
+		Tracer.log("_onKeyDown");
 		if(Std.parseInt(e.keyCode) == 67) {
 			this._cutIndex++;
 			this._currentCut = this._cuts[this._cutIndex % this._cuts.length];
@@ -1329,7 +1382,7 @@ dede.DeDeLine.prototype = $extend(THREE.Object3D.prototype,{
 			digit.setGeoMax(240);
 			this._digits.push(digit);
 		}
-		this.reset(0,dede.cuts.DeDeParam.getParam());
+		this.reset(0,dede.cuts.DeDeParam.getParam(),false);
 	}
 	,resetGeoMax: function(n) {
 		var _g1 = 0;
@@ -1458,6 +1511,7 @@ dede.DeDeLine.prototype = $extend(THREE.Object3D.prototype,{
 });
 dede.DeDeLines = function() {
 	this._colRatio = 0;
+	this._countUpNum = 0;
 	this._counter = 0;
 	THREE.Object3D.call(this);
 };
@@ -1484,13 +1538,13 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 			var line = this._lines[i];
 			line.addSec(addX,true);
 		}
-		this._flash();
+		this._countUpNum++;
+		if(this._countUpNum % 6 == 0) this._flash();
 	}
 	,changeType: function(data) {
 		var _g = data.sameType;
 		switch(_g) {
 		case 0:
-			window.alert("allsame!!");
 			var type = Math.floor(Math.random() * 6);
 			var _g2 = 0;
 			var _g1 = this._lines.length;
@@ -1502,13 +1556,15 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 			}
 			break;
 		case 1:
+			var oldType = -1;
 			var _g21 = 0;
 			var _g11 = this._lines.length;
 			while(_g21 < _g11) {
 				var i1 = _g21++;
 				var line1 = this._lines[i1];
-				var type1 = Math.floor(Math.random() * 6);
+				var type1 = common.MathUtil.getOtherInt(oldType,6);
 				line1.reset(type1,data,false);
+				type1 = oldType;
 				line1.setSec(data.startSec);
 			}
 			break;
@@ -1524,6 +1580,7 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 			}
 			break;
 		}
+		this._flash();
 	}
 	,_flash: function() {
 		this.showOutline();
@@ -1716,7 +1773,7 @@ dede.cuts.DeDeCut0.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		this._cam.setZoom(2);
 	}
 	,next: function() {
-		console.log("next");
+		Tracer.log("next");
 		var data = new dede.cuts.DeDeParam();
 		data.txt = "VRDGTH";
 		data.speed = 2;
@@ -1779,11 +1836,12 @@ dede.cuts.DeDeCutOneLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		this._vrdg.setGeoMax(1);
 		this._cam.setZoom(2);
 		var data = dede.cuts.DeDeParam.getParam();
-		data.txt = "DEDEMOUSE KTSNJDESIGN ";
+		data.txt = "DEDEMOUSE KTSNJDSGN ";
 		data.font = 1;
 		data.speedX = -0.5;
 		data.spaceX = 20;
 		data.startX = 2400 / 2;
+		data.space = 3;
 		this._lines.changeType(data);
 	}
 	,next: function() {
@@ -1831,6 +1889,7 @@ dede.cuts.DeDeParam.getParam = function() {
 	return data;
 };
 dede.cuts.DeDeString = function(o) {
+	this.type = -1;
 	this.spaceX = 0;
 	this.font = 0;
 	this.text = "";
@@ -3029,6 +3088,7 @@ clock.DotDigit.TYPE_RANDOM_CONTINUE = 5;
 clock.DotDigit.NUM_TYPE = 4;
 common.Config.canvasOffsetY = 0;
 common.Config.globalVol = 1.0;
+common.Config.particleSize = 3000;
 common.Dat.UP = 38;
 common.Dat.DOWN = 40;
 common.Dat.LEFT = 37;
@@ -3098,5 +3158,3 @@ typo.StrokeUtil.VRDG = 0;
 typo.StrokeUtil.FUTURA = 1;
 Main.main();
 })();
-
-//# sourceMappingURL=clock.js.map

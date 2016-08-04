@@ -284,6 +284,13 @@ camera.ExCamera.prototype = $extend(THREE.PerspectiveCamera.prototype,{
 	}
 });
 var common = {};
+common.Callback = function() {
+};
+common.Callback.create = function(scope,func,args) {
+	return function() {
+		func.apply(scope,args);
+	};
+};
 common.Config = function() {
 };
 common.Config.prototype = {
@@ -300,6 +307,7 @@ common.Config.prototype = {
 		win.host = common.Config.host;
 		common.Config.canvasOffsetY = data.canvasOffsetY;
 		common.Config.globalVol = data.globalVol;
+		common.Config.particleSize = data.particleSize;
 		if(this._callback != null) this._callback();
 	}
 };
@@ -334,24 +342,45 @@ common.Dat._onKeyDown = function(e) {
 		if(common.Dat.gui.domElement.style.display == "block") common.Dat.hide(); else common.Dat.show();
 		break;
 	case 49:
-		window.location.href = "../../01/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL1);
 		break;
 	case 50:
-		window.location.href = "../../02/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL2);
 		break;
 	case 51:
-		window.location.href = "../../03/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL3);
 		break;
 	case 52:
-		window.location.href = "../../04/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL4);
 		break;
 	case 53:
-		window.location.href = "../../05/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL5);
 		break;
 	case 54:
-		window.location.href = "../../06/bin/";
+		common.StageRef.fadeOut(common.Dat._goURL6);
 		break;
 	}
+};
+common.Dat._goURL1 = function() {
+	common.Dat._goURL("../../01/bin/");
+};
+common.Dat._goURL2 = function() {
+	common.Dat._goURL("../../02/bin/");
+};
+common.Dat._goURL3 = function() {
+	common.Dat._goURL("../../03/bin/");
+};
+common.Dat._goURL4 = function() {
+	common.Dat._goURL("../../04/bin/");
+};
+common.Dat._goURL5 = function() {
+	common.Dat._goURL("../../05/bin/");
+};
+common.Dat._goURL6 = function() {
+	common.Dat._goURL("../../06/bin/");
+};
+common.Dat._goURL = function(url) {
+	window.location.href = url;
 };
 common.Dat.show = function() {
 	common.Dat.gui.domElement.style.display = "block";
@@ -367,7 +396,12 @@ common.FadeSheet.prototype = {
 	fadeIn: function() {
 		this.element.style.opacity = "0";
 		this.opacity = 0;
-		TweenMax.to(this,1.0,{ opacity : 1, delay : 0.2, ease : Power0.easeInOut, onUpdate : $bind(this,this._onUpdate)});
+		if(this._twn != null) this._twn.kill();
+		this._twn = TweenMax.to(this,0.8,{ opacity : 1, delay : 0.2, ease : Power0.easeInOut, onUpdate : $bind(this,this._onUpdate)});
+	}
+	,fadeOut: function(callback) {
+		if(this._twn != null) this._twn.kill();
+		this._twn = TweenMax.to(this,0.5,{ opacity : 0, ease : Power0.easeInOut, onUpdate : $bind(this,this._onUpdate), onComplete : callback});
 	}
 	,_onUpdate: function() {
 		this.element.style.opacity = "" + this.opacity;
@@ -404,6 +438,10 @@ common.StageRef = function() {
 common.StageRef.fadeIn = function() {
 	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
 	common.StageRef.sheet.fadeIn();
+};
+common.StageRef.fadeOut = function(callback) {
+	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
+	common.StageRef.sheet.fadeOut(callback);
 };
 common.StageRef.setCenter = function() {
 	if(!common.Dat.bg) {
@@ -460,23 +498,58 @@ effect.PostProcessing2.prototype = {
 		this._composer = new THREE.EffectComposer(renderer);
 		this._composer.addPass(this._renderPass);
 		this._displacePass = new effect.pass.DisplacementPass();
-		this._displacePass.enabled = true;
+		this._displacePass.enabled = false;
 		this._composer.addPass(this._displacePass);
 		this._xLoopPass = new effect.pass.XLoopPass();
 		this._xLoopPass.enabled = true;
 		this._composer.addPass(this._xLoopPass);
+		this._colorPass = new effect.pass.ColorMapPass();
+		this._colorPass.enabled = false;
+		this._composer.addPass(this._colorPass);
 		this._composer.addPass(this._copyPass);
 		this._copyPass.clear = true;
 		this._copyPass.renderToScreen = true;
 		if(this._callback != null) this._callback();
 	}
-	,change: function(isColor,isDisplace) {
-		this._xLoopPass.setTexture(isColor,isDisplace);
-		this._displacePass.setTexture(isColor,isDisplace);
+	,change: function(data) {
+		var _g = data.displaceType;
+		switch(_g) {
+		case 0:
+			this._xLoopPass.enabled = false;
+			this._displacePass.enabled = false;
+			break;
+		case 1:
+			this._xLoopPass.enabled = true;
+			this._xLoopPass.setTexture(false,true);
+			this._displacePass.enabled = false;
+			break;
+		case 2:
+			this._xLoopPass.enabled = false;
+			this._displacePass.enabled = true;
+			this._displacePass.setTexture(false,true);
+			break;
+		}
+		var _g1 = data.colorType;
+		switch(_g1) {
+		case 0:
+			this._colorPass.enabled = false;
+			break;
+		case 2:
+			this._colorPass.enabled = true;
+			this._colorPass.setMono(true);
+			this._colorPass.setTexture();
+			break;
+		case 1:
+			this._colorPass.enabled = true;
+			this._colorPass.setMono(false);
+			this._colorPass.setTexture();
+			break;
+		}
 	}
 	,update: function(audio) {
 		this._xLoopPass.update(audio);
 		this._displacePass.update(audio);
+		this._colorPass.update(audio);
 		this._composer.render();
 	}
 	,resize: function(w,h) {
@@ -485,26 +558,26 @@ effect.PostProcessing2.prototype = {
 };
 effect.pass = {};
 effect.pass.ColorMapPass = function() {
-	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\tuniform sampler2D texture;\r\n\t\t\t\t\tuniform sampler2D colTexture;\r\n\t\t\t\t\tuniform float strengthX;\r\n\t\t\t\t\tuniform float strengthY;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 col = texture2D( texture, vUv);\r\n\t\t\t\t\t\tfloat f1 = strengthX * sin(counter);// pow(counter, 2.0 + 3.0 * col.x);//sin(counter * 3.9) * 0.23;\r\n\t\t\t\t\t\tfloat f2 = strengthY * sin(counter*0.92);// pow(counter, 2.0 + 3.0 * col.x) * 0.001;// pow(counter, 2.0 + 3.0 * col.y);//cos(counter * 3.7) * 0.23;\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec2 axis = vec2( \r\n\t\t\t\t\t\t\tvUv.x + (col.y-0.5)*f1, vUv.y + (col.z-0.5)*f2\r\n\t\t\t\t\t\t);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 texel = texture2D( tDiffuse, axis );\r\n\t\t\t\t\t\t//vec4 texel = texture2D( colTexture, axis );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//vec3 luma = vec3( 0.299, 0.587, 0.114 );\r\n\t\t\t\t\t\t//float v = dot( texel.xyz, luma );//akarusa\r\n\t\t\t\t\t\t//vec2 axis = vec2( 0.5,v );\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec2 pp = vec2( 0.5, fract( texel.x + counter * 100.0 ) );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 out1 = texture2D( colTexture, pp );\r\n\t\t\t\t\t\tif ( texel.x == 0.0 ) {\r\n\t\t\t\t\t\t\tout1 = vec4(0.0, 0.0, 0.0, 1.0);\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//bakibaki\r\n\t\t\t\t\t\tif ( texel.x == 0.0 || mod( floor( texel.x * 10000.0 + counter ),2.0) == 0.0 ) {\r\n\t\t\t\t\t\t\ttexel.x = 0.0;\r\n\t\t\t\t\t\t\ttexel.y = 0.0;\r\n\t\t\t\t\t\t\ttexel.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\ttexel.x = out1.x;// 1.0;\r\n\t\t\t\t\t\t\ttexel.y = out1.y;// 1.0;\r\n\t\t\t\t\t\t\ttexel.z = out1.z;// 1.0;\t\t\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tgl_FragColor = texel;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
+	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\tuniform sampler2D texture;\r\n\t\t\t\t\tuniform float strength;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tuniform float mono;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 texel = texture2D( tDiffuse, vUv );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 out1 = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tif( mono == 0.0){\r\n\t\t\t\t\t\tvec2 pp = vec2( 0.5, fract( texel.x * strength + counter ) );//akarusanioujite\t\t\t\t\t\r\n\t\t\t\t\t\tif ( pp.y < 0.5) {\r\n\t\t\t\t\t\t\t\tpp.y = pp.y * 2.0;\r\n\t\t\t\t\t\t\t\tout1 = texture2D( texture, pp );\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\t\tpp.y = (1.0 - (pp.y - 0.5) * 2.0);\t\t\t\t\r\n\t\t\t\t\t\t\t\tout1 = texture2D( texture, pp );\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\tif ( texel.x == 0.0 ) {\r\n\t\t\t\t\t\t\t\tout1 = vec4(0.0, 0.0, 0.0, 1.0);\r\n\t\t\t\t\t\t}\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t}else{\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t//bakibaki\r\n\t\t\t\t\t\tfloat nn = 10000. + 9995. * sin(counter*0.01);\r\n\t\t\t\t\t\tif ( texel.x == 0.0 || mod( floor( texel.x * nn ),2.0) == 0.0 ) {\r\n\t\t\t\t\t\t\tout1.x = 0.0;\r\n\t\t\t\t\t\t\tout1.y = 0.0;\r\n\t\t\t\t\t\t\tout1.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\tout1.x = 1.0;\r\n\t\t\t\t\t\t\tout1.y = 1.0;\r\n\t\t\t\t\t\t\tout1.z = 1.0;\t\t\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\tgl_FragColor = out1;// out1;// texel;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
 	this._vertex = "\r\n\t\tvarying vec2 vUv;\r\n\t\tvoid main() {\r\n\t\t\tvUv = uv;\r\n\t\t\tgl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\r\n\t\t}\t\t\r\n\t";
 	this._textures = [];
-	var _g = 1;
-	while(_g < 11) {
-		var i = _g++;
-		this._textures.push(THREE.ImageUtils.loadTexture("displace" + i + ".png"));
-	}
-	THREE.ShaderPass.call(this,{ uniforms : { tDiffuse : { type : "t", value : null}, texture : { type : "t", value : this._textures[0]}, colTexture : { type : "t", value : this._textures[1]}, strengthX : { type : "f", value : 0}, strengthY : { type : "f", value : 0}, counter : { type : "f", value : 0}}, vertexShader : this._vertex, fragmentShader : this._fragment});
+	this._textures.push(THREE.ImageUtils.loadTexture("grade.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("grade2.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("grade3.png"));
+	THREE.ShaderPass.call(this,{ uniforms : { tDiffuse : { type : "t", value : null}, texture : { type : "t", value : this._textures[0]}, strength : { type : "f", value : 0}, counter : { type : "f", value : 0}, mono : { type : "f", value : 1}}, vertexShader : this._vertex, fragmentShader : this._fragment});
 };
 effect.pass.ColorMapPass.__super__ = THREE.ShaderPass;
 effect.pass.ColorMapPass.prototype = $extend(THREE.ShaderPass.prototype,{
 	update: function(audio) {
-		this.uniforms.strengthX.value = Math.pow(audio.freqByteData[3] / 255,4);
-		this.uniforms.strengthY.value = Math.pow(audio.freqByteData[7] / 255,4);
+		if(!this.enabled) return;
+		this.uniforms.strength.value = Math.pow(audio.freqByteData[3] / 255,2) * 1000;
 		this.uniforms.counter.value += audio.freqByteData[3] / 255 * 0.8;
 	}
 	,setTexture: function() {
 		this.uniforms.texture.value = this._textures[Math.floor(Math.random() * this._textures.length)];
-		this.uniforms.colTexture.value = this._textures[Math.floor(Math.random() * this._textures.length)];
+	}
+	,setMono: function(b) {
+		if(b) this.uniforms.mono.value = 1; else this.uniforms.mono.value = 0;
 	}
 });
 effect.pass.DisplacementPass = function() {
@@ -535,7 +608,7 @@ effect.pass.DisplacementPass.prototype = $extend(THREE.ShaderPass.prototype,{
 	}
 });
 effect.pass.XLoopPass = function() {
-	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\tuniform sampler2D disTexture;\r\n\t\t\t\t\tuniform sampler2D colTexture;\r\n\t\t\t\t\tuniform float strengthX;\r\n\t\t\t\t\tuniform float strengthY;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tuniform float isDisplace;\r\n\t\t\t\t\tuniform float isColor;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\t\r\n\t\t\t\t\tfloat yama(float rr, float beki) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tfloat hoge = 0.5 + 0.5 * sin(rr * 3.14 - 3.14 * 0.5);\r\n\t\t\t\t\t\t//out = pow(out, beki);\r\n\t\t\t\t\t\treturn hoge;// out;\r\n\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t\tfloat yama2(float rr, float beki) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tfloat hoge = rr * 2.0;\r\n\t\t\t\t\t\tif ( hoge < 1.0) {\r\n\t\t\t\t\t\t\thoge = pow(hoge, 1./beki) * 0.5;\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\thoge = pow(hoge-1.0, beki) * 0.5 + 0.5;\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t//out = pow(out, beki);\r\n\t\t\t\t\t\treturn hoge;// out;\r\n\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//dispace\r\n\t\t\t\t\t\tvec4 texel = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//0.4-0.6 no hani wo kurikaesu\r\n\t\t\t\t\t\tfloat minX = 0.45;\r\n\t\t\t\t\t\tfloat maxX = 0.55;\r\n\t\t\t\t\t\tfloat amp = maxX - minX;\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//float xx = clamp( vUv.x, minX, maxX );\r\n\t\t\t\t\t\t//xx = (xx - minX) / len;//0-1\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tfloat nn = 10. * sin( counter * 0.07 );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tfloat xx = minX + amp * (0.5 + 0.5 * sin(yama2(vUv.x, 2.0) * nn * 3.14 - 3.14 * 0.5));\r\n\t\t\t\t\tfloat minA = 0.3;// 1;\r\n\t\t\t\t\tfloat maxA = 0.7;// 9;\r\n\t\t\t\t\t\r\n\t\t\t\t\tif (vUv.x < minA) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\txx = xx * pow(vUv.x / minA, 0.2);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t}else if (vUv.x > maxA) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\txx = mix(xx, vUv.x, pow((vUv.x - maxA) / (1.0 - maxA), 7.0));\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\tfloat yy = vUv.y + 0.05 * sin(vUv.x * 6.0 * 3.14);\r\n\t\t\t\t\t\r\n\t\t\t\t\txx = mix(vUv.x, xx, 0.5+0.5*sin(counter * 0.1) );\r\n\t\t\t\t\tyy = mix(vUv.y, yy, 0.5+0.5*sin(counter * 0.1) );\r\n\t\t\t\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t//xx = 0.5+0.5*sin( 2.*3.14*vUv.x -3.14/2.0);\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t//xx = 0.5 + 0.5 * sin(xx * 2.0 * 3.14 * 5.0);\r\n\t\t\t\t\t\t//vUv.x\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tvec2 axis = vec2( xx, yy );\r\n\t\t\t\t\ttexel = texture2D( tDiffuse, axis );\r\n\t\t\t\t\tvec4 out1 = texel;\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t//color\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\tvec3 luma = vec3( 0.299, 0.587, 0.114 );\r\n\t\t\t\t\t\tfloat v = dot( texel.xyz, luma );//akarusa\r\n\t\t\t\t\t\tv = fract( v*20.0 + counter * 0.01 ) * 2.0;\r\n\t\t\t\t\t\tif (v > 1.0) {\r\n\t\t\t\t\t\t\tv = 1.0 - (v - 1.0);\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\taxis = vec2( 0.5,v );\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 out1 = texture2D( colTexture, axis );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tif ( texel.x == 0.0 ) {\r\n\t\t\t\t\t\t\tout1.x = 0.0;\r\n\t\t\t\t\t\t\tout1.y = 0.0;\r\n\t\t\t\t\t\t\tout1.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}*/\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\tif ( texel.x == 0.0 || mod( floor( texel.x * 1000.0 + counter ),2.0) == 0.0 ) {\r\n\t\t\t\t\t\t\tout1.x = 0.0;\r\n\t\t\t\t\t\t\tout1.y = 0.0;\r\n\t\t\t\t\t\t\tout1.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\tout1.x = out1.x;// 1.0;\r\n\t\t\t\t\t\t\tout1.y = out1.y;// 1.0;\r\n\t\t\t\t\t\t\tout1.z = out1.z;// 1.0;\t\t\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}*/\r\n\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\t\ttexel.x = out1.x;//1.0;\r\n\t\t\t\t\t\t\ttexel.y = out1.y;//1.0;\r\n\t\t\t\t\t\t\ttexel.z = out1.z;//1.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t*/\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tgl_FragColor = out1;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
+	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\tuniform sampler2D disTexture;\r\n\t\t\t\t\tuniform sampler2D colTexture;\r\n\t\t\t\t\tuniform float strength;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tuniform float isDisplace;\r\n\t\t\t\t\tuniform float isColor;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\t\r\n\t\t\t\t\tfloat yama(float rr, float beki) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tfloat hoge = 0.5 + 0.5 * sin(rr * 3.14 - 3.14 * 0.5);\r\n\t\t\t\t\t\t//out = pow(out, beki);\r\n\t\t\t\t\t\treturn hoge;// out;\r\n\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t\tfloat yama2(float rr, float beki) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tfloat hoge = rr * 2.0;\r\n\t\t\t\t\t\tif ( hoge < 1.0) {\r\n\t\t\t\t\t\t\thoge = pow(hoge, 1./beki) * 0.5;\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\thoge = pow(hoge-1.0, beki) * 0.5 + 0.5;\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t//out = pow(out, beki);\r\n\t\t\t\t\t\treturn hoge;// out;\r\n\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//dispace\r\n\t\t\t\t\t\tvec4 texel = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//0.4-0.6 no hani wo kurikaesu\r\n\t\t\t\t\t\tfloat minX = 0.45;\r\n\t\t\t\t\t\tfloat maxX = 0.55;\r\n\t\t\t\t\t\tfloat amp = maxX - minX;\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//float xx = clamp( vUv.x, minX, maxX );\r\n\t\t\t\t\t\t//xx = (xx - minX) / len;//0-1\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tfloat nn = 10. * sin( counter * 0.07 );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tfloat xx = minX + amp * (0.5 + 0.5 * sin(yama2(vUv.x, 2.0) * nn * 3.14 - 3.14 * 0.5));\r\n\t\t\t\t\tfloat minA = 0.3;// 1;\r\n\t\t\t\t\tfloat maxA = 0.7;// 9;\r\n\t\t\t\t\t\r\n\t\t\t\t\tif (vUv.x < minA) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\txx = xx * pow(vUv.x / minA, 0.2);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t}else if (vUv.x > maxA) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\txx = mix(xx, vUv.x, pow((vUv.x - maxA) / (1.0 - maxA), 7.0));\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\txx += 0.01 * sin(vUv.y * 2. * 3.14);\r\n\t\t\t\t\tfloat yy = vUv.y + 0.05 * sin(vUv.x * 6.0 * 3.14);\r\n\t\t\t\t\t\r\n\t\t\t\t\t//float ss = strength;\r\n\t\t\t\t\tfloat ss = 0.5 + 0.5 * sin(counter * 0.1);\r\n\t\t\t\t\tss = ss * strength;\r\n\t\t\t\t\txx = mix(vUv.x, xx, ss );\r\n\t\t\t\t\tyy = mix(vUv.y, yy, ss );\r\n\t\t\t\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t//xx = 0.5+0.5*sin( 2.*3.14*vUv.x -3.14/2.0);\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t//xx = 0.5 + 0.5 * sin(xx * 2.0 * 3.14 * 5.0);\r\n\t\t\t\t\t\t//vUv.x\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tvec2 axis = vec2( xx, yy );\r\n\t\t\t\t\ttexel = texture2D( tDiffuse, axis );\r\n\t\t\t\t\tvec4 out1 = texel;\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t//color\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\tvec3 luma = vec3( 0.299, 0.587, 0.114 );\r\n\t\t\t\t\t\tfloat v = dot( texel.xyz, luma );//akarusa\r\n\t\t\t\t\t\tv = fract( v*20.0 + counter * 0.01 ) * 2.0;\r\n\t\t\t\t\t\tif (v > 1.0) {\r\n\t\t\t\t\t\t\tv = 1.0 - (v - 1.0);\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\taxis = vec2( 0.5,v );\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 out1 = texture2D( colTexture, axis );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tif ( texel.x == 0.0 ) {\r\n\t\t\t\t\t\t\tout1.x = 0.0;\r\n\t\t\t\t\t\t\tout1.y = 0.0;\r\n\t\t\t\t\t\t\tout1.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}*/\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\tif ( texel.x == 0.0 || mod( floor( texel.x * 1000.0 + counter ),2.0) == 0.0 ) {\r\n\t\t\t\t\t\t\tout1.x = 0.0;\r\n\t\t\t\t\t\t\tout1.y = 0.0;\r\n\t\t\t\t\t\t\tout1.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\tout1.x = out1.x;// 1.0;\r\n\t\t\t\t\t\t\tout1.y = out1.y;// 1.0;\r\n\t\t\t\t\t\t\tout1.z = out1.z;// 1.0;\t\t\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}*/\r\n\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\t\ttexel.x = out1.x;//1.0;\r\n\t\t\t\t\t\t\ttexel.y = out1.y;//1.0;\r\n\t\t\t\t\t\t\ttexel.z = out1.z;//1.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t*/\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tgl_FragColor = out1;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
 	this._vertex = "\r\n\t\tvarying vec2 vUv;\r\n\t\tvoid main() {\r\n\t\t\tvUv = uv;\r\n\t\t\tgl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\r\n\t\t}\t\t\r\n\t";
 	this._textures = [];
 	var _g = 1;
@@ -544,14 +617,13 @@ effect.pass.XLoopPass = function() {
 		this._textures.push(THREE.ImageUtils.loadTexture("displace" + i + ".png"));
 	}
 	this._colors = [THREE.ImageUtils.loadTexture("grade.png"),THREE.ImageUtils.loadTexture("grade2.png"),THREE.ImageUtils.loadTexture("grade3.png"),THREE.ImageUtils.loadTexture("grade4.png")];
-	THREE.ShaderPass.call(this,{ uniforms : { tDiffuse : { type : "t", value : null}, isDisplace : { type : "f", value : 1}, isColor : { type : "f", value : 1}, disTexture : { type : "t", value : this._textures[0]}, colTexture : { type : "t", value : this._colors[3]}, strengthX : { type : "f", value : 0}, strengthY : { type : "f", value : 0}, counter : { type : "f", value : 0}}, vertexShader : this._vertex, fragmentShader : this._fragment});
+	THREE.ShaderPass.call(this,{ uniforms : { tDiffuse : { type : "t", value : null}, isDisplace : { type : "f", value : 1}, isColor : { type : "f", value : 1}, disTexture : { type : "t", value : this._textures[0]}, colTexture : { type : "t", value : this._colors[3]}, strength : { type : "f", value : 0}, counter : { type : "f", value : 0}}, vertexShader : this._vertex, fragmentShader : this._fragment});
 };
 effect.pass.XLoopPass.__super__ = THREE.ShaderPass;
 effect.pass.XLoopPass.prototype = $extend(THREE.ShaderPass.prototype,{
 	update: function(audio) {
 		if(!this.enabled) return;
-		this.uniforms.strengthX.value = Math.pow(audio.freqByteData[3] / 255,4) * 0.75;
-		this.uniforms.strengthY.value = Math.pow(audio.freqByteData[7] / 255,4) * 0.75;
+		this.uniforms.strength.value = 1;
 		this.uniforms.counter.value += audio.freqByteData[3] / 255 * 0.8;
 	}
 	,setTexture: function(isColor,isDisplace) {
@@ -658,34 +730,6 @@ js.Browser.createXMLHttpRequest = function() {
 	throw "Unable to create XMLHttpRequest object.";
 };
 var objects = {};
-objects.MyCATLoader = function() {
-	THREE.Object3D.call(this);
-};
-objects.MyCATLoader.__super__ = THREE.Object3D;
-objects.MyCATLoader.prototype = $extend(THREE.Object3D.prototype,{
-	load: function(callback) {
-		this._callback = callback;
-		var loader = new THREE.ColladaLoader();
-		loader.options.convertUpAxis = true;
-		loader.load("cat/test_cat.dae",$bind(this,this._onComplete));
-	}
-	,_onComplete: function(ret) {
-		var dae = ret.scene;
-		var mm = new THREE.MeshBasicMaterial({ map : THREE.ImageUtils.loadTexture("./cat/cat_diff.jpg"), skinning : false, depthWrite : true, depthTest : true});
-		mm.shading = 2;
-		mm.alphaTest = 0.9;
-		
-			dae.traverse( function(child){
-				if( child instanceof THREE.Mesh){
-					child.material = mm;
-					//mm.specular.set(0,0,0);
-				}
-			}); ;
-		dae.scale.set(100,100,100);
-		this.add(dae);
-		if(this._callback != null) this._callback();
-	}
-});
 objects.MyDAELoader = function() {
 };
 objects.MyDAELoader.getPosY = function(ratio) {
@@ -780,6 +824,7 @@ objects.MyFaceSingle = function(idx) {
 	this._sphere = 0.1;
 	this._speed = 0.01;
 	this._count = 0;
+	this.s = 1;
 	this.index = idx;
 	THREE.Object3D.call(this);
 };
@@ -828,16 +873,16 @@ objects.MyFaceSingle.prototype = $extend(THREE.Object3D.prototype,{
 		if(this._audio != null && this._audio.isStart) {
 			this._audio.update();
 			if(this._audio.freqByteData.length > 19) {
-				this._nejireX = Math.pow(this._audio.freqByteData[16] / 255,1.5) * 10;
-				this._nejireY = Math.pow(this._audio.freqByteData[18] / 255,2) * Math.PI * 2;
-				this._noise = Math.pow(this._audio.freqByteData[12] / 255,1) * 4.5;
-				this._speed = Math.pow(this._audio.freqByteData[8] / 255,2) * 0.5;
-				this._sphere = Math.pow(this._audio.freqByteData[4] / 255,5);
-				this._noiseSpeed = 0.1 + Math.pow(this._audio.freqByteData[19] / 255,4) * 0.05;
-				this._scale = 1 + Math.pow(this._audio.freqByteData[1] / 255,3) * 0.4;
-				this._yokoRatio = Math.pow(this._audio.freqByteData[5] / 255,2);
-				this._yokoSpeed = Math.pow(this._audio.freqByteData[13] / 255,2) * 4;
-				this._zengoRatio = Math.pow(this._audio.freqByteData[19] / 255,2);
+				this._nejireX = Math.pow(this.s * this._audio.freqByteData[16] / 255,1.5) * 10;
+				this._nejireY = Math.pow(this.s * this._audio.freqByteData[18] / 255,2) * Math.PI * 2;
+				this._noise = Math.pow(this.s * this._audio.freqByteData[12] / 255,1) * 4.5;
+				this._speed = Math.pow(this.s * this._audio.freqByteData[8] / 255,2) * 0.5;
+				this._sphere = Math.pow(this.s * this._audio.freqByteData[4] / 255,5);
+				this._noiseSpeed = 0.1 + Math.pow(this.s * this._audio.freqByteData[19] / 255,4) * 0.05;
+				this._scale = 1 + Math.pow(this.s * this._audio.freqByteData[1] / 255,3) * 0.4;
+				this._yokoRatio = Math.pow(this.s * this._audio.freqByteData[5] / 255,2);
+				this._yokoSpeed = Math.pow(this.s * this._audio.freqByteData[13] / 255,2) * 4;
+				this._zengoRatio = Math.pow(this.s * this._audio.freqByteData[19] / 255,2);
 			}
 		} else return;
 		var _g1 = 0;
@@ -859,8 +904,6 @@ objects.MyFaceSingle.prototype = $extend(THREE.Object3D.prototype,{
 			g.vertices[i].y += (tgtY - g.vertices[i].y) / 2;
 			g.vertices[i].z += (tgtZ - g.vertices[i].z) / 2;
 			if(this.isSplit) this._splitSpirit(g.vertices[i],tgtX,tgtY,tgtZ);
-		}
-		if(this._audio != null && this._audio.freqByteData.length > 15) {
 		}
 	}
 	,_splitSpirit: function(vv,tgtX,tgtY,tgtZ) {
@@ -1040,6 +1083,7 @@ objects.MyWorld = function() {
 	this._counter = 0;
 	this.faces = [];
 	this.border = 0;
+	this.effectName = "";
 	this._mode = "single";
 	THREE.Object3D.call(this);
 };
@@ -1066,6 +1110,7 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 		common.Dat.gui.add(this,"changeMode1");
 		common.Dat.gui.add(this,"changeMode2");
 		common.Dat.gui.add(this,"changeMode3");
+		common.Dat.gui.add(this,"effectName").listen();
 		this.changeMode1();
 	}
 	,_KeyDownFunc: function(e) {
@@ -1089,22 +1134,26 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 		case 39:
 			this._nextEffect();
 			break;
+		case 37:
+			this._prevEffect();
+			break;
 		}
 	}
 	,_nextEffect: function() {
-		var isColor;
-		if(Math.random() < 0.5) isColor = true; else isColor = false;
-		var isDisplace;
-		if(Math.random() < 0.5) isDisplace = true; else isDisplace = false;
-		this._pp.change(isColor,isDisplace);
+		var data = objects.data.EffectData.getNext();
+		this.effectName = data.name;
+		this._pp.change(data);
 		var mat = 0;
-		if(isColor) mat = 1; else mat = 0;
+		if(data.colorType == 2 || data.colorType == 1) mat = 1; else mat = 0;
 		var _g1 = 0;
 		var _g = this.faces.length;
 		while(_g1 < _g) {
 			var i = _g1++;
 			this.faces[i].updateMaterial(mat);
+			this.faces[i].s = data.strength;
 		}
+	}
+	,_prevEffect: function() {
 	}
 	,_nextSingle: function() {
 		this.changeMode1();
@@ -1255,6 +1304,29 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 		}
 	}
 });
+objects.data = {};
+objects.data.EffectData = function(o) {
+	this.name = "";
+	this.strength = 1;
+	this.displaceType = 0;
+	this.colorType = 0;
+	if(o != null) {
+		this.name = o.name;
+		this.colorType = o.colorType;
+		this.displaceType = o.displaceType;
+		this.strength = o.strength;
+	}
+};
+objects.data.EffectData.getNext = function() {
+	objects.data.EffectData._count++;
+	objects.data.EffectData._count = objects.data.EffectData._count % objects.data.EffectData.effects.length;
+	return objects.data.EffectData.effects[objects.data.EffectData._count];
+};
+objects.data.EffectData.getPrev = function() {
+	objects.data.EffectData._count--;
+	if(objects.data.EffectData._count < 0) objects.data.EffectData._count = objects.data.EffectData.effects.length - 1;
+	return objects.data.EffectData.effects[objects.data.EffectData._count];
+};
 var sound = {};
 sound.DummyBars = function() {
 	THREE.Object3D.call(this);
@@ -1552,6 +1624,7 @@ Three.LineStrip = 0;
 Three.LinePieces = 1;
 common.Config.canvasOffsetY = 0;
 common.Config.globalVol = 1.0;
+common.Config.particleSize = 3000;
 common.Dat.UP = 38;
 common.Dat.DOWN = 40;
 common.Dat.LEFT = 37;
@@ -1608,6 +1681,19 @@ objects.MyWorld.MODE_SINGLE = "single";
 objects.MyWorld.MODE_SPLIT = "split";
 objects.MyWorld.MODE_SPLIT2 = "split2";
 objects.MyWorld.MODE_SPLIT3 = "split3";
+objects.data.EffectData.COLOR_NONE = 0;
+objects.data.EffectData.COLOR_GRADE = 1;
+objects.data.EffectData.COLOR_MONO = 2;
+objects.data.EffectData.DISPLACE_NONE = 0;
+objects.data.EffectData.DISPLACE_X = 1;
+objects.data.EffectData.DISPLACE_MAP = 2;
+objects.data.EffectData.EFFECT_NORMAL = new objects.data.EffectData({ name : "EFFECT_NORMAL", colorType : 0, displaceType : 0, strength : 1});
+objects.data.EffectData.EFFECT_MONO = new objects.data.EffectData({ name : "EFFECT_MONO", colorType : 2, displaceType : 0, strength : 1});
+objects.data.EffectData.EFFECT_DISPLACE_X = new objects.data.EffectData({ name : "EFFECT_DISPLACE_X", colorType : 0, displaceType : 1, strength : 0.3});
+objects.data.EffectData.EFFECT_DISPLACE_MAP = new objects.data.EffectData({ name : "EFFECT_DISPLACE_MAP", colorType : 0, displaceType : 2, strength : 0.8});
+objects.data.EffectData.EFFECT_COLOR = new objects.data.EffectData({ name : "EFFECT_COLOR", colorType : 1, displaceType : 0, strength : 1});
+objects.data.EffectData.effects = [objects.data.EffectData.EFFECT_NORMAL,objects.data.EffectData.EFFECT_MONO,objects.data.EffectData.EFFECT_DISPLACE_X,objects.data.EffectData.EFFECT_DISPLACE_MAP,objects.data.EffectData.EFFECT_COLOR];
+objects.data.EffectData._count = -1;
 sound.MyAudio.FFTSIZE = 64;
 three._WebGLRenderer.RenderPrecision_Impl_.highp = "highp";
 three._WebGLRenderer.RenderPrecision_Impl_.mediump = "mediump";

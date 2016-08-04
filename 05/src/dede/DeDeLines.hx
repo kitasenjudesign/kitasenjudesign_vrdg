@@ -1,4 +1,5 @@
 package dede;
+import common.MathUtil;
 import dede.cuts.DeDeParam;
 import dede.cuts.DeDeString;
 import js.Browser;
@@ -19,8 +20,10 @@ class DeDeLines extends Object3D
 	private var _lines:Array<DeDeLine>;
 	//private var _sec:Float = 0.001;
 	private var _counter:Float = 0;
+	private var _countUpNum:Int = 0;
 	private var _twn:TweenMaxHaxe;
-	private var _colRatio:Float=0;
+	private var _colRatio:Float = 0;
+	
 	
 	//public var enabled:Bool = true;
 	
@@ -52,7 +55,11 @@ class DeDeLines extends Object3D
 			line.addSec(addX, true);
 		}
 		
-		_flash();
+		_countUpNum++;
+		if (_countUpNum % 6 == 0) {
+			_flash(); 
+		}
+		//_flash();
 		//}
 		
 		//if (_isFlash) _flash();
@@ -85,7 +92,7 @@ class DeDeLines extends Object3D
 		switch(data.sameType) {
 			
 			case DeDeParam.SAME_ALL:
-				Browser.window.alert("allsame!!");
+				//Browser.window.alert("allsame!!");
 				var type:Int = Math.floor(Math.random() * 6);
 				for (i in 0..._lines.length) {
 					var line:DeDeLine = _lines[i];
@@ -94,10 +101,12 @@ class DeDeLines extends Object3D
 				}
 				
 			case DeDeParam.SAME_LINE:
+				var oldType:Int = -1;
 				for (i in 0..._lines.length) {
 					var line:DeDeLine = _lines[i];
-					var type:Int = Math.floor(Math.random() * 6);
+					var type:Int = MathUtil.getOtherInt(oldType, 6);
 					line.reset( type, data, false );// txt, type, isRotate, font, speed, space, spaceX );
+					type = oldType;
 					line.setSec(data.startSec);
 				}	
 				
@@ -110,6 +119,8 @@ class DeDeLines extends Object3D
 				}					
 				
 		}
+		
+		_flash();
 		
 	}
 	

@@ -60,7 +60,7 @@ class DeDeLine extends Object3D
 		
 		//
 		//reset("A", 0, false, 0, 2 + 2 * Math.random(), 3 + 18 * Math.random(),_spaceX);
-		reset(0, DeDeParam.getParam());
+		reset(0, DeDeParam.getParam(), false);
 	}
 	
 	

@@ -22,8 +22,7 @@ class XLoopPass extends ShaderPass
 					uniform sampler2D tDiffuse;
 					uniform sampler2D disTexture;
 					uniform sampler2D colTexture;
-					uniform float strengthX;
-					uniform float strengthY;
+					uniform float strength;
 					uniform float counter;
 					uniform float isDisplace;
 					uniform float isColor;
@@ -80,10 +79,14 @@ class XLoopPass extends ShaderPass
 						
 					}
 					
+					xx += 0.01 * sin(vUv.y * 2. * 3.14);
 					float yy = vUv.y + 0.05 * sin(vUv.x * 6.0 * 3.14);
 					
-					xx = mix(vUv.x, xx, 0.5+0.5*sin(counter * 0.1) );
-					yy = mix(vUv.y, yy, 0.5+0.5*sin(counter * 0.1) );
+					//float ss = strength;
+					float ss = 0.5 + 0.5 * sin(counter * 0.1);
+					ss = ss * strength;
+					xx = mix(vUv.x, xx, ss );
+					yy = mix(vUv.y, yy, ss );
 					
 					
 						//xx = 0.5+0.5*sin( 2.*3.14*vUv.x -3.14/2.0);
@@ -164,8 +167,7 @@ class XLoopPass extends ShaderPass
 				"isColor": 		{ type: "f", value: 1 },
 				"disTexture" : { type: "t", value: _textures[0] },
 				"colTexture": { type: "t", value: _colors[3] },
-				"strengthX": { type:"f", value:0 },
-				"strengthY": { type:"f", value:0 },
+				"strength": { type:"f", value:0 },
 				"counter":{type:"f",value:0}
 			},		
 			vertexShader: _vertex,
@@ -180,8 +182,8 @@ class XLoopPass extends ShaderPass
 	
 		if (!enabled) return;
 		
-		uniforms.strengthX.value = Math.pow( audio.freqByteData[3] / 255, 4) * 0.75;
-		uniforms.strengthY.value = Math.pow( audio.freqByteData[7] / 255, 4) * 0.75;
+		
+		uniforms.strength.value = 1;
 		uniforms.counter.value += audio.freqByteData[3] / 255 * 0.8;		
 		
 	}

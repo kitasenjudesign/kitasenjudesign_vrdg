@@ -116,9 +116,10 @@ class DisplacementPass extends ShaderPass
 	{
 		
 		_textures = [];
-		for (i in 1...11) {	
-			_textures.push( ImageUtils.loadTexture("displace/displace" +(i)+".png") );
-		}
+		//for (i in 1...11) {	
+		//	_textures.push( ImageUtils.loadTexture("displace/displace" +(i)+".png") );
+		//}
+		_textures.push( ImageUtils.loadTexture("displace/displaceA.png") );
 		_colors = [
 			ImageUtils.loadTexture("grade/grade.png"),
 			ImageUtils.loadTexture("grade/grade2.png"),

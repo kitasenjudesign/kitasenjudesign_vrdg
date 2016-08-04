@@ -3,6 +3,7 @@ import effect.pass.ColorMapPass;
 import effect.pass.DisplacementPass;
 import effect.pass.XLoopPass;
 import effect.shaders.CopyShader;
+import objects.data.EffectData;
 import sound.MyAudio;
 import three.PerspectiveCamera;
 import three.postprocessing.EffectComposer;
@@ -70,13 +71,19 @@ class PostProcessing2
 		
 		//
 		_displacePass = new DisplacementPass();
-		_displacePass.enabled = true;
+		_displacePass.enabled = false;
 		_composer.addPass( _displacePass );
 		
 		//passes
 		_xLoopPass = new XLoopPass();
 		_xLoopPass.enabled = true;
 		_composer.addPass(_xLoopPass);
+		
+		//color
+		_colorPass = new ColorMapPass();
+		_colorPass.enabled = false;
+		_composer.addPass( _colorPass );
+		
 		
 		_composer.addPass( _copyPass );
 		_copyPass.clear = true;
@@ -92,11 +99,41 @@ class PostProcessing2
 	//color 
 	//displace1
 	//displace2
-	public function change(isColor:Bool,isDisplace:Bool):Void {
+	public function change(data:EffectData):Void {
 		
-		_xLoopPass.setTexture(isColor,isDisplace);
-		_displacePass.setTexture(isColor, isDisplace);
+		switch ( data.displaceType ) {
+			case EffectData.DISPLACE_NONE:
+				
+				_xLoopPass.enabled = false;
+				_displacePass.enabled = false;
+				
+			case EffectData.DISPLACE_X:
+
+				_xLoopPass.enabled = true;
+				_xLoopPass.setTexture(false, true);
+				_displacePass.enabled = false;
+				
+			case EffectData.DISPLACE_MAP:
+				
+				_xLoopPass.enabled = false;
+				_displacePass.enabled = true;
+				_displacePass.setTexture(false, true);
+				
+		}
 		
+		switch ( data.colorType ) {
+			case EffectData.COLOR_NONE:
+				_colorPass.enabled = false;
+			case EffectData.COLOR_MONO:
+				_colorPass.enabled = true;
+				_colorPass.setMono(true);
+				_colorPass.setTexture();
+			case EffectData.COLOR_GRADE:
+				_colorPass.enabled = true;
+				_colorPass.setMono(false);				
+				_colorPass.setTexture();
+				
+		}
 	}
 	
 	//changeMode 
@@ -123,6 +160,7 @@ class PostProcessing2
 	{
 		_xLoopPass.update(audio);
 		_displacePass.update(audio);
+		_colorPass.update(audio);
 		
 		_composer.render();
 		

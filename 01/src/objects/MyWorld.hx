@@ -4,6 +4,7 @@ import common.Dat;
 import common.Key;
 import effect.PostProcessing2;
 import js.Browser;
+import objects.data.EffectData;
 import sound.MyAudio;
 import three.CubeCamera;
 import three.Mesh;
@@ -27,7 +28,7 @@ class MyWorld extends Object3D
 	public static inline var MODE_SPLIT2:String = "split2";
 	public static inline var MODE_SPLIT3:String = "split3";
 	
-	
+	public var effectName:String = "";
 	public var sphere	:MySphere;
 	public var border	:Float = 0;
 	public var faces:Array<MyFace> = [];
@@ -80,6 +81,7 @@ class MyWorld extends Object3D
 		Dat.gui.add(this, "changeMode1");
 		Dat.gui.add(this, "changeMode2");
 		Dat.gui.add(this, "changeMode3");
+		Dat.gui.add(this, "effectName").listen();
 		
 		changeMode1();
 	}
@@ -106,6 +108,8 @@ class MyWorld extends Object3D
 							
 			case Dat.RIGHT:	
 				_nextEffect();///////////////////////////////
+			case Dat.LEFT:	
+				_prevEffect();///////////////////////////////
 
 		}
 		
@@ -117,12 +121,14 @@ class MyWorld extends Object3D
 	 */
 	public function _nextEffect():Void {
 		
-		var isColor		:Bool = Math.random() < 0.5 ? true : false;
-		var isDisplace	:Bool = Math.random() < 0.5 ? true : false;
-		_pp.change(isColor,isDisplace);
+		//koko
+		var data:EffectData = EffectData.getNext();		
+		//Browser.window.alert(data.name);
+		effectName = data.name;
+		_pp.change(data);// isColor, isDisplace);
 
 		var mat:Int = 0;
-		if (isColor) {
+		if (data.colorType==EffectData.COLOR_MONO || data.colorType==EffectData.COLOR_GRADE) {
 			mat = MyFace.MAT_DEPTH;
 		}else {
 			mat = MyFace.MAT_DEFAULT;
@@ -131,10 +137,15 @@ class MyWorld extends Object3D
 		for ( i in 0...faces.length) {
 			
 			faces[i].updateMaterial(mat);
-			
+			faces[i].s = data.strength;
 		}
 		
 	}
+	
+	public function _prevEffect():Void {
+		
+	}
+	
 	
 	
 	private function _nextSingle():Void {

@@ -119,7 +119,7 @@ class Fbo
 		
 		_simuShaderMat.update( audio );
 		//_particles.updateIconPos(32 * 11 + 3);
-		_particles.updateIconPos(32 * 16 + 13);
+		//_particles.updateIconPos(32 * 16 + 13);
 		
 		//_renderShaderMat.uniforms.timer.value += 0.01;
 		//_renderGeo.attributes.life += 0.01;

@@ -30,13 +30,14 @@ class DeDeCutOneLine  extends DeDeCutBase
 		_cam.setZoom(2);
 		
 		var data:DeDeParam = DeDeParam.getParam();
-		data.txt = "DEDEMOUSE KTSNJDESIGN ";
+		data.txt = "DEDEMOUSE KTSNJDSGN ";
 		data.font = StrokeUtil.FUTURA;
 		data.speedX = DeDeLine.SPEEDX0;
 		data.spaceX = 20;
 		data.startX = DeDeLine.WIDTH / 2;
-		
+		data.space = 3;// + 7 * Math.random();
 		//data.isRandomLine = false;
+		//line.reset( type, data, false );//
 		
 		_lines.changeType( data );
 
