@@ -114,8 +114,6 @@ Main3d.prototype = {
 		this.dae.load($bind(this,this._onLoadDAE));
 		common.Dat.gui.add(this.camera,"amp").listen();
 	}
-	,_setPos: function() {
-	}
 	,_onLoadDAE: function() {
 		this._maeFaces = new faces.MaeFaces();
 		this._maeFaces.init(this);
@@ -348,6 +346,7 @@ common.Config.prototype = {
 		win.host = common.Config.host;
 		common.Config.canvasOffsetY = data.canvasOffsetY;
 		common.Config.globalVol = data.globalVol;
+		common.Config.particleSize = data.particleSize;
 		if(this._callback != null) this._callback();
 	}
 };
@@ -697,22 +696,28 @@ var faces = {};
 faces.MaeBg = function() {
 	this._fragment = "\r\n\r\nuniform vec3 col;\r\nvoid main()\r\n{\r\n  // テクスチャの色情報をそのままピクセルに塗る\r\n\tgl_FragColor = vec4(col,1.0);\r\n}\r\n\t\r\n";
 	this._vertex = "\r\nvoid main()\r\n{\r\n  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);    \r\n  gl_Position = projectionMatrix * mvPosition;\r\n}";
-	this._geo = new THREE.PlaneBufferGeometry(30,30,1,1);
-	this._mat = new THREE.ShaderMaterial({ vertexShader : this._vertex, fragmentShader : this._fragment, uniforms : { col : { type : "v3", value : new THREE.Vector3(1,1,1)}}, wireframe : true});
-	THREE.Mesh.call(this,this._geo,this._mat);
+	if(faces.MaeBg._geo == null) {
+		var w = 15.;
+		faces.MaeBg._geo = new THREE.Geometry();
+		faces.MaeBg._geo.vertices.push(new THREE.Vector3(-w,-w,0));
+		faces.MaeBg._geo.vertices.push(new THREE.Vector3(-w,w,0));
+		faces.MaeBg._geo.vertices.push(new THREE.Vector3(w,w,0));
+		faces.MaeBg._geo.vertices.push(new THREE.Vector3(w,-w,0));
+		faces.MaeBg._geo.vertices.push(new THREE.Vector3(-w,-w,0));
+	}
+	this._mat = new THREE.LineBasicMaterial({ color : 16777215});
+	THREE.Line.call(this,faces.MaeBg._geo,this._mat);
 };
-faces.MaeBg.__super__ = THREE.Mesh;
-faces.MaeBg.prototype = $extend(THREE.Mesh.prototype,{
+faces.MaeBg.__super__ = THREE.Line;
+faces.MaeBg.prototype = $extend(THREE.Line.prototype,{
 	flash: function() {
 		Tracer.log("flash");
 		this._light = 1;
 		if(this._twn != null) this._twn.kill();
-		this._twn = TweenMax.to(this,0.5,{ _light : 0, onUpdate : $bind(this,this._onUpdate)});
+		this._twn = TweenMax.to(this,0.5,{ _light : 0.5, onUpdate : $bind(this,this._onUpdate)});
 	}
 	,_onUpdate: function() {
-		this._mat.uniforms.col.value.x = this._light;
-		this._mat.uniforms.col.value.y = this._light;
-		this._mat.uniforms.col.value.z = this._light;
+		this._mat.color.setRGB(this._light,this._light,this._light);
 	}
 });
 faces.MaeFace = function() {
@@ -728,20 +733,20 @@ faces.MaeFace = function() {
 	}
 	this._face = new faces.MaeFaceMesh();
 	this.add(this._face);
-	this._gauge = new faces.MaeGauge(20,5);
+	this._gauge = new faces.MaeGauge(30,2);
 	this._gauge.init(this.randomIndex);
-	this._gauge.position.x = 5;
-	this._gauge.position.y = -20;
+	this._gauge.position.x = 0;
+	this._gauge.position.y = -16.5;
 	this.add(this._gauge);
 	this._plate = new faces.MaePlate();
 	this._plate.init(10);
 	this._plate.position.x = -15;
 	this._plate.position.y = -22;
 	this._plate.position.z = -1;
-	this.add(this._plate);
 	this._bg = new faces.MaeBg();
 	this._bg.position.z = 0;
 	this.add(this._bg);
+	this._line = new faces.lines.MaeFaceLine();
 };
 faces.MaeFace.__super__ = THREE.Object3D;
 faces.MaeFace.prototype = $extend(THREE.Object3D.prototype,{
@@ -754,12 +759,6 @@ faces.MaeFace.prototype = $extend(THREE.Object3D.prototype,{
 			this.enabled = true;
 			this._face.addForce(f);
 		}
-	}
-	,update: function(audio) {
-		if(this._life++ > 15) this.enabled = false;
-		this._calcLifeRatio();
-		this._face.update(audio,this._lifeRatio);
-		this._gauge.update(audio,this._lifeRatio);
 	}
 	,setRotMode: function(mode) {
 		this._face.setRotMode(mode);
@@ -784,10 +783,31 @@ faces.MaeFace.prototype = $extend(THREE.Object3D.prototype,{
 			break;
 		}
 	}
+	,updatePlate: function() {
+		this._plate.updateText();
+	}
+	,addLineVertex: function(v1,v2) {
+		this._line.addVertex(v1,v2);
+	}
+	,connectLine: function(idx,v1,col) {
+		var p1 = this.position;
+		if(idx == 0) this._line.lines[0].update2(v1,p1.x - 15,p1.y - 17.5,p1.z,col);
+		if(idx == 1) this._line.lines[1].update2(v1,p1.x - 15,p1.y - 16.5,p1.z,col);
+		if(idx == 2) this._line.lines[2].update2(v1,p1.x - 15,p1.y - 15.5,p1.z,col);
+	}
 	,_calcLifeRatio: function() {
 		var nn = this._life / 20;
 		if(nn > 1) nn = 1;
 		this._lifeRatio = 1 - nn;
+	}
+	,update: function(audio) {
+		if(this._life++ == 15) this.enabled = false;
+		this._calcLifeRatio();
+		this._face.update(audio,this._lifeRatio);
+		this._gauge.update(audio,this._lifeRatio);
+	}
+	,updateGauge: function(idx,ff) {
+		this._gauge.setGauge(idx,ff);
 	}
 });
 faces.MaeFaceMesh = function() {
@@ -845,7 +865,7 @@ faces.MaeFaceMesh.prototype = $extend(THREE.Mesh.prototype,{
 faces.MaeFaces = function() {
 	this._faces = [];
 	this._offsetY = 0;
-	this._currentForm = 1;
+	this._currentForm = 0;
 	THREE.Object3D.call(this);
 };
 faces.MaeFaces.__super__ = THREE.Object3D;
@@ -882,7 +902,14 @@ faces.MaeFaces.prototype = $extend(THREE.Object3D.prototype,{
 		var _g = Std.parseInt(e.keyCode);
 		switch(_g) {
 		case 39:
-			this._setFormation(Math.floor(Math.random() * 3));
+			this._currentForm++;
+			this._currentForm = this._currentForm % faces.data.MaeFormation.FORMATIONS.length;
+			this._setFormation(this._currentForm);
+			break;
+		case 37:
+			this._currentForm--;
+			if(this._currentForm < 0) this._currentForm = faces.data.MaeFormation.FORMATIONS.length - 1;
+			this._setFormation(this._currentForm);
 			break;
 		case 38:
 			this._setMaterial();
@@ -915,9 +942,9 @@ faces.MaeFaces.prototype = $extend(THREE.Object3D.prototype,{
 	}
 });
 faces.MaeGauge = function(ww,hh) {
-	this._fragment = "\r\n\t\t\tuniform vec2 resolution;\r\n\t\t\tuniform float time;\r\n\t\t\tuniform float freqs[5];\r\n\t\t\tvarying vec2 vUv; \r\n\t\t\t\r\n\t\t\tvec4 getColor(float xx, float freq) {\r\n\t\t\t\tvec4 black = vec4(0.1, 0.1, 0.1, 1.0);\r\n\t\t\t\tvec4 red = vec4(1.0, 1.0, 1.0, 1.0);\r\n\t\t\t\t\r\n\t\t\t\tif (xx > freq ) {\r\n\t\t\t\t\treturn black;\r\n\t\t\t\t}\r\n\t\t\t\t\r\n\t\t\t\treturn red;\r\n\t\t\t\t\t\r\n\t\t\t}\r\n\t\t\t\r\n\t\t\tvoid main()\t{\r\n\t\t\t\t\r\n\t\t\t\tif (vUv.y < 0.1) {\r\n\t\t\t\r\n\t\t\t\t\tgl_FragColor = getColor( vUv.x, freqs[0] );\r\n\t\t\t\t\t\r\n\t\t\t\t}else if (0.2<vUv.y && vUv.y<0.3) {\r\n\t\t\t\t\t\r\n\t\t\t\t\tgl_FragColor = getColor( vUv.x, freqs[1] );\r\n\t\t\t\t\t\r\n\t\t\t\t}else if (0.4<vUv.y && vUv.y<0.5) {\r\n\t\t\t\t\t\r\n\t\t\t\t\tgl_FragColor = getColor( vUv.x, freqs[2] );\r\n\t\t\t\t\t\r\n\t\t\t\t}else if (0.6<vUv.y && vUv.y<0.7) {\r\n\t\t\t\t\t\r\n\t\t\t\t\tgl_FragColor = getColor( vUv.x, freqs[3] );\r\n\t\t\t\t\t\r\n\t\t\t\t}else if (0.8<vUv.y && vUv.y<0.9) {\r\n\t\t\t\t\t\r\n\t\t\t\t\tgl_FragColor = getColor( vUv.x, freqs[4] );\r\n\t\t\t\t}\r\n\t\t\t\t\r\n\t\t\t}\t\r\n\t";
+	this._fragment = "\r\n\t\t\tuniform vec2 resolution;\r\n\t\t\tuniform float time;\r\n\t\t\tuniform float freqs[5];\r\n\t\t\tvarying vec2 vUv; \r\n\t\t\t\r\n\t\t\tvec4 getColor(float xx, float freq) {\r\n\t\t\t\tvec4 black = vec4(0.3, 0.3, 0.3, 1.0);\r\n\t\t\t\tvec4 red = vec4(1.0, 1.0, 1.0, 1.0);\r\n\t\t\t\t\r\n\t\t\t\tif (xx > freq ) {\r\n\t\t\t\t\treturn black;\r\n\t\t\t\t}\r\n\t\t\t\t\r\n\t\t\t\treturn red;\r\n\t\t\t\t\t\r\n\t\t\t}\r\n\t\t\t\r\n\t\t\tvoid main()\t{\r\n\t\t\t\t\r\n\t\t\t\tif (vUv.y < 0.2) {\r\n\t\t\t\r\n\t\t\t\t\tgl_FragColor = getColor( vUv.x, freqs[0] );\r\n\t\t\t\t\t\r\n\t\t\t\t}else if (0.4<vUv.y && vUv.y<0.6) {\r\n\t\t\t\t\t\r\n\t\t\t\t\tgl_FragColor = getColor( vUv.x, freqs[1] );\r\n\t\t\t\t\t\r\n\t\t\t\t}else if (0.8<vUv.y && vUv.y<1.0) {\r\n\t\t\t\t\t\r\n\t\t\t\t\tgl_FragColor = getColor( vUv.x, freqs[2] );\r\n\t\t\t\t\t\r\n\t\t\t\t}/*else if (0.6<vUv.y && vUv.y<0.7) {\r\n\t\t\t\t\t\r\n\t\t\t\t\tgl_FragColor = getColor( vUv.x, freqs[3] );\r\n\t\t\t\t\t\r\n\t\t\t\t}else if (0.8<vUv.y && vUv.y<0.9) {\r\n\t\t\t\t\t\r\n\t\t\t\t\tgl_FragColor = getColor( vUv.x, freqs[4] );\r\n\t\t\t\t}*/\r\n\t\t\t\t\r\n\t\t\t}\t\r\n\t";
 	this._vertex = "\r\n\t\r\n\t\t\tvarying vec2 vUv;\r\n\t\r\n\t\t\tvoid main()\t{\r\n\t\t\t\tvUv = uv;\r\n\t\t\t\tvec4 mvPosition = modelViewMatrix * vec4(position, 1.0);    \r\n\t\t\t\t// 変換：カメラ座標 → 画面座標\r\n\t\t\t\tgl_Position = projectionMatrix * mvPosition;\r\n\t\t\t\t\r\n\t\t\t}\t\r\n\t";
-	this._geometry = new THREE.PlaneBufferGeometry(ww,hh,1,1);
+	this._geometry = new THREE.PlaneBufferGeometry(ww,hh,1,2);
 	this._material = new THREE.ShaderMaterial({ uniforms : { time : { type : "f", value : 1.0}, resolution : { type : "v2", value : new THREE.Vector2(512,512)}, freqs : { type : "fv1", value : [1,2,3,4,5]}}, vertexShader : this._vertex, fragmentShader : this._fragment});
 	this._material.transparent = true;
 	THREE.Mesh.call(this,this._geometry,this._material);
@@ -934,9 +961,13 @@ faces.MaeGauge.prototype = $extend(THREE.Mesh.prototype,{
 		var _g = 0;
 		while(_g < 5) {
 			var i = _g++;
-			var ff = audio.freqByteData[this._randomIndex[i]] / 255 * 2 * lifeRatio;
-			this._material.uniforms.freqs.value[i] += (ff - this._material.uniforms.freqs.value[i]) / 4;
+			var ff = audio.freqByteDataAry[this._randomIndex[i]] / 255;
+			if(lifeRatio == 0) ff = 0;
+			this._material.uniforms.freqs.value[i] += (ff - this._material.uniforms.freqs.value[i]) / 2;
 		}
+	}
+	,setGauge: function(idx,ff) {
+		this._material.uniforms.freqs.value[idx] = ff;
 	}
 });
 faces.MaeLines = function() {
@@ -947,22 +978,28 @@ faces.MaeLines = function() {
 faces.MaeLines.__super__ = THREE.Object3D;
 faces.MaeLines.prototype = $extend(THREE.Object3D.prototype,{
 	init: function(faces) {
+		this._hMesh = new THREE.Mesh(new THREE.BoxGeometry(100,2,2),new THREE.MeshBasicMaterial({ color : 16777215}));
+		this.add(this._hMesh);
 		var geo = new THREE.Geometry();
 		this._faces = faces;
 		var _g1 = 0;
 		var _g = this._faces.length;
 		while(_g1 < _g) {
 			var i = _g1++;
+			var f = this._faces[i];
 			var _g2 = 0;
 			while(_g2 < 5) {
 				var j = _g2++;
-				geo.vertices.push(this._faces[i].position.clone());
-				geo.vertices.push(new THREE.Vector3(j * 10,-100,0));
+				var v1 = new THREE.Vector3();
+				var v2 = new THREE.Vector3();
+				geo.vertices.push(v1);
+				geo.vertices.push(v2);
 				geo.colors.push(new THREE.Color(16711680));
 				geo.colors.push(new THREE.Color(65280));
+				f.addLineVertex(v1,v2);
 			}
 		}
-		this._line = new THREE.LineSegments(geo,new THREE.LineBasicMaterial({ color : 16777215, vertexColors : 2}));
+		this._line = new THREE.LineSegments(geo,new THREE.LineBasicMaterial({ color : 16777215}));
 		this.add(this._line);
 	}
 	,update: function(audio) {
@@ -970,13 +1007,28 @@ faces.MaeLines.prototype = $extend(THREE.Object3D.prototype,{
 		this._line.geometry.verticesNeedUpdate = true;
 		this._line.geometry.colorsNeedUpdate = true;
 		var offY = this.startY;
+		var scaleX = audio.freqByteData[5] / 255 * 5;
+		if(scaleX < 0) scaleX = 0;
+		this._hMesh.scale.x = scaleX;
+		this._hMesh.position.z = -100;
+		this._hMesh.position.y = offY;
 		var _g1 = 0;
 		var _g = this._faces.length;
 		while(_g1 < _g) {
 			var i = _g1++;
-			if(audio.freqByteDataAry[this._faces[i].randomIndex[0]] > 15 && this._faces[i].visible) {
-				this._faces[i].addForce(1);
-				this._connectLine(this._faces[i].position,new THREE.Vector3(100 * (Math.random() - 0.5),offY,-100),Math.random());
+			var face = this._faces[i];
+			var freq0 = audio.freqByteDataAry[face.randomIndex[0]] / 255;
+			var freq1 = audio.freqByteDataAry[face.randomIndex[1]] / 255;
+			var freq2 = audio.freqByteDataAry[face.randomIndex[2]] / 255;
+			var freqs = [freq0,freq1,freq2];
+			var _g2 = 0;
+			while(_g2 < 3) {
+				var j = _g2++;
+				if(freqs[j] > 0.2 && face.visible) {
+					face.addForce(1);
+					face.connectLine(j,new THREE.Vector3(scaleX * 100 * (Math.random() - 0.5),offY,-100),1);
+				} else {
+				}
 			}
 		}
 	}
@@ -991,7 +1043,7 @@ faces.MaeLines.prototype = $extend(THREE.Object3D.prototype,{
 	}
 	,_connectLine: function(ss,ee,col) {
 		var ox = -15;
-		var oy = -15;
+		var oy = -18;
 		this._line.geometry.vertices[this._lineIdx].set(ss.x + ox,ss.y + oy,ss.z);
 		this._line.geometry.vertices[this._lineIdx + 1].set(ee.x,ee.y,ee.z);
 		this._line.geometry.colors[this._lineIdx].setRGB(col,col,col);
@@ -1146,35 +1198,65 @@ faces.data = {};
 faces.data.MaeFormation = function() {
 	this._height = 0;
 	this._width = 0;
-	this._currentForm = 0;
+	this._currentForm = "FORMATION0";
 };
 faces.data.MaeFormation.prototype = {
 	init: function(main,lines) {
 		this._camera = main.camera;
 		this._lines = lines;
 	}
-	,setFormation: function(n,faces) {
-		this._currentForm = n;
-		switch(n) {
-		case 0:
-			this._setFormH0(faces);
+	,setFormation: function(n,faces1) {
+		this._currentForm = faces.data.MaeFormation.FORMATIONS[n % faces.data.MaeFormation.FORMATIONS.length];
+		var _g = this._currentForm;
+		switch(_g) {
+		case "FORMATION0":
+			this._setFormH0(faces1);
 			break;
-		case 1:
-			this._setFormH1(faces);
+		case "FORMATION1":
+			this._setFormH1(faces1);
 			break;
-		case 2:
-			this._setFormA(faces);
+		case "FORMATION2":
+			this._setFormA(faces1);
 			break;
-		case 3:
-			this._setFormB(faces);
+		case "FORMATION3":
+			this._setFormB(faces1);
 			break;
+		}
+	}
+	,_setFormH0debug: function(faces) {
+		Tracer.log("_setForm1");
+		this._lines.startY = -150;
+		this._camera.amp = 300;
+		this._camera.setFOV(30);
+		var spaceX = 35;
+		var xnum = 20;
+		var ynum = 3;
+		this._width = xnum * spaceX;
+		var len = faces.length;
+		var _g = 0;
+		while(_g < len) {
+			var i = _g++;
+			var ff = faces[i];
+			if(i == 0) {
+				var xx = i % xnum - (xnum - 1) / 2;
+				var yy = Math.floor(i / xnum) - (ynum - 1) / 2;
+				ff.enabled = true;
+				ff.visible = true;
+				ff.position.x = 0;
+				ff.position.y = 8;
+				ff.position.z = 230;
+				ff.rotation.y = 0;
+			} else {
+				ff.visible = false;
+				ff.enabled = false;
+			}
 		}
 	}
 	,_setFormH0: function(faces) {
 		Tracer.log("_setForm1");
 		this._lines.startY = -150;
 		this._camera.amp = 300;
-		this._camera.setFOV(45);
+		this._camera.setFOV(30);
 		var spaceX = 35;
 		var xnum = 20;
 		var ynum = 3;
@@ -1203,7 +1285,7 @@ faces.data.MaeFormation.prototype = {
 		Tracer.log("_setForm1");
 		this._lines.startY = -150;
 		this._camera.amp = 300;
-		this._camera.setFOV(45);
+		this._camera.setFOV(30);
 		var spaceX = 50;
 		var spaceY = 50;
 		var xnum = 20;
@@ -1276,13 +1358,13 @@ faces.data.MaeFormation.prototype = {
 	,update: function(faces) {
 		var _g = this._currentForm;
 		switch(_g) {
-		case 0:
+		case "FORMATION0":
 			this._update0(faces);
 			break;
-		case 1:
+		case "FORMATION1":
 			this._update1(faces);
 			break;
-		case 2:
+		case "FORMATION2":
 			this._update2(faces);
 			break;
 		}
@@ -1292,8 +1374,10 @@ faces.data.MaeFormation.prototype = {
 		var _g = faces.length;
 		while(_g1 < _g) {
 			var i = _g1++;
-			faces[i].position.x -= 0.2;
-			if(faces[i].position.x < -this._width / 2) faces[i].position.x = this._width / 2;
+			if(faces[i].position.x < -this._width / 2) {
+				faces[i].position.x = this._width / 2;
+				faces[i].updatePlate();
+			}
 		}
 	}
 	,_update1: function(faces) {
@@ -1302,7 +1386,10 @@ faces.data.MaeFormation.prototype = {
 		while(_g1 < _g) {
 			var i = _g1++;
 			faces[i].position.x -= 0.5;
-			if(faces[i].position.x < -this._width / 2) faces[i].position.x = this._width / 2;
+			if(faces[i].position.x < -this._width / 2) {
+				faces[i].position.x = this._width / 2;
+				faces[i].updatePlate();
+			}
 		}
 	}
 	,_update2: function(faces) {
@@ -1311,8 +1398,41 @@ faces.data.MaeFormation.prototype = {
 		while(_g1 < _g) {
 			var i = _g1++;
 			faces[i].position.y += 0.25;
-			if(faces[i].position.y > this._height / 2) faces[i].position.y = -this._height / 2;
+			if(faces[i].position.y > this._height / 2) {
+				faces[i].position.y = -this._height / 2;
+				faces[i].updatePlate();
+			}
 		}
+	}
+};
+faces.lines = {};
+faces.lines.ConnectLine = function(v1,v2) {
+	this._count = 0;
+	this._isTween = false;
+	this._v1 = v1;
+	this._v2 = v2;
+	this._count = Math.floor(Math.random() * 30);
+};
+faces.lines.ConnectLine.prototype = {
+	update: function(start,goal) {
+		this._start = start;
+		this._goal = goal;
+		this._v1.copy(this._start);
+		this._v2.copy(this._goal);
+	}
+	,update2: function(start,xx,yy,zz,col) {
+		this._v1.copy(start);
+		this._v2.x = xx;
+		this._v2.y = yy;
+		this._v2.z = zz;
+	}
+};
+faces.lines.MaeFaceLine = function() {
+	this.lines = [];
+};
+faces.lines.MaeFaceLine.prototype = {
+	addVertex: function(v1,v2) {
+		this.lines.push(new faces.lines.ConnectLine(v1,v2));
 	}
 };
 var haxe = {};
@@ -1914,6 +2034,7 @@ Three.LineStrip = 0;
 Three.LinePieces = 1;
 common.Config.canvasOffsetY = 0;
 common.Config.globalVol = 1.0;
+common.Config.particleSize = 3000;
 common.Dat.UP = 38;
 common.Dat.DOWN = 40;
 common.Dat.LEFT = 37;
@@ -1972,10 +2093,11 @@ faces.MaeFaceMesh.ROT_MODE_B = 1;
 faces.MaeFaceMesh.ROT_MODE_C = 2;
 faces.MaeFaces.MAX = 150;
 faces.MaePlate._index = 0;
-faces.data.MaeFormation.FORMATION0 = 0;
-faces.data.MaeFormation.FORMATION1 = 1;
-faces.data.MaeFormation.FORMATION2 = 2;
-faces.data.MaeFormation.FORMATION3 = 3;
+faces.data.MaeFormation.FORMATION0 = "FORMATION0";
+faces.data.MaeFormation.FORMATION1 = "FORMATION1";
+faces.data.MaeFormation.FORMATION2 = "FORMATION2";
+faces.data.MaeFormation.FORMATION3 = "FORMATION3";
+faces.data.MaeFormation.FORMATIONS = ["FORMATION0","FORMATION1","FORMATION2","FORMATION3"];
 objects.shaders.CurlNoise.glsl = "\r\n//\r\n// Description : Array and textureless GLSL 2D/3D/4D simplex \r\n//               noise functions.\r\n//      Author : Ian McEwan, Ashima Arts.\r\n//  Maintainer : ijm\r\n//     Lastmod : 20110822 (ijm)\r\n//     License : Copyright (C) 2011 Ashima Arts. All rights reserved.\r\n//               Distributed under the MIT License. See LICENSE file.\r\n//               https://github.com/ashima/webgl-noise\r\n// \r\n\r\nvec3 mod289(vec3 x) {\r\n\treturn x - floor(x * (1.0 / 289.0)) * 289.0;\r\n}\r\n\r\nvec4 mod289(vec4 x) {\r\n\treturn x - floor(x * (1.0 / 289.0)) * 289.0;\r\n}\r\n\r\nvec4 permute(vec4 x) {\r\n\treturn mod289(((x*34.0)+1.0)*x);\r\n}\r\n\r\nvec4 taylorInvSqrt(vec4 r){\r\n\treturn 1.79284291400159 - 0.85373472095314 * r;\r\n}\r\n\r\nfloat snoise(vec3 v) { \r\n\r\n\tconst vec2  C = vec2(1.0/6.0, 1.0/3.0) ;\r\n\tconst vec4  D = vec4(0.0, 0.5, 1.0, 2.0);\r\n\r\n\t// First corner\r\n\tvec3 i  = floor(v + dot(v, C.yyy) );\r\n\tvec3 x0 =   v - i + dot(i, C.xxx) ;\r\n\r\n\t// Other corners\r\n\tvec3 g = step(x0.yzx, x0.xyz);\r\n\tvec3 l = 1.0 - g;\r\n\tvec3 i1 = min( g.xyz, l.zxy );\r\n\tvec3 i2 = max( g.xyz, l.zxy );\r\n\r\n\t//   x0 = x0 - 0.0 + 0.0 * C.xxx;\r\n\t//   x1 = x0 - i1  + 1.0 * C.xxx;\r\n\t//   x2 = x0 - i2  + 2.0 * C.xxx;\r\n\t//   x3 = x0 - 1.0 + 3.0 * C.xxx;\r\n\tvec3 x1 = x0 - i1 + C.xxx;\r\n\tvec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y\r\n\tvec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y\r\n\r\n\t// Permutations\r\n\ti = mod289(i); \r\n\tvec4 p = permute( permute( permute( \r\n\t\t  i.z + vec4(0.0, i1.z, i2.z, 1.0 ))\r\n\t\t+ i.y + vec4(0.0, i1.y, i2.y, 1.0 )) \r\n\t\t+ i.x + vec4(0.0, i1.x, i2.x, 1.0 ));\r\n\r\n\t// Gradients: 7x7 points over a square, mapped onto an octahedron.\r\n\t// The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)\r\n\tfloat n_ = 0.142857142857; // 1.0/7.0\r\n\tvec3  ns = n_ * D.wyz - D.xzx;\r\n\r\n\tvec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)\r\n\r\n\tvec4 x_ = floor(j * ns.z);\r\n\tvec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)\r\n\r\n\tvec4 x = x_ *ns.x + ns.yyyy;\r\n\tvec4 y = y_ *ns.x + ns.yyyy;\r\n\tvec4 h = 1.0 - abs(x) - abs(y);\r\n\r\n\tvec4 b0 = vec4( x.xy, y.xy );\r\n\tvec4 b1 = vec4( x.zw, y.zw );\r\n\r\n\t//vec4 s0 = vec4(lessThan(b0,0.0))*2.0 - 1.0;\r\n\t//vec4 s1 = vec4(lessThan(b1,0.0))*2.0 - 1.0;\r\n\tvec4 s0 = floor(b0)*2.0 + 1.0;\r\n\tvec4 s1 = floor(b1)*2.0 + 1.0;\r\n\tvec4 sh = -step(h, vec4(0.0));\r\n\r\n\tvec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;\r\n\tvec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;\r\n\r\n\tvec3 p0 = vec3(a0.xy,h.x);\r\n\tvec3 p1 = vec3(a0.zw,h.y);\r\n\tvec3 p2 = vec3(a1.xy,h.z);\r\n\tvec3 p3 = vec3(a1.zw,h.w);\r\n\r\n\t//Normalise gradients\r\n\tvec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));\r\n\tp0 *= norm.x;\r\n\tp1 *= norm.y;\r\n\tp2 *= norm.z;\r\n\tp3 *= norm.w;\r\n\r\n\t// Mix final noise value\r\n\tvec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);\r\n\tm = m * m;\r\n\treturn 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ) );\r\n\r\n}\r\n\r\nvec3 snoiseVec3( vec3 x ){\r\n\r\n\tfloat s  = snoise(vec3( x ));\r\n\tfloat s1 = snoise(vec3( x.y - 19.1 , x.z + 33.4 , x.x + 47.2 ));\r\n\tfloat s2 = snoise(vec3( x.z + 74.2 , x.x - 124.5 , x.y + 99.4 ));\r\n\tvec3 c = vec3( s , s1 , s2 );\r\n\treturn c;\r\n\r\n}\r\n\r\nvec3 curlNoise( vec3 p ){\r\n \r\n\tconst float e = .1;\r\n\tvec3 dx = vec3( e   , 0.0 , 0.0 );\r\n\tvec3 dy = vec3( 0.0 , e   , 0.0 );\r\n\tvec3 dz = vec3( 0.0 , 0.0 , e   );\r\n\r\n\tvec3 p_x0 = snoiseVec3( p - dx );\r\n\tvec3 p_x1 = snoiseVec3( p + dx );\r\n\tvec3 p_y0 = snoiseVec3( p - dy );\r\n\tvec3 p_y1 = snoiseVec3( p + dy );\r\n\tvec3 p_z0 = snoiseVec3( p - dz );\r\n\tvec3 p_z1 = snoiseVec3( p + dz );\r\n\r\n\tfloat x = p_y1.z - p_y0.z - p_z1.y + p_z0.y;\r\n\tfloat y = p_z1.x - p_z0.x - p_x1.z + p_x0.z;\r\n\tfloat z = p_x1.y - p_x0.y - p_y1.x + p_y0.x;\r\n\r\n\tconst float divisor = 1.0 / ( 2.0 * e );\r\n\treturn normalize( vec3( x , y , z ) * divisor );\r\n\r\n}\r\n\r\nvec3 curlNoise2( vec3 p ) {\r\n\r\n\tconst float e = .1;\r\n\r\n\tvec3 xNoisePotentialDerivatives = snoiseVec3( p );\r\n\tvec3 yNoisePotentialDerivatives = snoiseVec3( p + e * vec3( 3., -3.,  1. ) );\r\n\tvec3 zNoisePotentialDerivatives = snoiseVec3( p + e * vec3( 2.,  4., -3. ) );\r\n\r\n\tvec3 noiseVelocity = vec3(\r\n\t\tzNoisePotentialDerivatives.y - yNoisePotentialDerivatives.z,\r\n\t\txNoisePotentialDerivatives.z - zNoisePotentialDerivatives.x,\r\n\t\tyNoisePotentialDerivatives.x - xNoisePotentialDerivatives.y\r\n\t);\r\n\r\n\treturn normalize( noiseVelocity );\r\n\r\n}\r\n\r\nvec4 snoiseD(vec3 v) { //returns vec4(value, dx, dy, dz)\r\n  const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;\r\n  const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);\r\n \r\n  vec3 i  = floor(v + dot(v, C.yyy) );\r\n  vec3 x0 =   v - i + dot(i, C.xxx) ;\r\n \r\n  vec3 g = step(x0.yzx, x0.xyz);\r\n  vec3 l = 1.0 - g;\r\n  vec3 i1 = min( g.xyz, l.zxy );\r\n  vec3 i2 = max( g.xyz, l.zxy );\r\n \r\n  vec3 x1 = x0 - i1 + C.xxx;\r\n  vec3 x2 = x0 - i2 + C.yyy;\r\n  vec3 x3 = x0 - D.yyy;\r\n \r\n  i = mod289(i);\r\n  vec4 p = permute( permute( permute(\r\n             i.z + vec4(0.0, i1.z, i2.z, 1.0 ))\r\n           + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))\r\n           + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));\r\n \r\n  float n_ = 0.142857142857; // 1.0/7.0\r\n  vec3  ns = n_ * D.wyz - D.xzx;\r\n \r\n  vec4 j = p - 49.0 * floor(p * ns.z * ns.z);\r\n \r\n  vec4 x_ = floor(j * ns.z);\r\n  vec4 y_ = floor(j - 7.0 * x_ );\r\n \r\n  vec4 x = x_ *ns.x + ns.yyyy;\r\n  vec4 y = y_ *ns.x + ns.yyyy;\r\n  vec4 h = 1.0 - abs(x) - abs(y);\r\n \r\n  vec4 b0 = vec4( x.xy, y.xy );\r\n  vec4 b1 = vec4( x.zw, y.zw );\r\n \r\n  vec4 s0 = floor(b0)*2.0 + 1.0;\r\n  vec4 s1 = floor(b1)*2.0 + 1.0;\r\n  vec4 sh = -step(h, vec4(0.0));\r\n \r\n  vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;\r\n  vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;\r\n \r\n  vec3 p0 = vec3(a0.xy,h.x);\r\n  vec3 p1 = vec3(a0.zw,h.y);\r\n  vec3 p2 = vec3(a1.xy,h.z);\r\n  vec3 p3 = vec3(a1.zw,h.w);\r\n \r\n  vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));\r\n  p0 *= norm.x;\r\n  p1 *= norm.y;\r\n  p2 *= norm.z;\r\n  p3 *= norm.w;\r\n \r\n  vec4 values = vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ); //value of contributions from each corner (extrapolate the gradient)\r\n \r\n  vec4 m = max(0.5 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0); //kernel function from each corner\r\n \r\n  vec4 m2 = m * m;\r\n  vec4 m3 = m * m * m;\r\n \r\n  vec4 temp = -6.0 * m2 * values;\r\n  float dx = temp[0] * x0.x + temp[1] * x1.x + temp[2] * x2.x + temp[3] * x3.x + m3[0] * p0.x + m3[1] * p1.x + m3[2] * p2.x + m3[3] * p3.x;\r\n  float dy = temp[0] * x0.y + temp[1] * x1.y + temp[2] * x2.y + temp[3] * x3.y + m3[0] * p0.y + m3[1] * p1.y + m3[2] * p2.y + m3[3] * p3.y;\r\n  float dz = temp[0] * x0.z + temp[1] * x1.z + temp[2] * x2.z + temp[3] * x3.z + m3[0] * p0.z + m3[1] * p1.z + m3[2] * p2.z + m3[3] * p3.z;\r\n \r\n  return vec4(dot(m3, values), dx, dy, dz) * 42.0;\r\n}\r\n\r\n\r\nvec3 curlNoise3 (vec3 p) {\r\n\r\n    vec3 xNoisePotentialDerivatives = snoiseD( p ).yzw; //yzw are the xyz derivatives\r\n    vec3 yNoisePotentialDerivatives = snoiseD(vec3( p.y - 19.1 , p.z + 33.4 , p.x + 47.2 )).zwy;\r\n    vec3 zNoisePotentialDerivatives = snoiseD(vec3( p.z + 74.2 , p.x - 124.5 , p.y + 99.4 )).wyz;\r\n    vec3 noiseVelocity = vec3(\r\n        zNoisePotentialDerivatives.y - yNoisePotentialDerivatives.z,\r\n        xNoisePotentialDerivatives.z - zNoisePotentialDerivatives.x,\r\n        yNoisePotentialDerivatives.x - xNoisePotentialDerivatives.y\r\n    );\r\n\t\r\n\tconst float e = .1;\r\n\tconst float divisor = 1.0 / ( 2.0 * e );\r\n\treturn normalize( noiseVelocity * divisor );\r\n\r\n}\r\n\t\r\n\t";
 sound.MyAudio.FFTSIZE = 64;
 three._WebGLRenderer.RenderPrecision_Impl_.highp = "highp";

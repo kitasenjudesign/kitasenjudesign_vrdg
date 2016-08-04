@@ -1,8 +1,6 @@
 package faces;
 import three.BoxGeometry;
 import three.Geometry;
-import three.Line;
-import three.LineBasicMaterial;
 import three.Mesh;
 import three.PlaneBufferGeometry;
 import three.ShaderMaterial;
@@ -14,7 +12,7 @@ import tween.TweenMaxHaxe;
  * ...
  * @author watanabe
  */
-class MaeBg extends Line
+class MaeBg extends Mesh
 {
 	
 	private var _vertex:String = "
@@ -37,28 +35,23 @@ void main()
 
 
 
-	private static var _geo:Geometry;//PlaneBufferGeometry;
-	private var _mat:LineBasicMaterial;
-	
+	private var _geo:Geometry;//PlaneBufferGeometry;
+	private var _mat:ShaderMaterial;
 	private var _twn:TweenMaxHaxe;
 	private var _light:Float;
 	
 	public function new() 
 	{
 		
-		if (_geo == null) {
-			var w:Float = 30 / 2;
-			_geo = new Geometry();
-			_geo.vertices.push(new Vector3(-w,-w,0));
-			_geo.vertices.push(new Vector3(-w,w,0));
-			_geo.vertices.push(new Vector3(w,w,0));
-			_geo.vertices.push(new Vector3(w,-w,0));
-			_geo.vertices.push(new Vector3(-w,-w,0));
-		}
-		
-		_mat = new LineBasicMaterial({
-			color:0xffffff
-		});
+		_geo = new PlaneBufferGeometry(30, 30, 1, 1);
+		_mat = new ShaderMaterial({
+			vertexShader: _vertex,
+			fragmentShader: _fragment,
+			uniforms: {
+				col: { type: 'v3', value: new Vector3(1,1,1)}                               
+			},
+			wireframe:true
+		});	
 		
 		super(untyped _geo, _mat);
 	}
@@ -69,13 +62,12 @@ void main()
 	public function flash():Void {
 		//
 		Tracer.log("flash");
-		
 		_light = 1;
 		if (_twn != null) {
 			_twn.kill();
 		}
 		_twn = TweenMax.to(this, 0.5, {
-			_light:0.5,
+			_light:0,
 			onUpdate:_onUpdate
 		});
 		
@@ -83,7 +75,9 @@ void main()
 	
 	function _onUpdate() 
 	{
-		_mat.color.setRGB(_light, _light, _light);	
+		_mat.uniforms.col.value.x = _light;
+		_mat.uniforms.col.value.y = _light;
+		_mat.uniforms.col.value.z = _light;		
 	}
 	
 }

@@ -99,11 +99,6 @@ class Main3d
 		
 	}
 	
-	private function _setPos():Void {
-	
-		
-	}
-	
 	
 	/**
 	 * _onLoadDAE

@@ -12,19 +12,27 @@ import three.Scene;
 class MaeFormation
 {
 	
-	private var _currentForm:Int = 0;
+
+	public static inline var FORMATION0:String = "FORMATION0";
+	public static inline var FORMATION1:String = "FORMATION1";
+	
+	public static inline var FORMATION2:String = "FORMATION2";
+	public static inline var FORMATION3:String = "FORMATION3";
+	
+	public static var FORMATIONS:Array<String> = [
+		FORMATION0,
+		FORMATION1,
+		FORMATION2,
+		FORMATION3		
+	];	
+	
+	private var _currentForm:String = FORMATION0;
 	private var _width:Float = 0;
 	private var _height:Float = 0;
 	private var _camera:ExCamera;
 	private var _lines:MaeLines;
 	private var _fog:Fog;
 	private var _scene:Scene;
-	
-	public static inline var FORMATION0:Int = 0;
-	public static inline var FORMATION1:Int = 1;
-	
-	public static inline var FORMATION2:Int = 2;
-	public static inline var FORMATION3:Int = 3;
 	
 	
 	public function new() 
@@ -46,9 +54,10 @@ class MaeFormation
 	
 	public function setFormation(n:Int,faces:Array<MaeFace>):Void {
 		
-		_currentForm = n;
-		switch(n) {
+		_currentForm = FORMATIONS[n%FORMATIONS.length];
+		switch(_currentForm) {
 			case FORMATION0:
+				//_setFormH0(faces);
 				_setFormH0(faces);
 				
 			case FORMATION1:
@@ -63,6 +72,39 @@ class MaeFormation
 		
 	}
 	
+	private function _setFormH0debug(faces:Array<MaeFace>):Void
+	{
+		Tracer.log("_setForm1");
+		
+		_lines.startY = -150;
+		_camera.amp = 300;
+		_camera.setFOV(30);//
+		
+		var spaceX:Float = 35;
+		var xnum:Int = 20;
+		var ynum:Int = 3;
+		_width = xnum * spaceX;
+
+		
+		var len:Int = faces.length;
+		for (i in 0...len) {
+			var ff:MaeFace = faces[i];
+			if(i==0){
+				var xx:Float = i % xnum - (xnum-1)/2;
+				var yy:Float = Math.floor(i / xnum) - (ynum - 1) / 2;
+				ff.enabled = true;
+				ff.visible = true;
+				ff.position.x = 0;
+				ff.position.y = 8;
+				ff.position.z = 230;
+				ff.rotation.y = 0;
+			}else {
+				ff.visible = false;
+				ff.enabled = false;
+			}
+		}
+	}	
+	
 		
 	//1 line
 	private function _setFormH0(faces:Array<MaeFace>):Void
@@ -71,7 +113,7 @@ class MaeFormation
 		
 		_lines.startY = -150;
 		_camera.amp = 300;
-		_camera.setFOV(45);//
+		_camera.setFOV(30);//
 		
 		var spaceX:Float = 35;
 		var xnum:Int = 20;
@@ -106,7 +148,7 @@ class MaeFormation
 		
 		_lines.startY = -150;
 		_camera.amp = 300;
-		_camera.setFOV(45);//
+		_camera.setFOV(30);//
 		
 		var spaceX:Float = 50;
 		var spaceY:Float = 50;
@@ -195,6 +237,7 @@ class MaeFormation
 	private function _setFormB(faces:Array<MaeFace>):Void
 	{
 		
+		// tate ni susumu yatsu wo tsukuru
 		
 	}
 	
@@ -219,21 +262,20 @@ class MaeFormation
 	private function _update0(faces:Array<MaeFace>):Void {
 		
 		for ( i in 0...faces.length) {
-			faces[i].position.x -= 0.2;
+			//faces[i].position.x -= 0.1;
 			if ( faces[i].position.x < -_width/2) {
-				faces[i].position.x = _width/2;
+				faces[i].position.x = _width / 2;
+				faces[i].updatePlate();
 			}
 		}
-		//_faces[i].position.x -= 0.25;
-			//if ( _faces[i].position.x < -500) {
-			//	_faces[i].position.x = 500;
-			//}		
+
 	}
 	private function _update1(faces:Array<MaeFace>):Void {
 		for ( i in 0...faces.length) {
 			faces[i].position.x -= 0.5;
 			if ( faces[i].position.x < -_width/2) {
-				faces[i].position.x = _width/2;
+				faces[i].position.x = _width / 2;
+				faces[i].updatePlate();
 			}			
 		}		
 	}
@@ -243,7 +285,8 @@ class MaeFormation
 		for ( i in 0...faces.length) {
 			faces[i].position.y += 0.25;
 			if ( faces[i].position.y > _height/2) {
-				faces[i].position.y = -_height/2;
+				faces[i].position.y = -_height / 2;
+				faces[i].updatePlate();
 			}						
 		}		
 	}

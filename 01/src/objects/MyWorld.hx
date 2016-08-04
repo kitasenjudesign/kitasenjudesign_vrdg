@@ -81,6 +81,7 @@ class MyWorld extends Object3D
 		Dat.gui.add(this, "changeMode1");
 		Dat.gui.add(this, "changeMode2");
 		Dat.gui.add(this, "changeMode3");
+		
 		Dat.gui.add(this, "effectName").listen();
 		
 		changeMode1();
@@ -108,6 +109,7 @@ class MyWorld extends Object3D
 							
 			case Dat.RIGHT:	
 				_nextEffect();///////////////////////////////
+				
 			case Dat.LEFT:	
 				_prevEffect();///////////////////////////////
 
@@ -120,6 +122,8 @@ class MyWorld extends Object3D
 	 * _nextEffect
 	 */
 	public function _nextEffect():Void {
+		
+		
 		
 		//koko
 		var data:EffectData = EffectData.getNext();		

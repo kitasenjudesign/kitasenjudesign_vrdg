@@ -57,9 +57,11 @@ class MaeFaceMesh extends Mesh
 	
 	public function addForce(f:Float) 
 	{
+		
 		_vx += 0.1 * ( Math.random() - 0.5 );
 		_vy += 0.1 * ( Math.random() - 0.5 );
 		_vz += 0.1 * ( Math.random() - 0.5 );
+		
 	}	
 	
 	public function update(audio:MyAudio, lifeRatio:Float):Void {

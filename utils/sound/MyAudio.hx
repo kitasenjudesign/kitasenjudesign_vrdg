@@ -96,6 +96,11 @@ class MyAudio
 		setImpulse();
 		update();
 		
+		//debug
+		//freqByteDataAry = [];
+		//for ( i in 0...freqByteData.length) {
+		//	freqByteDataAry[i] = Math.floor(Math.random() * 255);
+		//}
 		_callback();
 	}
 	

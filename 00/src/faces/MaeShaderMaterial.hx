@@ -186,7 +186,8 @@ void main()
 
 	";
 	
-
+	//akarusa wo setsuru
+	
 	
 	private static var _texture1:Texture;
 	private static var _colorTextures:Array<Texture>;

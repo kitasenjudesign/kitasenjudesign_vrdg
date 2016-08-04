@@ -1,10 +1,12 @@
 package faces;
 
+import faces.lines.MaeFaceLine;
 import faces.MaeGauge;
 import sound.MyAudio;
 import three.Geometry;
 import three.Mesh;
 import three.Object3D;
+import three.Vector3;
 
 /**
  * ...
@@ -28,10 +30,13 @@ class MaeFace extends Object3D
 	
 	private var _life		:Int = 0;
 	private var _lifeRatio	:Float = 0;
-
+	private var _line		:MaeFaceLine;
+	
+	
 	//
 	public var randomIndex:Array<Int>;	
 	public var enabled		:Bool = true;
+	
 	
 	
 	
@@ -57,10 +62,10 @@ class MaeFace extends Object3D
 		_face = new MaeFaceMesh();
 		add( _face );
 		
-		_gauge = new MaeGauge(20, 5);
+		_gauge = new MaeGauge(30, 2);
 		_gauge.init(randomIndex);
-		_gauge.position.x = 5;
-		_gauge.position.y = -20;
+		_gauge.position.x = 0;
+		_gauge.position.y = -16.5;
 		add(_gauge);
 		
 		_plate = new MaePlate();
@@ -68,13 +73,13 @@ class MaeFace extends Object3D
 		_plate.position.x = -15;
 		_plate.position.y = -22;
 		_plate.position.z = -1;
-		add(_plate);
+		//add(_plate);
 		
 		_bg = new MaeBg();
 		_bg.position.z = 0;
 		add(_bg);
 		
-		//yokoni nagarete iku
+		_line = new MaeFaceLine();
 	}
 	
 	/**
@@ -102,21 +107,7 @@ class MaeFace extends Object3D
 	
 	
 	
-	/**
-	 * update
-	 * @param	audio
-	 */
-	public function update(audio:MyAudio):Void {
-		//update
-		if( _life++ > 15){
-			enabled = false;
-		}
-		_calcLifeRatio();
-		
-		_face.update(audio, _lifeRatio);
-		_gauge.update(audio, _lifeRatio);
-		
-	}
+	
 	
 	
 	//public function setRotMode	
@@ -155,6 +146,27 @@ class MaeFace extends Object3D
 		
 	}
 	
+	public function updatePlate():Void {
+		
+		_plate.updateText();
+		
+	}
+	
+	public function addLineVertex(v1:Vector3,v2:Vector3) 
+	{
+		_line.addVertex(v1,v2);
+	}
+	
+	
+	public function connectLine(idx:Int, v1:Vector3, col:Float):Void
+	{
+		var p1:Vector3 = position;
+		if(idx==0)_line.lines[0].update2(v1, p1.x-15, p1.y-17.5, p1.z, col);
+		if(idx==1)_line.lines[1].update2(v1, p1.x-15, p1.y-16.5, p1.z, col);
+		if(idx==2)_line.lines[2].update2(v1, p1.x-15, p1.y-15.5, p1.z, col);	
+		
+	}
+	
 	/**
 	 * 
 	 * @return
@@ -169,6 +181,31 @@ class MaeFace extends Object3D
 		
 	}
 	
+	
+	/**
+	 * update
+	 * @param	audio
+	 */
+	public function update(audio:MyAudio):Void {
+		//update
+		if( _life++ == 15){
+			enabled = false;
+			//_plate.setEnable(enabled);
+			
+		}
+		_calcLifeRatio();
+		//ad_line.update(this.position);
+		_face.update(audio, _lifeRatio);
+		_gauge.update(audio, _lifeRatio);
+		
+	}
+	
+	public function updateGauge(idx:Int,ff:Float):Void {
+		
+		
+		_gauge.setGauge(idx, ff);
+		
+	}
 	
 	
 	

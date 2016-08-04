@@ -20,7 +20,7 @@ class MaeFaces extends Object3D
 	
 	public static inline var MAX:Int = 150;
 	
-	private var _currentForm:Int = 1;
+	private var _currentForm:Int = 0;
 	private var _offsetY:Float = 0;
 	private var _faces:Array<MaeFace> = [];
 	private var _lines:MaeLines;
@@ -89,8 +89,17 @@ class MaeFaces extends Object3D
 		switch( Std.parseInt( e.keyCode ) ) {
 			
 			case Dat.RIGHT:
-				_setFormation(Math.floor(Math.random() * 3));//
+				//nextFormation
+				_currentForm++;
+				_currentForm = _currentForm % MaeFormation.FORMATIONS.length;
+				_setFormation(_currentForm);
 
+			case Dat.LEFT:
+
+				_currentForm--;
+				if (_currentForm < 0)_currentForm = MaeFormation.FORMATIONS.length-1;
+				_setFormation(_currentForm);
+				
 			case Dat.UP:
 				_setMaterial();//
 				

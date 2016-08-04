@@ -37,7 +37,7 @@ class MaeGauge extends Mesh
 			varying vec2 vUv; 
 			
 			vec4 getColor(float xx, float freq) {
-				vec4 black = vec4(0.1, 0.1, 0.1, 1.0);
+				vec4 black = vec4(0.3, 0.3, 0.3, 1.0);
 				vec4 red = vec4(1.0, 1.0, 1.0, 1.0);
 				
 				if (xx > freq ) {
@@ -50,26 +50,26 @@ class MaeGauge extends Mesh
 			
 			void main()	{
 				
-				if (vUv.y < 0.1) {
+				if (vUv.y < 0.2) {
 			
 					gl_FragColor = getColor( vUv.x, freqs[0] );
 					
-				}else if (0.2<vUv.y && vUv.y<0.3) {
+				}else if (0.4<vUv.y && vUv.y<0.6) {
 					
 					gl_FragColor = getColor( vUv.x, freqs[1] );
 					
-				}else if (0.4<vUv.y && vUv.y<0.5) {
+				}else if (0.8<vUv.y && vUv.y<1.0) {
 					
 					gl_FragColor = getColor( vUv.x, freqs[2] );
 					
-				}else if (0.6<vUv.y && vUv.y<0.7) {
+				}/*else if (0.6<vUv.y && vUv.y<0.7) {
 					
 					gl_FragColor = getColor( vUv.x, freqs[3] );
 					
 				}else if (0.8<vUv.y && vUv.y<0.9) {
 					
 					gl_FragColor = getColor( vUv.x, freqs[4] );
-				}
+				}*/
 				
 			}	
 	";
@@ -80,7 +80,7 @@ class MaeGauge extends Mesh
 	 */
 	public function new(ww:Float,hh:Float) 
 	{
-		_geometry = new PlaneBufferGeometry( ww, hh,1,1 );			
+		_geometry = new PlaneBufferGeometry( ww, hh,1,2 );			
 		_material = new ShaderMaterial( {
 			uniforms: {
 				time:       { type:"f",value: 1.0 },
@@ -117,8 +117,9 @@ class MaeGauge extends Mesh
 		_material.uniforms.resolution.value.y = 512;	
 
 		for (i in 0...5) {
-			var ff:Float = audio.freqByteData[_randomIndex[i]] / 255 * 2 * lifeRatio;
-			_material.uniforms.freqs.value[i] += (ff - _material.uniforms.freqs.value[i]) / 4;
+			var ff:Float = audio.freqByteDataAry[_randomIndex[i]] / 255;// * 2;// * lifeRatio;
+			if (lifeRatio == 0) ff = 0;
+			_material.uniforms.freqs.value[i] += (ff - _material.uniforms.freqs.value[i]) / 2;
 		}
 		
 		//_material.uniforms.freqs.value[1] = audio.freqByteData[_randomIndex[1]] / 255 * 2;
@@ -127,6 +128,10 @@ class MaeGauge extends Mesh
 		//_material.uniforms.freqs.value[4] = audio.freqByteData[_randomIndex[4]] / 255 * 2;
 		
 		
+	}
+	
+	public function setGauge(idx:Int, ff:Float):Void {
+		_material.uniforms.freqs.value[idx] = ff;
 	}
 	
 	
