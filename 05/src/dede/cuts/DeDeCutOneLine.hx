@@ -9,7 +9,7 @@ import typo.StrokeUtil;
 class DeDeCutOneLine  extends DeDeCutBase
 {
 
-	
+	private var _type:Int = 0;
 	
 	public function new() 
 	{
@@ -51,12 +51,14 @@ class DeDeCutOneLine  extends DeDeCutBase
 		
 		//set dot type
 		//_lines.next();
-		var type:Int = Math.floor( 6 * Math.random() );
+
 		var isRotate:Bool = _nextCounter%5==4 ? true : false;
-		
-		_lines.setDotType( type, isRotate );
+		_lines.setSec(Math.random(), true);
+		_lines.setDotType( _type, isRotate );
 		_nextCounter++;
 		
+		_type++;
+		_type = _type % 6;
 		//test
 		//MyPointCloud.cloud.setRandomLine();
 	}	

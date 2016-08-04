@@ -1211,7 +1211,8 @@ dede.DeDeDigit.prototype = $extend(THREE.Object3D.prototype,{
 	,setSpeed: function(spd) {
 		this._rotSpeed = spd;
 	}
-	,setSec: function(rr) {
+	,setSec: function(rr,boost) {
+		if(boost == null) boost = false;
 		this._sec = rr % 1;
 		this._counter = 0;
 		var len = this._factory.length;
@@ -1220,6 +1221,7 @@ dede.DeDeDigit.prototype = $extend(THREE.Object3D.prototype,{
 			var i = _g++;
 			this._factory[i].r = 0;
 		}
+		if(boost) this._counter += this._rotSpeed * 50;
 	}
 	,addSec: function(rr,boost) {
 		this._sec += rr;
@@ -1423,12 +1425,13 @@ dede.DeDeLine.prototype = $extend(THREE.Object3D.prototype,{
 			this._digits[i].setType(type,isRotate);
 		}
 	}
-	,setSec: function(r) {
+	,setSec: function(r,boost) {
+		if(boost == null) boost = false;
 		var _g1 = 0;
 		var _g = this._digits.length;
 		while(_g1 < _g) {
 			var i = _g1++;
-			this._digits[i].setSec(r);
+			this._digits[i].setSec(r,boost);
 		}
 	}
 	,setRandomSec: function() {
@@ -1598,12 +1601,13 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 			this._lines[i].setDotType(type,isRotate);
 		}
 	}
-	,setSec: function(f) {
+	,setSec: function(f,boost) {
+		if(boost == null) boost = false;
 		var _g1 = 0;
 		var _g = this._lines.length;
 		while(_g1 < _g) {
 			var i = _g1++;
-			this._lines[i].setSec(f);
+			this._lines[i].setSec(f,boost);
 		}
 	}
 	,setGeoMax: function(n,enables) {
@@ -1825,6 +1829,7 @@ dede.cuts.DeDeCutMultiLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 	}
 });
 dede.cuts.DeDeCutOneLine = function() {
+	this._type = 0;
 	dede.cuts.DeDeCutBase.call(this);
 };
 dede.cuts.DeDeCutOneLine.__super__ = dede.cuts.DeDeCutBase;
@@ -1845,11 +1850,13 @@ dede.cuts.DeDeCutOneLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		this._lines.changeType(data);
 	}
 	,next: function() {
-		var type = Math.floor(6 * Math.random());
 		var isRotate;
 		if(this._nextCounter % 5 == 4) isRotate = true; else isRotate = false;
-		this._lines.setDotType(type,isRotate);
+		this._lines.setSec(Math.random(),true);
+		this._lines.setDotType(this._type,isRotate);
 		this._nextCounter++;
+		this._type++;
+		this._type = this._type % 6;
 	}
 	,update: function(audio) {
 		this._counter++;

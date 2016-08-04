@@ -150,9 +150,9 @@ class DeDeLines extends Object3D
 		}
 	}
 
-	public function setSec(f:Float):Void {
+	public function setSec(f:Float,boost:Bool=false):Void {
 		for (i in 0..._lines.length) {
-			_lines[i].setSec(f);
+			_lines[i].setSec(f, boost);
 		}
 	}
 	

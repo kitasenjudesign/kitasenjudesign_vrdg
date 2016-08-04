@@ -589,6 +589,7 @@ effect.pass.DisplacementPass = function() {
 		var i = _g++;
 		this._textures.push(THREE.ImageUtils.loadTexture("displace" + i + ".png"));
 	}
+	this._textures.push(THREE.ImageUtils.loadTexture("displaceV.png"));
 	this._colors = [THREE.ImageUtils.loadTexture("grade.png"),THREE.ImageUtils.loadTexture("grade2.png"),THREE.ImageUtils.loadTexture("grade3.png"),THREE.ImageUtils.loadTexture("grade4.png")];
 	THREE.ShaderPass.call(this,{ uniforms : { tDiffuse : { type : "t", value : null}, isDisplace : { type : "f", value : 1}, isColor : { type : "f", value : 1}, disTexture : { type : "t", value : this._textures[0]}, colTexture : { type : "t", value : this._colors[3]}, strengthX : { type : "f", value : 0}, strengthY : { type : "f", value : 0}, counter : { type : "f", value : 0}}, vertexShader : this._vertex, fragmentShader : this._fragment});
 };

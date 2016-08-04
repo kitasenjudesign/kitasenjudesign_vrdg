@@ -77,7 +77,7 @@ class MaeFace extends Object3D
 		
 		_bg = new MaeBg();
 		_bg.position.z = 0;
-		add(_bg);
+		//add(_bg);
 		
 		_line = new MaeFaceLine();
 	}

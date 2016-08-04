@@ -441,6 +441,7 @@ effect.pass.DisplacementPass = function() {
 	this._vertex = "\r\n\t\tvarying vec2 vUv;\r\n\t\tvoid main() {\r\n\t\t\tvUv = uv;\r\n\t\t\tgl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\r\n\t\t}\t\t\r\n\t";
 	this._textures = [];
 	this._textures.push(THREE.ImageUtils.loadTexture("displace/displaceA.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("displace/displaceV.png"));
 	this._colors = [THREE.ImageUtils.loadTexture("grade/grade.png"),THREE.ImageUtils.loadTexture("grade/grade2.png"),THREE.ImageUtils.loadTexture("grade/grade3.png"),THREE.ImageUtils.loadTexture("grade/grade4.png")];
 	THREE.ShaderPass.call(this,{ uniforms : { tDiffuse : { type : "t", value : null}, isDisplace : { type : "f", value : 1}, isColor : { type : "f", value : 1}, disTexture : { type : "t", value : this._textures[0]}, colTexture : { type : "t", value : this._colors[3]}, strengthX : { type : "f", value : 0}, strengthY : { type : "f", value : 0}, counter : { type : "f", value : 0}}, vertexShader : this._vertex, fragmentShader : this._fragment});
 };
@@ -1177,5 +1178,3 @@ three._WebGLRenderer.RenderPrecision_Impl_.mediump = "mediump";
 three._WebGLRenderer.RenderPrecision_Impl_.lowp = "lowp";
 Main.main();
 })();
-
-//# sourceMappingURL=haxetest.js.map

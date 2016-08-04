@@ -119,11 +119,11 @@ class MaeFaces extends Object3D
 	private function _setMaterial():Void {
 		
 		var type:Int = Math.floor( Math.random() * 4 ); //Math.random() < 0.5 ? 0 : 1;
-		var mode:Int = Math.floor( Math.random() * 4 );
+		//var mode:Int = Math.floor( Math.random() * 4 );
 		
 		for (i in 0..._faces.length) {
 			_faces[i].setMaterial( type );
-			_faces[i].setRotMode( mode );
+			//_faces[i].setRotMode( mode );
 		}
 		
 	}

@@ -57,8 +57,8 @@ class MaeFormation
 		_currentForm = FORMATIONS[n%FORMATIONS.length];
 		switch(_currentForm) {
 			case FORMATION0:
-				//_setFormH0(faces);
-				_setFormH0debug(faces);
+				_setFormH0(faces);
+				//_setFormH0debug(faces);
 				
 			case FORMATION1:
 				_setFormH1(faces);
@@ -122,7 +122,9 @@ class MaeFormation
 		
 		var len:Int = faces.length;
 		for (i in 0...len) {
-			var ff:MaeFace = faces[i];
+			var ff:MaeFace = faces[i];	
+			ff.setMaterial( MaeFaceMesh.ROT_MODE_X );
+		
 			if(i<20){
 				var xx:Float = i % xnum - (xnum-1)/2;
 				var yy:Float = Math.floor(i / xnum) - (ynum - 1) / 2;
@@ -261,7 +263,7 @@ class MaeFormation
 	private function _update0(faces:Array<MaeFace>):Void {
 		
 		for ( i in 0...faces.length) {
-			//faces[i].position.x -= 0.1;
+			faces[i].position.x -= 0.1;
 			if ( faces[i].position.x < -_width/2) {
 				faces[i].position.x = _width / 2;
 				faces[i].updatePlate();

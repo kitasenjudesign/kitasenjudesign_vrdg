@@ -52,8 +52,8 @@ class MaeLines extends Object3D
 				var v2:Vector3 = new Vector3();//new Vector3(j * 10, -100, 0);
 				geo.vertices.push(v1);
 				geo.vertices.push(v2);
-				geo.colors.push(new Color(0xff0000));
-				geo.colors.push(new Color(0x00ff00));
+				//geo.colors.push(new Color(0xff0000));
+				//geo.colors.push(new Color(0x00ff00));
 				
 				f.addLineVertex(v1, v2);
 				
@@ -63,7 +63,7 @@ class MaeLines extends Object3D
 		
 		_line = new LineSegments(
 			geo,
-			new LineBasicMaterial( { color:0xffffff/*, vertexColors: Three.VertexColors*/ } )
+			new LineBasicMaterial( { color:0xffffff, transparent:true, opacity:0.5/*, vertexColors: Three.VertexColors*/ } )
 		);
 		add(_line);
 		
@@ -83,7 +83,7 @@ class MaeLines extends Object3D
 		
 		var offY:Float = startY;// -150;
 		
-		var scaleX:Float = audio.freqByteData[5] / 255 * 5;
+		var scaleX:Float = audio.freqByteData[5] / 255 * 2;
 		if (scaleX < 0) scaleX = 0;
 		
 		_hMesh.scale.x = scaleX;

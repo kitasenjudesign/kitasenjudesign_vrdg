@@ -11,7 +11,7 @@ import three.Mesh;
 class MaeFaceMesh extends Mesh
 {
 
-	public static inline var ROT_MODE_A:Int = 0;
+	public static inline var ROT_MODE_X:Int = 0;
 	public static inline var ROT_MODE_B:Int = 1;
 	public static inline var ROT_MODE_C:Int = 2;	
 	private var _rotMode	:Int = 0;	
@@ -22,6 +22,7 @@ class MaeFaceMesh extends Mesh
 	private var _vx:Float = 0;
 	private var _vy:Float = 0;
 	private var _vz:Float = 0;
+	private var _speedRotX:Float = -0.02;
 	
 	
 	
@@ -77,8 +78,8 @@ class MaeFaceMesh extends Mesh
 		);*/
 		
 		switch(_rotMode) {
-			case ROT_MODE_A:
-				this.rotation.y += _vx;// _speedRotX;
+			case ROT_MODE_X:
+				this.rotation.y += _speedRotX;
 			case ROT_MODE_B:
 				this.rotation.y += _vy;
 				_vy *= 0.96;
@@ -86,7 +87,6 @@ class MaeFaceMesh extends Mesh
 				this.rotation.x += _vx * 1.2;
 				this.rotation.y += _vy;
 				this.rotation.z += _vz;
-				
 		}
 		
 		_vx *= 0.98;

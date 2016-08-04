@@ -115,10 +115,10 @@ class DeDeLine extends Object3D
 	/**
 	 * setSec,,,
 	 */
-	public function setSec(r:Float):Void {
+	public function setSec(r:Float,boost:Bool=false):Void {
 		//
 		for (i in 0..._digits.length) {
-			_digits[i].setSec( r );
+			_digits[i].setSec( r,boost );
 		}
 	}	
 	public function setRandomSec():Void {

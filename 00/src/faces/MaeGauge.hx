@@ -92,7 +92,7 @@ class MaeGauge extends Mesh
 		} );
 			
 		_material.transparent = true;
-		//_material.side = Three.DoubleSide;
+		_material.side = Three.DoubleSide;
 		
 		super( untyped _geometry, _material );
 			
@@ -118,7 +118,7 @@ class MaeGauge extends Mesh
 
 		for (i in 0...5) {
 			var ff:Float = audio.freqByteDataAry[_randomIndex[i]] / 255;// * 2;// * lifeRatio;
-			if (lifeRatio == 0) ff = 0;
+			//if (lifeRatio == 0) ff = 0;
 			_material.uniforms.freqs.value[i] += (ff - _material.uniforms.freqs.value[i]) / 2;
 		}
 		

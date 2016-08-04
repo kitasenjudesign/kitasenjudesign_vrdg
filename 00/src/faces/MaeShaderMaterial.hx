@@ -306,7 +306,7 @@ void main()
 	
 	public function setBrightness(bright:Float):Void {
 		
-		uniforms._brightness.value = 0.5+0.5*bright;
+		uniforms._brightness.value = 0.8+0.2*bright;
 		
 	}
 	

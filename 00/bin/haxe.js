@@ -746,7 +746,6 @@ faces.MaeFace = function() {
 	this.add(this._plate);
 	this._bg = new faces.MaeBg();
 	this._bg.position.z = 0;
-	this.add(this._bg);
 	this._line = new faces.lines.MaeFaceLine();
 };
 faces.MaeFace.__super__ = THREE.Object3D;
@@ -812,6 +811,7 @@ faces.MaeFace.prototype = $extend(THREE.Object3D.prototype,{
 	}
 });
 faces.MaeFaceMesh = function() {
+	this._speedRotX = -0.02;
 	this._vz = 0;
 	this._vy = 0;
 	this._vx = 0;
@@ -847,7 +847,7 @@ faces.MaeFaceMesh.prototype = $extend(THREE.Mesh.prototype,{
 		var _g = this._rotMode;
 		switch(_g) {
 		case 0:
-			this.rotation.y += this._vx;
+			this.rotation.y += this._speedRotX;
 			break;
 		case 1:
 			this.rotation.y += this._vy;
@@ -923,13 +923,11 @@ faces.MaeFaces.prototype = $extend(THREE.Object3D.prototype,{
 	}
 	,_setMaterial: function() {
 		var type = Math.floor(Math.random() * 4);
-		var mode = Math.floor(Math.random() * 4);
 		var _g1 = 0;
 		var _g = this._faces.length;
 		while(_g1 < _g) {
 			var i = _g1++;
 			this._faces[i].setMaterial(type);
-			this._faces[i].setRotMode(mode);
 		}
 	}
 	,update: function(audio) {
@@ -949,6 +947,7 @@ faces.MaeGauge = function(ww,hh) {
 	this._geometry = new THREE.PlaneBufferGeometry(ww,hh,1,2);
 	this._material = new THREE.ShaderMaterial({ uniforms : { time : { type : "f", value : 1.0}, resolution : { type : "v2", value : new THREE.Vector2(512,512)}, freqs : { type : "fv1", value : [1,2,3,4,5]}}, vertexShader : this._vertex, fragmentShader : this._fragment});
 	this._material.transparent = true;
+	this._material.side = 2;
 	THREE.Mesh.call(this,this._geometry,this._material);
 };
 faces.MaeGauge.__super__ = THREE.Mesh;
@@ -964,7 +963,6 @@ faces.MaeGauge.prototype = $extend(THREE.Mesh.prototype,{
 		while(_g < 5) {
 			var i = _g++;
 			var ff = audio.freqByteDataAry[this._randomIndex[i]] / 255;
-			if(lifeRatio == 0) ff = 0;
 			this._material.uniforms.freqs.value[i] += (ff - this._material.uniforms.freqs.value[i]) / 2;
 		}
 	}
@@ -996,12 +994,10 @@ faces.MaeLines.prototype = $extend(THREE.Object3D.prototype,{
 				var v2 = new THREE.Vector3();
 				geo.vertices.push(v1);
 				geo.vertices.push(v2);
-				geo.colors.push(new THREE.Color(16711680));
-				geo.colors.push(new THREE.Color(65280));
 				f.addLineVertex(v1,v2);
 			}
 		}
-		this._line = new THREE.LineSegments(geo,new THREE.LineBasicMaterial({ color : 16777215}));
+		this._line = new THREE.LineSegments(geo,new THREE.LineBasicMaterial({ color : 16777215, transparent : true, opacity : 0.5}));
 		this.add(this._line);
 	}
 	,update: function(audio) {
@@ -1009,7 +1005,7 @@ faces.MaeLines.prototype = $extend(THREE.Object3D.prototype,{
 		this._line.geometry.verticesNeedUpdate = true;
 		this._line.geometry.colorsNeedUpdate = true;
 		var offY = this.startY;
-		var scaleX = audio.freqByteData[5] / 255 * 5;
+		var scaleX = audio.freqByteData[5] / 255 * 2;
 		if(scaleX < 0) scaleX = 0;
 		this._hMesh.scale.x = scaleX;
 		this._hMesh.position.z = -100;
@@ -1082,7 +1078,7 @@ faces.MaePlate.prototype = $extend(THREE.Object3D.prototype,{
 		this.updateText();
 	}
 	,updateText: function() {
-		this._textNo.update(common.StringUtils.addZero(faces.MaePlate._index,4));
+		this._textNo.update("DE" + common.StringUtils.addZero(faces.MaePlate._index,4));
 		this._textTime.update(common.TimeCounter.getTime());
 		this._stage.update();
 		this._material.map.needsUpdate = true;
@@ -1185,7 +1181,7 @@ faces.MaeShaderMaterial.prototype = $extend(THREE.ShaderMaterial.prototype,{
 		}
 	}
 	,setBrightness: function(bright) {
-		this.uniforms._brightness.value = 0.5 + 0.5 * bright;
+		this.uniforms._brightness.value = 0.8 + 0.2 * bright;
 	}
 	,_updateFreq: function(audio,lifeRatio) {
 		var _g1 = 0;
@@ -1212,7 +1208,7 @@ faces.data.MaeFormation.prototype = {
 		var _g = this._currentForm;
 		switch(_g) {
 		case "FORMATION0":
-			this._setFormH0debug(faces1);
+			this._setFormH0(faces1);
 			break;
 		case "FORMATION1":
 			this._setFormH1(faces1);
@@ -1268,6 +1264,7 @@ faces.data.MaeFormation.prototype = {
 		while(_g < len) {
 			var i = _g++;
 			var ff = faces[i];
+			ff.setMaterial(0);
 			if(i < 20) {
 				var xx = i % xnum - (xnum - 1) / 2;
 				var yy = Math.floor(i / xnum) - (ynum - 1) / 2;
@@ -1376,6 +1373,7 @@ faces.data.MaeFormation.prototype = {
 		var _g = faces.length;
 		while(_g1 < _g) {
 			var i = _g1++;
+			faces[i].position.x -= 0.1;
 			if(faces[i].position.x < -this._width / 2) {
 				faces[i].position.x = this._width / 2;
 				faces[i].updatePlate();
@@ -2090,7 +2088,7 @@ faces.MaeFace.MAT_NORMAL = 0;
 faces.MaeFace.MAT_COLOR = 1;
 faces.MaeFace.MAT_WIRE_WHITE = 2;
 faces.MaeFace.MAT_WIRE_COLOR = 3;
-faces.MaeFaceMesh.ROT_MODE_A = 0;
+faces.MaeFaceMesh.ROT_MODE_X = 0;
 faces.MaeFaceMesh.ROT_MODE_B = 1;
 faces.MaeFaceMesh.ROT_MODE_C = 2;
 faces.MaeFaces.MAX = 150;
