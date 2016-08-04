@@ -4,6 +4,7 @@ import common.TimeCounter;
 import common.WebfontLoader;
 import createjs.easeljs.DisplayObject;
 import createjs.easeljs.Graphics;
+import createjs.easeljs.Shape;
 import createjs.easeljs.Stage;
 import createjs.easeljs.Text;
 import js.Browser;
@@ -48,44 +49,46 @@ class MaePlate extends Object3D
 	 * 
 	 * @param	ww
 	 */
-	public function init(ww:Float):Void {
-		
+	public function init():Void {
+		var ww:Float = 3.8;
 		var canvas:CanvasElement = Browser.document.createCanvasElement();
-		_stage = _createStage(canvas, 256, 256);
+		_stage = _createStage(canvas, 128*4, 64);
 		_material = _getMaterial(canvas);
 		
 		//_plane = new Mesh( new PlaneGeometry(256,64,1,1),new MeshBasicMaterial({color:0xff0000}));
 		//add(_plane);
 		
-		_plane = new Mesh( new PlaneGeometry(ww, ww, 1, 1), _material);
-		_plane.position.x += ww/2;
+		_plane = new Mesh( new PlaneGeometry(ww*8, ww, 1, 1), _material);
+		_plane.position.x = 0;
 		add(_plane);
 		
 		/*
+		 * for debug
 		var shape:Shape = new Shape();
 		shape.graphics.beginFill("#ff0000");
-		shape.graphics.drawRect(0, 0, ww, 20);
-		_stage.addChild( shape);*/
+		shape.graphics.drawRect(0, 0, 128*4, 64);
+		_stage.addChild( shape);
+		*/
 		
-		_textCh = new SpacingText("CH", SpacingText.getFont(42, "700", WebfontLoader.ROBOTO_CONDENSED), 0.5, "#ffffff");
-		_textCh.y = 37;
-		_stage.addChild( _textCh );
+		_textCh = new SpacingText("CH", SpacingText.getFont(30, "700", WebfontLoader.ROBOTO_CONDENSED), 0.5, "#ffffff");
+		_textCh.y = 0;
+		//_stage.addChild( _textCh );
 		
-		_textNo = new SpacingText("0001", SpacingText.getFont(80,"700", WebfontLoader.ROBOTO_CONDENSED), 0.5, "#ffffff");
+		_textNo = new SpacingText("0001", SpacingText.getFont(50,"700", WebfontLoader.ROBOTO_CONDENSED), 0.5, "#ffffff");
 		_stage.addChild( _textNo );
-		_textNo.x = 60;
-		_textNo.y = 4;
+		_textNo.x = 0;
+		_textNo.y = 0;
 		
-		_textTime = new SpacingText("10:20:23", SpacingText.getFont(60, "700", WebfontLoader.ROBOTO_CONDENSED), 1, "#ffffff");
-		_textTime.y = 85;
+		_textTime = new SpacingText("10:20:23", SpacingText.getFont(50, "700", WebfontLoader.ROBOTO_CONDENSED), 1, "#ffffff");
+		_textTime.x = 330;
 		_stage.addChild( _textTime );
 		
 		_stage.update();
 		_material.map.needsUpdate = true;
 		
-		var g:Geometry = new Geometry();
-		g.vertices.push(new Vector3(0, -50, 0));
-		g.vertices.push(new Vector3(0, 50, 0));
+		//var g:Geometry = new Geometry();
+		///g.vertices.push(new Vector3(0, -50, 0));
+		//g.vertices.push(new Vector3(0, 50, 0));
 		
 		/*
 		var lineA:Line = new Line(g, new LineBasicMaterial( { color:0xffffff } ));

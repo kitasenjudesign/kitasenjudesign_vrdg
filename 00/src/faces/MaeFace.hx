@@ -69,11 +69,11 @@ class MaeFace extends Object3D
 		add(_gauge);
 		
 		_plate = new MaePlate();
-		_plate.init(10);
-		_plate.position.x = -15;
-		_plate.position.y = -22;
+		_plate.init();
+		_plate.position.x = 0;
+		_plate.position.y = 17;
 		_plate.position.z = -1;
-		//add(_plate);
+		add(_plate);
 		
 		_bg = new MaeBg();
 		_bg.position.z = 0;
@@ -146,6 +146,7 @@ class MaeFace extends Object3D
 		
 	}
 	
+	
 	public function updatePlate():Void {
 		
 		_plate.updateText();
@@ -191,7 +192,6 @@ class MaeFace extends Object3D
 		if( _life++ == 15){
 			enabled = false;
 			//_plate.setEnable(enabled);
-			
 		}
 		_calcLifeRatio();
 		//ad_line.update(this.position);

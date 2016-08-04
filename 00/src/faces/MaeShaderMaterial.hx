@@ -22,6 +22,7 @@ class MaeShaderMaterial extends ShaderMaterial
 		uniform vec3 _lightPosition; //光源位置座標
 		uniform float _wireframe;
 		uniform float _isColor;
+		uniform float _brightness;
 		
 		// vertexShaderで処理されて渡されるテクスチャ座標
 		varying vec2 vUv;                                             
@@ -35,7 +36,7 @@ class MaeShaderMaterial extends ShaderMaterial
 		{
 			if ( _wireframe == 1.0 ) {
 				
-				gl_FragColor = vec4( 1.0, 1.0, 1.0, 1.0 );
+				gl_FragColor = vec4( _brightness, _brightness, _brightness, 1.0 );
 				
 			}else{
 			
@@ -76,6 +77,10 @@ class MaeShaderMaterial extends ShaderMaterial
 				//diffuse.x *= vVertex.z / 5000.0;
 				//diffuse.y *= vVertex.z / 5000.0;
 				//diffuse.z *= vVertex.z / 5000.0;
+				
+				diffuse.x *= _brightness;
+				diffuse.y *= _brightness;
+				diffuse.z *= _brightness;
 				
 				gl_FragColor = vec4( diffuse, 1.0);			
 			
@@ -224,7 +229,8 @@ void main()
 					_count: { type:'f', 		value:100 * Math.random() },					
 					_lightPosition: { type: "v3", value: new Vector3(0, 100, 50) },
 					_wireframe: { type:"f",		value:1 },
-					_isColor: { type:"f",		value:1 }
+					_isColor: { type:"f",		value:1 },
+					_brightness: { type:"f",		value:1 }
 				}
 		});
 		
@@ -295,6 +301,12 @@ void main()
 			uniforms._freqByteData.value = _freq;// Math.random();// Math.random();
 		}
 		//needsUpdate = true;
+		
+	}
+	
+	public function setBrightness(bright:Float):Void {
+		
+		uniforms._brightness.value = 0.5+0.5*bright;
 		
 	}
 	

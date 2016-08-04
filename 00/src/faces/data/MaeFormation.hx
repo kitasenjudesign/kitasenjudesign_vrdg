@@ -58,7 +58,7 @@ class MaeFormation
 		switch(_currentForm) {
 			case FORMATION0:
 				//_setFormH0(faces);
-				_setFormH0(faces);
+				_setFormH0debug(faces);
 				
 			case FORMATION1:
 				_setFormH1(faces);
@@ -74,10 +74,10 @@ class MaeFormation
 	
 	private function _setFormH0debug(faces:Array<MaeFace>):Void
 	{
-		Tracer.log("_setForm1");
+		Tracer.log("_setForm1 " );
 		
 		_lines.startY = -150;
-		_camera.amp = 300;
+		_camera.amp = 500;
 		_camera.setFOV(30);//
 		
 		var spaceX:Float = 35;
@@ -104,7 +104,6 @@ class MaeFormation
 			}
 		}
 	}	
-	
 		
 	//1 line
 	private function _setFormH0(faces:Array<MaeFace>):Void
@@ -112,7 +111,7 @@ class MaeFormation
 		Tracer.log("_setForm1");
 		
 		_lines.startY = -150;
-		_camera.amp = 300;
+		_camera.amp = 400;
 		_camera.setFOV(30);//
 		
 		var spaceX:Float = 35;

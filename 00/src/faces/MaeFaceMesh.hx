@@ -67,7 +67,7 @@ class MaeFaceMesh extends Mesh
 	public function update(audio:MyAudio, lifeRatio:Float):Void {
 	
 		_material.update(audio, lifeRatio);
-		
+		_material.setBrightness(lifeRatio);
 		//this.position.z = -lifeRatio * 100;
 		/*
 		this.scale.set( 
