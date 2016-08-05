@@ -14,7 +14,10 @@ class Torus extends PrimitiveBase
 	{super();
 	}
 	
-	override public function init():Void {var m:Mesh = new Mesh(new TorusGeometry(100, 30, 20, 20), new MeshLambertMaterial( { color:0xffffff } ));add(m);
+	override public function init(o:Dynamic):Void {
+		super.init(o);
+		var m:Mesh = new Mesh(new TorusGeometry(100, 30, 20, 20), new MeshLambertMaterial( { color:0xffffff } ));
+		add(m);
 	}
 	
 	//あとはチャネルロゴをいれる

@@ -22,7 +22,8 @@ class Cube extends PrimitiveBase
 	{super();
 	}
 	
-	override public function init():Void {
+	override public function init(o:Dynamic):Void {
+		super.init(o);
 		
 		var materials:Array<Material> = 
 			[	new MeshLambertMaterial( { color: 0x22ff33 } ),	

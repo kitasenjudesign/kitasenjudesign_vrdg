@@ -1,9 +1,11 @@
 package canvas.primitives;
 import canvas.primitives.Cubes;
+import canvas.primitives.data.EffectData;
 import canvas.primitives.Knot;
 import canvas.primitives.Octa;
-import canvas.primitives.RoppongiLogo;
+import canvas.primitives.PrimitiveBase;
 import canvas.primitives.Two;
+import canvas.primitives.VideoPlane;
 import common.Dat;
 import data.LogoPaths;
 import js.Browser;
@@ -23,7 +25,7 @@ class Primitives extends Object3D
 	private var _minV:Vector3;
 	
 	
-	private var _count:Int = 0;
+	private var _count:Int = -1;
 	
 	private var _cube		:Cube;
 	private var _sphere		:Sphere;
@@ -39,6 +41,8 @@ class Primitives extends Object3D
 	private var _spheres:Spheres;
 	private var _two:Two;
 	private var _face:DeDeFace;
+	private var _walker:VideoPlane;
+	var _current:PrimitiveBase;
 	
 	public function new() 
 	{
@@ -56,60 +60,52 @@ class Primitives extends Object3D
 		_minV = new Vector3();
 		_addV = new Vector3();
 		
-		_cube = new Cube();
-		_cube.init();
-		add(_cube);
-
-		_cubes = new Cubes();
-		_cubes.init();
-		add(_cubes);
+		//pixelType = o.pixelType;
+		//dynamicScale = o.dynamicScale;
+		//isDepth = o.isDepth;
 		
+		_cube = new Cube();
+		_cube.init({isDepth:false});
+		
+		_cubes = new Cubes();
+		_cubes.init(null);
 		
 		_sphere = new Sphere();
-		_sphere.init();
-		add(_sphere);
+		_sphere.init(null);
 		
 		_spheres = new Spheres();
-		_spheres.init();
-		add(_spheres);
-				
-		
+		_spheres.init(null);
+					
 		_torus = new Torus();
-		_torus.init();
-		add(_torus);
+		_torus.init(null);
 		
 		_logo = new VrdgLogo();
-		_logo.init();
-		add(_logo);
+		_logo.init(null);
 		
 		_octa = new Octa();
-		_octa.init();
-		add(_octa);
+		_octa.init(null);
 		
 		_knot = new Knot();
-		_knot.init();
-		add(_knot);
+		_knot.init(null);
 		
 		_kitasen = new Kitasenju();
-		_kitasen.init();
-		add(_kitasen);
+		_kitasen.init(null);
 		
 		_face = new DeDeFace();
-		_face.init();
-		add(_face);
-
+		_face.init(null);
+		
 		_mouse = new DeDeLogo();
-		_mouse.init();
+		_mouse.init({pixelType:EffectData.BLACK_TRUE,dynamicScale:false,isDepth:false});
 		add(_mouse);
 		
-		
+		_walker = new VideoPlane();
+		_walker.init({pixelType:EffectData.BLACK_TRUE,dynamicScale:false,isDepth:false});
 		//_beyond = new BeyondCode();
 		//_beyond.init();
 		//add(_beyond);
 		
 		_two = new Two();
-		_two.init();
-		add(_two);
+		_two.init(null);
 		/*
 		_primitives = [
 			_logo,
@@ -118,10 +114,12 @@ class Primitives extends Object3D
 		];*/
 		
 		_primitives = [
+			_walker,
 			_cube,
+			_sphere,
 			_two,
 			_cubes,
-			_sphere,
+			
 			_spheres,
 			_torus,
 			
@@ -132,9 +130,12 @@ class Primitives extends Object3D
 			_mouse,
 			_logo
 		];
+		for (i in 0..._primitives.length) {
+			add(_primitives[i]);
+		}
 		
 		
-		next(true);
+	//	next(false);
 		//Dat.gui.add(this, "next");
 		//Browser.document.addEventListener("keydown", _goNext);
 	}
@@ -147,9 +148,8 @@ class Primitives extends Object3D
 		}
 	}*/
 	
-	public function next(isRandom:Bool):Void {
+	public function next(isRandom:Bool):EffectData {
 	
-		
 		if (isRandom) {
 			_count = Math.floor(Math.random() *  _primitives.length);
 		}else{
@@ -160,11 +160,15 @@ class Primitives extends Object3D
 		if ( _count == _primitives.length - 1) {
 			//Browser.window.alert("hoge");
 		}
-		_primitives[_count % _primitives.length].visible = true;
-		_primitives[_count % _primitives.length].start();
-		add( _primitives[_count % _primitives.length] );
+		_current = _primitives[_count % _primitives.length];
+		_current.visible = true;
+		_current.start();
+		add(_current );
 		
 		_setParam();
+		
+		return _current.data;
+		
 		
 	}
 	
@@ -177,6 +181,7 @@ class Primitives extends Object3D
 	
 		for (i in 0..._primitives.length) {
 			_primitives[i].visible = b;
+			_primitives[i].stop();
 			remove( _primitives[i] );
 		}
 		
@@ -199,11 +204,19 @@ class Primitives extends Object3D
 		_addV.z *= 0.99;
 		
 		
+		//scale
 		
-			_tgtScale = 0.8 + Math.pow( audio.freqByteData[8] / 255, 2 );
+		_tgtScale = 0.8 + Math.pow( audio.freqByteData[8] / 255, 2 );
+			
+		if (_current != null) {
+			if ( _current.data.dynamicScale == false ) {
+				_tgtScale = 1;
+			}
+		}
 			scale.x = _tgtScale;
 			scale.y = _tgtScale;
 			scale.z = _tgtScale;
+		
 		
 		
 		

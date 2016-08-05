@@ -1,6 +1,7 @@
 package canvas;
 import camera.ExCamera;
 import canvas.primitives.Cube;
+import canvas.primitives.data.EffectData;
 import canvas.primitives.Primitives;
 import effect.PostProcessing2;
 import emoji.EmojiPiece;
@@ -39,8 +40,9 @@ class CanvasSrc
 	private var _primitives:Primitives;
 	private var _canvas:CanvasData;
 	private var _imageData:Uint8Array;
-	var _pp:PostProcessing2;
-	var p:EmojiPiece;
+	private var _pp:PostProcessing2;
+	private var p:EmojiPiece;
+	private var _depthMat:MeshDepthMaterial;
 	
 	public function new() 
 	{
@@ -51,7 +53,7 @@ class CanvasSrc
 	 * init
 	 */
 	public function init():Void {
-	
+		_depthMat = new MeshDepthMaterial();
 		_renderer = new WebGLRenderer({devicePixelRatio:1, antialias: false });
 		_imageData = new Uint8Array(CanvasSrc.W * CanvasSrc.H * 4);
 
@@ -69,7 +71,6 @@ class CanvasSrc
 		_camera.init();
 		
 		_scene = new Scene();
-		_scene.overrideMaterial = new MeshDepthMaterial();
 		
 		/*
 		var light:PointLight = new PointLight(0xffffff,1);
@@ -97,8 +98,16 @@ class CanvasSrc
 		//update();
 	}
 	
-	public function next(isRandom:Bool):Void {
-		_primitives.next(isRandom);
+	
+	
+	public function next(isRandom:Bool):EffectData {
+		
+		var data:EffectData = _primitives.next(isRandom);
+		
+		_scene.overrideMaterial = data.isDepth ? _depthMat : null;
+		
+		return data;
+		
 	}
 	
 	

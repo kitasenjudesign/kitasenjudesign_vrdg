@@ -88,7 +88,7 @@ class EmojiShader
             seed:	{ type: 'f', value: 0.0 },
             counter:	{ type: 'f', value: 0 },
 			texture:	 { type: 't', value: tex },
-			scale1: 	{ type: 'f', value: 22000 },
+			scale1: 	{ type: 'f', value: Config.particleSize },
 			scale: 		{ type: 'f', value: 1.0 },
 			posScale: 	{type: 'v3', value: new Vector3(1.0, 1.0, 1.0)},
             offset: 	{type: 'v2', value: new Vector2(1/animationFrameLength, 0.0)},

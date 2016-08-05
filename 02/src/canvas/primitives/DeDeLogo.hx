@@ -25,7 +25,8 @@ class DeDeLogo extends PrimitiveBase
 		super();
 	}
 	
-	override public function init():Void {
+	override public function init(o:Dynamic):Void {
+		super.init(o);
 		
 		if(_loader==null){
 			_loader = new MyDAELoader();
@@ -55,19 +56,19 @@ class DeDeLogo extends PrimitiveBase
 	private function _onLoad():Void
 	{
 		this.visible = false;
-		_loader.dae.scale.x = 0.3;
-		_loader.dae.scale.y = 0.3;
-		_loader.dae.scale.z = 0.3;
+		_loader.dae.scale.x = 0.2;
+		_loader.dae.scale.y = 0.2;
+		_loader.dae.scale.z = 0.2;
 		add( _loader.dae );
 		_dede1 = _loader.dae;
 		
 		_dede2 = _loader.dae.clone();
 		add(_dede2);
-		_dede2.position.x = 200;
+		_dede2.position.x = 150;
 		
 		_dede3 = _loader.dae.clone();
 		add(_dede3);
-		_dede3.position.x = -200;
+		_dede3.position.x = -150;
 		
 	}
 	
@@ -75,13 +76,13 @@ class DeDeLogo extends PrimitiveBase
 	override public function update(a:MyAudio,rotV:Vector3):Void {
 	
 		if(_dede1!=null){
-			_dede1.rotation.y += rotV.y * 0.5 + 0.01;
+			//_dede1.rotation.y += rotV.y * 0.5 + 0.01;
 		}
 		if(_dede2!=null){
-			_dede2.rotation.y = _dede1.rotation.y;
+			//_dede2.rotation.y = _dede1.rotation.y;
 		}
 		if(_dede3!=null){
-			_dede3.rotation.y = _dede1.rotation.y;
+			//_dede3.rotation.y = _dede1.rotation.y;
 		}
 		//super.update(a, rotV);
 		

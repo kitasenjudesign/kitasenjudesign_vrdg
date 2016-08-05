@@ -1,6 +1,7 @@
 package emoji;
 import camera.ExCamera;
 import canvas.CanvasSrc;
+import canvas.primitives.data.EffectData;
 import common.Dat;
 import js.Browser;
 import sound.MyAudio;
@@ -131,15 +132,19 @@ class Emojis extends Object3D
 			
 		}else if ( keyCode == Dat.RIGHT ) {
 		
-			_canvas.next(true);//random
+			var data:EffectData = _canvas.next(false);//random
+			
+			//
 			_pos.setRange(
 				Math.random(),
 				Math.pow(Math.random(),2)
 			);
 			
-			_isBlackPixel = (Math.random() < 0.5) ? true : false;
+			_isBlackPixel = data.getIsBlackPixel();// (Math.random() < 0.5) ? true : false;
 			
-			_depthDir = Math.random() < 0.2 ? -1 : 1;
+			//Browser.window.alert("isBlack " + _isBlackPixel);
+			_depthDir = 1;// Math.random() < 0.2 ? -1 : 1;
+			//_depthDir = Math.random() < 0.2 ? -1 : 1;
 			//_camera.radX = 0;
 			
 		}else if ( keyCode == Dat.LEFT ) {
@@ -303,8 +308,9 @@ class Emojis extends Object3D
 			var light:Float 
 			= _canvas.getPixel(Math.floor(xx/_w*_maxW), Math.floor((yy/_h*_maxH)));
 			
+			//kurowo egakanai
 			if(_isBlackPixel){
-				if(light != 0){
+				if(light >= 2){
 					shader.attributes.aOffset.value[i] = _pos.getIconPos(light);
 				}else {
 					shader.attributes.aOffset.value[i] = new Vector2(0, 0);

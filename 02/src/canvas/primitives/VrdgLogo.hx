@@ -21,7 +21,8 @@ class VrdgLogo extends PrimitiveBase
 		super();
 	}
 	
-	override public function init():Void {
+	override public function init(o:Dynamic):Void {
+		super.init(o);
 		
 		if(_loader==null){
 			_loader = new MyDAELoader();

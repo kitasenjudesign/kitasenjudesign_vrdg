@@ -21,7 +21,8 @@ class Octa extends PrimitiveBase
 		super();
 	}
 	
-	override public function init():Void {
+	override public function init(o:Dynamic):Void {
+		super.init(o);
 		/*var light:DirectionalLight = new DirectionalLight(0xffffff, 0.1);light.position.set( -10, 5, 3);add(light);*/
 		
 		var geo:Geometry = new OctahedronGeometry(60);

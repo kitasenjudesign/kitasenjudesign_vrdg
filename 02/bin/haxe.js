@@ -415,6 +415,7 @@ canvas.CanvasSrc = function() {
 canvas.CanvasSrc.__name__ = true;
 canvas.CanvasSrc.prototype = {
 	init: function() {
+		this._depthMat = new THREE.MeshDepthMaterial();
 		this._renderer = new THREE.WebGLRenderer({ devicePixelRatio : 1, antialias : false});
 		this._imageData = new Uint8Array(canvas.CanvasSrc.W * canvas.CanvasSrc.H * 4);
 		this._renderer.setSize(Math.floor(canvas.CanvasSrc.W),Math.floor(canvas.CanvasSrc.H));
@@ -427,7 +428,6 @@ canvas.CanvasSrc.prototype = {
 		this._camera = new camera.ExCamera(60,canvas.CanvasSrc.W / canvas.CanvasSrc.H,2,800);
 		this._camera.init();
 		this._scene = new THREE.Scene();
-		this._scene.overrideMaterial = new THREE.MeshDepthMaterial();
 		var light = new THREE.DirectionalLight(16777215,1);
 		light.position.set(20,30,200);
 		this._scene.add(light);
@@ -442,7 +442,9 @@ canvas.CanvasSrc.prototype = {
 		this._scene.add(this._primitives);
 	}
 	,next: function(isRandom) {
-		this._primitives.next(isRandom);
+		var data = this._primitives.next(isRandom);
+		if(data.isDepth) this._scene.overrideMaterial = this._depthMat; else this._scene.overrideMaterial = null;
+		return data;
 	}
 	,update: function(a) {
 		if(!a.isStart && a.freqByteData == null) return;
@@ -469,7 +471,8 @@ canvas.primitives.PrimitiveBase = function() {
 canvas.primitives.PrimitiveBase.__name__ = true;
 canvas.primitives.PrimitiveBase.__super__ = THREE.Object3D;
 canvas.primitives.PrimitiveBase.prototype = $extend(THREE.Object3D.prototype,{
-	init: function() {
+	init: function(o) {
+		this.data = new canvas.primitives.data.EffectData(o);
 	}
 	,start: function() {
 	}
@@ -477,6 +480,8 @@ canvas.primitives.PrimitiveBase.prototype = $extend(THREE.Object3D.prototype,{
 		this.rotation.x += rotV.x;
 		this.rotation.y += rotV.y;
 		this.rotation.z += rotV.z;
+	}
+	,stop: function() {
 	}
 	,__class__: canvas.primitives.PrimitiveBase
 });
@@ -486,7 +491,8 @@ canvas.primitives.Cube = function() {
 canvas.primitives.Cube.__name__ = true;
 canvas.primitives.Cube.__super__ = canvas.primitives.PrimitiveBase;
 canvas.primitives.Cube.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
-	init: function() {
+	init: function(o) {
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		var materials = [new THREE.MeshLambertMaterial({ color : 2293555}),new THREE.MeshLambertMaterial({ color : 4521728}),new THREE.MeshLambertMaterial({ color : 1179647}),new THREE.MeshLambertMaterial({ color : 3342591}),new THREE.MeshLambertMaterial({ color : 16711731}),new THREE.MeshLambertMaterial({ color : 16746496})];
 		var cube = new THREE.Mesh(new THREE.BoxGeometry(130,130,130,10,10,10),new THREE.MeshFaceMaterial(materials));
 		this.add(cube);
@@ -529,7 +535,8 @@ canvas.primitives.Cubes = function() {
 canvas.primitives.Cubes.__name__ = true;
 canvas.primitives.Cubes.__super__ = canvas.primitives.PrimitiveBase;
 canvas.primitives.Cubes.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
-	init: function() {
+	init: function(o) {
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		var materials = [new THREE.MeshLambertMaterial({ color : 2293555}),new THREE.MeshLambertMaterial({ color : 4521728}),new THREE.MeshLambertMaterial({ color : 1179647}),new THREE.MeshLambertMaterial({ color : 3342591}),new THREE.MeshLambertMaterial({ color : 16711731}),new THREE.MeshLambertMaterial({ color : 16746496})];
 		var mm = new THREE.MeshFaceMaterial(materials);
 		var geo = new THREE.BoxGeometry(130,130,130,10,10,10);
@@ -572,7 +579,8 @@ canvas.primitives.DeDeFace = function() {
 canvas.primitives.DeDeFace.__name__ = true;
 canvas.primitives.DeDeFace.__super__ = canvas.primitives.PrimitiveBase;
 canvas.primitives.DeDeFace.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
-	init: function() {
+	init: function(o) {
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		if(this._loader == null) {
 			this._loader = new data.MyDAELoader();
 			this._loader.load("mae_face.dae",$bind(this,this._onLoad));
@@ -580,10 +588,22 @@ canvas.primitives.DeDeFace.prototype = $extend(canvas.primitives.PrimitiveBase.p
 	}
 	,_onLoad: function() {
 		this.visible = false;
-		this.add(this._loader.dae);
+		this._face1 = this._loader.dae;
+		this.add(this._face1);
+		this._face2 = this._loader.dae.clone();
+		this.add(this._face2);
+		this._face1.position.x = 200;
+		this._face2.position.x = -200;
 	}
 	,update: function(a,rotV) {
-		this.rotation.y += rotV.y * 0.5 + 0.01;
+		if(this._face1 != null) {
+			this._face1.rotation.x += rotV.x * 0.5 + 0.01;
+			this._face1.rotation.y += rotV.y * 0.45 + 0.01;
+			this._face1.rotation.z += rotV.z * 0.39 + 0.01;
+			this._face2.rotation.x += rotV.y * 0.44 + 0.01;
+			this._face2.rotation.y += rotV.z * 0.49 + 0.01;
+			this._face2.rotation.z += rotV.x * 0.41 + 0.01;
+		}
 	}
 	,__class__: canvas.primitives.DeDeFace
 });
@@ -593,7 +613,8 @@ canvas.primitives.DeDeLogo = function() {
 canvas.primitives.DeDeLogo.__name__ = true;
 canvas.primitives.DeDeLogo.__super__ = canvas.primitives.PrimitiveBase;
 canvas.primitives.DeDeLogo.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
-	init: function() {
+	init: function(o) {
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		if(this._loader == null) {
 			this._loader = new data.MyDAELoader();
 			this._loader.load("dae/mouse.dae",$bind(this,this._onLoad));
@@ -601,22 +622,25 @@ canvas.primitives.DeDeLogo.prototype = $extend(canvas.primitives.PrimitiveBase.p
 	}
 	,_onLoad: function() {
 		this.visible = false;
-		this._loader.dae.scale.x = 0.3;
-		this._loader.dae.scale.y = 0.3;
-		this._loader.dae.scale.z = 0.3;
+		this._loader.dae.scale.x = 0.2;
+		this._loader.dae.scale.y = 0.2;
+		this._loader.dae.scale.z = 0.2;
 		this.add(this._loader.dae);
 		this._dede1 = this._loader.dae;
 		this._dede2 = this._loader.dae.clone();
 		this.add(this._dede2);
-		this._dede2.position.x = 200;
+		this._dede2.position.x = 150;
 		this._dede3 = this._loader.dae.clone();
 		this.add(this._dede3);
-		this._dede3.position.x = -200;
+		this._dede3.position.x = -150;
 	}
 	,update: function(a,rotV) {
-		if(this._dede1 != null) this._dede1.rotation.y += rotV.y * 0.5 + 0.01;
-		if(this._dede2 != null) this._dede2.rotation.y = this._dede1.rotation.y;
-		if(this._dede3 != null) this._dede3.rotation.y = this._dede1.rotation.y;
+		if(this._dede1 != null) {
+		}
+		if(this._dede2 != null) {
+		}
+		if(this._dede3 != null) {
+		}
 	}
 	,__class__: canvas.primitives.DeDeLogo
 });
@@ -649,7 +673,8 @@ canvas.primitives.Kitasenju = function() {
 canvas.primitives.Kitasenju.__name__ = true;
 canvas.primitives.Kitasenju.__super__ = canvas.primitives.PrimitiveBase;
 canvas.primitives.Kitasenju.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
-	init: function() {
+	init: function(o) {
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		var ary = [this.a1,this.a2,this.a3];
 		this._meshes = [];
 		var _g1 = 0;
@@ -678,7 +703,8 @@ canvas.primitives.Knot = function() {
 canvas.primitives.Knot.__name__ = true;
 canvas.primitives.Knot.__super__ = canvas.primitives.PrimitiveBase;
 canvas.primitives.Knot.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
-	init: function() {
+	init: function(o) {
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		var mesh = new THREE.Mesh(new THREE.TorusKnotGeometry(50,18,60,10,2,3),new THREE.MeshPhongMaterial({ color : 16746547}));
 		this.add(mesh);
 	}
@@ -690,7 +716,8 @@ canvas.primitives.Octa = function() {
 canvas.primitives.Octa.__name__ = true;
 canvas.primitives.Octa.__super__ = canvas.primitives.PrimitiveBase;
 canvas.primitives.Octa.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
-	init: function() {
+	init: function(o) {
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		var geo = new THREE.OctahedronGeometry(60);
 		var m = new THREE.MeshPhongMaterial({ color : 8947848, shading : 1});
 		this._cubes = [];
@@ -724,7 +751,7 @@ canvas.primitives.Octa.prototype = $extend(canvas.primitives.PrimitiveBase.proto
 });
 canvas.primitives.Primitives = function() {
 	this._tgtScale = 1;
-	this._count = 0;
+	this._count = -1;
 	THREE.Object3D.call(this);
 };
 canvas.primitives.Primitives.__name__ = true;
@@ -735,53 +762,51 @@ canvas.primitives.Primitives.prototype = $extend(THREE.Object3D.prototype,{
 		this._minV = new THREE.Vector3();
 		this._addV = new THREE.Vector3();
 		this._cube = new canvas.primitives.Cube();
-		this._cube.init();
-		this.add(this._cube);
+		this._cube.init({ isDepth : false});
 		this._cubes = new canvas.primitives.Cubes();
-		this._cubes.init();
-		this.add(this._cubes);
+		this._cubes.init(null);
 		this._sphere = new canvas.primitives.Sphere();
-		this._sphere.init();
-		this.add(this._sphere);
+		this._sphere.init(null);
 		this._spheres = new canvas.primitives.Spheres();
-		this._spheres.init();
-		this.add(this._spheres);
+		this._spheres.init(null);
 		this._torus = new canvas.primitives.Torus();
-		this._torus.init();
-		this.add(this._torus);
+		this._torus.init(null);
 		this._logo = new canvas.primitives.VrdgLogo();
-		this._logo.init();
-		this.add(this._logo);
+		this._logo.init(null);
 		this._octa = new canvas.primitives.Octa();
-		this._octa.init();
-		this.add(this._octa);
+		this._octa.init(null);
 		this._knot = new canvas.primitives.Knot();
-		this._knot.init();
-		this.add(this._knot);
+		this._knot.init(null);
 		this._kitasen = new canvas.primitives.Kitasenju();
-		this._kitasen.init();
-		this.add(this._kitasen);
+		this._kitasen.init(null);
 		this._face = new canvas.primitives.DeDeFace();
-		this._face.init();
-		this.add(this._face);
+		this._face.init(null);
 		this._mouse = new canvas.primitives.DeDeLogo();
-		this._mouse.init();
+		this._mouse.init({ pixelType : 1, dynamicScale : false, isDepth : false});
 		this.add(this._mouse);
+		this._walker = new canvas.primitives.VideoPlane();
+		this._walker.init({ pixelType : 1, dynamicScale : false, isDepth : false});
 		this._two = new canvas.primitives.Two();
-		this._two.init();
-		this.add(this._two);
-		this._primitives = [this._cube,this._two,this._cubes,this._sphere,this._spheres,this._torus,this._octa,this._knot,this._kitasen,this._face,this._mouse,this._logo];
-		this.next(true);
+		this._two.init(null);
+		this._primitives = [this._walker,this._cube,this._sphere,this._two,this._cubes,this._spheres,this._torus,this._octa,this._knot,this._kitasen,this._face,this._mouse,this._logo];
+		var _g1 = 0;
+		var _g = this._primitives.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.add(this._primitives[i]);
+		}
 	}
 	,next: function(isRandom) {
 		if(isRandom) this._count = Math.floor(Math.random() * this._primitives.length); else this._count++;
 		this.setVisible(false);
 		if(this._count == this._primitives.length - 1) {
 		}
-		this._primitives[this._count % this._primitives.length].visible = true;
-		this._primitives[this._count % this._primitives.length].start();
-		this.add(this._primitives[this._count % this._primitives.length]);
+		this._current = this._primitives[this._count % this._primitives.length];
+		this._current.visible = true;
+		this._current.start();
+		this.add(this._current);
 		this._setParam();
+		return this._current.data;
 	}
 	,_setParam: function() {
 	}
@@ -791,6 +816,7 @@ canvas.primitives.Primitives.prototype = $extend(THREE.Object3D.prototype,{
 		while(_g1 < _g) {
 			var i = _g1++;
 			this._primitives[i].visible = b;
+			this._primitives[i].stop();
 			this.remove(this._primitives[i]);
 		}
 	}
@@ -804,6 +830,9 @@ canvas.primitives.Primitives.prototype = $extend(THREE.Object3D.prototype,{
 		this._addV.y *= 0.99;
 		this._addV.z *= 0.99;
 		this._tgtScale = 0.8 + Math.pow(audio.freqByteData[8] / 255,2);
+		if(this._current != null) {
+			if(this._current.data.dynamicScale == false) this._tgtScale = 1;
+		}
 		this.scale.x = this._tgtScale;
 		this.scale.y = this._tgtScale;
 		this.scale.z = this._tgtScale;
@@ -823,45 +852,14 @@ canvas.primitives.Primitives.prototype = $extend(THREE.Object3D.prototype,{
 	}
 	,__class__: canvas.primitives.Primitives
 });
-canvas.primitives.RoppongiLogo = function() {
-	this.a3 = "M105.4,62.9c2.8-0.2,13.8-8.5,14.9-9.6l11.5-11.5c0.9-0.9,4.7-5.3,5.5-6c1.9-1.3,2.1-1.5,3.2-3.2L153.2,17l11.3-18.5c1.3-1.9,5.5-11.1,6.8-12.8l1.5-4l-0.2-0.4c-1.9,0.6-15.7,6.6-16.4,6.6c-4.5,0-29.3-14.5-33.4-21.1l0.4-0.9l3.8,0.4l0.6-1.3c1.3,0,7.4-0.9,8.7-0.9c1.5,0,8.1-1.3,9.4-1.5L163-40l2.8-0.2l18.1-1.9c1.1-0.2,6-1.3,6.8-1.5c0.6,0,0.9-0.2,1.3-0.9l0.2-4.3l-0.2-18.7c0-1.3-0.6-7.4-0.6-8.7c-0.2-2.3-0.4-9.6-3.2-10.8c-4-1.7-6.6-2.8-8.7-6.6c0.6-0.2,1.7-0.4,2.6-0.6c0.9-0.4,6.4-4,7.2-4c4.7,0,10.6,1.5,15.5,3.8c0.6,0.2,3.2,1.1,3.6,1.3l1.5,2.3c1.1,0.2,10.2,5.7,10.8,6.2c3,1.3,6.6,4.5,7.2,7.7c0.2,0.4,0.9,1.7,0.9,2.6c0,0.6-0.9,3.4-1.1,4c-0.2,1.1-3.8,4.9-4.3,6c-0.2,0.6-0.4,3.6-0.6,4c-0.2,0.9-1.5,4.5-1.5,5.3c0,0.6-0.6,3.4-0.6,4c0,0.6,0.2,1.1,0.6,2.1l25.7-2.8c0.9-0.2,4.7-0.2,5.5-0.4l0.6-1.1c0.9-0.2,1.1-0.2,1.5-1.1c0.6-0.2,3-1.5,3.6-1.5c0.2,0,0.6,0,1.1,0.2c0.2-0.2,0.6-0.6,1.1-0.6c0.6,0,3.6,0.6,4.3,0.6c1.5,1.3,1.7,1.3,2.8,1.1l0.9,1.1c4,1.1,4.5,1.1,6.4,3.6h0.9c2.8,3.6,4.7,4.3,8.3,5.3c2.6,0.9,3.8,7.9,3.8,8.9c0,2.1-0.9,3-3.4,5.5c-1.3,1.5-5.5,1.7-11.3,1.9l-17.9-1.5h-11.7l-17,1.7h-0.9l-0.2,0.6c2.1,2.8,10.6,15.9,12.8,18.5L249.1,4c1.9,2.1,10.4,10.2,12.1,11.9l11.3,10.8l7.9,8.1l11.9,12.3L308,59.3c3.8,4,6,6.2,6,7.2c0,1.9-8.9,2.8-11.9,3l-17.7-0.9h-11.3c-5.1,0-7-0.6-9.4-3.6l-8.3-10.6c-3.2-4.3-9.6-10.6-12.3-15.1c-1.3-2.1-6.8-11.1-8.9-14.7c-1.7-2.8-3.6-7.2-5.3-10c-1.7-2.3-8.9-13.8-9.6-14.7c-0.4,1.3-0.4,1.5-0.4,3c0,1.3-0.4,6.8-0.2,8.1v19.6l-0.2,0.9l0.2,21.5c0,1.7,0.9,9.8,0.9,11.5c0,0.4-0.6,3.2-0.6,3.4c0,0.2,0.4,1.7,0.4,1.9c0,0.9-0.2,4.7-0.2,5.3c0,0.9-1.5,4.7-1.5,5.3c0,6.8-0.4,7.2-3,12.8c-2.1,0.9-2.6,1.5-5.3,5.3c-0.4,0.6-1.3,1.1-1.9,1.1c-0.2,0-3.6-0.4-4.3-0.4c-1.3,0-2.1,0-3.2-1.1c-0.4-0.6-1.9-3.6-2.3-4l-6.6-17.4c-0.2-0.4-0.6-2.3-0.9-2.8c-0.4-0.6-0.4-1.9-0.4-2.6c0-0.9,0.2-1.5,1.3-3c1.1-5.3,1.3-6,1.5-7.9l-0.2-18.9c0-0.4-0.2-2.6-0.2-3c0.2-5.7,0.4-13.6,0.6-18.9c0.2-5.1,0.6-13.8,0.2-18.3l-0.2-2.6L190.9,1l-8.1,14.7c-1.9,3.4-8.3,10.6-12.3,15.3c-0.4,0.4-3,4.7-3.4,5.3c-0.2,0.6-3,2.3-3.4,3c-0.9,0.9-9.4,10.6-10.4,11.5c-1.5,1.1-7.7,6.2-8.9,7c-0.2,0.2-11.9,6.6-12.3,6.8c-0.4,0-11.5,2.3-12.3,2.3c-6.8,0-8.7-1.3-11.1-2.6l-3.4-0.9L105.4,62.9z";
-	this.a2 = "M-96-33.6h6c1.9,0.4,2.1,0.4,4.7-0.6l17.9-0.9l22.8-3.8c3.4-0.6,6.4-0.9,13.2-1.5c0.6,0,8.1-1.7,9.8-1.9c-0.2-3.2-0.2-4.3-0.2-5.3c0.2-1.3,1.1-7,0.9-8.3l-1.7-20.2c-0.2-1.7-0.4-9.4-0.9-10.6c-0.6-1.7-1.5-2.1-8.5-5.5c-0.9-0.4-2.8-2.1-2.8-3c0-0.4,0.2-1.3,0.6-2.1c1.7,0,9.6-1.3,11.9-2.6c1.5,0,14.2,1.9,15.1,2.6c1.1,0.9,6,4,6.8,4.7c1.1,0.9,5.1,5.7,6.2,6.6c0.6,0.6,5.3,3.6,6,4.5c0.6,0.6,3.2,4,3.2,5.3c0,4.5-3,8.5-5.3,11.7C8.2-63,8-62.1,8-61.5c0,1.5-0.6,8.3-0.6,9.6c0,0.2,0.2,6.2,0.2,6.8l6-0.4l18.3-2.3c3.4-0.4,6.6-3.2,9.6-5.7c0.6-0.4,0.9-0.6,3.6-1.1c0.4,0,1.9-1.3,2.3-1.3c0.9,0.2,5.7,0.6,8.3,2.8c0.9,0.4,4.7,2.3,5.5,2.6c3.4,2.8,4.7,3.8,8.3,6c3.6,2.1,4.3,2.6,6,4.7v0.9l1.1,1.1c-0.4,1.7-0.6,2.3-0.4,4.5c-0.4,0.9-3.4,5.1-4.3,6.2C70.5-27.3,65-26,64.5-26l-16.8-1.3c-10.8-0.9-18.5-1.5-21.7-1.5c-1.7,0-9.4,0.6-10.8,0.6l-0.4,0.6c4.5,5.5,10.4,13.2,12.8,15.3L40.9-0.5L41.6,0l12.8,12.8c0.6,0.9,3.8,3.4,4.3,4c6.2,7.2,42.5,38.1,42.5,41.9c0,1.5-1.1,1.7-9.6,2.6c-11.9,1.3-20.6,2.1-26.4,2.1c-2.8,0-9.1,0-14.7-8.1L39.2,39.1L37.1,37L26.1,22.5C19.5,14,16.1,7.6,14.6,4.6c-0.2-0.4-1.5-2.1-1.7-2.6c-1.7-1.7-2.1-2.3-5.5-7.9H6.5c0,0.6-0.9,3.2-0.9,3.6c0.2,0.6,0.6,3,0.6,3.6c0,6.8-0.9,19.4-1.5,20.2c0,1.5,0.4,2.3,1.1,3.8c1.1-0.2,4.9-2.3,5.5-2.8c1.9-0.6,2.8-0.9,6.6-0.4c0.9,0.9,5.5,4.3,6.4,5.1c1.1,0.9,6.6,4.5,7.7,5.1c0.9,1.5,2.3,3.6,2.3,6.2c0,0.4-4.3,5.7-5.5,5.7c-3.4,0-4.3,0.2-11.7,1.7C15,46.5,7.1,47.4,5,47.6c0,1.5-0.4,7.7-0.4,8.9c0,1.1,0.9,4.9,0.9,5.7L5.6,78c0,1.1-0.6,6.2-0.6,7.7c0,4,0,5.7-2.3,9.8C1.2,98-2.7,101-4.6,101c-4.7,0-6.6-1.9-10.6-6.8c-1.9-1.9-5.3-6-6.2-7.4c-0.6-1.5-3.2-11.9-3.2-12.1c0-0.4,2.3-8.3,2.6-9.6c0-1.5,0.9-7.9,0.9-9.1c0-1.1-0.2-2.6-0.2-3.6c-1.1-0.2-5.7,0.9-6.6,0.9c-1.1-0.4-14.7-4.9-17.4-7c-0.6-0.4-4.9-5.3-6.2-5.3c-0.6,0-8.7,8.1-10.4,9.8c-1.5,1.5-8.5,6.8-9.6,8.1c-2.1,1.9-11.5,7.4-16.4,7.9c-2.1,0.2-12.3,2.8-13.4,2.8s-7-0.6-7-1.7l0.4-1.1c7.9-4.7,8.5-5.3,15.5-14c0.9-1.1,8.3-7.4,9.8-8.9c5.1-6,36.4-49.3,38.3-59.1c-0.6,0-3.4,0.6-3.8,0.6c-0.6,0-5.5,1.1-6.6,1.3c-1.1,0.2-5.7,3-6.8,3c-4.9,0-20-6.8-34.5-22.3V-33.6z";
-	this.a1 = "M-264.2,30.6c0.6-1.1,4.3-5.1,4.3-6.2c0-1.9-6-8.5-6-10.2c0-0.2,0.2-0.6,0.6-0.6c1.3,0,14.5,1.1,17,2.6c4.7,3,19.4,11.9,19.4,18.7c0,4.9-8.3,15.1-8.9,15.7c-5.1,4-27.6,23.8-31.3,25.9c-7,4.5-16.4,8.3-20.8,8.5c-2.6,0.2-14.2,1.1-16.2,1.1c-0.9,0-3-0.6-3.6-0.6C-284.9,68.6-279.8,59.3-264.2,30.6z M-234.5-43.6c0-1.1,0.4-5.7,0.4-6.6c0-3.2-1.9-28.1-3.6-31c-1.3-2.3-11.1-9.6-12.8-11.3c0.4-0.2,2.1-0.6,2.6-0.6c13,0,13.4,0.2,19.1,2.8c1.9,0.9,11.7,4.7,17.7,7c0.6,0.2,11.1,9.4,11.5,9.8c1.1,1.1,2.3,3.2,2.3,5.7c0,5.5-11.3,31.3-11.3,33.4c0,1.7,1.9,1.7,2.8,1.7c3.4,0,17.9-1.3,21.1-1.5c17.9-0.9,23.2-1.1,25.7-2.1c0.9-0.4,5.1-2.8,6-3.2c1.1-0.4,1.9-0.4,3-0.4c3.6,0,4.9,0.6,17,7.7c9.1,5.3,9.4,8.5,9.4,11.9c0,9.6-12.3,10-13,10c-2.8,0-49.8-4.3-50.6-4.3c-13.4,0-43.2,3.4-44.9,3.8c-4.7,1.1-28.1,6.2-28.7,6.6c-0.4,0.2-6.2,3.2-7.2,3.2c-3.2,0-15.5-6.6-18.1-7.7c-15.9-6.2-22.8-14.5-22.8-14.9c0-1.7,2.1-1.7,3-1.7c2.3,0.2,6.4,0.4,8.1,0.4c5.1,0,27-3,31.5-3.4c6.2-0.6,33.8-3,39.3-3.8C-233.8-40.2-234.5-41.1-234.5-43.6z M-203.6,11c6,0,23.8,13.6,30.4,18.7c3.4,2.8,19.1,13.4,22.1,15.9c6.4,5.3,13.2,17.7,13.2,28.9c0,7.9-5.7,14.7-12.8,14.7c-4.7,0-16.8-7.7-23.6-20c-2.6-4.5-22.3-42.3-24.7-45.7c-3.6-5.3-7-9.4-9.1-11.9C-206.8,11.4-205.1,11-203.6,11z";
-	canvas.primitives.PrimitiveBase.call(this);
-};
-canvas.primitives.RoppongiLogo.__name__ = true;
-canvas.primitives.RoppongiLogo.__super__ = canvas.primitives.PrimitiveBase;
-canvas.primitives.RoppongiLogo.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
-	init: function() {
-		var ary = [this.a1,this.a2,this.a3];
-		this._meshes = [];
-		var _g1 = 0;
-		var _g = ary.length;
-		while(_g1 < _g) {
-			var i = _g1++;
-			var shape = common.Svg2Shape.getShape(ary[i]);
-			var g = new THREE.ExtrudeGeometry(shape,{ amount : 60, bevelEnabled : false});
-			var mesh1 = new THREE.Mesh(g,new THREE.MeshLambertMaterial({ color : 16711680}));
-			mesh1.position.z = -30;
-			this.add(mesh1);
-			this._meshes.push(mesh1);
-		}
-	}
-	,update: function(a,rotV) {
-		this.scale.z = 0.12 + 2.5 * a.freqByteData[3] / 255;
-		this.scale.x = 0.13 + 0.5 * a.freqByteData[3] / 255;
-		this.scale.y = 0.13 + 0.5 * a.freqByteData[3] / 255;
-		canvas.primitives.PrimitiveBase.prototype.update.call(this,a,rotV);
-	}
-	,__class__: canvas.primitives.RoppongiLogo
-});
 canvas.primitives.Sphere = function() {
 	canvas.primitives.PrimitiveBase.call(this);
 };
 canvas.primitives.Sphere.__name__ = true;
 canvas.primitives.Sphere.__super__ = canvas.primitives.PrimitiveBase;
 canvas.primitives.Sphere.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
-	init: function() {
+	init: function(o) {
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		this._mat = new THREE.MeshLambertMaterial({ color : 8947848, shading : 1, side : 2});
 		this._mesh = new THREE.Mesh(new THREE.IcosahedronGeometry(85,1),this._mat);
 		this.add(this._mesh);
@@ -884,7 +882,8 @@ canvas.primitives.Spheres = function() {
 canvas.primitives.Spheres.__name__ = true;
 canvas.primitives.Spheres.__super__ = canvas.primitives.PrimitiveBase;
 canvas.primitives.Spheres.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
-	init: function() {
+	init: function(o) {
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		this.mm = new THREE.MeshBasicMaterial({ color : 12303291});
 		var geo = new THREE.SphereGeometry(85,10,10);
 		this._cubes = [];
@@ -919,7 +918,8 @@ canvas.primitives.Torus = function() {
 canvas.primitives.Torus.__name__ = true;
 canvas.primitives.Torus.__super__ = canvas.primitives.PrimitiveBase;
 canvas.primitives.Torus.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
-	init: function() {
+	init: function(o) {
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		var m = new THREE.Mesh(new THREE.TorusGeometry(100,30,20,20),new THREE.MeshLambertMaterial({ color : 16777215}));
 		this.add(m);
 	}
@@ -931,7 +931,8 @@ canvas.primitives.Two = function() {
 canvas.primitives.Two.__name__ = true;
 canvas.primitives.Two.__super__ = canvas.primitives.PrimitiveBase;
 canvas.primitives.Two.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
-	init: function() {
+	init: function(o) {
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		var s = "3";
 		var _g1 = 0;
 		var _g = s.length;
@@ -947,13 +948,53 @@ canvas.primitives.Two.prototype = $extend(canvas.primitives.PrimitiveBase.protot
 	}
 	,__class__: canvas.primitives.Two
 });
+canvas.primitives.VideoPlane = function() {
+	canvas.primitives.PrimitiveBase.call(this);
+};
+canvas.primitives.VideoPlane.__name__ = true;
+canvas.primitives.VideoPlane.__super__ = canvas.primitives.PrimitiveBase;
+canvas.primitives.VideoPlane.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
+	init: function(o) {
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
+		if(this._video == null) {
+			this._video = window.document.getElementById("walker");
+			this._video.loop = true;
+			var _this = window.document;
+			this._canvas = _this.createElement("canvas");
+			this._canvas.width = 192;
+			this._canvas.height = 58;
+			this._context = this._canvas.getContext("2d");
+			this._texture = new THREE.Texture(this._canvas);
+			this._material = new THREE.MeshBasicMaterial({ map : this._texture});
+			this._material.side = 2;
+			var s = 3.5;
+			this._plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(192 * s,58 * s,1,1),this._material);
+			this.add(this._plane);
+		}
+	}
+	,start: function() {
+		if(this._video != null) {
+			this._video.play();
+			this._video.loop = true;
+		}
+	}
+	,update: function(a,rotV) {
+		this._context.drawImage(this._video,0,0);
+		this._texture.needsUpdate = true;
+	}
+	,stop: function() {
+		if(this._video != null) this._video.pause();
+	}
+	,__class__: canvas.primitives.VideoPlane
+});
 canvas.primitives.VrdgLogo = function() {
 	canvas.primitives.PrimitiveBase.call(this);
 };
 canvas.primitives.VrdgLogo.__name__ = true;
 canvas.primitives.VrdgLogo.__super__ = canvas.primitives.PrimitiveBase;
 canvas.primitives.VrdgLogo.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
-	init: function() {
+	init: function(o) {
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		if(this._loader == null) {
 			this._loader = new data.MyDAELoader();
 			this._loader.load("dae/logo.dae",$bind(this,this._onLoad));
@@ -971,6 +1012,37 @@ canvas.primitives.VrdgLogo.prototype = $extend(canvas.primitives.PrimitiveBase.p
 	}
 	,__class__: canvas.primitives.VrdgLogo
 });
+canvas.primitives.data = {};
+canvas.primitives.data.EffectData = function(o) {
+	this.isDepth = true;
+	this.dynamicScale = true;
+	this.pixelType = 0;
+	if(o != null) {
+		if(o.pixelType != null) this.pixelType = o.pixelType;
+		if(o.dynamicScale != null) this.dynamicScale = o.dynamicScale;
+		if(o.isDepth != null) this.isDepth = o.isDepth;
+	}
+};
+canvas.primitives.data.EffectData.__name__ = true;
+canvas.primitives.data.EffectData.prototype = {
+	getIsBlackPixel: function() {
+		var out = false;
+		var _g = this.pixelType;
+		switch(_g) {
+		case 0:
+			if(Math.random() < 0.5) out = true; else out = false;
+			break;
+		case 1:
+			out = true;
+			break;
+		case 2:
+			out = false;
+			break;
+		}
+		return out;
+	}
+	,__class__: canvas.primitives.data.EffectData
+};
 canvas.primitives.font = {};
 canvas.primitives.font.FontTest = function() {
 };
@@ -1701,7 +1773,7 @@ emoji.EmojiShader.prototype = {
 		var tex = data.TextureData.emo2048.texture;
 		tex.minFilter = 1003;
 		tex.magFilter = 1003;
-		this.uniforms = { strength : { type : "f", value : 100.0}, seed : { type : "f", value : 0.0}, counter : { type : "f", value : 0}, texture : { type : "t", value : tex}, scale1 : { type : "f", value : 22000}, scale : { type : "f", value : 1.0}, posScale : { type : "v3", value : new THREE.Vector3(1.0,1.0,1.0)}, offset : { type : "v2", value : new THREE.Vector2(1 / this.animationFrameLength,0.0)}, repeat : { type : "v2", value : new THREE.Vector2(1 / this.animationFrameLength,1 / this.animationFrameLength)}};
+		this.uniforms = { strength : { type : "f", value : 100.0}, seed : { type : "f", value : 0.0}, counter : { type : "f", value : 0}, texture : { type : "t", value : tex}, scale1 : { type : "f", value : common.Config.particleSize}, scale : { type : "f", value : 1.0}, posScale : { type : "v3", value : new THREE.Vector3(1.0,1.0,1.0)}, offset : { type : "v2", value : new THREE.Vector2(1 / this.animationFrameLength,0.0)}, repeat : { type : "v2", value : new THREE.Vector2(1 / this.animationFrameLength,1 / this.animationFrameLength)}};
 		this.shaderMaterial = new THREE.ShaderMaterial({ uniforms : this.uniforms, attributes : this.attributes, vertexShader : this.vertexShader, fragmentShader : this.fragmentShader, transparent : true, alphaTest : 0.5, depthWrite : false});
 	}
 	,__class__: emoji.EmojiShader
@@ -1744,6 +1816,7 @@ emoji.EmojiSpritePos = function(max,numx) {
 	this.range = 100;
 	this.currentIndex = 0;
 	this.counter = 0;
+	this.counterIndex = 0;
 	this.endIndex = 0;
 	this.startIndex = 0;
 	this.animationFrameLength = 32;
@@ -1759,6 +1832,7 @@ emoji.EmojiSpritePos.prototype = {
 	init: function() {
 		common.Dat.gui.add(this,"startIndex",0,this._max - 1).listen();
 		common.Dat.gui.add(this,"range",0,this._max - 1).listen();
+		common.Dat.gui.add(this,"counterIndex",0,844).listen();
 	}
 	,getIconPos: function(light) {
 		this.endIndex = this.startIndex + this.range;
@@ -1767,7 +1841,7 @@ emoji.EmojiSpritePos.prototype = {
 		var no = Math.floor((this.endIndex - this.startIndex) * ratio + Math.floor(this.counter));
 		no = no % num;
 		var index = Math.floor(this.startIndex + no);
-		index = index % this._max;
+		index = (index + this.counterIndex) % this._max;
 		var xx = index % this.animationFrameLength;
 		var yy = this.animationFrameLength - 1 - Math.floor(index / this.animationFrameLength);
 		return new THREE.Vector2(xx / this.animationFrameLength,yy / this.animationFrameLength);
@@ -1793,6 +1867,7 @@ emoji.EmojiSpritePos.prototype = {
 };
 emoji.Emojis = function() {
 	this._depthDir = 1;
+	this._isCurl = false;
 	this._isRotate = false;
 	this._isDepth = false;
 	this._isBlackPixel = true;
@@ -1842,10 +1917,10 @@ emoji.Emojis.prototype = $extend(THREE.Object3D.prototype,{
 		if(!this.isActive) return;
 		var keyCode = Std.parseInt(e.keyCode);
 		if(keyCode == 78) this._isCurl = !this._isCurl; else if(keyCode == 39) {
-			this._canvas.next(true);
+			var data = this._canvas.next(false);
 			this._pos.setRange(Math.random(),Math.pow(Math.random(),2));
-			if(Math.random() < 0.5) this._isBlackPixel = true; else this._isBlackPixel = false;
-			if(Math.random() < 0.2) this._depthDir = -1; else this._depthDir = 1;
+			this._isBlackPixel = data.getIsBlackPixel();
+			this._depthDir = 1;
 		} else if(keyCode == 37) this._tweenZoom(true); else if(keyCode == 38) this._tweenZoom(false); else if(keyCode == 40) this._tweenWide(); else if(keyCode == 80) this._isDepth = !this._isDepth; else if(keyCode == 82) {
 			this._isRotate = !this._isRotate;
 			if(this._isRotate) this._isDepth = true;
@@ -1914,7 +1989,7 @@ emoji.Emojis.prototype = $extend(THREE.Object3D.prototype,{
 			var yy = Math.floor(i / this._w);
 			var light = this._canvas.getPixel(Math.floor(xx / this._w * this._maxW),Math.floor(yy / this._h * this._maxH));
 			if(this._isBlackPixel) {
-				if(light != 0) this.shader.attributes.aOffset.value[i] = this._pos.getIconPos(light); else this.shader.attributes.aOffset.value[i] = new THREE.Vector2(0,0);
+				if(light >= 2) this.shader.attributes.aOffset.value[i] = this._pos.getIconPos(light); else this.shader.attributes.aOffset.value[i] = new THREE.Vector2(0,0);
 			} else this.shader.attributes.aOffset.value[i] = this._pos.getIconPos(light);
 		}
 	}
@@ -3052,6 +3127,11 @@ Three.LineStrip = 0;
 Three.LinePieces = 1;
 canvas.CanvasSrc.W = 200;
 canvas.CanvasSrc.H = 50;
+canvas.primitives.VideoPlane.W = 192;
+canvas.primitives.VideoPlane.H = 58;
+canvas.primitives.data.EffectData.BLACK_RANDOM = 0;
+canvas.primitives.data.EffectData.BLACK_TRUE = 1;
+canvas.primitives.data.EffectData.BLACK_FALSE = 2;
 common.Config.canvasOffsetY = 0;
 common.Config.globalVol = 1.0;
 common.Config.particleSize = 3000;

@@ -45,7 +45,7 @@ uniform float frequency;
 uniform float amplitude;
 uniform float maxDistance;
 uniform float freqByteData[32];
-
+uniform vec3 freqs;
 
 void main() {
 
@@ -54,11 +54,11 @@ void main() {
     //vec3 tar = pos + curl( pos.x * frequency, pos.y * frequency, pos.z * frequency ) * amplitude;
     //float d = length( pos-tar ) / maxDistance;
     //pos = mix( pos, tar, pow( d, 5. ) );
-	float rr = 0.1*sin(timer*0.1);
+	float rr = 0.2*sin(timer*0.1);
 	vec3 vv = curlNoise(pos * rr);/////koko
-	vv.x *= freqByteData[1] / 255.0 * 10.0;
-	vv.y *= freqByteData[5] / 255.0 * 10.0;
-	vv.z *= freqByteData[8] / 255.0 * 10.0;
+	vv.x *= freqs.x / 255.0 * 10.0;
+	vv.y *= freqs.y / 255.0 * 10.0;
+	vv.z *= freqs.z / 255.0 * 10.0;
     //pos = pos + vv * 2.5;
 	pos = pos + vv;// * freqByteData[3] / 255.0 * 10.0;
 	
@@ -78,6 +78,9 @@ void main() {
 	";
 	
 	
+	private var _idx1:Int = 0;
+	private var _idx2:Int = 1;
+	private var _idx3:Int = 2;
 	
 	
 	public function new(ww:Int, hh:Int) 
@@ -109,7 +112,7 @@ void main() {
                     amplitude: { type: "f", value: 96 },
                     maxDistance: { type: "f", value: 48 },
 					freqByteData:{type:"fv1",	value:MyAudio.a.freqByteDataAry},//Uint8Array
-					
+					freqs:{ type: "v3", value: new Vector3( 0, 1, 2 ) }
                 },
                 vertexShader: _vertex,
                 fragmentShader:  _fragment
@@ -117,11 +120,21 @@ void main() {
 		
 	}
 	
+	public function next():Void {
+		
+		_idx1 = Math.floor( 12 * Math.random() );
+		_idx2 = Math.floor( 12 * Math.random() );
+		_idx3 = Math.floor( 12 * Math.random() );
+		
+	}
+	
 	public function update(a:MyAudio):Void {
 		
 		uniforms.timer.value += 0.001;
 		uniforms.freqByteData.value = a.freqByteDataAry;
-		
+		uniforms.freqs.value.x = a.freqByteDataAry[_idx1];
+		uniforms.freqs.value.y = a.freqByteDataAry[_idx2];
+		uniforms.freqs.value.z = a.freqByteDataAry[_idx3];
 	}
 	
 	

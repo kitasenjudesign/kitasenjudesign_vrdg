@@ -25,7 +25,8 @@ class Sphere extends PrimitiveBase
 	
 	
 	
-	override public function init():Void {
+	override public function init(o:Dynamic):Void {
+		super.init(o);
 		/*var light:DirectionalLight = new DirectionalLight(0xffffff, 0.1);light.position.set( -10, 5, 3);add(light);*/
 		_mat = new MeshLambertMaterial( { color:0x888888, shading:Three.FlatShading, side:Three.DoubleSide } );
 		_mesh = new Mesh( 	

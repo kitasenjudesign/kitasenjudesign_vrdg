@@ -1,15 +1,8 @@
 package;
 import camera.ExCamera;
 import canvas.CanvasSrc;
-import common.Dat;
 import emoji.Emojis;
-import js.Browser;
-import planes.PlaneFactory;
 import sound.MyAudio;
-import three.BoxGeometry;
-import three.Camera;
-import three.Mesh;
-import three.MeshBasicMaterial;
 import three.Object3D;
 import three.Scene;
 import three.WebGLRenderer;

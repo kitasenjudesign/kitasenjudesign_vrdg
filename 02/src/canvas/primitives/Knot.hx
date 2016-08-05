@@ -16,7 +16,8 @@ class Knot extends PrimitiveBase
 	{super();
 	}
 	
-	override public function init():Void {
+	override public function init(o:Dynamic):Void {
+		super.init(o);
 		/*var light:DirectionalLight = new DirectionalLight(0xffffff, 0.1);light.position.set( -10, 5, 3);add(light);*/
 		var mesh:Mesh = new Mesh( 	
 		//new SphereGeometry(100, 8, 8),	

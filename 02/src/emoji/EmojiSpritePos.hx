@@ -24,6 +24,7 @@ class EmojiSpritePos
 	
 	public var startIndex	:Int = 0;
 	public var endIndex		:Int = 0;
+	public var counterIndex:Int = 0;
 	public var counter:Float = 0;
 	public var currentIndex:Int = 0;
 	public var range		:Int = 100;
@@ -49,7 +50,7 @@ class EmojiSpritePos
 		
 		Dat.gui.add(this, "startIndex", 0, _max - 1 ).listen();
 		Dat.gui.add(this, "range", 0, _max - 1).listen();
-		
+		Dat.gui.add(this, "counterIndex", 0, 844).listen();
 	}
 
 	
@@ -66,8 +67,9 @@ class EmojiSpritePos
 		var num:Int = endIndex - startIndex;
 		var no:Int = Math.floor( (endIndex - startIndex) * ratio + Math.floor(counter) );
 		no = no % num;
+		
 		var index:Int = Math.floor( startIndex + no );
-		index = index % _max;
+		index = (index+counterIndex) % _max;
 		//counter++;
 		
 		var xx:Int = (index) % animationFrameLength;

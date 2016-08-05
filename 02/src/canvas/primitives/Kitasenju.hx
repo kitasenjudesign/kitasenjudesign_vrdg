@@ -27,7 +27,8 @@ class Kitasenju extends PrimitiveBase
 	}
 	
 
-	override public function init():Void {
+	override public function init(o:Dynamic):Void {
+		super.init(o);
 		
 		var ary:Array<String> = [a1, a2, a3];
 		_meshes = [];

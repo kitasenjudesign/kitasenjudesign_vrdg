@@ -29,7 +29,8 @@ class Spheres extends PrimitiveBase
 		super();
 	}
 	
-	override public function init():Void {
+	override public function init(o:Dynamic):Void {
+		super.init(o);
 		
 		mm = new MeshBasicMaterial( { color:0xbbbbbb } );
 		

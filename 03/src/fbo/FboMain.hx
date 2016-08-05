@@ -104,10 +104,17 @@ class FboMain
 		Browser.window.onresize = _onResize;
 		_onResize(null);
 		
-		Dat.gui.add(this, "change");
+		Dat.gui.add(this, "changePP");
 		Dat.gui.add(this, "changeLine");
+		Dat.gui.add(this, "next");
+		
 		update();
 	}
+	
+	public function next():Void {
+		_fbo.next();
+	}
+	
 	
 	public function changeLine():Void {
 
@@ -115,7 +122,7 @@ class FboMain
 		
 	}
 	
-	public function change():Void {
+	public function changePP():Void {
 		
 		_pp.change(false, true);
 		
