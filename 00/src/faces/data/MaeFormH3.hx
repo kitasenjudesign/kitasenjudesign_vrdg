@@ -20,9 +20,6 @@ class MaeFormH3 extends MaeFormBase
 		var rotMode:Int = MaeFaceMesh.getRandomRot();
 		_setRot(rotMode);
 		
-		
-		
-		
 		_lines.startY = -100;
 		_camera.amp = 300;
 		_camera.setFOV(30);//
@@ -49,6 +46,7 @@ class MaeFormH3 extends MaeFormBase
 				ff.position.y = yy * spaceY + offsetY;	
 				ff.position.z = 0;
 				ff.rotation.y = 0;
+				
 			}else {
 				
 				ff.enabled = false;
@@ -62,7 +60,7 @@ class MaeFormH3 extends MaeFormBase
 	//3line
 	override public function update():Void {
 		for ( i in 0..._faces.length) {
-			_faces[i].position.x -= 0.5;
+			_faces[i].position.x -= 0.25;
 			if ( _faces[i].position.x < -_width/2) {
 				_faces[i].position.x = _width / 2;
 				_faces[i].updatePlate();

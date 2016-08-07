@@ -46,6 +46,14 @@ class DeDeLines extends Object3D
 		}
 	}
 	
+	public function reposition(ynum:Int,spaceY:Float=150, oy:Float=-150):Void {
+		
+		for(i in 0..._lines.length){
+			var line:DeDeLine = _lines[i];
+			line.position.y = i * spaceY + oy;
+		}
+		
+	}
 	
 	//suuji kaunto up
 	public function countUp(addX:Float):Void {

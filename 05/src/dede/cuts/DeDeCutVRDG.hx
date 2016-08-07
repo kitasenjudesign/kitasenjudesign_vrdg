@@ -6,7 +6,7 @@ import sound.MyAudio;
  * ...
  * @author watanabe
  */
-class DeDeCut0 extends DeDeCutBase
+class DeDeCutVRDG extends DeDeCutBase
 {
 
 	private var _counter2:Int = 0;
@@ -58,9 +58,12 @@ class DeDeCut0 extends DeDeCutBase
 		//reset("VRDGTH", Math.floor(Math.random() * 4), false, 0, 0, 0, 50);
 		//reset( Math.floor(Math.random() * 4), data);
 		
-		if(_nextCounter%6==0){
+		if(_nextCounter%10==4){
 			data.isRotate = true;
 			MyPointCloud.cloud.setRandom(true);			
+		}else if ( _nextCounter % 10 == 8) {
+			data.isRotate = false;
+			MyPointCloud.cloud.setRandom(true);						
 		}else {
 			data.isRotate = false;
 			MyPointCloud.cloud.setRandom(false);			

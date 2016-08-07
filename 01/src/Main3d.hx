@@ -86,6 +86,8 @@ class Main3d
 		_pp = new PostProcessing2();
 		_pp.init(_scene, _camera, _renderer,_onLoadDAE0);
 		
+		Dat.gui.add(_camera, "radX").listen();
+		
 	}
 	
 	private function _onLoadDAE0():Void{

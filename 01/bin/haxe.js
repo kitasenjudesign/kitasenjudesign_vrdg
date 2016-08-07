@@ -100,6 +100,7 @@ Main3d.prototype = {
 		common.StageRef.setCenter();
 		this._pp = new effect.PostProcessing2();
 		this._pp.init(this._scene,this._camera,this._renderer,$bind(this,this._onLoadDAE0));
+		common.Dat.gui.add(this._camera,"radX").listen();
 	}
 	,_onLoadDAE0: function() {
 		this._cubeCamera = new THREE.CubeCamera(1,2000,256);
@@ -177,7 +178,7 @@ camera.ExCamera = function(fov,aspect,near,far) {
 	this.tgtOffsetY = 0;
 	this.isActive = false;
 	this.radY = 0;
-	this.radX = Math.PI / 5;
+	this.radX = 0;
 	this.amp = 900.0;
 	this._oRadY = 0;
 	this._oRadX = 0;
@@ -1122,6 +1123,7 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 		common.Dat.gui.add(this,"changeMode3");
 		common.Dat.gui.add(this,"effectName").listen();
 		this.changeMode1();
+		this._nextEffect();
 	}
 	,_KeyDownFunc: function(e) {
 		var _g = Std.parseInt(e.keyCode);
@@ -1164,6 +1166,10 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 		}
 	}
 	,_prevEffect: function() {
+		this.changeMode1();
+		this._dae.changeMap(this.sphere.changeBg());
+		this.sphere.power = 0.7 + 0.3 * Math.random();
+		this._impulese();
 	}
 	,_nextSingle: function() {
 		this.changeMode1();

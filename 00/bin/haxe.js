@@ -361,22 +361,22 @@ common.Dat._onKeyDown = function(e) {
 	}
 };
 common.Dat._goURL1 = function() {
-	common.Dat._goURL("../../01/bin/");
-};
-common.Dat._goURL2 = function() {
-	common.Dat._goURL("../../02/bin/");
-};
-common.Dat._goURL3 = function() {
-	common.Dat._goURL("../../03/bin/");
-};
-common.Dat._goURL4 = function() {
 	common.Dat._goURL("../../04/bin/");
 };
-common.Dat._goURL5 = function() {
+common.Dat._goURL2 = function() {
 	common.Dat._goURL("../../05/bin/");
 };
+common.Dat._goURL3 = function() {
+	common.Dat._goURL("../../02/bin/");
+};
+common.Dat._goURL4 = function() {
+	common.Dat._goURL("../../03/bin/");
+};
+common.Dat._goURL5 = function() {
+	common.Dat._goURL("../../00/bin/");
+};
 common.Dat._goURL6 = function() {
-	common.Dat._goURL("../../06/bin/");
+	common.Dat._goURL("../../01/bin/");
 };
 common.Dat._goURL = function(url) {
 	window.location.href = url;
@@ -680,7 +680,8 @@ faces.MaeBg.prototype = $extend(THREE.Points.prototype,{
 	}
 });
 faces.MaeFace = function() {
-	this.enabled = true;
+	this.enabled = false;
+	this._isFirst = true;
 	this._lifeRatio = 0;
 	this._life = 0;
 	THREE.Object3D.call(this);
@@ -706,14 +707,26 @@ faces.MaeFace = function() {
 	this._bg = new faces.MaeBg();
 	this._bg.position.z = 0;
 	this.add(this._bg);
+	this._face.visible = false;
+	this._gauge.visible = false;
+	this._plate.visible = false;
 	this._line = new faces.lines.MaeFaceLine();
 };
 faces.MaeFace.__super__ = THREE.Object3D;
 faces.MaeFace.prototype = $extend(THREE.Object3D.prototype,{
 	init: function() {
 	}
+	,show: function() {
+		if(!this._isFirst) return;
+		this._isFirst = false;
+		this._face.show();
+		this._face.visible = true;
+		this._gauge.visible = true;
+		this._plate.visible = true;
+	}
 	,addForce: function(idx,f) {
 		if(!this.enabled) {
+			this.show();
 			this._bg.flash();
 			this._life = 0;
 			this.enabled = true;
@@ -771,11 +784,14 @@ faces.MaeFace.prototype = $extend(THREE.Object3D.prototype,{
 	}
 });
 faces.MaeFaceMesh = function() {
+	this.isFirst = true;
 	this._speedRotX = -0.02;
 	this._vz = 0;
 	this._vy = 0;
 	this._vx = 0;
 	this._rotMode = 0;
+	this._isFirst = true;
+	this._isForceRandom = false;
 	this._geometry = objects.MyDAELoader.geometry;
 	this._material = new faces.MaeShaderMaterial();
 	THREE.Mesh.call(this,this._geometry,this._material);
@@ -799,15 +815,26 @@ faces.MaeFaceMesh.prototype = $extend(THREE.Mesh.prototype,{
 		this._vx = 0;
 		this._vy = 0;
 		this._vz = 0;
+		if(Math.random() < 0.5) this._isForceRandom = true; else this._isForceRandom = false;
 	}
 	,addForce: function(idx,f) {
-		if(idx == 0) this._vx += f * 0.5 * this._d.x;
-		if(idx == 1) this._vy += f * 0.5 * this._d.y;
-		if(idx == 2) this._vz += f * 0.5 * this._d.z;
+		if(!this._isForceRandom) {
+			if(idx == 0) this._vx += f * 0.5 * this._d.x;
+			if(idx == 1) this._vy += f * 0.5 * this._d.y;
+			if(idx == 2) this._vz += f * 0.5 * this._d.z;
+		} else {
+			if(idx == 0) this._vx += Math.random() - 0.5;
+			if(idx == 1) this._vy += Math.random() - 0.5;
+			if(idx == 2) this._vz += Math.random() - 0.5;
+		}
 	}
 	,update: function(audio,lifeRatio) {
 		this._material.update(audio,lifeRatio);
-		if(lifeRatio == 0) {
+		if(this._isFirst) {
+			this.scale.x = 0;
+			this.scale.y = 0;
+			this.scale.z = 0;
+		} else if(lifeRatio == 0) {
 			this.scale.x += (7 - this.scale.x) / 4;
 			this.scale.y += (7 - this.scale.y) / 4;
 			this.scale.z += (7 - this.scale.z) / 4;
@@ -842,6 +869,9 @@ faces.MaeFaceMesh.prototype = $extend(THREE.Mesh.prototype,{
 		this._vx *= 0.96;
 		this._vy *= 0.96;
 		this._vz *= 0.96;
+	}
+	,show: function() {
+		this._isFirst = false;
 	}
 });
 faces.MaeFaces = function() {
@@ -1114,7 +1144,7 @@ faces.MaePlate.prototype = $extend(THREE.Object3D.prototype,{
 faces.MaeShaderMaterial = function() {
 	this.vv = "\r\n//\r\n// Description : Array and textureless GLSL 2D/3D/4D simplex \r\n//               noise functions.\r\n//      Author : Ian McEwan, Ashima Arts.\r\n//  Maintainer : ijm\r\n//     Lastmod : 20110822 (ijm)\r\n//     License : Copyright (C) 2011 Ashima Arts. All rights reserved.\r\n//               Distributed under the MIT License. See LICENSE file.\r\n//               https://github.com/ashima/webgl-noise\r\n// \r\n\r\nvec3 mod289(vec3 x) {\r\n\treturn x - floor(x * (1.0 / 289.0)) * 289.0;\r\n}\r\n\r\nvec4 mod289(vec4 x) {\r\n\treturn x - floor(x * (1.0 / 289.0)) * 289.0;\r\n}\r\n\r\nvec4 permute(vec4 x) {\r\n\treturn mod289(((x*34.0)+1.0)*x);\r\n}\r\n\r\nvec4 taylorInvSqrt(vec4 r){\r\n\treturn 1.79284291400159 - 0.85373472095314 * r;\r\n}\r\n\r\nfloat snoise(vec3 v) { \r\n\r\n\tconst vec2  C = vec2(1.0/6.0, 1.0/3.0) ;\r\n\tconst vec4  D = vec4(0.0, 0.5, 1.0, 2.0);\r\n\r\n\t// First corner\r\n\tvec3 i  = floor(v + dot(v, C.yyy) );\r\n\tvec3 x0 =   v - i + dot(i, C.xxx) ;\r\n\r\n\t// Other corners\r\n\tvec3 g = step(x0.yzx, x0.xyz);\r\n\tvec3 l = 1.0 - g;\r\n\tvec3 i1 = min( g.xyz, l.zxy );\r\n\tvec3 i2 = max( g.xyz, l.zxy );\r\n\r\n\t//   x0 = x0 - 0.0 + 0.0 * C.xxx;\r\n\t//   x1 = x0 - i1  + 1.0 * C.xxx;\r\n\t//   x2 = x0 - i2  + 2.0 * C.xxx;\r\n\t//   x3 = x0 - 1.0 + 3.0 * C.xxx;\r\n\tvec3 x1 = x0 - i1 + C.xxx;\r\n\tvec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y\r\n\tvec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y\r\n\r\n\t// Permutations\r\n\ti = mod289(i); \r\n\tvec4 p = permute( permute( permute( \r\n\t\t  i.z + vec4(0.0, i1.z, i2.z, 1.0 ))\r\n\t\t+ i.y + vec4(0.0, i1.y, i2.y, 1.0 )) \r\n\t\t+ i.x + vec4(0.0, i1.x, i2.x, 1.0 ));\r\n\r\n\t// Gradients: 7x7 points over a square, mapped onto an octahedron.\r\n\t// The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)\r\n\tfloat n_ = 0.142857142857; // 1.0/7.0\r\n\tvec3  ns = n_ * D.wyz - D.xzx;\r\n\r\n\tvec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)\r\n\r\n\tvec4 x_ = floor(j * ns.z);\r\n\tvec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)\r\n\r\n\tvec4 x = x_ *ns.x + ns.yyyy;\r\n\tvec4 y = y_ *ns.x + ns.yyyy;\r\n\tvec4 h = 1.0 - abs(x) - abs(y);\r\n\r\n\tvec4 b0 = vec4( x.xy, y.xy );\r\n\tvec4 b1 = vec4( x.zw, y.zw );\r\n\r\n\t//vec4 s0 = vec4(lessThan(b0,0.0))*2.0 - 1.0;\r\n\t//vec4 s1 = vec4(lessThan(b1,0.0))*2.0 - 1.0;\r\n\tvec4 s0 = floor(b0)*2.0 + 1.0;\r\n\tvec4 s1 = floor(b1)*2.0 + 1.0;\r\n\tvec4 sh = -step(h, vec4(0.0));\r\n\r\n\tvec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;\r\n\tvec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;\r\n\r\n\tvec3 p0 = vec3(a0.xy,h.x);\r\n\tvec3 p1 = vec3(a0.zw,h.y);\r\n\tvec3 p2 = vec3(a1.xy,h.z);\r\n\tvec3 p3 = vec3(a1.zw,h.w);\r\n\r\n\t//Normalise gradients\r\n\tvec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));\r\n\tp0 *= norm.x;\r\n\tp1 *= norm.y;\r\n\tp2 *= norm.z;\r\n\tp3 *= norm.w;\r\n\r\n\t// Mix final noise value\r\n\tvec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);\r\n\tm = m * m;\r\n\treturn 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ) );\r\n\r\n}\r\n\r\nvec3 snoiseVec3( vec3 x ){\r\n\r\n\tfloat s  = snoise(vec3( x ));\r\n\tfloat s1 = snoise(vec3( x.y - 19.1 , x.z + 33.4 , x.x + 47.2 ));\r\n\tfloat s2 = snoise(vec3( x.z + 74.2 , x.x - 124.5 , x.y + 99.4 ));\r\n\tvec3 c = vec3( s , s1 , s2 );\r\n\treturn c;\r\n\r\n}\r\n\r\nvec3 curlNoise( vec3 p ){\r\n \r\n\tconst float e = .1;\r\n\tvec3 dx = vec3( e   , 0.0 , 0.0 );\r\n\tvec3 dy = vec3( 0.0 , e   , 0.0 );\r\n\tvec3 dz = vec3( 0.0 , 0.0 , e   );\r\n\r\n\tvec3 p_x0 = snoiseVec3( p - dx );\r\n\tvec3 p_x1 = snoiseVec3( p + dx );\r\n\tvec3 p_y0 = snoiseVec3( p - dy );\r\n\tvec3 p_y1 = snoiseVec3( p + dy );\r\n\tvec3 p_z0 = snoiseVec3( p - dz );\r\n\tvec3 p_z1 = snoiseVec3( p + dz );\r\n\r\n\tfloat x = p_y1.z - p_y0.z - p_z1.y + p_z0.y;\r\n\tfloat y = p_z1.x - p_z0.x - p_x1.z + p_x0.z;\r\n\tfloat z = p_x1.y - p_x0.y - p_y1.x + p_y0.x;\r\n\r\n\tconst float divisor = 1.0 / ( 2.0 * e );\r\n\treturn normalize( vec3( x , y , z ) * divisor );\r\n\r\n}\r\n\r\nvec3 curlNoise2( vec3 p ) {\r\n\r\n\tconst float e = .1;\r\n\r\n\tvec3 xNoisePotentialDerivatives = snoiseVec3( p );\r\n\tvec3 yNoisePotentialDerivatives = snoiseVec3( p + e * vec3( 3., -3.,  1. ) );\r\n\tvec3 zNoisePotentialDerivatives = snoiseVec3( p + e * vec3( 2.,  4., -3. ) );\r\n\r\n\tvec3 noiseVelocity = vec3(\r\n\t\tzNoisePotentialDerivatives.y - yNoisePotentialDerivatives.z,\r\n\t\txNoisePotentialDerivatives.z - zNoisePotentialDerivatives.x,\r\n\t\tyNoisePotentialDerivatives.x - xNoisePotentialDerivatives.y\r\n\t);\r\n\r\n\treturn normalize( noiseVelocity );\r\n\r\n}\r\n\r\nvec4 snoiseD(vec3 v) { //returns vec4(value, dx, dy, dz)\r\n  const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;\r\n  const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);\r\n \r\n  vec3 i  = floor(v + dot(v, C.yyy) );\r\n  vec3 x0 =   v - i + dot(i, C.xxx) ;\r\n \r\n  vec3 g = step(x0.yzx, x0.xyz);\r\n  vec3 l = 1.0 - g;\r\n  vec3 i1 = min( g.xyz, l.zxy );\r\n  vec3 i2 = max( g.xyz, l.zxy );\r\n \r\n  vec3 x1 = x0 - i1 + C.xxx;\r\n  vec3 x2 = x0 - i2 + C.yyy;\r\n  vec3 x3 = x0 - D.yyy;\r\n \r\n  i = mod289(i);\r\n  vec4 p = permute( permute( permute(\r\n             i.z + vec4(0.0, i1.z, i2.z, 1.0 ))\r\n           + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))\r\n           + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));\r\n \r\n  float n_ = 0.142857142857; // 1.0/7.0\r\n  vec3  ns = n_ * D.wyz - D.xzx;\r\n \r\n  vec4 j = p - 49.0 * floor(p * ns.z * ns.z);\r\n \r\n  vec4 x_ = floor(j * ns.z);\r\n  vec4 y_ = floor(j - 7.0 * x_ );\r\n \r\n  vec4 x = x_ *ns.x + ns.yyyy;\r\n  vec4 y = y_ *ns.x + ns.yyyy;\r\n  vec4 h = 1.0 - abs(x) - abs(y);\r\n \r\n  vec4 b0 = vec4( x.xy, y.xy );\r\n  vec4 b1 = vec4( x.zw, y.zw );\r\n \r\n  vec4 s0 = floor(b0)*2.0 + 1.0;\r\n  vec4 s1 = floor(b1)*2.0 + 1.0;\r\n  vec4 sh = -step(h, vec4(0.0));\r\n \r\n  vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;\r\n  vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;\r\n \r\n  vec3 p0 = vec3(a0.xy,h.x);\r\n  vec3 p1 = vec3(a0.zw,h.y);\r\n  vec3 p2 = vec3(a1.xy,h.z);\r\n  vec3 p3 = vec3(a1.zw,h.w);\r\n \r\n  vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));\r\n  p0 *= norm.x;\r\n  p1 *= norm.y;\r\n  p2 *= norm.z;\r\n  p3 *= norm.w;\r\n \r\n  vec4 values = vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ); //value of contributions from each corner (extrapolate the gradient)\r\n \r\n  vec4 m = max(0.5 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0); //kernel function from each corner\r\n \r\n  vec4 m2 = m * m;\r\n  vec4 m3 = m * m * m;\r\n \r\n  vec4 temp = -6.0 * m2 * values;\r\n  float dx = temp[0] * x0.x + temp[1] * x1.x + temp[2] * x2.x + temp[3] * x3.x + m3[0] * p0.x + m3[1] * p1.x + m3[2] * p2.x + m3[3] * p3.x;\r\n  float dy = temp[0] * x0.y + temp[1] * x1.y + temp[2] * x2.y + temp[3] * x3.y + m3[0] * p0.y + m3[1] * p1.y + m3[2] * p2.y + m3[3] * p3.y;\r\n  float dz = temp[0] * x0.z + temp[1] * x1.z + temp[2] * x2.z + temp[3] * x3.z + m3[0] * p0.z + m3[1] * p1.z + m3[2] * p2.z + m3[3] * p3.z;\r\n \r\n  return vec4(dot(m3, values), dx, dy, dz) * 42.0;\r\n}\r\n\r\n\r\nvec3 curlNoise3 (vec3 p) {\r\n\r\n    vec3 xNoisePotentialDerivatives = snoiseD( p ).yzw; //yzw are the xyz derivatives\r\n    vec3 yNoisePotentialDerivatives = snoiseD(vec3( p.y - 19.1 , p.z + 33.4 , p.x + 47.2 )).zwy;\r\n    vec3 zNoisePotentialDerivatives = snoiseD(vec3( p.z + 74.2 , p.x - 124.5 , p.y + 99.4 )).wyz;\r\n    vec3 noiseVelocity = vec3(\r\n        zNoisePotentialDerivatives.y - yNoisePotentialDerivatives.z,\r\n        xNoisePotentialDerivatives.z - zNoisePotentialDerivatives.x,\r\n        yNoisePotentialDerivatives.x - xNoisePotentialDerivatives.y\r\n    );\r\n\t\r\n\tconst float e = .1;\r\n\tconst float divisor = 1.0 / ( 2.0 * e );\r\n\treturn normalize( noiseVelocity * divisor );\r\n\r\n}\r\n\t\r\n\t" + "\r\n\r\nconst float PI = 3.141592653;\r\n\t\r\nvarying vec2 vUv;\r\nvarying vec3 vPos;\r\nvarying vec3 vNormal;\r\nvarying vec4 vLight;\r\nvarying vec4 vAbs;\r\nvarying vec4 vVertex;\r\nuniform float _noise;\r\nuniform float _count;\r\nuniform float _freqByteData[32];\r\nuniform vec3 _lightPosition; //光源位置座標\r\nuniform float _strength;\r\n\r\nvoid main()\r\n{\r\n\tvUv = uv;\r\n\t//頂点法線ベクトルを視点座標系に変換する行列=normalMatrix\r\n\t//vNormal = (normal * normalMatrix);\r\n\t//vec4 fuga = projectionMatrix * vec4( normal * normalMatrix , 0.0);\r\n\tvNormal = normalMatrix * normal;\r\n\t\r\n\t//視点座標系における光線ベクトル\r\n\tvLight = (viewMatrix * vec4( _lightPosition, 0.0));\r\n\r\n\t\r\n\tvPos = (modelMatrix * vec4(position, 1.0 )).xyz;\r\n\t\r\n\t//vecNormal = (modelMatrix * vec4(normal, 0.0)).xyz;\r\n\t//patams\r\n\t\r\n\tfloat nejireX\t\t= pow( _freqByteData[16] / 255.0, 1.5) * 15.0;\r\n\tfloat nejireY\t\t= pow(_freqByteData[18] / 255.0, 2.0) * PI * 2.0;// * 0.5;\r\n\tfloat noise \t\t= pow(_freqByteData[12] / 255.0, 1.0) * _noise;//1.5;\r\n\tfloat speed \t\t= pow(_freqByteData[8] / 255.0, 2.0) * 0.5;\r\n\tfloat sphere \t\t= pow(_freqByteData[4]/255.0, 2.0);\r\n\tfloat noiseSpeed \t= 0.1 + pow( _freqByteData[19] / 255.0, 4.0) * 0.25;\r\n\tfloat scale \t\t= 1.0 + pow(_freqByteData[1] / 255.0, 3.0) * 0.4;\t\t\t\t\r\n\tfloat yokoRatio \t= pow(_freqByteData[5] / 255.0, 2.0);\r\n\tfloat yokoSpeed \t= pow(_freqByteData[13] / 255.0, 2.0) * 4.0;\r\n\tfloat zengoRatio \t= pow(_freqByteData[19] / 255.0, 2.0);\t\t\r\n\tfloat tate\t\t\t= 1.0 + ( pow(_freqByteData[14] / 255.0, 2.0) * 1.0 - pow(_freqByteData[3] / 255.0, 2.0) * 1.0 );\r\n\t\r\n\tnejireX *= _strength;\r\n\tnejireY *= _strength;\r\n\tnoise *= _strength;\r\n\tspeed *= _strength;\r\n\tsphere *= _strength;\r\n\tnoiseSpeed *= _strength;\r\n\tscale *= _strength;\r\n\tyokoRatio *= _strength;\r\n\tyokoSpeed *= _strength;\r\n\tzengoRatio *= _strength;\r\n\ttate *= _strength;\r\n\t\r\n\t////////////////////\r\n\tvec3 vv = position;\r\n\t/*\r\n\t\tvar a:Float = Math.sqrt( vv.x * vv.x + vv.y * vv.y + vv.z * vv.z);\r\n\t\tvar radX:Float = -Math.atan2(vv.z, vv.x) + vv.y * Math.sin(_count) * _nejireX;//横方向の角度\r\n\t\tvar radY:Float = Math.asin(vv.y / a);// + _nejireY;// * Math.sin(_count * 0.8);//縦方向の角度\t\r\n\t*/\t\r\n\tfloat a = length(vv);\r\n\tfloat radX = (-atan(vv.z, vv.x) + PI * 0.5) + vv.y * sin(_count) * nejireX;//横方向の角度\r\n\tfloat radY = asin(vv.y / a);\r\n\t\r\n\t/*\r\n\t\tvar amp:Float = (1-_sphere) * a + (_sphere) * 1;\r\n\t\tamp += Math.sin(_count * 0.7) * _getNoise(vv.x, vv.y + _count * _noiseSpeed, vv.z) * _noise;\r\n\t*/\r\n\r\n\t//float snoise(vec3 v) { \r\n\tfloat amp = (1.0 - sphere) * a + sphere * 1.0;\r\n\tvec3 snoisePos = vec3(vv.x, vv.y + _count * noiseSpeed, vv.z);\r\n\tamp += sin(_count * 0.7) * snoise(snoisePos) * noise;\r\n\t\r\n\t/*\r\n\t\tvar yoko:Float = Math.sin( 0.5*( vv.y * 2 * Math.PI ) + _count * _yokoSpeed ) * _yokoRatio;\r\n\t\tvar zengo:Float = Math.cos( 0.5*( vv.y * 2 * Math.PI ) + _count * 3 ) * 0.2 * _zengoRatio;\r\n\t\t\t\r\n\t\tvar tgtX:Float = amp * Math.sin( radX ) * Math.cos(radY) + zengo;//横\r\n\t\tvar tgtY:Float = amp * Math.sin( radY );//縦\r\n\t\tvar tgtZ:Float = amp * Math.cos( radX ) * Math.cos(radY) + yoko;//横\t\r\n\t*/\r\n\r\n\tfloat yoko = sin( 0.5*( vv.y * 2.0 * PI ) + _count * yokoSpeed ) * yokoRatio;\r\n\tfloat zengo = cos( 0.5*( vv.y * 2.0 * PI ) + _count * 3.0 ) * 0.2 * zengoRatio;\t\r\n\t\r\n\tvec3 hoge = vec3(0.0);\r\n\t\thoge.x = amp * sin( radX ) * cos(radY) + zengo;//横\r\n\t\thoge.y = amp * sin( radY ) * tate;//縦\r\n\t\thoge.z = amp * cos( radX ) * cos(radY) + yoko;//横\t\r\n\t\t\r\n\t// 変換：ローカル座標 → 配置 → カメラ座標\r\n\tvec4 mvPosition = modelViewMatrix * vec4(hoge, 1.0);//vec4(vv, 1.0);    \r\n\t\r\n\t//vLight =  projectionMatrix * viewMatrix * vec4( _lightPosition, 0.0);\r\n\tvAbs = vec4(0.0);\r\n\tvAbs.x = hoge.x - position.x;\r\n\tvAbs.y = hoge.y - position.y;\r\n\tvAbs.z = hoge.z - position.z;\r\n\t\r\n\t\r\n\tvVertex = mvPosition;\r\n\t// 変換：カメラ座標 → 画面座標\r\n\tgl_Position = projectionMatrix * mvPosition;\r\n\t\r\n\t\r\n}\r\n\r\n\t";
 	this.ff = "\r\n\t\t//uniform 変数としてテクスチャのデータを受け取る\r\n\t\tuniform sampler2D texture;\r\n\t\tuniform sampler2D colTexture;\r\n\t\tuniform vec3 _lightPosition; //光源位置座標\r\n\t\tuniform float _wireframe;\r\n\t\tuniform float _isColor;\r\n\t\tuniform float _brightness;\r\n\t\t\r\n\t\t// vertexShaderで処理されて渡されるテクスチャ座標\r\n\t\tvarying vec2 vUv;                                             \r\n\t\tvarying vec3 vNormal;\r\n\t\tvarying vec3 vPos;\r\n\t\tvarying vec4 vLight;\r\n\t\tvarying vec4 vAbs;\r\n\t\tvarying vec4 vVertex;\r\n\t\t\r\n\t\tvoid main()\r\n\t\t{\r\n\t\t\tif ( _wireframe == 1.0 ) {\r\n\t\t\t\t\r\n\t\t\t\tgl_FragColor = vec4( _brightness, _brightness, _brightness, 1.0 );\r\n\t\t\t\t\r\n\t\t\t}else{\r\n\t\t\t\r\n\t\t\t\r\n\t\t\t\t// テクスチャの色情報をそのままピクセルに塗る\r\n\t\t\t\tvec4 col = texture2D( texture, vec2( vUv.x, vUv.y ) )*1.0;\r\n\t\t\t\t//gl_FragColor = col;// texture2D(texture, vUv);\r\n\t\t\t\t\r\n\t\t\t\t//視点座標系における光線ベクトル\r\n\t\t\t\tvec4 viewLightPosition = vLight;// \r\n\t\t\t\t//vec4 viewLightPosition = viewMatrix * vec4( _lightPosition, 0.0);\r\n\t\t\t\t//vec3 lightDirection = normalize(vPos - _lightPosition);\r\n\t\t\t\t//float dotNL = clamp(dot( vLight.xyz, vNormal), 0.0, 1.0);\r\n\t\t\t\t\r\n\t\t\t\t//ベクトルの規格化\r\n\t\t\t\tvec3 N = normalize(vNormal);                //法線ベクトル\r\n\t\t\t\tvec3 L = normalize(viewLightPosition.xyz); //光線ベクトル\r\n\t\t\t\t\r\n\t\t\t\t//法線ベクトルと光線ベクトルの内積\r\n\t\t\t\tfloat dotNL = dot(N, L);\r\n\r\n\t\t\t\t//拡散色の決定\r\n\t\t\t\tvec3 diffuse = col.xyz * dotNL * 0.3 + col.xyz * 0.7;\r\n\t\t\t\t\r\n\t\t\t\t//diffuse = diffuse * vAbs.xyz;\r\n\t\t\t\t\r\n\t\t\t\tif( _isColor == 1.0 ){\r\n\t\t\t\t\t\tvec2 pp = vec2( 0.5, fract( length(vAbs) ) );\r\n\t\t\t\t\t\t//vec2 pp = vec2( fract(vUv.x+vAbs.x*0.03), fract(vUv.y+vAbs.z*0.03) );\r\n\t\t\t\t\t\tvec4 out1 = texture2D( colTexture, pp );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tdiffuse = out1.xyz * dotNL * 0.3 + out1.xyz * 0.7;\r\n\t\t\t\t\t\t//diffuse.x += out1.x;\r\n\t\t\t\t\t\t//diffuse.y += out1.y;\r\n\t\t\t\t\t\t//diffuse.z += out1.z;\r\n\t\t\t\t}\r\n\t\t\t\t\r\n\t\t\t\t//diffuse.x *= vVertex.z / 5000.0;\r\n\t\t\t\t//diffuse.y *= vVertex.z / 5000.0;\r\n\t\t\t\t//diffuse.z *= vVertex.z / 5000.0;\r\n\t\t\t\t\r\n\t\t\t\tdiffuse.x *= _brightness;\r\n\t\t\t\tdiffuse.y *= _brightness;\r\n\t\t\t\tdiffuse.z *= _brightness;\r\n\t\t\t\t\r\n\t\t\t\tgl_FragColor = vec4( diffuse, 1.0);\t\t\t\r\n\t\t\t\r\n\t\t\t}\r\n\t\t}\t\r\n\t";
-	if(faces.MaeShaderMaterial._texture1 == null) faces.MaeShaderMaterial._texture1 = THREE.ImageUtils.loadTexture("dede_face_diff.png");
+	if(faces.MaeShaderMaterial._texture1 == null) faces.MaeShaderMaterial._texture1 = THREE.ImageUtils.loadTexture("dede_face_diff_red.png");
 	this._indecies = [];
 	this._freq = [];
 	var _g1 = 0;
@@ -1300,7 +1330,7 @@ faces.data.MaeFormH3.prototype = $extend(faces.data.MaeFormBase.prototype,{
 		var _g = this._faces.length;
 		while(_g1 < _g) {
 			var i = _g1++;
-			this._faces[i].position.x -= 0.5;
+			this._faces[i].position.x -= 0.25;
 			if(this._faces[i].position.x < -this._width / 2) {
 				this._faces[i].position.x = this._width / 2;
 				this._faces[i].updatePlate();

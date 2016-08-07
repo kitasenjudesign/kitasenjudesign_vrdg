@@ -85,6 +85,8 @@ class MyWorld extends Object3D
 		Dat.gui.add(this, "effectName").listen();
 		
 		changeMode1();
+		_nextEffect();
+		
 	}
 	
 	private function _KeyDownFunc(e):Void 
@@ -94,6 +96,7 @@ class MyWorld extends Object3D
 			
 			case Dat.Q:
 				_nextSingle();
+				
 			case Dat.W:
 				changeMode2();			
 				sphere.changeBg();
@@ -147,6 +150,11 @@ class MyWorld extends Object3D
 	}
 	
 	public function _prevEffect():Void {
+		
+		changeMode1();
+		_dae.changeMap( sphere.changeBg() );
+		sphere.power = 0.7 + 0.3 * Math.random();
+		_impulese();				
 		
 	}
 	

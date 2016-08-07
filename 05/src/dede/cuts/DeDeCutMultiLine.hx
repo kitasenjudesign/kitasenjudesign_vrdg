@@ -8,24 +8,50 @@ import sound.MyAudio;
 class DeDeCutMultiLine  extends DeDeCutBase
 {
 
+	private var _lineType:Int = 0;
+	
 	public function new() 
 	{
 		super();
 	}
 	
 	override public function start():Void {
-				
-		_lines.visible = true;
 		
-		_lines.setGeoMax(150,[true,true,true]);
+		Tracer.debug("start");
+		_reposThree();
+		next();
+	}
+	
+	private function _reposTwo():Void {
+		
+		_lines.visible = true;
+		_lines.setGeoMax(150, [true, true, false]);
+		_lines.reposition(2,150,-75+10);
 		//_lines.setSpeedX( DeDeLine.SPEEDX1 );
 		
 		_vrdg.visible = false;
 		_vrdg.setGeoMax(1);
 		
-		_cam.setZoom(0.7);
+		_cam.setZoom(1.3);
 		
-		next();
+		//next();		
+		
+	}	
+	
+	private function _reposThree():Void {
+		
+		_lines.visible = true;
+		_lines.setGeoMax(150,[true,true,true]);
+		_lines.reposition(3);
+		//_lines.setSpeedX( DeDeLine.SPEEDX1 );
+		
+		_vrdg.visible = false;
+		_vrdg.setGeoMax(1);
+		
+		_cam.setZoom(0.85);
+		
+		//next();		
+		
 	}
 	
 	/**
@@ -33,10 +59,22 @@ class DeDeCutMultiLine  extends DeDeCutBase
 	 */
 	override public function next():Void
 	{
+		
+		_lineType++;
+		switch(_lineType % 2) {
+			case 0:
+				_reposThree();
+			case 1:
+				_reposTwo();
+			
+		}		
+		
 		var data:DeDeParam = DeDeParam.getParam();
 		data.speedX = -1;
 		//data.spaceX = 
 		_lines.changeType(data);
+		
+		
 		//MyPointCloud.cloud.setRandomLine();
 	}	
 	

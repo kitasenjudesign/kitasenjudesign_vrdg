@@ -150,23 +150,34 @@ class Dat
 		
 	}
 	
+	//typofish
 	private static function _goURL1():Void {
-		_goURL( "../../01/bin/" );
-	}
-	private static function _goURL2():Void {
-		_goURL( "../../02/bin/" );
-	}	
-	private static function _goURL3():Void {
-		_goURL( "../../03/bin/" );
-	}	
-	private static function _goURL4():Void {
 		_goURL( "../../04/bin/" );
-	}	
-	private static function _goURL5():Void {
+	}
+	
+	//dot moji
+	private static function _goURL2():Void {
 		_goURL( "../../05/bin/" );
 	}	
+	
+	//emoji
+	private static function _goURL3():Void {
+		_goURL( "../../02/bin/" );
+	}
+	
+	//emoji fbo
+	private static function _goURL4():Void {
+		_goURL( "../../03/bin/" );
+	}
+	
+	//faces
+	private static function _goURL5():Void {
+		_goURL( "../../00/bin/" );
+	}
+	
+	//single
 	private static function _goURL6():Void {
-		_goURL( "../../06/bin/" );
+		_goURL( "../../01/bin/" );
 	}	
 	
 	

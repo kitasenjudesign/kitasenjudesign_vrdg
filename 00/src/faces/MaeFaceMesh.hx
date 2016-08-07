@@ -18,6 +18,8 @@ class MaeFaceMesh extends Mesh
 	public static inline var ROT_MODE_NNM	:Int = 3;
 	
 	private var _d:Vector3;
+	private var _isForceRandom:Bool = false;
+	private var _isFirst:Bool = true;
 	
 	public static function getRandomRot():Int {
 		
@@ -35,7 +37,7 @@ class MaeFaceMesh extends Mesh
 	private var _vz:Float = 0;
 	private var _speedRotX:Float = -0.02;
 	
-	
+	private var isFirst:Bool = true;
 	
 	public function new() 
 	{
@@ -52,7 +54,7 @@ class MaeFaceMesh extends Mesh
 		);
 		
 		scale.set(10, 10, 10);
-
+		//this.visible = false;
 	}
 	
 	public function setColor(b:Bool):Void
@@ -73,13 +75,27 @@ class MaeFaceMesh extends Mesh
 		_vx = 0;
 		_vy = 0;
 		_vz = 0;
+		
+		_isForceRandom = Math.random() < 0.5 ? true : false;
 	}
 	
 	public function addForce(idx:Int, f:Float) 
 	{
-		if (idx == 0) _vx += f * 0.5 * _d.x;// 1 * ( Math.random() - 0.5 );
-		if (idx == 1) _vy += f * 0.5 * _d.y;// 1 * ( Math.random() - 0.5 );
-		if (idx == 2) _vz += f * 0.5 * _d.z;// 1 * ( Math.random() - 0.5 );
+		
+		
+		if(!_isForceRandom){
+		
+			if (idx == 0) _vx += f * 0.5 * _d.x;// 1 * ( Math.random() - 0.5 );
+			if (idx == 1) _vy += f * 0.5 * _d.y;// 1 * ( Math.random() - 0.5 );
+			if (idx == 2) _vz += f * 0.5 * _d.z;// 1 * ( Math.random() - 0.5 );
+			
+		}else {
+			
+			if (idx == 0) _vx += 1 * ( Math.random() - 0.5 );
+			if (idx == 1) _vy += 1 * ( Math.random() - 0.5 );
+			if (idx == 2) _vz += 1 * ( Math.random() - 0.5 );
+						
+		}
 	}	
 	
 	public function update(audio:MyAudio, lifeRatio:Float):Void {
@@ -94,7 +110,13 @@ class MaeFaceMesh extends Mesh
 			lifeRatio * 10			
 		);*/
 		
-		if (lifeRatio == 0) {
+		if (_isFirst) {
+		
+			scale.x = 0;// (0 - scale.x) / 4;
+			scale.y = 0;// (0 - scale.x) / 4;
+			scale.z = 0;// (0 - scale.x) / 4;
+			
+		}else if (lifeRatio == 0) {
 			//scale.set(5, 5, 5);
 			scale.x += (7 - scale.x) / 4;
 			scale.y += (7 - scale.y) / 4;
@@ -129,6 +151,12 @@ class MaeFaceMesh extends Mesh
 		_vy *= 0.96;
 		_vz *= 0.96;		
 		
+	}
+	
+	
+	public function show():Void
+	{
+		_isFirst = false;
 	}
 	
 	

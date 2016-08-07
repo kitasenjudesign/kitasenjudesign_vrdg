@@ -15,22 +15,16 @@ import typo.StrokeUtil;
 class DeDeLine extends Object3D
 {
 	
-	public static inline var SPEEDX0:Float = -0.5;
+	public static inline var SPEEDX0:Float = -0.25;
 	public static inline var SPEEDX1:Float = -2;
 	public static inline var WIDTH:Float = 2400;
 	public static inline var SPACE_R:Float = 0.65 * 2;
 	public static inline var SCALE:Float = 0.65;
 
 	private var _digits:Array<DeDeDigit>;
-	//private var _speed:Float;
-	//private var _space:Float;
-	//private var _spaceX:Float = 50;
 	private var _width:Float = 0;
-	//private var _font:Int = 0;
-	//private var _text:String;
 	private var _textIndex:Int = 0;
 	private var _sec:Int = 0;
-	//private var _speedX:Float = -2;
 	private var _data:DeDeParam;
 	
 	public function new() 

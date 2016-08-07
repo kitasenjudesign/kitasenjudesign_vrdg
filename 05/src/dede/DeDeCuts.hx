@@ -2,10 +2,11 @@ package dede;
 import camera.DoubleCamera;
 import common.Dat;
 import common.Key;
-import dede.cuts.DeDeCut0;
+import dede.cuts.DeDeCutVRDG;
 import dede.cuts.DeDeCutOneLine;
 import dede.cuts.DeDeCutMultiLine;
 import dede.cuts.DeDeCutBase;
+import dede.cuts.DeDeCutTwoLine;
 import dede.VrdgLine;
 import js.Browser;
 import sound.MyAudio;
@@ -16,10 +17,11 @@ import sound.MyAudio;
  */
 class DeDeCuts
 {
-
+	/*
 	private var _cut0		:DeDeCut0;
 	private var _cut1		:DeDeCutOneLine;
 	private var _cut2		:DeDeCutMultiLine;
+	*/
 	private var _cuts		:Array<DeDeCutBase>;
 	private var _cutIndex	:Int = 0;
 	private var _currentCut	:DeDeCutBase;
@@ -40,21 +42,33 @@ class DeDeCuts
 		
 		//Browser.window.alert("unko");
 		
-		_cut0 = new DeDeCut0();
-		_cut1 = new DeDeCutOneLine();
-		_cut2 = new DeDeCutMultiLine();
-		_cut0.init(main);
-		_cut1.init(main);
-		_cut2.init(main);
+		//////#vrdg
 		
-		_cutIndex = 0;	
-		_cuts = [
-			_cut0,_cut1,_cut2
-		];
+		
+			_cutIndex = 0;	
+			if( Browser.location.hash=="#vrdg" ){
+				_cuts = [
+					new DeDeCutVRDG()
+				];	
+			}else {
+				_cuts = [
+					//new DeDeCut0(),
+					new DeDeCutOneLine(),
+					//new DeDeCutTwoLine(),
+					new DeDeCutMultiLine()
+				];				
+			}
+			
+			for (i in 0..._cuts.length) {
+				_cuts[i].init(main);
+			}
+			_currentCut = _cuts[0];
+			
+		//}
 		
 		//start
-		_currentCut = _cut0;	
-		_cut0.start();
+		
+		_currentCut.start();
 		
 		Key.board.addEventListener("keydown", _onKeyDown);
 		

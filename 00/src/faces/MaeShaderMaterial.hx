@@ -220,7 +220,7 @@ void main()
 	public function new() 
 	{
 		if (_texture1 == null) {
-			_texture1 = ImageUtils.loadTexture("dede_face_diff.png");// mae_face.png");
+			_texture1 = ImageUtils.loadTexture("dede_face_diff_red.png");// mae_face.png");
 		}
 		
 		_indecies = [];

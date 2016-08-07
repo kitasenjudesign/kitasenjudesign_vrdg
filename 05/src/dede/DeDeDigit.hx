@@ -43,9 +43,7 @@ class DeDeDigit extends Object3D
 	private static var _mat:PointCloudMaterial;
 	public var hq:Bool = false;// true;
 	private var _counter:Float = 100;
-	//private var _speed:Float = 0.001;
 	private var _vertexCounter:Int = 0;
-	//private var lines:DotDigitLine;
 	
 	private var _dots:Array<Array<ExVector3>>;
 	private var _sec:Float = 0;
@@ -62,7 +60,7 @@ class DeDeDigit extends Object3D
 	var _moji:String = "";
 	var _font:Int;
 	public var isRotate:Bool = false;
-	
+	private var isFirst:Bool = true;
 	//public var isRandom:Bool = false;
 	
 	
@@ -222,9 +220,9 @@ class DeDeDigit extends Object3D
 		}
 		if (boost) {
 			if (_sec > 0.5) {
-				_counter += _rotSpeed * 150;
+				_counter += _rotSpeed * 100;
 			}else {
-				_counter -= _rotSpeed * 150;	
+				_counter -= _rotSpeed * 100;	
 			}
 		}			
 		
@@ -250,9 +248,9 @@ class DeDeDigit extends Object3D
 		_sec = Math.abs(_sec) % 1;
 		if (boost) {
 			if (_sec > 0.5) {
-				_counter += _rotSpeed * 150;				
+				_counter += _rotSpeed * 100;				
 			}else{
-				_counter -= _rotSpeed * 150;
+				_counter -= _rotSpeed * 100;
 			}
 		}		
 		

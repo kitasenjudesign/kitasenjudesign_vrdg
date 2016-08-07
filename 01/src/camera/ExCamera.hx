@@ -28,7 +28,7 @@ class ExCamera extends PerspectiveCamera
     private var _oRadY  :Float = 0;
 
     public var amp    	:Float = 900.0;
-	public var radX   	:Float = Math.PI/5;
+	public var radX   	:Float = 0;
     public var radY   	:Float = 0;// Math.PI / 5;
 	
 	

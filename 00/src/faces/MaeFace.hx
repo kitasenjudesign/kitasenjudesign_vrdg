@@ -7,6 +7,7 @@ import three.Geometry;
 import three.Mesh;
 import three.Object3D;
 import three.Vector3;
+import tween.TweenMax;
 
 /**
  * ...
@@ -31,11 +32,11 @@ class MaeFace extends Object3D
 	private var _life		:Int = 0;
 	private var _lifeRatio	:Float = 0;
 	private var _line		:MaeFaceLine;
-	
+	private var _isFirst	:Bool = true;
 	
 	//
 	public var randomIndex:Array<Int>;	
-	public var enabled		:Bool = true;
+	public var enabled		:Bool = false;
 	
 	
 	
@@ -79,6 +80,11 @@ class MaeFace extends Object3D
 		_bg.position.z = 0;
 		add(_bg);
 		
+		_face.visible = false;
+		_gauge.visible = false;
+		_plate.visible = false;
+		
+		//
 		_line = new MaeFaceLine();
 	}
 	
@@ -89,6 +95,20 @@ class MaeFace extends Object3D
 		
 	}
 	
+	public function show():Void {
+		
+		if (!_isFirst) return;
+		_isFirst = false;
+		
+		_face.show();
+		_face.visible = true;
+		_gauge.visible = true;
+		_plate.visible = true;		
+		
+	}	
+	
+
+	
 	/**
 	 * setHoge
 	 */
@@ -96,10 +116,12 @@ class MaeFace extends Object3D
 		
 		//_material.setWireframe( Math.random() < 0.5 ? true : false);
 		//_force = f;
-		if(!enabled){
+		if (!enabled) {
+			show();
 			_bg.flash();
 			_life = 0;
 			enabled = true;/////////////////////////enabled = true;
+			//_face.show();
 			_face.addForce(idx,f);
 		}	
 		

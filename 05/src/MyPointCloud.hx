@@ -13,6 +13,7 @@ import three.Object3D;
 import three.PointCloud;
 import three.PointCloudMaterial;
 import three.Vector3;
+import tween.easing.Cubic;
 import tween.easing.Power0;
 import tween.TweenMax;
 import tween.TweenMaxHaxe;
@@ -175,14 +176,14 @@ class MyPointCloud extends Object3D
 			_lineMat.transparent = false;
 		}
 		
-		_offsetIndex = Math.floor( 1000 * Math.random() );
+		_offsetIndex = 2;// GEO_MAX;// Math.floor( 1000 * Math.random() );
+		
 		/*
 		TweenMax.to(this, 1, {
-			delay:1,
-			ease:Power0.easeInOut,
-			_offsetIndex:10
-		});
-		*/
+			ease:Cubic.easeOut,
+			_offsetIndex:2
+		});*/
+		
 	}
 	
 	

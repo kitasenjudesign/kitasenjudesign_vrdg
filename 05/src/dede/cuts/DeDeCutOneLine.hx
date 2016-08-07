@@ -10,6 +10,7 @@ class DeDeCutOneLine  extends DeDeCutBase
 {
 
 	private var _type:Int = 0;
+	private var _startSec:Float = 0;
 	
 	public function new() 
 	{
@@ -21,7 +22,8 @@ class DeDeCutOneLine  extends DeDeCutBase
 		_lines.visible = true;
 		
 		//mongon wo kimeru
-		_lines.setGeoMax(300,[false,true,false]);
+		_lines.setGeoMax(300, [false, true, false]);
+		_lines.reposition(3);
 		//_lines.setSpeedX( DeDeLine.SPEEDX0 );
 		
 		_vrdg.visible = false;
@@ -34,13 +36,17 @@ class DeDeCutOneLine  extends DeDeCutBase
 		data.font = StrokeUtil.FUTURA;
 		data.speedX = DeDeLine.SPEEDX0;
 		data.spaceX = 20;
-		data.startX = DeDeLine.WIDTH / 2;
+		data.startX = DeDeLine.WIDTH/2+400;
 		data.space = 3;// + 7 * Math.random();
+		data.startSec = 0;
+		data.sameType = DeDeParam.SAME_LINE;
 		//data.isRandomLine = false;
 		//line.reset( type, data, false );//
 		
 		_lines.changeType( data );
-
+		
+		
+		next();
 	}
 	
 	/**
@@ -48,14 +54,17 @@ class DeDeCutOneLine  extends DeDeCutBase
 	 */
 	override public function next():Void
 	{
-		
 		//set dot type
 		//_lines.next();
-
 		//
 		
 		var isRotate:Bool = _nextCounter%5==4 ? true : false;
-		_lines.setSec(Math.random(), true);
+		
+		if (_nextCounter == 0) {
+			_lines.setSec(0, false);
+		}else{
+			_lines.setSec(Math.random(), true);			
+		}
 		_lines.setDotType( _type, isRotate );
 		_nextCounter++;
 		
@@ -74,7 +83,7 @@ class DeDeCutOneLine  extends DeDeCutBase
 		
 		//_lines.up
 		_counter++;
-		if ( audio.subFreqByteData[5] > 10 && _counter > 15 ) {
+		if ( audio.subFreqByteData[5] > 10 && _counter > 30 ) {
 			_counter = 0;
 			var addVal:Float = 1 / 30;
 			_lines.countUp( addVal );// Math.random());

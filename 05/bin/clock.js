@@ -262,7 +262,7 @@ MyPointCloud.prototype = $extend(THREE.Object3D.prototype,{
 			this._lineMat.opacity = 1;
 			this._lineMat.transparent = false;
 		}
-		this._offsetIndex = Math.floor(1000 * Math.random());
+		this._offsetIndex = 2;
 	}
 	,connectRandomLine: function() {
 		if(!this._isRandom) return;
@@ -338,48 +338,6 @@ Three.requestAnimationFrame = function(f) {
 };
 Three.cancelAnimationFrame = function(f) {
 	window.cancelAnimationFrame(id);
-};
-var Tracer = function() {
-};
-Tracer.assert = function(condition,p1,p2,p3,p4,p5) {
-};
-Tracer.clear = function(p1,p2,p3,p4,p5) {
-};
-Tracer.count = function(p1,p2,p3,p4,p5) {
-};
-Tracer.debug = function(p1,p2,p3,p4,p5) {
-};
-Tracer.dir = function(p1,p2,p3,p4,p5) {
-};
-Tracer.dirxml = function(p1,p2,p3,p4,p5) {
-};
-Tracer.error = function(p1,p2,p3,p4,p5) {
-};
-Tracer.group = function(p1,p2,p3,p4,p5) {
-};
-Tracer.groupCollapsed = function(p1,p2,p3,p4,p5) {
-};
-Tracer.groupEnd = function() {
-};
-Tracer.info = function(p1,p2,p3,p4,p5) {
-};
-Tracer.log = function(p1,p2,p3,p4,p5) {
-};
-Tracer.markTimeline = function(p1,p2,p3,p4,p5) {
-};
-Tracer.profile = function(title) {
-};
-Tracer.profileEnd = function(title) {
-};
-Tracer.time = function(title) {
-};
-Tracer.timeEnd = function(title,p1,p2,p3,p4,p5) {
-};
-Tracer.timeStamp = function(p1,p2,p3,p4,p5) {
-};
-Tracer.trace = function(p1,p2,p3,p4,p5) {
-};
-Tracer.warn = function(p1,p2,p3,p4,p5) {
 };
 var camera = {};
 camera.DoubleCamera = function() {
@@ -994,7 +952,7 @@ common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
 	}
 	,_onKeyDown: function(e) {
 		var n = Std.parseInt(e.keyCode);
-		Tracer.debug("_onkeydown " + n);
+		console.debug("_onkeydown " + n);
 		this._dispatch(n);
 	}
 	,_dispatch: function(n) {
@@ -1082,20 +1040,20 @@ dede.DeDeCuts = function() {
 };
 dede.DeDeCuts.prototype = {
 	init: function(main) {
-		this._cut0 = new dede.cuts.DeDeCut0();
-		this._cut1 = new dede.cuts.DeDeCutOneLine();
-		this._cut2 = new dede.cuts.DeDeCutMultiLine();
-		this._cut0.init(main);
-		this._cut1.init(main);
-		this._cut2.init(main);
 		this._cutIndex = 0;
-		this._cuts = [this._cut0,this._cut1,this._cut2];
-		this._currentCut = this._cut0;
-		this._cut0.start();
+		if(window.location.hash == "#vrdg") this._cuts = [new dede.cuts.DeDeCutVRDG()]; else this._cuts = [new dede.cuts.DeDeCutOneLine(),new dede.cuts.DeDeCutMultiLine()];
+		var _g1 = 0;
+		var _g = this._cuts.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this._cuts[i].init(main);
+		}
+		this._currentCut = this._cuts[0];
+		this._currentCut.start();
 		common.Key.board.addEventListener("keydown",$bind(this,this._onKeyDown));
 	}
 	,_onKeyDown: function(e) {
-		Tracer.log("_onKeyDown");
+		console.log("_onKeyDown");
 		if(Std.parseInt(e.keyCode) == 67) {
 			this._cutIndex++;
 			this._currentCut = this._cuts[this._cutIndex % this._cuts.length];
@@ -1110,6 +1068,7 @@ dede.DeDeCuts.prototype = {
 	}
 };
 dede.DeDeDigit = function() {
+	this.isFirst = true;
 	this.isRotate = false;
 	this._moji = "";
 	this._numDots = 0;
@@ -1223,14 +1182,14 @@ dede.DeDeDigit.prototype = $extend(THREE.Object3D.prototype,{
 			var i = _g++;
 		}
 		if(boost) {
-			if(this._sec > 0.5) this._counter += this._rotSpeed * 150; else this._counter -= this._rotSpeed * 150;
+			if(this._sec > 0.5) this._counter += this._rotSpeed * 100; else this._counter -= this._rotSpeed * 100;
 		}
 	}
 	,addSec: function(rr,boost) {
 		this._sec += rr;
 		this._sec = Math.abs(this._sec) % 1;
 		if(boost) {
-			if(this._sec > 0.5) this._counter += this._rotSpeed * 150; else this._counter -= this._rotSpeed * 150;
+			if(this._sec > 0.5) this._counter += this._rotSpeed * 100; else this._counter -= this._rotSpeed * 100;
 		}
 		this._vx += Math.random() - 0.5;
 		this._vy += Math.random() - 0.5;
@@ -1539,6 +1498,17 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 			this._lines.push(line);
 		}
 	}
+	,reposition: function(ynum,spaceY,oy) {
+		if(oy == null) oy = -150;
+		if(spaceY == null) spaceY = 150;
+		var _g1 = 0;
+		var _g = this._lines.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var line = this._lines[i];
+			line.position.y = i * spaceY + oy;
+		}
+	}
 	,countUp: function(addX) {
 		var _g1 = 0;
 		var _g = this._lines.length;
@@ -1795,12 +1765,118 @@ dede.cuts.DeDeCutBase.prototype = {
 	,update: function(audio) {
 	}
 };
-dede.cuts.DeDeCut0 = function() {
+dede.cuts.DeDeCutMultiLine = function() {
+	this._lineType = 0;
+	dede.cuts.DeDeCutBase.call(this);
+};
+dede.cuts.DeDeCutMultiLine.__super__ = dede.cuts.DeDeCutBase;
+dede.cuts.DeDeCutMultiLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
+	start: function() {
+		console.debug("start");
+		this._reposThree();
+		this.next();
+	}
+	,_reposTwo: function() {
+		this._lines.visible = true;
+		this._lines.setGeoMax(150,[true,true,false]);
+		this._lines.reposition(2,150,-65);
+		this._vrdg.visible = false;
+		this._vrdg.setGeoMax(1);
+		this._cam.setZoom(1.3);
+	}
+	,_reposThree: function() {
+		this._lines.visible = true;
+		this._lines.setGeoMax(150,[true,true,true]);
+		this._lines.reposition(3);
+		this._vrdg.visible = false;
+		this._vrdg.setGeoMax(1);
+		this._cam.setZoom(0.85);
+	}
+	,next: function() {
+		this._lineType++;
+		var _g = this._lineType % 2;
+		switch(_g) {
+		case 0:
+			this._reposThree();
+			break;
+		case 1:
+			this._reposTwo();
+			break;
+		}
+		var data = dede.cuts.DeDeParam.getParam();
+		data.speedX = -1;
+		this._lines.changeType(data);
+	}
+	,update: function(audio) {
+		this._counter++;
+		if(audio.subFreqByteData[5] > 10 && this._counter > 15) {
+			this._counter = 0;
+			var addVal = 0.0333333333333333329;
+			this._lines.countUp(addVal);
+		}
+		this._lines.update(audio);
+	}
+});
+dede.cuts.DeDeCutOneLine = function() {
+	this._startSec = 0;
+	this._type = 0;
+	dede.cuts.DeDeCutBase.call(this);
+};
+dede.cuts.DeDeCutOneLine.__super__ = dede.cuts.DeDeCutBase;
+dede.cuts.DeDeCutOneLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
+	start: function() {
+		this._lines.visible = true;
+		this._lines.setGeoMax(300,[false,true,false]);
+		this._lines.reposition(3);
+		this._vrdg.visible = false;
+		this._vrdg.setGeoMax(1);
+		this._cam.setZoom(2);
+		var data = dede.cuts.DeDeParam.getParam();
+		data.txt = "DEDEMOUSE KTSNJDSGN ";
+		data.font = 1;
+		data.speedX = -0.25;
+		data.spaceX = 20;
+		data.startX = 2400 / 2 + 400;
+		data.space = 3;
+		data.startSec = 0;
+		data.sameType = 1;
+		this._lines.changeType(data);
+		this.next();
+	}
+	,next: function() {
+		var isRotate;
+		if(this._nextCounter % 5 == 4) isRotate = true; else isRotate = false;
+		if(this._nextCounter == 0) this._lines.setSec(0,false); else this._lines.setSec(Math.random(),true);
+		this._lines.setDotType(this._type,isRotate);
+		this._nextCounter++;
+		this._type++;
+		this._type = this._type % 6;
+	}
+	,update: function(audio) {
+		this._counter++;
+		if(audio.subFreqByteData[5] > 10 && this._counter > 30) {
+			this._counter = 0;
+			var addVal = 0.0333333333333333329;
+			this._lines.countUp(addVal);
+		}
+		this._lines.update(audio);
+	}
+});
+dede.cuts.DeDeCutTwoLine = function() {
+	dede.cuts.DeDeCutMultiLine.call(this);
+};
+dede.cuts.DeDeCutTwoLine.__super__ = dede.cuts.DeDeCutMultiLine;
+dede.cuts.DeDeCutTwoLine.prototype = $extend(dede.cuts.DeDeCutMultiLine.prototype,{
+	start: function() {
+		this._reposTwo();
+	}
+});
+dede.cuts.DeDeCutVRDG = function() {
 	this._counter2 = 0;
 	dede.cuts.DeDeCutBase.call(this);
 };
-dede.cuts.DeDeCut0.__super__ = dede.cuts.DeDeCutBase;
-dede.cuts.DeDeCut0.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
+dede.cuts.DeDeCutVRDG.__super__ = dede.cuts.DeDeCutBase;
+dede.cuts.DeDeCutVRDG.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 	start: function() {
 		this._lines.visible = false;
 		this._lines.setGeoMax(1);
@@ -1809,15 +1885,18 @@ dede.cuts.DeDeCut0.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		this._cam.setZoom(2);
 	}
 	,next: function() {
-		Tracer.log("next");
+		console.log("next");
 		var data = new dede.cuts.DeDeParam();
 		data.txt = "VRDGTH";
 		data.speed = 2;
 		data.space = 30 + 30 * Math.random();
 		if(this._nextCounter % 2 == 0) data.space = 60;
 		if(this._nextCounter % 4 == 0) data.startSec = 0; else data.startSec = Math.random();
-		if(this._nextCounter % 6 == 0) {
+		if(this._nextCounter % 10 == 4) {
 			data.isRotate = true;
+			MyPointCloud.cloud.setRandom(true);
+		} else if(this._nextCounter % 10 == 8) {
+			data.isRotate = false;
 			MyPointCloud.cloud.setRandom(true);
 		} else {
 			data.isRotate = false;
@@ -1836,74 +1915,6 @@ dede.cuts.DeDeCut0.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		this._counter2++;
 		if(this._counter2 % 720 == 0) this.next();
 		this._vrdg.update(audio);
-	}
-});
-dede.cuts.DeDeCutMultiLine = function() {
-	dede.cuts.DeDeCutBase.call(this);
-};
-dede.cuts.DeDeCutMultiLine.__super__ = dede.cuts.DeDeCutBase;
-dede.cuts.DeDeCutMultiLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
-	start: function() {
-		this._lines.visible = true;
-		this._lines.setGeoMax(150,[true,true,true]);
-		this._vrdg.visible = false;
-		this._vrdg.setGeoMax(1);
-		this._cam.setZoom(0.7);
-		this.next();
-	}
-	,next: function() {
-		var data = dede.cuts.DeDeParam.getParam();
-		data.speedX = -1;
-		this._lines.changeType(data);
-	}
-	,update: function(audio) {
-		this._counter++;
-		if(audio.subFreqByteData[5] > 10 && this._counter > 15) {
-			this._counter = 0;
-			var addVal = 0.0333333333333333329;
-			this._lines.countUp(addVal);
-		}
-		this._lines.update(audio);
-	}
-});
-dede.cuts.DeDeCutOneLine = function() {
-	this._type = 0;
-	dede.cuts.DeDeCutBase.call(this);
-};
-dede.cuts.DeDeCutOneLine.__super__ = dede.cuts.DeDeCutBase;
-dede.cuts.DeDeCutOneLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
-	start: function() {
-		this._lines.visible = true;
-		this._lines.setGeoMax(300,[false,true,false]);
-		this._vrdg.visible = false;
-		this._vrdg.setGeoMax(1);
-		this._cam.setZoom(2);
-		var data = dede.cuts.DeDeParam.getParam();
-		data.txt = "DEDEMOUSE KTSNJDSGN ";
-		data.font = 1;
-		data.speedX = -0.5;
-		data.spaceX = 20;
-		data.startX = 2400 / 2;
-		data.space = 3;
-		this._lines.changeType(data);
-	}
-	,next: function() {
-		var isRotate;
-		if(this._nextCounter % 5 == 4) isRotate = true; else isRotate = false;
-		this._lines.setSec(Math.random(),true);
-		this._lines.setDotType(this._type,isRotate);
-		this._nextCounter++;
-		this._type++;
-		this._type = this._type % 6;
-	}
-	,update: function(audio) {
-		this._counter++;
-		if(audio.subFreqByteData[5] > 10 && this._counter > 15) {
-			this._counter = 0;
-			var addVal = 0.0333333333333333329;
-			this._lines.countUp(addVal);
-		}
-		this._lines.update(audio);
 	}
 });
 dede.cuts.DeDeParam = function() {
@@ -1943,7 +1954,8 @@ dede.cuts.DeDeString = function(o) {
 	this.spaceX = o.spaceX;
 };
 dede.cuts.DeDeString.getData = function() {
-	var data = new dede.cuts.DeDeString(dede.cuts.DeDeString.texts[Math.floor(Math.random() * dede.cuts.DeDeString.texts.length)]);
+	var data = new dede.cuts.DeDeString(dede.cuts.DeDeString.texts[dede.cuts.DeDeString._count % dede.cuts.DeDeString.texts.length]);
+	dede.cuts.DeDeString._count++;
 	return data;
 };
 var haxe = {};
@@ -3190,7 +3202,7 @@ dede.DeDeDigit.TYPE_LINE_CONTINUE = 3;
 dede.DeDeDigit.TYPE_RANDOM_MONOSPACE = 4;
 dede.DeDeDigit.TYPE_RANDOM_CONTINUE = 5;
 dede.DeDeDigit.NUM_TYPE = 4;
-dede.DeDeLine.SPEEDX0 = -0.5;
+dede.DeDeLine.SPEEDX0 = -0.25;
 dede.DeDeLine.SPEEDX1 = -2;
 dede.DeDeLine.WIDTH = 2400;
 dede.DeDeLine.SPACE_R = 1.3;
@@ -3198,7 +3210,8 @@ dede.DeDeLine.SCALE = 0.65;
 dede.cuts.DeDeParam.SAME_ALL = 0;
 dede.cuts.DeDeParam.SAME_LINE = 1;
 dede.cuts.DeDeParam.SAME_DIFF = 2;
-dede.cuts.DeDeString.texts = [{ text : "VRDG3DMMVRTHATHRE", font : 0, spaceX : 50},{ text : "NIGHT VOICE ", font : 1, spaceX : 50},{ text : "DEDEMOUSE", font : 1, spaceX : 30},{ text : "DEDE", font : 1, spaceX : 50},{ text : "KITASENJUDESIGN", font : 1, spaceX : 50},{ text : "デデデデデデ", font : 0, spaceX : 30},{ text : "デデマウス", font : 0, spaceX : 50}];
+dede.cuts.DeDeString._count = 0;
+dede.cuts.DeDeString.texts = [{ text : "NIGHTVOICE", font : 1, spaceX : 50},{ text : "VRDG3DMMVRTHATHRE", font : 0, spaceX : 50},{ text : "DEDEMOUSE", font : 1, spaceX : 30},{ text : "DEDE", font : 1, spaceX : 50},{ text : "KITASENJUDESIGN", font : 1, spaceX : 50},{ text : "デデデデデデ", font : 0, spaceX : 30},{ text : "デデマウス", font : 0, spaceX : 50}];
 sound.MyAudio.FFTSIZE = 64;
 three._WebGLRenderer.RenderPrecision_Impl_.highp = "highp";
 three._WebGLRenderer.RenderPrecision_Impl_.mediump = "mediump";
@@ -3207,3 +3220,5 @@ typo.StrokeUtil.VRDG = 0;
 typo.StrokeUtil.FUTURA = 1;
 Main.main();
 })();
+
+//# sourceMappingURL=clock.js.map
