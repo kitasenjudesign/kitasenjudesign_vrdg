@@ -19,6 +19,8 @@ BeyondCodeGeo.getMesh = function(nn,font) {
 	while(_g1 < _g) {
 		var i = _g1++;
 		var line = new THREE.Line(geos[i],BeyondCodeGeo.mat);
+		line.renderOrder = BeyondCodeGeo._renderOrder;
+		BeyondCodeGeo._renderOrder++;
 		o.add(line);
 	}
 	return o;
@@ -210,7 +212,8 @@ MyPointCloud.prototype = $extend(THREE.Object3D.prototype,{
 		this._cloud = new THREE.PointCloud(g1,this._mat);
 		this._cloud.renderOrder = 10;
 		this.add(this._cloud);
-		this._lineMat = new THREE.LineBasicMaterial({ color : 16777215, transparent : true, opacity : 0.7});
+		this._lineMat = new THREE.LineBasicMaterial({ color : 16777215});
+		this._lineMat.linewidth = 1;
 		this._line = new THREE.LineSegments(g2,this._lineMat);
 		this._line.frustumCulled = false;
 		this._cloud.renderOrder = 9;
@@ -991,6 +994,7 @@ common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
 	}
 	,_onKeyDown: function(e) {
 		var n = Std.parseInt(e.keyCode);
+		Tracer.debug("_onkeydown " + n);
 		this._dispatch(n);
 	}
 	,_dispatch: function(n) {
@@ -1116,7 +1120,6 @@ dede.DeDeDigit = function() {
 	this._isLine = true;
 	this._sec = 0;
 	this._vertexCounter = 0;
-	this._speed = 0.001;
 	this._counter = 100;
 	this.hq = false;
 	this._rotSpeed = 0.002;
@@ -1214,19 +1217,21 @@ dede.DeDeDigit.prototype = $extend(THREE.Object3D.prototype,{
 	,setSec: function(rr,boost) {
 		if(boost == null) boost = false;
 		this._sec = rr % 1;
-		this._counter = 0;
 		var len = this._factory.length;
 		var _g = 0;
 		while(_g < len) {
 			var i = _g++;
-			this._factory[i].r = 0;
 		}
-		if(boost) this._counter += this._rotSpeed * 50;
+		if(boost) {
+			if(this._sec > 0.5) this._counter += this._rotSpeed * 150; else this._counter -= this._rotSpeed * 150;
+		}
 	}
 	,addSec: function(rr,boost) {
 		this._sec += rr;
 		this._sec = Math.abs(this._sec) % 1;
-		if(boost) this._counter += this._rotSpeed * 100;
+		if(boost) {
+			if(this._sec > 0.5) this._counter += this._rotSpeed * 150; else this._counter -= this._rotSpeed * 150;
+		}
 		this._vx += Math.random() - 0.5;
 		this._vy += Math.random() - 0.5;
 		this._vz += Math.random() - 0.5;
@@ -1239,23 +1244,24 @@ dede.DeDeDigit.prototype = $extend(THREE.Object3D.prototype,{
 			this.rotation.x = this.rotation.x % (Math.PI * 2);
 			this.rotation.y = this.rotation.y % (Math.PI * 2);
 			this.rotation.z = this.rotation.z % (Math.PI * 2);
-			this._vx *= 0.93;
-			this._vy *= 0.93;
-			this._vz *= 0.93;
 		} else {
 			this.rotation.x += (0 - this.rotation.x) / 6;
 			this.rotation.y += (0 - this.rotation.y) / 6;
 			this.rotation.z += (0 - this.rotation.z) / 6;
 		}
+		this._vx *= 0.93;
+		this._vy *= 0.93;
+		this._vz *= 0.93;
 		var rr = this._sec * 2;
+		var d = 1;
 		if(rr > 1) {
 			rr = 1 - rr / 2;
-			this._speed = -0.001;
+			d = 1;
 		} else {
 			rr = rr / 2;
-			this._speed = 0.001;
+			d = -1;
 		}
-		this._counter += this._rotSpeed;
+		this._counter += this._rotSpeed * d;
 		var _g1 = 0;
 		var _g = this._strokes.length;
 		while(_g1 < _g) {
@@ -1712,6 +1718,7 @@ dede.VrdgLine.prototype = $extend(dede.DeDeLine.prototype,{
 	}
 });
 dede.VrdgLines = function() {
+	this._typeCounter = 0;
 	dede.DeDeLines.call(this);
 };
 dede.VrdgLines.__super__ = dede.DeDeLines;
@@ -1722,6 +1729,31 @@ dede.VrdgLines.prototype = $extend(dede.DeDeLines.prototype,{
 		this._vrdg.init();
 		this.add(this._vrdg);
 		this._lines.push(this._vrdg);
+	}
+	,changeType: function(data) {
+		var types = [0,3,2,4,1,5];
+		this._typeCounter++;
+		var type = types[this._typeCounter % types.length];
+		var _g1 = 0;
+		var _g = this._lines.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var line = this._lines[i];
+			line.reset(type,data,false);
+			line.setSec(data.startSec);
+		}
+		this._flash();
+	}
+	,countUp: function(addX) {
+		var _g1 = 0;
+		var _g = this._lines.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var line = this._lines[i];
+			line.addSec(addX,true);
+		}
+		if(this._countUpNum % 3 == 0) this._flash();
+		this._countUpNum++;
 	}
 	,update: function(audio) {
 		if(!this.visible) return;
@@ -1781,22 +1813,28 @@ dede.cuts.DeDeCut0.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		var data = new dede.cuts.DeDeParam();
 		data.txt = "VRDGTH";
 		data.speed = 2;
-		data.space = 3 + 10 * Math.random();
-		data.startSec = Math.random();
+		data.space = 30 + 30 * Math.random();
+		if(this._nextCounter % 2 == 0) data.space = 60;
+		if(this._nextCounter % 4 == 0) data.startSec = 0; else data.startSec = Math.random();
+		if(this._nextCounter % 6 == 0) {
+			data.isRotate = true;
+			MyPointCloud.cloud.setRandom(true);
+		} else {
+			data.isRotate = false;
+			MyPointCloud.cloud.setRandom(false);
+		}
+		this._nextCounter++;
 		this._vrdg.changeType(data);
 	}
 	,update: function(audio) {
 		this._counter++;
-		if(audio.subFreqByteData[5] > 10 && this._counter > 15) {
+		if(this._counter % 60 == 0) {
 			this._counter = 0;
 			var addVal = 0.0333333333333333329;
 			this._vrdg.countUp(addVal);
 		}
 		this._counter2++;
-		if(audio.subFreqByteData[5] > 10 && this._counter2 > 240) {
-			this._counter2 = 0;
-			this.next();
-		}
+		if(this._counter2 % 720 == 0) this.next();
 		this._vrdg.update(audio);
 	}
 });
@@ -2544,6 +2582,7 @@ var sound = {};
 sound.MyAudio = function() {
 	this.globalVolume = 0.899;
 	this.isStart = false;
+	this.freqByteDataAryEase = [];
 	this._impulse = [];
 };
 sound.MyAudio.prototype = {
@@ -2571,6 +2610,7 @@ sound.MyAudio.prototype = {
 		while(_g < 64) {
 			var i = _g++;
 			this.subFreqByteData[i] = 0;
+			this.freqByteDataAryEase[i] = 0;
 			this._oldFreqByteData[i] = 0;
 		}
 		source.connect(this.analyser,0);
@@ -2625,6 +2665,7 @@ sound.MyAudio.prototype = {
 		while(_g15 < _g6) {
 			var i5 = _g15++;
 			this.freqByteDataAry[i5] = this.freqByteData[i5];
+			this.freqByteDataAryEase[i5] += (this.freqByteData[i5] - this.freqByteDataAryEase[i5]) / 2;
 		}
 		this._updateInpulse();
 	}
@@ -2932,6 +2973,7 @@ Math.isFinite = function(i) {
 Math.isNaN = function(i1) {
 	return isNaN(i1);
 };
+BeyondCodeGeo._renderOrder = 0;
 MainDeDe.W = 1024;
 MyColor.r = 0;
 MyColor.g = 0;

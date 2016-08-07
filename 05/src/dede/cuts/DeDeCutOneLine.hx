@@ -52,6 +52,8 @@ class DeDeCutOneLine  extends DeDeCutBase
 		//set dot type
 		//_lines.next();
 
+		//
+		
 		var isRotate:Bool = _nextCounter%5==4 ? true : false;
 		_lines.setSec(Math.random(), true);
 		_lines.setDotType( _type, isRotate );

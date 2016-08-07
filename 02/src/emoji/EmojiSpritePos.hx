@@ -51,6 +51,7 @@ class EmojiSpritePos
 		Dat.gui.add(this, "startIndex", 0, _max - 1 ).listen();
 		Dat.gui.add(this, "range", 0, _max - 1).listen();
 		Dat.gui.add(this, "counterIndex", 0, 844).listen();
+		
 	}
 
 	

@@ -19,6 +19,7 @@ class BeyondCodeGeo
 {
 	
 	private static var _mojiGeo:Map<String,Array<Geometry>>;
+	private static var _renderOrder:Int = 0;
 	public static var mat:LineBasicMaterial;// = new LineBasicMaterial( { color:0xffffff } );
 	
 	public function new() 
@@ -29,7 +30,12 @@ class BeyondCodeGeo
 	
 	
 	
-	
+	/**
+	 * 
+	 * @param	nn
+	 * @param	font
+	 * @return
+	 */
 	public static function getMesh(nn:String,font:Int):Object3D {
 		
 		if (mat == null) {
@@ -43,6 +49,8 @@ class BeyondCodeGeo
 		var geos:Array<Geometry> = getGeo(nn, font);
 		for (i in 0...geos.length) {
 			var line:Line = new Line(geos[i], mat);
+			line.renderOrder = _renderOrder;
+			_renderOrder++;
 			o.add(line);
 		}
 		
@@ -101,45 +109,10 @@ class BeyondCodeGeo
 				
 			}
 		
-		
 		return geos;		
 	
 	}
 	
-	/*
-	public static function getGeos():Array<Array<Geometry>> {
-		var nn:String = "BEYONDCD";
-		var geos:Array<Array<Geometry>> = [];
-		
-		for(i in 0...nn.length){
-			geos[i] = [];
-			
-			var strokes:Array<Stroke> = StrokeUtil.getStrokes(nn.substr(i, 1), 0.65);
-			for (j in 0...strokes.length) {
-				
-				var vv:Array<Vector2> = strokes[j].getPoints();
-				var g:Geometry = new Geometry();
-				for (i in 0...vv.length) {
-					g.vertices.push(new Vector3(
-						vv[i].x*2,
-						-vv[i].y*2,
-						0
-					));
-				}
-				g.vertices.push(new Vector3(
-					vv[0].x*2,
-					-vv[0].y*2,
-					0
-				));
-				
-				geos[i].push(g);
-				
-			}
-		}
-		
-		return geos;
-		
-	}*/
 	
 }
 

@@ -80,8 +80,10 @@ class MyPointCloud extends Object3D
 		add(_cloud);
 
 		_lineMat = new LineBasicMaterial( { 
-			color:0xffffff, transparent:true, opacity:0.7//, vertexColors: Three.VertexColors
+			color:0xffffff, //transparent:true, opacity:0.9//, vertexColors: Three.VertexColors
 		} );
+		_lineMat.linewidth = 1;
+		
 		_line = new LineSegments(g2,_lineMat );
 		_line.frustumCulled = false;
 		_cloud.renderOrder = 9;
@@ -102,6 +104,10 @@ class MyPointCloud extends Object3D
 		return cast _cloud.geometry.vertices[_count%GEO_MAX];		
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public function getNextLine():Array<Vector3> {
 		_countL += 2;
 		return [

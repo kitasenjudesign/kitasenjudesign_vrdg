@@ -43,7 +43,7 @@ class DeDeDigit extends Object3D
 	private static var _mat:PointCloudMaterial;
 	public var hq:Bool = false;// true;
 	private var _counter:Float = 100;
-	private var _speed:Float = 0.001;
+	//private var _speed:Float = 0.001;
 	private var _vertexCounter:Int = 0;
 	//private var lines:DotDigitLine;
 	
@@ -214,15 +214,23 @@ class DeDeDigit extends Object3D
 	public function setSec(rr:Float,boost:Bool=false):Void {
 		
 		_sec = rr % 1;
-		_counter = 0;// 0.1;
+		//_counter = 0;// 0.1;
+		
 		var len:Int = _factory.length;
 		for (i in 0...len) {
-			_factory[i].r = 0;
+			//_factory[i].r = 0;
 		}
-		if(boost){
-			_counter += _rotSpeed * 50;
+		if (boost) {
+			if (_sec > 0.5) {
+				_counter += _rotSpeed * 150;
+			}else {
+				_counter -= _rotSpeed * 150;	
+			}
 		}			
 		
+		//_vx = 0;
+		//_vy = 0;
+		//_vz = 0;
 		/*
 		if(boost){
 			_counter += _rotSpeed * 140;
@@ -240,8 +248,12 @@ class DeDeDigit extends Object3D
 		
 		_sec += rr;
 		_sec = Math.abs(_sec) % 1;
-		if(boost){
-			_counter += _rotSpeed * 100;
+		if (boost) {
+			if (_sec > 0.5) {
+				_counter += _rotSpeed * 150;				
+			}else{
+				_counter -= _rotSpeed * 150;
+			}
 		}		
 		
 		_vx += 1 * ( Math.random() - 0.5 );
@@ -265,9 +277,6 @@ class DeDeDigit extends Object3D
 			this.rotation.y = this.rotation.y % (Math.PI * 2);
 			this.rotation.z = this.rotation.z % (Math.PI * 2);
 			
-			_vx *= 0.93;
-			_vy *= 0.93;
-			_vz *= 0.93;
 			
 		}else {
 			
@@ -276,20 +285,23 @@ class DeDeDigit extends Object3D
 			this.rotation.z += ( 0 -this.rotation.z) / 6;			
 			
 		}
-		
+			_vx *= 0.93;
+			_vy *= 0.93;
+			_vz *= 0.93;
+
+			
 		var rr:Float = _sec*2;//0-1
 		
 		//0.5を頂点にする
+		var d:Float = 1;
 		if (rr > 1) {
 			rr = 1 - rr / 2;
-			_speed = -0.001;
-		}else {
+			d = 1;
+		}else{
 			rr = rr / 2;
-			_speed = 0.001;
-			
+			d = -1;			
 		}
-		
-		_counter += _rotSpeed;
+		_counter += _rotSpeed * d;
 		
 		
 		for (i in 0..._strokes.length) {

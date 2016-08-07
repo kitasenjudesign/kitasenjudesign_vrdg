@@ -41,16 +41,35 @@ class DeDeCut0 extends DeDeCutBase
 		var data:DeDeParam = new DeDeParam();
 		data.txt = "VRDGTH";
 		data.speed = 2;// 2 + 2 * Math.random();
-		data.space = 3 + 10 * Math.random();
-		data.startSec = Math.random();
+		data.space = 30 + 30 * Math.random();// 10 + 60 * Math.random();// 3 + 17 * Math.random();
+
+		if (_nextCounter % 2 == 0) {
+			data.space = 60;
+		}
 		
+		if (_nextCounter % 4 == 0) {
+			data.startSec = 0;
+		}else{
+			data.startSec = Math.random();
+		}
 		//data.isRandomLine
 		//data.type = Math.floor(Math.random() * 6);
 		//data.spaceX = data.spaceX;
 		//reset("VRDGTH", Math.floor(Math.random() * 4), false, 0, 0, 0, 50);
 		//reset( Math.floor(Math.random() * 4), data);
 		
-		_vrdg.changeType( data );
+		if(_nextCounter%6==0){
+			data.isRotate = true;
+			MyPointCloud.cloud.setRandom(true);			
+		}else {
+			data.isRotate = false;
+			MyPointCloud.cloud.setRandom(false);			
+		}
+		
+		_nextCounter++;
+		
+		_vrdg.changeType( data );//
+		
 		
 	}	
 	
@@ -63,15 +82,15 @@ class DeDeCut0 extends DeDeCutBase
 		//_lines.up
 		
 		_counter++;
-		if ( audio.subFreqByteData[5] > 10 && _counter > 15 ) {
+		if ( _counter % 60 == 0 ) {
 			_counter = 0;
 			var addVal:Float = 1 / 30;
 			_vrdg.countUp( addVal );// Math.random());
 		}		
 		
 		_counter2++;
-		if ( audio.subFreqByteData[5] > 10 && _counter2 > 60*4 ) {
-			_counter2 = 0;
+		if ( _counter2 % (60*12) == 0 ) {
+			//_counter2 = 0;
 			next();
 		}
 		

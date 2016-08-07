@@ -43,7 +43,7 @@ class MainDeDe
 	{
 
 		_renderer = new WebGLRenderer( { antialias:true, devicePixelRatio:1 } );
-		_renderer.domElement.id = "webgl";
+		_renderer.domElement.id = StageRef.name;
         Browser.document.body.appendChild(_renderer.domElement);
 		
 		StrokeUtil.init();
