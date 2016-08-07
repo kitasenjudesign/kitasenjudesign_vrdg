@@ -64,6 +64,9 @@ class MyFaceSingle extends Object3D
 	
 	private var _mode:String = "";
 	var _daeLoader:MyDAELoader;
+	var _baseAmp:Array<Float>;
+	var _baseRadX:Array<Float>;
+	var _baseRadY:Array<Float>;
 	
 	public function new(idx:Int) 
 	{
@@ -97,7 +100,10 @@ class MyFaceSingle extends Object3D
 		add(dae);
 		
 		_base = d.baseGeo;
-
+		_baseAmp = d.baseAmp;
+		_baseRadX = d.baseRadX;
+		_baseRadY = d.baseRadY;
+		
 		//this.rotation.z = Math.PI / 2;
 		vr = (Math.random()-0.5) * Math.PI / 140;
 	}
@@ -174,9 +180,9 @@ class MyFaceSingle extends Object3D
 			
 			var vv:Vector3 = _base[i];
 
-			var a:Float = Math.sqrt( vv.x * vv.x + vv.y * vv.y + vv.z * vv.z);
-			var radX:Float = -Math.atan2(vv.z, vv.x) + vv.y * Math.sin(_count) * _nejireX;//横方向の角度
-			var radY:Float = Math.asin(vv.y / a);// + _nejireY;// * Math.sin(_count * 0.8);//縦方向の角度
+			var a:Float = _baseAmp[i];// Math.sqrt( vv.x * vv.x + vv.y * vv.y + vv.z * vv.z);
+			var radX:Float = _baseRadX[i] + vv.y * Math.sin(_count) * _nejireX;//横方向の角度
+			var radY:Float = _baseRadY[i];// + _nejireY;// * Math.sin(_count * 0.8);//縦方向の角度
 
 			var amp:Float = (1-_sphere) * a + (_sphere) * 1;
 			amp += Math.sin(_count * 0.7) * _getNoise(vv.x, vv.y + _count * _noiseSpeed, vv.z) * _noise;
@@ -204,6 +210,7 @@ class MyFaceSingle extends Object3D
 			//g.faces[i].vertexColors
 		}
 		
+			//g.computeVertexNormals();
 		
 		//g.colorsNeedUpdate = true;
 		//dae2.geometry.computeVertexNormals();

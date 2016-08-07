@@ -30,6 +30,11 @@ class MyDAELoader
 	public var geometry:Geometry;
 	public var material:MeshPhongMaterial;
 	public var baseGeo:Array<Vector3>;
+	public var baseAmp:Array<Float>;
+	public var baseRadX:Array<Float>;
+	public var baseRadY:Array<Float>;
+	
+	
 	
 	
 	public function new() 
@@ -44,7 +49,11 @@ class MyDAELoader
 		
 		var loader = untyped __js__("new THREE.ColladaLoader()");
 		loader.options.convertUpAxis = true;		
-		loader.load( 'mae_face.dae', _onComplete );
+		//loader.load( 'mae_face.dae', _onComplete );
+
+		loader.load( 'dede_160806_2high.dae', _onComplete );
+
+		//loader.load( 'dede_160805_7b.dae', _onComplete );
 		//loader.load( 'mae_face_hole.dae', _onComplete );
 		
 		
@@ -60,7 +69,7 @@ class MyDAELoader
 	
 		//material = untyped dae.children[0].children[0].material;
 		
-		_texture1 = ImageUtils.loadTexture("mae_face.png");
+		_texture1 = ImageUtils.loadTexture("dede_face_diff.png");// mae_face.png");
 		_texture1.minFilter = Three.NearestFilter;
 		_texture1.magFilter = Three.NearestFilter;
 		
@@ -80,7 +89,7 @@ class MyDAELoader
 			material.refractionRatio = 0.2;
 			material.side = Three.DoubleSide;
 			material.shading = Three.SmoothShading;
-			material.normalMap = ImageUtils.loadTexture("maenyan_normal.jpg");
+			//material.normalMap = ImageUtils.loadTexture("maenyan_normal.jpg");
 			//material.shading = Three.FlatShading;
 			
 			material.shininess = 2;
@@ -90,13 +99,25 @@ class MyDAELoader
 		geometry.verticesNeedUpdate = true;
 		
 		baseGeo = [];
+		baseAmp = [];
+		baseRadX = [];
+		baseRadY = [];
+		
+		//	var radX:Float = -Math.atan2(vv.z, vv.x) + vv.y * Math.sin(_count) * _nejireX;//横方向の角度
+		//	var radY:Float = Math.asin(vv.y / a);// + _nejireY;// * Math.sin(_count * 0.8);//縦方向の角度
+
 		
 		var max:Vector3 = new Vector3();
 		var min:Vector3 = new Vector3();
 		
 		for (i in 0...geometry.vertices.length) {
 			var vv:Vector3 = geometry.vertices[i].clone();
+			var a:Float = vv.length();
 			baseGeo.push( vv );
+			baseAmp.push( a );
+			baseRadX.push( -Math.atan2(vv.z, vv.x) );
+			baseRadY.push( Math.asin(vv.y / a) );
+			
 			max.x = Math.max(vv.x,max.x);
 			max.y = Math.max(vv.y,max.y); 
 			max.z = Math.max(vv.z,max.z); 

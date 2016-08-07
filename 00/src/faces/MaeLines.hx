@@ -36,8 +36,8 @@ class MaeLines extends Object3D
 	 */
 	public function init(faces:Array<MaeFace>):Void {
 		
-		_hMesh = new Mesh(new BoxGeometry(100, 2, 2), new MeshBasicMaterial( { color:0xffffff } ));
-		add(_hMesh);
+		_hMesh = new Mesh(new BoxGeometry(100, 1, 1), new MeshBasicMaterial( { color:0xffffff } ));
+		//add(_hMesh);
 		
 		var geo:Geometry = new Geometry();
 		_faces = faces;
@@ -92,18 +92,27 @@ class MaeLines extends Object3D
 		
 		for (i in 0..._faces.length) {
 			var face:MaeFace = _faces[i];
+			
+			var idx0:Int = face.randomIndex[0];
+			var idx1:Int = face.randomIndex[1];
+			var idx2:Int = face.randomIndex[2];
+			
 			//閾値を超えた時
-			var freq0:Float = audio.freqByteDataAry[ face.randomIndex[0] ] / 255;
-			var freq1:Float = audio.freqByteDataAry[ face.randomIndex[1] ] / 255;
-			var freq2:Float = audio.freqByteDataAry[ face.randomIndex[2] ] / 255;
+			var freq0:Float = audio.freqByteDataAry[ idx0 ] / 255;
+			var freq1:Float = audio.freqByteDataAry[ idx1 ] / 255;
+			var freq2:Float = audio.freqByteDataAry[ idx2 ] / 255;
 			
 			var freqs:Array<Float> = [freq0, freq1, freq2];
-			
+			var idxs:Array<Int> = [idx0, idx1, idx2];
 			for(j in 0...3){
 				if ( freqs[j] > 0.2 && face.visible ) {
-					face.addForce(1);
+					
+					face.addForce(j,freqs[j]);
+					
 					face.connectLine(
 						j, new Vector3(scaleX * 100 * (Math.random() - 0.5), offY, -100),1//start
+						//j, new Vector3(idxs[j]*10, offY, -100),1//start
+						
 					);
 					//face.updateGauge(j, freqs[j]);
 					

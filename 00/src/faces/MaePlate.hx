@@ -50,10 +50,13 @@ class MaePlate extends Object3D
 	 * @param	ww
 	 */
 	public function init():Void {
+		
+		TimeCounter.start();
+		
 		var ww:Float = 3.8;
 		var canvas:CanvasElement = Browser.document.createCanvasElement();
 		_stage = _createStage(canvas, 128*4, 64);
-		_material = _getMaterial(canvas);
+		_material = _getMaterial(canvas, true);
 		
 		//_plane = new Mesh( new PlaneGeometry(256,64,1,1),new MeshBasicMaterial({color:0xff0000}));
 		//add(_plane);
@@ -85,6 +88,7 @@ class MaePlate extends Object3D
 		
 		_stage.update();
 		_material.map.needsUpdate = true;
+		_material.transparent = true;
 		
 		//var g:Geometry = new Geometry();
 		///g.vertices.push(new Vector3(0, -50, 0));

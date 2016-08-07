@@ -104,6 +104,7 @@ uniform float _noise;
 uniform float _count;
 uniform float _freqByteData[32];
 uniform vec3 _lightPosition; //光源位置座標
+uniform float _strength;
 
 void main()
 {
@@ -133,6 +134,18 @@ void main()
 	float yokoSpeed 	= pow(_freqByteData[13] / 255.0, 2.0) * 4.0;
 	float zengoRatio 	= pow(_freqByteData[19] / 255.0, 2.0);		
 	float tate			= 1.0 + ( pow(_freqByteData[14] / 255.0, 2.0) * 1.0 - pow(_freqByteData[3] / 255.0, 2.0) * 1.0 );
+	
+	nejireX *= _strength;
+	nejireY *= _strength;
+	noise *= _strength;
+	speed *= _strength;
+	sphere *= _strength;
+	noiseSpeed *= _strength;
+	scale *= _strength;
+	yokoRatio *= _strength;
+	yokoSpeed *= _strength;
+	zengoRatio *= _strength;
+	tate *= _strength;
 	
 	////////////////////
 	vec3 vv = position;
@@ -197,7 +210,7 @@ void main()
 	private static var _texture1:Texture;
 	private static var _colorTextures:Array<Texture>;
 	private var _indecies:Array<Int>;
-	private var _freq:Array<Int>;
+	private var _freq:Array<Float>;
 	private var _currentTexture:Texture;
 	/**
 	 * new
@@ -207,7 +220,7 @@ void main()
 	public function new() 
 	{
 		if (_texture1 == null) {
-			_texture1 = ImageUtils.loadTexture("mae_face.png");//mae_face.png");
+			_texture1 = ImageUtils.loadTexture("dede_face_diff.png");// mae_face.png");
 		}
 		
 		_indecies = [];
@@ -230,7 +243,8 @@ void main()
 					_lightPosition: { type: "v3", value: new Vector3(0, 100, 50) },
 					_wireframe: { type:"f",		value:1 },
 					_isColor: { type:"f",		value:1 },
-					_brightness: { type:"f",		value:1 }
+					_brightness: { type:"f",		value:1 },
+					_strength: { type:"f", value:1 }
 				}
 		});
 		
@@ -310,11 +324,19 @@ void main()
 		
 	}
 	
+	public function setStrength(f:Float):Void {
+
+		uniforms._strength.value = f;
+				
+	}
+	
 	//
 	private function _updateFreq(audio:MyAudio,lifeRatio:Float):Void {
+		
 		for(i in 0..._freq.length){
-			_freq[i] = audio.freqByteData[_indecies[i]];
+			_freq[i] = audio.freqByteDataAryEase[_indecies[i]];
 		}
+		
 	}
 	
 	

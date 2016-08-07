@@ -43,7 +43,10 @@ class MyDAELoader extends Object3D
 		
 		var loader = untyped __js__("new THREE.ColladaLoader()");
 		loader.options.convertUpAxis = true;		
-		loader.load( 'mae_face.dae', _onComplete );
+		//loader.load( 'mae_face.dae', _onComplete );
+		//loader.load( 'dede_160805_7c.dae', _onComplete );
+		loader.load( 'dede_160807_3c4d.dae', _onComplete );
+
 		//loader.load( 'de.dae', _onComplete );
 		
 		//loader.load( 'mae_face_hole.dae', _onComplete );

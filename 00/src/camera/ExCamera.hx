@@ -71,7 +71,7 @@ class ExCamera extends PerspectiveCamera
 
 	
 	private function onMouseWheelFF(e):Void{
-        this.amp += e.detail * 0.5;
+        this.amp += e.detail * 0.1;
         if (this.amp > 118000) {
 			this.amp=118000;
 		}
@@ -81,7 +81,7 @@ class ExCamera extends PerspectiveCamera
     }
 
 	private function onMouseWheel(e):Void {
-        this.amp += e.wheelDelta * 0.5;
+        this.amp += e.wheelDelta * 0.1;
         if (this.amp > 118000) {
 			this.amp=118000;
 		}

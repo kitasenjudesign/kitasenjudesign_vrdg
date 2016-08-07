@@ -5,6 +5,8 @@ import three.Line;
 import three.LineBasicMaterial;
 import three.Mesh;
 import three.PlaneBufferGeometry;
+import three.Points;
+import three.PointsMaterial;
 import three.ShaderMaterial;
 import three.Vector3;
 import tween.TweenMax;
@@ -14,7 +16,7 @@ import tween.TweenMaxHaxe;
  * ...
  * @author watanabe
  */
-class MaeBg extends Line
+class MaeBg extends Points
 {
 	
 	private var _vertex:String = "
@@ -38,7 +40,7 @@ void main()
 
 
 	private static var _geo:Geometry;//PlaneBufferGeometry;
-	private var _mat:LineBasicMaterial;
+	private var _mat:PointsMaterial;
 	
 	private var _twn:TweenMaxHaxe;
 	private var _light:Float;
@@ -47,17 +49,16 @@ void main()
 	{
 		
 		if (_geo == null) {
-			var w:Float = 30 / 2;
+			var w:Float = 30 / 2 - 0.5;
 			_geo = new Geometry();
 			_geo.vertices.push(new Vector3(-w,-w,0));
 			_geo.vertices.push(new Vector3(-w,w,0));
 			_geo.vertices.push(new Vector3(w,w,0));
 			_geo.vertices.push(new Vector3(w,-w,0));
-			_geo.vertices.push(new Vector3(-w,-w,0));
 		}
 		
-		_mat = new LineBasicMaterial({
-			color:0xffffff
+		_mat = new PointsMaterial({
+			color:0xffffff,size:2
 		});
 		
 		super(untyped _geo, _mat);
@@ -69,7 +70,7 @@ void main()
 	public function flash():Void {
 		//
 		Tracer.log("flash");
-		
+		/*
 		_light = 1;
 		if (_twn != null) {
 			_twn.kill();
@@ -78,7 +79,7 @@ void main()
 			_light:0.5,
 			onUpdate:_onUpdate
 		});
-		
+		*/
 	}
 	
 	function _onUpdate() 

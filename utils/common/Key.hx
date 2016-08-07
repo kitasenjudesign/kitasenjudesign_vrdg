@@ -43,6 +43,8 @@ class Key extends EventDispatcher
 	private function _onKeyDown(e:Dynamic):Void {
 	
 		var n:Int = Std.parseInt(e.keyCode);
+		Tracer.debug("_onkeydown " + n);
+		
 		_dispatch(n);
 		
 	}

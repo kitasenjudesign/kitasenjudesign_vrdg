@@ -67,15 +67,16 @@ class Main3d
 		_camera.bure = _bure;
 		
 		
-		var light:AmbientLight = new AmbientLight(0x999999);//new AmbientLight(0xaaaaaa);
+		var light:AmbientLight = new AmbientLight(0x888888);
+		//new AmbientLight(0x999999);//new AmbientLight(0xaaaaaa);
 		_scene.add(light);
 		
-		var d:DirectionalLight = new DirectionalLight(0xffffff, 1);
+		var d:DirectionalLight = new DirectionalLight(0xffffff, 0.9);
 		d.castShadow = true;
 		_scene.add(d);
-		d.position.set(0, 500, 20);
+		d.position.set(100, 200, 0);
 		
-		_renderer.domElement.width = StageRef.stageWidth;// + "px";
+		_renderer.domElement.width 	= StageRef.stageWidth;// + "px";
 		_renderer.domElement.height = StageRef.stageHeight;// + "px";
 		
 		_camera.init(_renderer.domElement);

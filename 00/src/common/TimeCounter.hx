@@ -8,7 +8,7 @@ class TimeCounter
 {
 
 	private static var _time:Date; 
-	
+	private static var _isStart:Bool = false;
 	
 	public function new() 
 	{
@@ -17,6 +17,9 @@ class TimeCounter
 	
 	public static function start():Void {
 	
+		if (_isStart) return;
+		
+		_isStart = true;
 		_time = Date.now();
 		
 	}

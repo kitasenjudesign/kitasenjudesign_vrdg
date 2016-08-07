@@ -77,7 +77,7 @@ class MaeFace extends Object3D
 		
 		_bg = new MaeBg();
 		_bg.position.z = 0;
-		//add(_bg);
+		add(_bg);
 		
 		_line = new MaeFaceLine();
 	}
@@ -92,7 +92,7 @@ class MaeFace extends Object3D
 	/**
 	 * setHoge
 	 */
-	public function addForce(f:Float):Void {
+	public function addForce(idx:Int, f:Float):Void {
 		
 		//_material.setWireframe( Math.random() < 0.5 ? true : false);
 		//_force = f;
@@ -100,7 +100,7 @@ class MaeFace extends Object3D
 			_bg.flash();
 			_life = 0;
 			enabled = true;/////////////////////////enabled = true;
-			_face.addForce(f);
+			_face.addForce(idx,f);
 		}	
 		
 	}
@@ -189,9 +189,10 @@ class MaeFace extends Object3D
 	 */
 	public function update(audio:MyAudio):Void {
 		//update
-		if( _life++ == 15){
+		if( _life++ > 15){
 			enabled = false;
-			//_plate.setEnable(enabled);
+		}else {
+			enabled = true;
 		}
 		_calcLifeRatio();
 		//ad_line.update(this.position);

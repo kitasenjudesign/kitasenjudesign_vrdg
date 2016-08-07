@@ -91,14 +91,13 @@ class MaeFaces extends Object3D
 			case Dat.RIGHT:
 				//nextFormation
 				_currentForm++;
-				_currentForm = _currentForm % MaeFormation.FORMATIONS.length;
-				_setFormation(_currentForm);
+				_formation.setFormation(_currentForm,_faces);
 
 			case Dat.LEFT:
 
 				_currentForm--;
-				if (_currentForm < 0)_currentForm = MaeFormation.FORMATIONS.length-1;
-				_setFormation(_currentForm);
+				if (_currentForm < 0)_currentForm = MaeFormation.num-1;
+				_formation.setFormation(_currentForm,_faces);
 				
 			case Dat.UP:
 				_setMaterial();//
@@ -106,12 +105,8 @@ class MaeFaces extends Object3D
 		}
 	}
 	
+	//formation shidai de 
 	
-	private function _setFormation(type:Int):Void {
-		
-		_formation.setFormation(type,_faces);
-		
-	}
 	
 	/**
 	 * 	_setMaterial
@@ -139,10 +134,15 @@ class MaeFaces extends Object3D
 			_faces[i].update(audio);
 			
 		}
-		_formation.update(_faces);
+		_formation.update();
 		_lines.update(audio);
 		
 	}
+	
+	
+	
+	
+	
 	
 	
 	

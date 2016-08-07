@@ -88,12 +88,12 @@ Main3d.prototype = {
 		this._scene = new THREE.Scene();
 		this._camera = new camera.ExCamera(35,Main3d.W / Main3d.H,10,common.Dat.bg?20000:2000);
 		this._camera.bure = this._bure;
-		var light = new THREE.AmbientLight(10066329);
+		var light = new THREE.AmbientLight(8947848);
 		this._scene.add(light);
-		var d = new THREE.DirectionalLight(16777215,1);
+		var d = new THREE.DirectionalLight(16777215,0.9);
 		d.castShadow = true;
 		this._scene.add(d);
-		d.position.set(0,500,20);
+		d.position.set(100,200,0);
 		this._renderer.domElement.width = common.StageRef.get_stageWidth();
 		this._renderer.domElement.height = common.StageRef.get_stageHeight();
 		this._camera.init(this._renderer.domElement);
@@ -426,6 +426,7 @@ common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
 	}
 	,_onKeyDown: function(e) {
 		var n = Std.parseInt(e.keyCode);
+		console.debug("_onkeydown " + n);
 		this._dispatch(n);
 	}
 	,_dispatch: function(n) {
@@ -589,7 +590,6 @@ effect.pass.DisplacementPass = function() {
 		var i = _g++;
 		this._textures.push(THREE.ImageUtils.loadTexture("displace" + i + ".png"));
 	}
-	this._textures.push(THREE.ImageUtils.loadTexture("displaceV.png"));
 	this._colors = [THREE.ImageUtils.loadTexture("grade.png"),THREE.ImageUtils.loadTexture("grade2.png"),THREE.ImageUtils.loadTexture("grade3.png"),THREE.ImageUtils.loadTexture("grade4.png")];
 	THREE.ShaderPass.call(this,{ uniforms : { tDiffuse : { type : "t", value : null}, isDisplace : { type : "f", value : 1}, isColor : { type : "f", value : 1}, disTexture : { type : "t", value : this._textures[0]}, colTexture : { type : "t", value : this._colors[3]}, strengthX : { type : "f", value : 0}, strengthY : { type : "f", value : 0}, counter : { type : "f", value : 0}}, vertexShader : this._vertex, fragmentShader : this._fragment});
 };
@@ -753,12 +753,12 @@ objects.MyDAELoader.prototype = {
 		this._callback = callback;
 		var loader = new THREE.ColladaLoader();
 		loader.options.convertUpAxis = true;
-		loader.load("mae_face.dae",$bind(this,this._onComplete));
+		loader.load("dede_160806_2high.dae",$bind(this,this._onComplete));
 	}
 	,_onComplete: function(collada) {
 		this.dae = collada.scene;
 		this.dae.scale.x = this.dae.scale.y = this.dae.scale.z = 150;
-		this._texture1 = THREE.ImageUtils.loadTexture("mae_face.png");
+		this._texture1 = THREE.ImageUtils.loadTexture("dede_face_diff.png");
 		this._texture1.minFilter = 1003;
 		this._texture1.magFilter = 1003;
 		this._texture2 = THREE.ImageUtils.loadTexture("mae_faceD.png");
@@ -772,11 +772,13 @@ objects.MyDAELoader.prototype = {
 		this.material.refractionRatio = 0.2;
 		this.material.side = 2;
 		this.material.shading = 2;
-		this.material.normalMap = THREE.ImageUtils.loadTexture("maenyan_normal.jpg");
 		this.material.shininess = 2;
 		this.geometry = this.dae.children[0].children[0].geometry;
 		this.geometry.verticesNeedUpdate = true;
 		this.baseGeo = [];
+		this.baseAmp = [];
+		this.baseRadX = [];
+		this.baseRadY = [];
 		var max = new THREE.Vector3();
 		var min = new THREE.Vector3();
 		var _g1 = 0;
@@ -784,7 +786,11 @@ objects.MyDAELoader.prototype = {
 		while(_g1 < _g) {
 			var i = _g1++;
 			var vv = this.geometry.vertices[i].clone();
+			var a = vv.length();
 			this.baseGeo.push(vv);
+			this.baseAmp.push(a);
+			this.baseRadX.push(-Math.atan2(vv.z,vv.x));
+			this.baseRadY.push(Math.asin(vv.y / a));
 			max.x = Math.max(vv.x,max.x);
 			max.y = Math.max(vv.y,max.y);
 			max.z = Math.max(vv.z,max.z);
@@ -846,6 +852,9 @@ objects.MyFaceSingle.prototype = $extend(THREE.Object3D.prototype,{
 		this.dae.scale.set(170,170,170);
 		this.add(this.dae);
 		this._base = d.baseGeo;
+		this._baseAmp = d.baseAmp;
+		this._baseRadX = d.baseRadX;
+		this._baseRadY = d.baseRadY;
 		this.vr = (Math.random() - 0.5) * Math.PI / 140;
 	}
 	,updateMaterial: function(matMode) {
@@ -891,9 +900,9 @@ objects.MyFaceSingle.prototype = $extend(THREE.Object3D.prototype,{
 		while(_g1 < _g) {
 			var i = _g1++;
 			var vv = this._base[i];
-			var a = Math.sqrt(vv.x * vv.x + vv.y * vv.y + vv.z * vv.z);
-			var radX = -Math.atan2(vv.z,vv.x) + vv.y * Math.sin(this._count) * this._nejireX;
-			var radY = Math.asin(vv.y / a);
+			var a = this._baseAmp[i];
+			var radX = this._baseRadX[i] + vv.y * Math.sin(this._count) * this._nejireX;
+			var radY = this._baseRadY[i];
 			var amp = (1 - this._sphere) * a + this._sphere;
 			amp += Math.sin(this._count * 0.7) * this._getNoise(vv.x,vv.y + this._count * this._noiseSpeed,vv.z) * this._noise;
 			var yoko = Math.sin(0.5 * (vv.y * 2 * Math.PI) + this._count * this._yokoSpeed) * this._yokoRatio;
@@ -991,7 +1000,7 @@ objects.MySphere = function() {
 	THREE.Object3D.call(this);
 	if(!common.Dat.bg) return;
 	var texture = THREE.ImageUtils.loadTexture("R0010035.JPG");
-	this._textures = [texture,THREE.ImageUtils.loadTexture("bg/dedebg.jpg"),THREE.ImageUtils.loadTexture("bg/R0010042.jpg"),THREE.ImageUtils.loadTexture("bg/R0010046.jpg"),THREE.ImageUtils.loadTexture("bg/R0010047.jpg"),THREE.ImageUtils.loadTexture("bg/R0010048.jpg"),THREE.ImageUtils.loadTexture("bg/R0010051.jpg"),THREE.ImageUtils.loadTexture("bg/R0010053.jpg"),THREE.ImageUtils.loadTexture("bg/R0010053.jpg"),THREE.ImageUtils.loadTexture("bg/R0010055.jpg"),THREE.ImageUtils.loadTexture("bg/R0010057.jpg"),THREE.ImageUtils.loadTexture("bg/R0010059.jpg"),THREE.ImageUtils.loadTexture("bg/R0010061.jpg"),THREE.ImageUtils.loadTexture("bg/R0010062.jpg"),THREE.ImageUtils.loadTexture("bg/R0010063.jpg"),THREE.ImageUtils.loadTexture("bg/R0010065.jpg"),THREE.ImageUtils.loadTexture("bg/R0010066.jpg"),THREE.ImageUtils.loadTexture("bg/R0010068.jpg"),THREE.ImageUtils.loadTexture("bg/R0010069.jpg"),THREE.ImageUtils.loadTexture("img/IMG_5796B.jpg"),THREE.ImageUtils.loadTexture("img/IMG_5796.jpg"),THREE.ImageUtils.loadTexture("img/a.jpg"),THREE.ImageUtils.loadTexture("img/b.jpg"),THREE.ImageUtils.loadTexture("img/hoge.jpg"),THREE.ImageUtils.loadTexture("img/fuga.jpg"),THREE.ImageUtils.loadTexture("bg/white.png")];
+	this._textures = [texture,THREE.ImageUtils.loadTexture("bg/dedebg4.jpg"),THREE.ImageUtils.loadTexture("bg/R0010042.jpg"),THREE.ImageUtils.loadTexture("bg/R0010046.jpg"),THREE.ImageUtils.loadTexture("bg/R0010047.jpg"),THREE.ImageUtils.loadTexture("bg/R0010048.jpg"),THREE.ImageUtils.loadTexture("bg/R0010051.jpg"),THREE.ImageUtils.loadTexture("bg/R0010053.jpg"),THREE.ImageUtils.loadTexture("bg/R0010053.jpg"),THREE.ImageUtils.loadTexture("bg/R0010055.jpg"),THREE.ImageUtils.loadTexture("bg/R0010057.jpg"),THREE.ImageUtils.loadTexture("bg/R0010059.jpg"),THREE.ImageUtils.loadTexture("bg/R0010061.jpg"),THREE.ImageUtils.loadTexture("bg/R0010062.jpg"),THREE.ImageUtils.loadTexture("bg/R0010063.jpg"),THREE.ImageUtils.loadTexture("bg/R0010065.jpg"),THREE.ImageUtils.loadTexture("bg/R0010066.jpg"),THREE.ImageUtils.loadTexture("bg/R0010068.jpg"),THREE.ImageUtils.loadTexture("bg/R0010069.jpg"),THREE.ImageUtils.loadTexture("img/IMG_5796B.jpg"),THREE.ImageUtils.loadTexture("img/IMG_5796.jpg"),THREE.ImageUtils.loadTexture("img/a.jpg"),THREE.ImageUtils.loadTexture("img/b.jpg"),THREE.ImageUtils.loadTexture("img/hoge.jpg"),THREE.ImageUtils.loadTexture("img/fuga.jpg"),THREE.ImageUtils.loadTexture("bg/white.png")];
 	this.mate = new THREE.MeshBasicMaterial({ map : texture});
 	var g = new THREE.SphereGeometry(1000,60,30);
 	this.mesh = new THREE.Mesh(g,this.mate);
@@ -1364,6 +1373,7 @@ sound.DummyBars.prototype = $extend(THREE.Object3D.prototype,{
 sound.MyAudio = function() {
 	this.globalVolume = 0.899;
 	this.isStart = false;
+	this.freqByteDataAryEase = [];
 	this._impulse = [];
 };
 sound.MyAudio.prototype = {
@@ -1391,6 +1401,7 @@ sound.MyAudio.prototype = {
 		while(_g < 64) {
 			var i = _g++;
 			this.subFreqByteData[i] = 0;
+			this.freqByteDataAryEase[i] = 0;
 			this._oldFreqByteData[i] = 0;
 		}
 		source.connect(this.analyser,0);
@@ -1445,6 +1456,7 @@ sound.MyAudio.prototype = {
 		while(_g15 < _g6) {
 			var i5 = _g15++;
 			this.freqByteDataAry[i5] = this.freqByteData[i5];
+			this.freqByteDataAryEase[i5] += (this.freqByteData[i5] - this.freqByteDataAryEase[i5]) / 2;
 		}
 		this._updateInpulse();
 	}
@@ -1701,3 +1713,5 @@ three._WebGLRenderer.RenderPrecision_Impl_.mediump = "mediump";
 three._WebGLRenderer.RenderPrecision_Impl_.lowp = "lowp";
 Main.main();
 })();
+
+//# sourceMappingURL=haxe.js.map

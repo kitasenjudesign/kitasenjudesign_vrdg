@@ -24,9 +24,10 @@ class MyAudio
 	private var _oldFreqByteData	:Array<Int>;
 	private var _impulse			:Array<Float> = [];
 	private var _callback:Void->Void;
-	public var freqByteData		:Uint8Array;
-	public var subFreqByteData	:Array<Int>;
-	public var freqByteDataAry	:Array<Int>;
+	public var freqByteData			:Uint8Array;
+	public var subFreqByteData		:Array<Int>;
+	public var freqByteDataAry		:Array<Int>;
+	public var freqByteDataAryEase	:Array<Float> = [];
 	
 	
 	public var isStart:Bool = false;
@@ -80,6 +81,7 @@ class MyAudio
 		_oldFreqByteData = [];
 		for (i in 0...FFTSIZE) {
 			subFreqByteData[i]	= 0;
+			freqByteDataAryEase[i] = 0;
 			_oldFreqByteData[i]	= 0;
 		}
 		
@@ -151,6 +153,7 @@ class MyAudio
 		//copy
 		for ( i in 0...freqByteData.length) {
 			freqByteDataAry[i] = freqByteData[i];
+			freqByteDataAryEase[i] += (freqByteData[i] - freqByteDataAryEase[i]) / 2;
 		}
 		
 		_updateInpulse();

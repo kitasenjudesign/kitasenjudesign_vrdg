@@ -91,6 +91,7 @@ class MaeGauge extends Mesh
 			fragmentShader: _fragment
 		} );
 			
+		_material.shading = Three.SmoothShading;
 		_material.transparent = true;
 		_material.side = Three.DoubleSide;
 		
