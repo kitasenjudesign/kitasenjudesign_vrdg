@@ -175,6 +175,15 @@ HxOverrides.cca = function(s,index) {
 	if(x != x) return undefined;
 	return x;
 };
+HxOverrides.substr = function(s,pos,len) {
+	if(pos != null && pos != 0 && len != null && len < 0) return "";
+	if(len == null) len = s.length;
+	if(pos < 0) {
+		pos = s.length + pos;
+		if(pos < 0) pos = 0;
+	} else if(len < 0) len = s.length + len - pos;
+	return s.substr(pos,len);
+};
 var Lambda = function() { };
 Lambda.exists = function(it,f) {
 	var $it0 = it.iterator();
@@ -207,6 +216,7 @@ Main._onLoad = function(e) {
 	var test = new CanvasTest3d();
 	test.init();
 };
+var IMap = function() { };
 var Std = function() { };
 Std.parseInt = function(x) {
 	var v = parseInt(x,10);
@@ -238,6 +248,48 @@ Three.requestAnimationFrame = function(f) {
 };
 Three.cancelAnimationFrame = function(f) {
 	window.cancelAnimationFrame(id);
+};
+var Tracer = function() {
+};
+Tracer.assert = function(condition,p1,p2,p3,p4,p5) {
+};
+Tracer.clear = function(p1,p2,p3,p4,p5) {
+};
+Tracer.count = function(p1,p2,p3,p4,p5) {
+};
+Tracer.debug = function(p1,p2,p3,p4,p5) {
+};
+Tracer.dir = function(p1,p2,p3,p4,p5) {
+};
+Tracer.dirxml = function(p1,p2,p3,p4,p5) {
+};
+Tracer.error = function(p1,p2,p3,p4,p5) {
+};
+Tracer.group = function(p1,p2,p3,p4,p5) {
+};
+Tracer.groupCollapsed = function(p1,p2,p3,p4,p5) {
+};
+Tracer.groupEnd = function() {
+};
+Tracer.info = function(p1,p2,p3,p4,p5) {
+};
+Tracer.log = function(p1,p2,p3,p4,p5) {
+};
+Tracer.markTimeline = function(p1,p2,p3,p4,p5) {
+};
+Tracer.profile = function(title) {
+};
+Tracer.profileEnd = function(title) {
+};
+Tracer.time = function(title) {
+};
+Tracer.timeEnd = function(title,p1,p2,p3,p4,p5) {
+};
+Tracer.timeStamp = function(p1,p2,p3,p4,p5) {
+};
+Tracer.trace = function(p1,p2,p3,p4,p5) {
+};
+Tracer.warn = function(p1,p2,p3,p4,p5) {
 };
 var camera = {};
 camera.ExCamera = function(fov,aspect,near,far) {
@@ -409,8 +461,10 @@ common.Config.prototype = {
 		common.Config.host = data.host;
 		var win = window;
 		win.host = common.Config.host;
+		if(common.QueryGetter.getQuery("host") != null) win.host = common.QueryGetter.getQuery("host");
 		common.Config.canvasOffsetY = data.canvasOffsetY;
 		common.Config.globalVol = data.globalVol;
+		common.Config.particleSize = data.particleSize;
 		if(this._callback != null) this._callback();
 	}
 };
@@ -465,22 +519,22 @@ common.Dat._onKeyDown = function(e) {
 	}
 };
 common.Dat._goURL1 = function() {
-	common.Dat._goURL("../../01/bin/");
-};
-common.Dat._goURL2 = function() {
-	common.Dat._goURL("../../02/bin/");
-};
-common.Dat._goURL3 = function() {
-	common.Dat._goURL("../../03/bin/");
-};
-common.Dat._goURL4 = function() {
 	common.Dat._goURL("../../04/bin/");
 };
-common.Dat._goURL5 = function() {
+common.Dat._goURL2 = function() {
 	common.Dat._goURL("../../05/bin/");
 };
+common.Dat._goURL3 = function() {
+	common.Dat._goURL("../../02/bin/");
+};
+common.Dat._goURL4 = function() {
+	common.Dat._goURL("../../03/bin/");
+};
+common.Dat._goURL5 = function() {
+	common.Dat._goURL("../../00/bin/");
+};
 common.Dat._goURL6 = function() {
-	common.Dat._goURL("../../06/bin/");
+	common.Dat._goURL("../../01/bin/");
 };
 common.Dat._goURL = function(url) {
 	window.location.href = url;
@@ -529,6 +583,7 @@ common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
 	}
 	,_onKeyDown: function(e) {
 		var n = Std.parseInt(e.keyCode);
+		Tracer.debug("_onkeydown " + n);
 		this._dispatch(n);
 	}
 	,_dispatch: function(n) {
@@ -536,6 +591,32 @@ common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
 		this.dispatchEvent({ type : "keydown", keyCode : n});
 	}
 });
+common.Path = function() {
+};
+common.QueryGetter = function() {
+};
+common.QueryGetter.init = function() {
+	common.QueryGetter._map = new haxe.ds.StringMap();
+	var str = window.location.search;
+	if(str.indexOf("?") < 0) Tracer.log("query nashi"); else {
+		str = HxOverrides.substr(str,1,str.length - 1);
+		var list = str.split("&");
+		Tracer.log(list);
+		var _g1 = 0;
+		var _g = list.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var fuga = list[i].split("=");
+			common.QueryGetter._map.set(fuga[0],fuga[1]);
+		}
+	}
+	if(common.QueryGetter._map.get("t") != null) common.QueryGetter.t = Std.parseInt(common.QueryGetter._map.get("t"));
+	common.QueryGetter._isInit = true;
+};
+common.QueryGetter.getQuery = function(idd) {
+	if(!common.QueryGetter._isInit) common.QueryGetter.init();
+	return common.QueryGetter._map.get(idd);
+};
 common.StageRef = function() {
 };
 common.StageRef.fadeIn = function() {
@@ -735,6 +816,19 @@ haxe.Http.prototype = {
 	,onStatus: function(status) {
 	}
 };
+haxe.ds = {};
+haxe.ds.StringMap = function() {
+	this.h = { };
+};
+haxe.ds.StringMap.__interfaces__ = [IMap];
+haxe.ds.StringMap.prototype = {
+	set: function(key,value) {
+		this.h["$" + key] = value;
+	}
+	,get: function(key) {
+		return this.h["$" + key];
+	}
+};
 var js = {};
 js.Browser = function() { };
 js.Browser.createXMLHttpRequest = function() {
@@ -847,6 +941,7 @@ var sound = {};
 sound.MyAudio = function() {
 	this.globalVolume = 0.899;
 	this.isStart = false;
+	this.freqByteDataAryEase = [];
 	this._impulse = [];
 };
 sound.MyAudio.prototype = {
@@ -874,6 +969,7 @@ sound.MyAudio.prototype = {
 		while(_g < 64) {
 			var i = _g++;
 			this.subFreqByteData[i] = 0;
+			this.freqByteDataAryEase[i] = 0;
 			this._oldFreqByteData[i] = 0;
 		}
 		source.connect(this.analyser,0);
@@ -928,6 +1024,7 @@ sound.MyAudio.prototype = {
 		while(_g15 < _g6) {
 			var i5 = _g15++;
 			this.freqByteDataAry[i5] = this.freqByteData[i5];
+			this.freqByteDataAryEase[i5] += (this.freqByteData[i5] - this.freqByteDataAryEase[i5]) / 2;
 		}
 		this._updateInpulse();
 	}
@@ -1138,7 +1235,7 @@ typo.Dots.prototype = $extend(THREE.Object3D.prototype,{
 		d.init(this);
 		this.initParams(d);
 		this.calcMotion();
-		window.document.addEventListener("keydown",$bind(this,this._onKeyDown));
+		common.Key.board.addEventListener("keydown",$bind(this,this._onKeyDown));
 	}
 	,change: function() {
 	}
@@ -1402,7 +1499,7 @@ typo.Dots.prototype = $extend(THREE.Object3D.prototype,{
 typo.Textures = function() {
 };
 typo.Textures.init = function() {
-	typo.Textures._textures = [THREE.ImageUtils.loadTexture("grade.png"),THREE.ImageUtils.loadTexture("grade1.png"),THREE.ImageUtils.loadTexture("grade2.png"),THREE.ImageUtils.loadTexture("grade3.png"),THREE.ImageUtils.loadTexture("grade4.png"),THREE.ImageUtils.loadTexture("grade5.png"),THREE.ImageUtils.loadTexture("grade6.png"),THREE.ImageUtils.loadTexture("grade7.png")];
+	typo.Textures._textures = [THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade.png"),THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade1.png"),THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade2.png"),THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade3.png"),THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade4.png"),THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade5.png"),THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade6.png"),THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade7.png")];
 };
 typo.Textures.getTexture = function() {
 	return typo.Textures._textures[Math.floor(Math.random() * typo.Textures._textures.length)];
@@ -1950,6 +2047,7 @@ camera.ExCamera.POS_NORMAL = "MODE_NORMAL";
 camera.ExCamera.POS_FOLLOW = "MODE_FOLLOW";
 common.Config.canvasOffsetY = 0;
 common.Config.globalVol = 1.0;
+common.Config.particleSize = 3000;
 common.Dat.UP = 38;
 common.Dat.DOWN = 40;
 common.Dat.LEFT = 37;
@@ -1993,6 +2091,11 @@ common.Dat.Z = 90;
 common.Dat.hoge = 0;
 common.Dat.bg = false;
 common.Dat._showing = true;
+common.Path.assets = "../../assets/";
+common.QueryGetter.NORMAL = 0;
+common.QueryGetter.SKIP = 1;
+common.QueryGetter._isInit = false;
+common.QueryGetter.t = 0;
 common.StageRef.$name = "webgl";
 sound.MyAudio.FFTSIZE = 64;
 three._WebGLRenderer.RenderPrecision_Impl_.highp = "highp";

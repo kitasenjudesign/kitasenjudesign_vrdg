@@ -1,4 +1,5 @@
 package faces;
+import common.Path;
 import js.html.Uint8Array;
 import objects.shaders.CurlNoise;
 import sound.MyAudio;
@@ -220,7 +221,7 @@ void main()
 	public function new() 
 	{
 		if (_texture1 == null) {
-			_texture1 = ImageUtils.loadTexture("face/dede_face_diff.png");// mae_face.png");
+			_texture1 = ImageUtils.loadTexture(Path.assets+ "face/dede_face_diff.png");// mae_face.png");
 		}
 		
 		_indecies = [];
@@ -258,11 +259,11 @@ void main()
 		
 		if ( _colorTextures == null ) {
 			_colorTextures = [
-				ImageUtils.loadTexture("grade/grade.png"),
-				ImageUtils.loadTexture("grade/grade2.png"),
-				ImageUtils.loadTexture("grade/grade3.png"),
-				ImageUtils.loadTexture("grade/grade4.png"),
-				ImageUtils.loadTexture("grade/grade8.png")
+				ImageUtils.loadTexture(Path.assets + "grade/grade.png"),
+				ImageUtils.loadTexture(Path.assets + "grade/grade2.png"),
+				ImageUtils.loadTexture(Path.assets + "grade/grade3.png"),
+				ImageUtils.loadTexture(Path.assets + "grade/grade4.png"),
+				ImageUtils.loadTexture(Path.assets + "grade/grade8.png")
 			];
 		}
 		_currentTexture = _colorTextures[Math.floor(_colorTextures.length*Math.random())];

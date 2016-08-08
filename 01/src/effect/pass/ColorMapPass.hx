@@ -1,4 +1,5 @@
 package effect.pass;
+import common.Path;
 import sound.MyAudio;
 import three.ImageUtils;
 import three.postprocessing.ShaderPass;
@@ -74,9 +75,9 @@ class ColorMapPass extends ShaderPass
 	{
 		
 		_textures = [];
-		_textures.push( ImageUtils.loadTexture("grade/grade.png") );
-		_textures.push( ImageUtils.loadTexture("grade/grade2.png") );
-		_textures.push( ImageUtils.loadTexture("grade/grade3.png") );
+		_textures.push( ImageUtils.loadTexture(Path.assets+ "grade/grade.png") );
+		_textures.push( ImageUtils.loadTexture(Path.assets + "grade/grade2.png") );
+		_textures.push( ImageUtils.loadTexture(Path.assets + "grade/grade3.png") );
 		
 		super( {
 			uniforms: {

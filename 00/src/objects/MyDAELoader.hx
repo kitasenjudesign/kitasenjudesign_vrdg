@@ -1,5 +1,6 @@
 package objects ;
 import camera.ExCamera;
+import common.Path;
 import js.Browser;
 import sound.MyAudio;
 import three.CubeCamera;
@@ -45,7 +46,7 @@ class MyDAELoader extends Object3D
 		loader.options.convertUpAxis = true;		
 		//loader.load( 'mae_face.dae', _onComplete );
 		//loader.load( 'dede_160805_7c.dae', _onComplete );
-		loader.load( 'face/dede_c4d.dae', _onComplete );
+		loader.load( Path.assets + 'face/dede_c4d.dae', _onComplete );
 
 		//loader.load( 'de.dae', _onComplete );
 		//loader.load( 'mae_face_hole.dae', _onComplete );

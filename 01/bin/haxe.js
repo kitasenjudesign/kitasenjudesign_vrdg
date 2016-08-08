@@ -488,6 +488,8 @@ common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
 		this.dispatchEvent({ type : "keydown", keyCode : n});
 	}
 });
+common.Path = function() {
+};
 common.QueryGetter = function() {
 };
 common.QueryGetter.init = function() {
@@ -640,9 +642,9 @@ effect.pass.ColorMapPass = function() {
 	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\tuniform sampler2D texture;\r\n\t\t\t\t\tuniform float strength;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tuniform float mono;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 texel = texture2D( tDiffuse, vUv );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 out1 = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tif( mono == 0.0){\r\n\t\t\t\t\t\tvec2 pp = vec2( 0.5, fract( texel.x * strength + counter ) );//akarusanioujite\t\t\t\t\t\r\n\t\t\t\t\t\tif ( pp.y < 0.5) {\r\n\t\t\t\t\t\t\t\tpp.y = pp.y * 2.0;\r\n\t\t\t\t\t\t\t\tout1 = texture2D( texture, pp );\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\t\tpp.y = (1.0 - (pp.y - 0.5) * 2.0);\t\t\t\t\r\n\t\t\t\t\t\t\t\tout1 = texture2D( texture, pp );\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\tif ( texel.x == 0.0 ) {\r\n\t\t\t\t\t\t\t\tout1 = vec4(0.0, 0.0, 0.0, 1.0);\r\n\t\t\t\t\t\t}\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t}else{\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t//bakibaki\r\n\t\t\t\t\t\tfloat nn = 10000. + 9995. * sin(counter*0.01);\r\n\t\t\t\t\t\tif ( texel.x == 0.0 || mod( floor( texel.x * nn ),2.0) == 0.0 ) {\r\n\t\t\t\t\t\t\tout1.x = 0.0;\r\n\t\t\t\t\t\t\tout1.y = 0.0;\r\n\t\t\t\t\t\t\tout1.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\tout1.x = 1.0;\r\n\t\t\t\t\t\t\tout1.y = 1.0;\r\n\t\t\t\t\t\t\tout1.z = 1.0;\t\t\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\tgl_FragColor = out1;// out1;// texel;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
 	this._vertex = "\r\n\t\tvarying vec2 vUv;\r\n\t\tvoid main() {\r\n\t\t\tvUv = uv;\r\n\t\t\tgl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\r\n\t\t}\t\t\r\n\t";
 	this._textures = [];
-	this._textures.push(THREE.ImageUtils.loadTexture("grade/grade.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("grade/grade2.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("grade/grade3.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade2.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade3.png"));
 	THREE.ShaderPass.call(this,{ uniforms : { tDiffuse : { type : "t", value : null}, texture : { type : "t", value : this._textures[0]}, strength : { type : "f", value : 0}, counter : { type : "f", value : 0}, mono : { type : "f", value : 1}}, vertexShader : this._vertex, fragmentShader : this._fragment});
 };
 effect.pass.ColorMapPass.__super__ = THREE.ShaderPass;
@@ -663,17 +665,17 @@ effect.pass.DisplacementPass = function() {
 	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\tuniform sampler2D disTexture;\r\n\t\t\t\t\tuniform sampler2D colTexture;\r\n\t\t\t\t\tuniform float strengthX;\r\n\t\t\t\t\tuniform float strengthY;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tuniform float isDisplace;\r\n\t\t\t\t\tuniform float isColor;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\t\r\n\t\t\t\t\tvec4 getColor(vec4 texel) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 out1 = vec4(0.0);\r\n\t\t\t\t\t\tvec2 pp = vec2( 0.5, fract( texel.x + counter ) );\r\n\t\t\t\t\t\t\tif ( pp.y < 0.5) {\r\n\t\t\t\t\t\t\t\tpp.y = pp.y * 2.0;\r\n\t\t\t\t\t\t\t\tout1 = texture2D( colTexture, pp );\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\t\tpp.y = (1.0 - (pp.y - 0.5) * 2.0);\t\t\t\t\r\n\t\t\t\t\t\t\t\tout1 = texture2D( colTexture, pp );\r\n\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\tif ( texel.x == 0.0 ) {\r\n\t\t\t\t\t\t\t\tout1 = vec4(0.0, 0.0, 0.0, 1.0);\r\n\t\t\t\t\t\t\t}\t\t\r\n\t\t\t\t\t\t\treturn out1;\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//dispace\r\n\t\t\t\t\t\tvec4 texel = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tif(isDisplace == 1.0){\r\n\t\t\t\t\t\t\tvec4 col = texture2D( disTexture, vUv);\r\n\t\t\t\t\t\t\tfloat f1 = strengthX * sin(counter*0.17);// pow(counter, 2.0 + 3.0 * col.x);//sin(counter * 3.9) * 0.23;\r\n\t\t\t\t\t\t\tfloat f2 = strengthY * sin(counter*0.22);// pow(counter, 2.0 + 3.0 * col.x) * 0.001;// pow(counter, 2.0 + 3.0 * col.y);//cos(counter * 3.7) * 0.23;\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\tvec2 axis = vec2( \r\n\t\t\t\t\t\t\t\tvUv.x + (col.y-0.5)*f1, vUv.y + (col.z-0.5)*f2\r\n\t\t\t\t\t\t\t);\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\ttexel = texture2D( tDiffuse, axis );\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\ttexel = texture2D( tDiffuse, vUv );\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//vec4 texel = texture2D( colTexture, axis );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//vec3 luma = vec3( 0.299, 0.587, 0.114 );\r\n\t\t\t\t\t\t//float v = dot( texel.xyz, luma );//akarusa\r\n\t\t\t\t\t\t//vec2 axis = vec2( 0.5,v );\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//position\r\n\t\t\t\t\t\tvec4 out1 = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tif( isColor == 1.0){\r\n\t\t\t\t\t\t\tout1 = getColor(texel);\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\tout1 = texel;\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\t\r\n\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\tif ( texel.x == 0.0 || mod( floor( texel.x * 1000.0 + counter ),2.0) == 0.0 ) {\r\n\t\t\t\t\t\t\ttexel.x = 0.0;\r\n\t\t\t\t\t\t\ttexel.y = 0.0;\r\n\t\t\t\t\t\t\ttexel.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\ttexel.x = out1.x;//1.0;\r\n\t\t\t\t\t\t\ttexel.y = out1.y;//1.0;\r\n\t\t\t\t\t\t\ttexel.z = out1.z;//1.0;\t\t\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}*/\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\t\ttexel.x = out1.x;//1.0;\r\n\t\t\t\t\t\t\ttexel.y = out1.y;//1.0;\r\n\t\t\t\t\t\t\ttexel.z = out1.z;//1.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t*/\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tgl_FragColor = out1;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
 	this._vertex = "\r\n\t\tvarying vec2 vUv;\r\n\t\tvoid main() {\r\n\t\t\tvUv = uv;\r\n\t\t\tgl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\r\n\t\t}\t\t\r\n\t";
 	this._textures = [];
-	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace0.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace1.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace2.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace3.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace4.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace5.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace6.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace7.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace8.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace9.png"));
-	this._colors = [THREE.ImageUtils.loadTexture("./grade/grade.png"),THREE.ImageUtils.loadTexture("./grade/grade2.png"),THREE.ImageUtils.loadTexture("./grade/grade3.png"),THREE.ImageUtils.loadTexture("./grade/grade4.png")];
+	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace0.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace1.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace2.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace3.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace4.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace5.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace6.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace7.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace8.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace9.png"));
+	this._colors = [THREE.ImageUtils.loadTexture("../../assets/" + "/grade/grade.png"),THREE.ImageUtils.loadTexture("../../assets/" + "/grade/grade2.png"),THREE.ImageUtils.loadTexture("../../assets/" + "/grade/grade3.png"),THREE.ImageUtils.loadTexture("../../assets/" + "/grade/grade4.png")];
 	THREE.ShaderPass.call(this,{ uniforms : { tDiffuse : { type : "t", value : null}, isDisplace : { type : "f", value : 1}, isColor : { type : "f", value : 1}, disTexture : { type : "t", value : this._textures[0]}, colTexture : { type : "t", value : this._colors[3]}, strengthX : { type : "f", value : 0}, strengthY : { type : "f", value : 0}, counter : { type : "f", value : 0}}, vertexShader : this._vertex, fragmentShader : this._fragment});
 };
 effect.pass.DisplacementPass.__super__ = THREE.ShaderPass;
@@ -841,18 +843,18 @@ objects.MyDAELoader.prototype = {
 		this._callback = callback;
 		var loader = new THREE.ColladaLoader();
 		loader.options.convertUpAxis = true;
-		loader.load("face/dede_c4d.dae",$bind(this,this._onComplete));
+		loader.load("../../assets/" + "face/dede_c4d.dae",$bind(this,this._onComplete));
 	}
 	,_onComplete: function(collada) {
 		this.dae = collada.scene;
 		this.dae.scale.x = this.dae.scale.y = this.dae.scale.z = 150;
-		this._texture1 = THREE.ImageUtils.loadTexture("face/dede_face_diff.png");
+		this._texture1 = THREE.ImageUtils.loadTexture("../../assets/" + "face/dede_face_diff.png");
 		this._texture1.minFilter = 1003;
 		this._texture1.magFilter = 1003;
-		this._texture2 = THREE.ImageUtils.loadTexture("mae_faceD.png");
+		this._texture2 = THREE.ImageUtils.loadTexture("../../assets/" + "face/dede_face_diff.png");
 		this._texture2.minFilter = 1003;
 		this._texture2.magFilter = 1003;
-		this._texture3 = THREE.ImageUtils.loadTexture("mae_faceE.png");
+		this._texture3 = THREE.ImageUtils.loadTexture("../../assets/" + "face/dede_face_diff.png");
 		this._texture3.minFilter = 1003;
 		this._texture3.magFilter = 1003;
 		this.material = new THREE.MeshPhongMaterial({ map : this._texture1});
@@ -1774,6 +1776,7 @@ common.Dat.Z = 90;
 common.Dat.hoge = 0;
 common.Dat.bg = false;
 common.Dat._showing = true;
+common.Path.assets = "../../assets/";
 common.QueryGetter.NORMAL = 0;
 common.QueryGetter.SKIP = 1;
 common.QueryGetter._isInit = false;
