@@ -1,4 +1,5 @@
 package canvas.primitives;
+import common.MyDAELoader;
 import sound.MyAudio;
 import three.BoxGeometry;
 import three.Geometry;
@@ -17,28 +18,38 @@ import three.Vector3;
  * ...
  * @author nabe
  */
-class Cubes extends PrimitiveBase
+class Ices extends PrimitiveBase
 {
 
 	private var _cubes	:Array<ExMesh>;
-	//private var _loader	:Mylo
+	private var _loader	:MyDAELoader;
 	
 	public function new() 
 	{
 		super();
 	}
 	
+	/**
+	 * 
+	 * @param	o
+	 */
 	override public function init(o:Dynamic):Void {
+		_cubes = [];
 		super.init(o);
+		
+		if(_loader==null){
+			_loader = new MyDAELoader();
+			_loader.load("dae/ice.dae", _onLoad);
+		}
 	}
 	
 	private function _onLoad():Void{
 		
-		var mm	:MeshFaceMaterial = new MeshFaceMaterial(materials);
-		var geo	:BoxGeometry = new BoxGeometry(130, 130, 130, 10, 10, 10 );
+		var mm	:MeshBasicMaterial = new MeshBasicMaterial({color:0xffffff});
+		var geo	:Geometry = _loader.meshes[0].geometry;//new BoxGeometry(130, 130, 130, 10, 10, 10 );
 			
 		//konnna 
-		_cubes = [];
+		
 		for (i in 0...16) {
 			
 			var cube:ExMesh = new ExMesh(geo,mm);	
@@ -52,7 +63,7 @@ class Cubes extends PrimitiveBase
 			cube.radX = 2 * Math.PI * Math.random();
 			cube.radY = 2 * Math.PI * Math.random();
 			
-			var ss:Float = Math.random() * 0.4 + 0.8;
+			var ss:Float = Math.random() * 0.4 + 0.7;
 			cube.scale.set(ss, ss, ss);
 			_cubes.push(cube);			
 		}
@@ -62,8 +73,10 @@ class Cubes extends PrimitiveBase
 	
 	override public function update(a:MyAudio,rotV:Vector3):Void {
 	
+		if (_cubes.length == 0) return;
+		
 		for (i in 0..._cubes.length) {
-			var aa:Float = a.freqByteData[0] / 255 * Math.PI/5 + Math.PI/10;
+			var aa:Float = a.freqByteData[0] / 255 * Math.PI/6 + Math.PI/20;
 			//_cubes[i].amp -= a.freqByteData[0] / 255 + 1;
 			_cubes[i].rotation.x += aa * _cubes[i].vx;
 			_cubes[i].rotation.y += aa * _cubes[i].vz;			

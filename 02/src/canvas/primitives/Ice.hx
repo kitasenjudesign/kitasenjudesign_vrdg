@@ -1,5 +1,5 @@
 package canvas.primitives;
-import data.MyDaeLoader.MyDAELoader;
+import common.MyDAELoader;
 import sound.MyAudio;
 import three.BoxGeometry;
 import three.Mesh;
@@ -27,6 +27,7 @@ class Ice extends PrimitiveBase
 		if(_loader==null){
 			_loader = new MyDAELoader();
 			//_loader.load("dae/katori.dae", _onLoad);
+			//_loader.load("dae/ice.dae", _onLoad);
 			_loader.load("dae/ice.dae", _onLoad);
 			
 		}

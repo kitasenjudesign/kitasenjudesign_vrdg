@@ -485,6 +485,72 @@ canvas.primitives.PrimitiveBase.prototype = $extend(THREE.Object3D.prototype,{
 	}
 	,__class__: canvas.primitives.PrimitiveBase
 });
+canvas.primitives.Chochin = function() {
+	canvas.primitives.PrimitiveBase.call(this);
+};
+canvas.primitives.Chochin.__name__ = true;
+canvas.primitives.Chochin.__super__ = canvas.primitives.PrimitiveBase;
+canvas.primitives.Chochin.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
+	init: function(o) {
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
+		if(this._loader == null) {
+			this._loader = new common.MyDAELoader();
+			this._loader.load("dae/chochin.dae",$bind(this,this._onLoad));
+		}
+	}
+	,_onLoad: function() {
+		this.visible = false;
+		this.rotation.x = Math.PI / 2;
+		var m = this._loader.meshes[0];
+		m.material = new THREE.MeshLambertMaterial({ color : 16777215});
+		m.scale.set(3,3,3);
+		this.add(m);
+	}
+	,update: function(a,rotV) {
+		this.rotation.x += 0.01;
+		this.rotation.y += 0.015;
+		this.rotation.z += 0.013;
+	}
+	,__class__: canvas.primitives.Chochin
+});
+canvas.primitives.Chochins = function() {
+	canvas.primitives.PrimitiveBase.call(this);
+};
+canvas.primitives.Chochins.__name__ = true;
+canvas.primitives.Chochins.__super__ = canvas.primitives.PrimitiveBase;
+canvas.primitives.Chochins.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
+	init: function(o) {
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
+		this._loader = new common.MyDAELoader();
+		this._loader.load("dae/chochin.dae",$bind(this,this._onLoad));
+	}
+	,_onLoad: function() {
+		var mm = new THREE.MeshLambertMaterial({ color : 16777215});
+		mm.side = 2;
+		var geo = this._loader.meshes[0].geometry;
+		this._cubes = [];
+		var _g = 0;
+		while(_g < 12) {
+			var i = _g++;
+			var cube = new THREE.Mesh(geo,mm);
+			cube.scale.set(2.5,2.5,2.5);
+			this.add(cube);
+			cube.position.x = 800 * (Math.random() - 0.5);
+			cube.position.y = 800 * (Math.random() - 0.5);
+			cube.position.z = 800 * (Math.random() - 0.5);
+			cube.rotation.x = 2 * Math.random() * Math.PI;
+			cube.rotation.y = 2 * Math.random() * Math.PI;
+			cube.rotation.z = 2 * Math.random() * Math.PI;
+			this._cubes.push(cube);
+		}
+	}
+	,start: function() {
+	}
+	,update: function(a,rotV) {
+		canvas.primitives.PrimitiveBase.prototype.update.call(this,a,rotV);
+	}
+	,__class__: canvas.primitives.Chochins
+});
 canvas.primitives.Cube = function() {
 	canvas.primitives.PrimitiveBase.call(this);
 };
@@ -582,7 +648,7 @@ canvas.primitives.DeDeLogo.prototype = $extend(canvas.primitives.PrimitiveBase.p
 	init: function(o) {
 		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		if(this._loader == null) {
-			this._loader = new data.MyDAELoader();
+			this._loader = new common.MyDAELoader();
 			this._loader.load("dae/mouse.dae",$bind(this,this._onLoad));
 		}
 	}
@@ -602,10 +668,19 @@ canvas.primitives.DeDeLogo.prototype = $extend(canvas.primitives.PrimitiveBase.p
 	}
 	,update: function(a,rotV) {
 		if(this._dede1 != null) {
+			this._dede1.rotation.x += rotV.x * 0.5 + 0.01;
+			this._dede1.rotation.y += rotV.y * 0.5 + 0.01;
+			this._dede1.rotation.z += rotV.z * 0.5 + 0.01;
 		}
 		if(this._dede2 != null) {
+			this._dede2.rotation.x += rotV.y * 0.5 + 0.01;
+			this._dede2.rotation.y += rotV.z * 0.5 + 0.01;
+			this._dede2.rotation.z += rotV.x * 0.5 + 0.01;
 		}
 		if(this._dede3 != null) {
+			this._dede3.rotation.x += rotV.z * 0.5 + 0.01;
+			this._dede3.rotation.y += rotV.y * 0.5 + 0.01;
+			this._dede3.rotation.z += rotV.x * 0.5 + 0.01;
 		}
 	}
 	,__class__: canvas.primitives.DeDeLogo
@@ -639,7 +714,7 @@ canvas.primitives.Hachigatsu.prototype = $extend(canvas.primitives.PrimitiveBase
 	init: function(o) {
 		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		if(this._loader == null) {
-			this._loader = new data.MyDAELoader();
+			this._loader = new common.MyDAELoader();
 			this._loader.load("dae/8gatsu11.dae",$bind(this,this._onLoad));
 		}
 	}
@@ -667,7 +742,7 @@ canvas.primitives.Ice.prototype = $extend(canvas.primitives.PrimitiveBase.protot
 	init: function(o) {
 		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		if(this._loader == null) {
-			this._loader = new data.MyDAELoader();
+			this._loader = new common.MyDAELoader();
 			this._loader.load("dae/ice.dae",$bind(this,this._onLoad));
 		}
 	}
@@ -686,6 +761,56 @@ canvas.primitives.Ice.prototype = $extend(canvas.primitives.PrimitiveBase.protot
 	}
 	,__class__: canvas.primitives.Ice
 });
+canvas.primitives.Ices = function() {
+	canvas.primitives.PrimitiveBase.call(this);
+};
+canvas.primitives.Ices.__name__ = true;
+canvas.primitives.Ices.__super__ = canvas.primitives.PrimitiveBase;
+canvas.primitives.Ices.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
+	init: function(o) {
+		this._cubes = [];
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
+		if(this._loader == null) {
+			this._loader = new common.MyDAELoader();
+			this._loader.load("dae/ice.dae",$bind(this,this._onLoad));
+		}
+	}
+	,_onLoad: function() {
+		var mm = new THREE.MeshBasicMaterial({ color : 16777215});
+		var geo = this._loader.meshes[0].geometry;
+		var _g = 0;
+		while(_g < 16) {
+			var i = _g++;
+			var cube = new canvas.primitives.ExMesh(geo,mm);
+			this.add(cube);
+			cube.position.x = 800 * (Math.random() - 0.5);
+			cube.position.y = 800 * (Math.random() - 0.5);
+			cube.position.z = 800 * (Math.random() - 0.5);
+			cube.amp = 400 + 600 * Math.random();
+			cube.radX = 2 * Math.PI * Math.random();
+			cube.radY = 2 * Math.PI * Math.random();
+			var ss = Math.random() * 0.4 + 0.7;
+			cube.scale.set(ss,ss,ss);
+			this._cubes.push(cube);
+		}
+	}
+	,update: function(a,rotV) {
+		if(this._cubes.length == 0) return;
+		var _g1 = 0;
+		var _g = this._cubes.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var aa = a.freqByteData[0] / 255 * Math.PI / 6 + Math.PI / 20;
+			this._cubes[i].rotation.x += aa * this._cubes[i].vx;
+			this._cubes[i].rotation.y += aa * this._cubes[i].vz;
+			this._cubes[i].rotation.z += aa * this._cubes[i].vz;
+			this._cubes[i].position.y -= 10 + Math.abs(aa * this._cubes[i].vy);
+			if(this._cubes[i].position.y < -400) this._cubes[i].position.y = 400;
+		}
+		this.rotation.y += rotV.y * 0.5;
+	}
+	,__class__: canvas.primitives.Ices
+});
 canvas.primitives.Katori = function() {
 	canvas.primitives.PrimitiveBase.call(this);
 };
@@ -695,7 +820,7 @@ canvas.primitives.Katori.prototype = $extend(canvas.primitives.PrimitiveBase.pro
 	init: function(o) {
 		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		if(this._loader == null) {
-			this._loader = new data.MyDAELoader();
+			this._loader = new common.MyDAELoader();
 			this._loader.load("dae/katori.dae",$bind(this,this._onLoad));
 		}
 	}
@@ -713,6 +838,56 @@ canvas.primitives.Katori.prototype = $extend(canvas.primitives.PrimitiveBase.pro
 		this.rotation.z += 0.013;
 	}
 	,__class__: canvas.primitives.Katori
+});
+canvas.primitives.Katoris = function() {
+	canvas.primitives.PrimitiveBase.call(this);
+};
+canvas.primitives.Katoris.__name__ = true;
+canvas.primitives.Katoris.__super__ = canvas.primitives.PrimitiveBase;
+canvas.primitives.Katoris.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
+	init: function(o) {
+		this._cubes = [];
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
+		if(this._loader == null) {
+			this._loader = new common.MyDAELoader();
+			this._loader.load("dae/katori.dae",$bind(this,this._onLoad));
+		}
+	}
+	,_onLoad: function() {
+		var mm = new THREE.MeshBasicMaterial({ color : 16777215});
+		var geo = this._loader.meshes[0].geometry;
+		var _g = 0;
+		while(_g < 16) {
+			var i = _g++;
+			var cube = new canvas.primitives.ExMesh(geo,mm);
+			this.add(cube);
+			cube.position.x = 800 * (Math.random() - 0.5);
+			cube.position.y = 800 * (Math.random() - 0.5);
+			cube.position.z = 800 * (Math.random() - 0.5);
+			cube.amp = 460 + 600 * Math.random();
+			cube.radX = 2 * Math.PI * Math.random();
+			cube.radY = 2 * Math.PI * Math.random();
+			var ss = Math.random() * 0.5 + 0.8;
+			cube.scale.set(ss,ss,ss);
+			this._cubes.push(cube);
+		}
+	}
+	,update: function(a,rotV) {
+		if(this._cubes.length == 0) return;
+		var _g1 = 0;
+		var _g = this._cubes.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var aa = a.freqByteData[0] / 255 * Math.PI / 6 + Math.PI / 20;
+			this._cubes[i].rotation.x += aa * this._cubes[i].vx * 0.3;
+			this._cubes[i].rotation.y += aa * this._cubes[i].vz * 0.3;
+			this._cubes[i].rotation.z += aa * this._cubes[i].vz * 0.3;
+			this._cubes[i].position.y += 0.5 + Math.abs(aa * this._cubes[i].vy);
+			if(this._cubes[i].position.y > 400) this._cubes[i].position.y = -400;
+		}
+		this.rotation.y += rotV.y * 0.03 + 0.01;
+	}
+	,__class__: canvas.primitives.Katoris
 });
 canvas.primitives.Knot = function() {
 	canvas.primitives.PrimitiveBase.call(this);
@@ -737,7 +912,7 @@ canvas.primitives.Octa.prototype = $extend(canvas.primitives.PrimitiveBase.proto
 		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		this._cubes = [];
 		if(this._loader == null) {
-			this._loader = new data.MyDAELoader();
+			this._loader = new common.MyDAELoader();
 			this._loader.load("dae/tetora.dae",$bind(this,this._onLoad));
 		}
 	}
@@ -790,8 +965,6 @@ canvas.primitives.Primitives.prototype = $extend(THREE.Object3D.prototype,{
 		this._katori.init(null);
 		this._ice = new canvas.primitives.Ice();
 		this._ice.init(null);
-		this._cube = new canvas.primitives.Cube();
-		this._cube.init({ isDepth : false});
 		this._cubes = new canvas.primitives.Cubes();
 		this._cubes.init(null);
 		this._sphere = new canvas.primitives.Sphere();
@@ -804,8 +977,6 @@ canvas.primitives.Primitives.prototype = $extend(THREE.Object3D.prototype,{
 		this._logo.init(null);
 		this._octa = new canvas.primitives.Octa();
 		this._octa.init(null);
-		this._knot = new canvas.primitives.Knot();
-		this._knot.init(null);
 		this._mouse = new canvas.primitives.DeDeLogo();
 		this._mouse.init({ pixelType : 1, dynamicScale : false, isDepth : false});
 		this.add(this._mouse);
@@ -815,7 +986,15 @@ canvas.primitives.Primitives.prototype = $extend(THREE.Object3D.prototype,{
 		this._two.init(null);
 		this._hachi = new canvas.primitives.Hachigatsu();
 		this._hachi.init(null);
-		this._primitives = [this._ice,this._hachi,this._katori,this._walker,this._cube,this._sphere,this._two,this._cubes,this._spheres,this._torus,this._octa,this._knot,this._mouse,this._logo];
+		this._chochin = new canvas.primitives.Chochin();
+		this._chochin.init({ pixelType : 1, isDepth : false});
+		this._chochins = new canvas.primitives.Chochins();
+		this._chochins.init({ isDepth : false});
+		this._ices = new canvas.primitives.Ices();
+		this._ices.init(null);
+		this._katoris = new canvas.primitives.Katoris();
+		this._katoris.init({ dynamicScale : false});
+		this._primitives = [this._chochin,this._hachi,this._katoris,this._two,this._ices,this._walker,this._chochins,this._sphere,this._katori,this._ice,this._mouse,this._spheres,this._torus,this._octa,this._logo];
 		var _g1 = 0;
 		var _g = this._primitives.length;
 		while(_g1 < _g) {
@@ -1017,7 +1196,7 @@ canvas.primitives.VrdgLogo.prototype = $extend(canvas.primitives.PrimitiveBase.p
 	init: function(o) {
 		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
 		if(this._loader == null) {
-			this._loader = new data.MyDAELoader();
+			this._loader = new common.MyDAELoader();
 			this._loader.load("dae/logo.dae",$bind(this,this._onLoad));
 		}
 	}
@@ -1266,6 +1445,36 @@ common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
 	}
 	,__class__: common.Key
 });
+common.MyDAELoader = function() {
+	THREE.Object3D.call(this);
+};
+common.MyDAELoader.__name__ = true;
+common.MyDAELoader.__super__ = THREE.Object3D;
+common.MyDAELoader.prototype = $extend(THREE.Object3D.prototype,{
+	load: function(filename,callback) {
+		this.meshes = [];
+		this._callback = callback;
+		var loader = new THREE.ColladaLoader();
+		loader.options.convertUpAxis = true;
+		loader.load(filename,$bind(this,this._onComplete));
+	}
+	,_onComplete: function(collada) {
+		this.dae = collada.scene;
+		this.dae.traverse($bind(this,this._getchild));
+		this.dae.scale.x = 50;
+		this.dae.scale.z = 50;
+		this.dae.scale.y = 50;
+		if(this._callback != null) this._callback();
+	}
+	,_getchild: function(child) {
+		if(js.Boot.__instanceof(child,THREE.Mesh)) {
+			var m = child;
+			m.material.side = 2;
+			this.meshes.push(child);
+		}
+	}
+	,__class__: common.MyDAELoader
+});
 common.StageRef = function() {
 };
 common.StageRef.__name__ = true;
@@ -1389,36 +1598,6 @@ data.LogoPaths.prototype = {
 	}
 	,__class__: data.LogoPaths
 };
-data.MyDAELoader = function() {
-	THREE.Object3D.call(this);
-};
-data.MyDAELoader.__name__ = true;
-data.MyDAELoader.__super__ = THREE.Object3D;
-data.MyDAELoader.prototype = $extend(THREE.Object3D.prototype,{
-	load: function(filename,callback) {
-		this.meshes = [];
-		this._callback = callback;
-		var loader = new THREE.ColladaLoader();
-		loader.options.convertUpAxis = true;
-		loader.load(filename,$bind(this,this._onComplete));
-	}
-	,_onComplete: function(collada) {
-		this.dae = collada.scene;
-		this.dae.traverse($bind(this,this._getchild));
-		this.dae.scale.x = 50;
-		this.dae.scale.z = 50;
-		this.dae.scale.y = 50;
-		if(this._callback != null) this._callback();
-	}
-	,_getchild: function(child) {
-		if(js.Boot.__instanceof(child,THREE.Mesh)) {
-			var m = child;
-			m.material.side = 2;
-			this.meshes.push(child);
-		}
-	}
-	,__class__: data.MyDAELoader
-});
 data.Paths = function() {
 };
 data.Paths.__name__ = true;

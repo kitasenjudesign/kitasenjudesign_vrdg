@@ -1,8 +1,13 @@
 package canvas.primitives;
+import canvas.primitives.Chochin;
+import canvas.primitives.Chochins;
+import canvas.primitives.Cubes;
 import canvas.primitives.Cubes;
 import canvas.primitives.data.EffectData;
 import canvas.primitives.Hachigatsu;
+import canvas.primitives.Ices;
 import canvas.primitives.Katori;
+import canvas.primitives.Katoris;
 import canvas.primitives.Knot;
 import canvas.primitives.Octa;
 import canvas.primitives.PrimitiveBase;
@@ -37,7 +42,7 @@ class Primitives extends Object3D
 	private var _primitives:Array<PrimitiveBase>;
 	private var _tgtScale:Float = 1;
 	private var _octa:Octa;
-	private var _knot:Knot;
+	//private var _knot:Knot;
 	//private var _kitasen:Kitasenju;
 	private var _cubes:Cubes;
 	private var _spheres:Spheres;
@@ -48,6 +53,10 @@ class Primitives extends Object3D
 	var _current:PrimitiveBase;
 	var _katori:Katori;
 	var _hachi:Hachigatsu;
+	var _chochin:Chochin;
+	var _ices:Ices;
+	var _chochins:Chochins;
+	var _katoris:Katoris;
 	
 	public function new() 
 	{
@@ -75,9 +84,8 @@ class Primitives extends Object3D
 		_ice = new Ice();
 		_ice.init(null);
 		
-		
-		_cube = new Cube();
-		_cube.init({isDepth:false});
+		//_cube = new Cube();
+		//_cube.init({isDepth:false});
 		
 		_cubes = new Cubes();
 		_cubes.init(null);
@@ -94,11 +102,11 @@ class Primitives extends Object3D
 		_logo = new VrdgLogo();
 		_logo.init(null);
 		
-		_octa = new Octa();
+		_octa = new Octa();//tetra
 		_octa.init(null);
 		
-		_knot = new Knot();
-		_knot.init(null);
+		//_knot = new Knot();
+		//_knot.init(null);
 		
 		_mouse = new DeDeLogo();
 		_mouse.init({pixelType:EffectData.BLACK_TRUE,dynamicScale:false,isDepth:false});
@@ -112,6 +120,8 @@ class Primitives extends Object3D
 		
 		_two = new Two();
 		_two.init(null);
+		
+		
 		/*
 		_primitives = [
 			_logo,
@@ -122,23 +132,35 @@ class Primitives extends Object3D
 		_hachi = new Hachigatsu();
 		_hachi.init(null);
 		
+		_chochin = new Chochin();
+		_chochin.init({pixelType:EffectData.BLACK_TRUE, isDepth:false});
+		
+		_chochins = new Chochins();
+		_chochins.init({isDepth:false});
+				
+		
+		_ices = new Ices();
+		_ices.init(null);
+		
+		_katoris = new Katoris();
+		_katoris.init({dynamicScale:false});
+		
 		_primitives = [
-		_ice,
+
+			_chochin,
 			_hachi,
-			_katori,
-			_walker,
-			_cube,
-			_sphere,
+			_katoris,//
 			_two,
-			_cubes,
-			
-			_spheres,
-			_torus,
-			
-			_octa,
-			_knot,
-			
+			_ices,//
+			_walker,
+			_chochins,//
+			_sphere,
+			_katori,
+			_ice,
 			_mouse,
+			_spheres,//
+			_torus,
+			_octa,
 			_logo
 		];
 		for (i in 0..._primitives.length) {

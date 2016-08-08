@@ -1,5 +1,5 @@
 package canvas.primitives;
-import data.MyDaeLoader.MyDAELoader;
+import common.MyDAELoader;
 import sound.MyAudio;
 import three.BoxGeometry;
 import three.Mesh;
@@ -58,13 +58,20 @@ class DeDeLogo extends PrimitiveBase
 	override public function update(a:MyAudio,rotV:Vector3):Void {
 	
 		if(_dede1!=null){
-			//_dede1.rotation.y += rotV.y * 0.5 + 0.01;
+			_dede1.rotation.x += rotV.x * 0.5 + 0.01;
+			_dede1.rotation.y += rotV.y * 0.5 + 0.01;
+			_dede1.rotation.z += rotV.z * 0.5 + 0.01;
 		}
 		if(_dede2!=null){
-			//_dede2.rotation.y = _dede1.rotation.y;
+			_dede2.rotation.x += rotV.y * 0.5 + 0.01;
+			_dede2.rotation.y += rotV.z * 0.5 + 0.01;
+			_dede2.rotation.z += rotV.x * 0.5 + 0.01;
 		}
-		if(_dede3!=null){
-			//_dede3.rotation.y = _dede1.rotation.y;
+		if (_dede3 != null) {
+			_dede3.rotation.x += rotV.z * 0.5 + 0.01;
+			_dede3.rotation.y += rotV.y * 0.5 + 0.01;
+			_dede3.rotation.z += rotV.x * 0.5 + 0.01;
+			
 		}
 		//super.update(a, rotV);
 		

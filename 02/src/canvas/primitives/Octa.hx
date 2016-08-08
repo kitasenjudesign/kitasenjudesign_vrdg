@@ -1,6 +1,6 @@
 package canvas.primitives;
 //import data.MyDAELoader;
-import data.MyDaeLoader.MyDAELoader;
+import common.MyDAELoader;
 
 import sound.MyAudio;
 import three.Geometry;
