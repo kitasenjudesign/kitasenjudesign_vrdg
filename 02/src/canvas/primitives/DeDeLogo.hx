@@ -32,26 +32,8 @@ class DeDeLogo extends PrimitiveBase
 			_loader = new MyDAELoader();
 			_loader.load("dae/mouse.dae", _onLoad);
 		}
-		//var cube:Mesh = new Mesh(new BoxGeometry(100, 100, 100, 1, 1, 1), new MeshBasicMaterial( { color:0xff0000 } ));
-		//add(cube);
-	}
-	
-	/*
-	 		var loader = untyped __js__("new THREE.ColladaLoader()");
-		loader.options.convertUpAxis = true;		
-		loader.load( 'mae_face.dae', _onComplete );
-		//loader.load( 'mae_face_hole.dae', _onComplete );
-		
 		
 	}
-	
-	
-	
-	private function _onComplete(collada):Void 
-	{
-		
-		dae = collada.scene;
-	 */
 	
 	private function _onLoad():Void
 	{

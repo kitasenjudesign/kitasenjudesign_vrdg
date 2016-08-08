@@ -1,5 +1,6 @@
 package emoji;
 import common.Dat;
+import data.TextureData;
 import sound.MyAudio;
 import three.Vector2;
 
@@ -11,11 +12,11 @@ class EmojiSpritePos
 {
 
 	//233
-	public static var EMOJI_MAX1:Int = 845;
-	public static var EMOJI_MAX2:Int = 200;
+	//public static var EMOJI_MAX1:Int = 845;
+	//public static var EMOJI_MAX2:Int = 200;
 	
-	public static var NUMX1:Int = 32;
-	public static var NUMX2:Int = 16;
+	//public static var NUMX1:Int = 32;
+	//public static var NUMX2:Int = 16;
 	
 	
 	private var _max:Int = 845;
@@ -32,18 +33,35 @@ class EmojiSpritePos
 	private var _maxRange		:Int = 0;	
 	private var _nn:Float = 0;
 	private var _isSoundReact:Bool = false;
-	
+	private var _randomIndecies:Array<Int> = [];
+	var _isRandomIdx:Bool=false;
 	/**
 	 * 
 	 */
-	public function new(max:Int,numx:Int) 
+	public function new(data:TextureData) 
 	{
-		_max = max;
+		//EmojiSpritePos.EMOJI_MAX1,EmojiSpritePos.NUMX1)
+		_max = data.max;
 		_maxRange = _max;
-		animationFrameLength = numx;
+		animationFrameLength = data.xnum;
+		
+		_randomIndecies = [];
+		for (i in 0..._max) {
+			_randomIndecies[i] = i;
+		}
+		for (i in 0..._max) {
+			
+			var idx1:Int = Math.floor( Math.random() * _max);
+			var idx2:Int = Math.floor( Math.random() * _max);
+			var tmp:Int = _randomIndecies[idx1];
+			_randomIndecies[idx1] = _randomIndecies[idx2];
+			_randomIndecies[idx2] = tmp;
+			
+		}
 		
 		startIndex	= 0;
 		endIndex	= 50;// _max - 1;
+		
 	
 	}
 	public function init():Void {
@@ -71,14 +89,24 @@ class EmojiSpritePos
 		
 		var index:Int = Math.floor( startIndex + no );
 		index = (index+counterIndex) % _max;
-		//counter++;
 		
+		if(_isRandomIdx){
+			index = _getRandomIndex(index);
+		}
+			
 		var xx:Int = (index) % animationFrameLength;
 		var yy:Int = animationFrameLength - 1 - Math.floor( index / animationFrameLength );		
 		
 		return new Vector2(xx / animationFrameLength, yy / animationFrameLength);
 	}
 	
+	private function _getRandomIndex(idx:Int):Int {
+		return _randomIndecies[idx];
+	}
+	
+	public function setRandomIndex(b:Bool):Void {
+		_isRandomIdx = b;
+	}
 	//public function cou
 	
 	

@@ -9,9 +9,10 @@ import three.Texture;
 class TextureData
 {
 	
-	public static var emo2048:TextureData = new TextureData("emo2048.png", 2048, 2048);
-	public static var emo128:TextureData = new TextureData("emo128.png", 2048, 2048);
 	
+	public static var emo2048	:TextureData = new TextureData("emo2048.png", 2048, 2048,845,32);
+	public static var emo128	:TextureData = new TextureData("emo128.png", 2048, 2048,200,32);
+	public static var emo2048b	:TextureData = new TextureData("images/emoji2048_64.png", 2048, 2048,700,32);
 	//public static var img2:TextureData;// = new TextureData("128/b.png", 512, 512);
 	//public static var img3:TextureData;// = new TextureData("128/c.png", 512, 512);
 	//public static var img4:TextureData;// = new TextureData("128/d.png", 256, 512);
@@ -24,9 +25,13 @@ class TextureData
 	public var width	:Float = 0;
 	public var height	:Float = 0;
 	public var texture	:Texture;
+	public var xnum:Int = 32;
+	public var max:Int = 845;
 	
-	public function new(u:String,w:Float,h:Float) 
+	public function new(u:String,w:Float,h:Float,maxx:Int,xxnum:Int) 
 	{
+		this.max = maxx;
+		this.xnum = xxnum;
 		this.url = u;
 		this.width = w;
 		this.height = h;

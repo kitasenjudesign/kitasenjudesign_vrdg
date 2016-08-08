@@ -83,7 +83,7 @@ class DeDeCutOneLine  extends DeDeCutBase
 		
 		//_lines.up
 		_counter++;
-		if ( audio.subFreqByteData[5] > 10 && _counter > 30 ) {
+		if ( audio.subFreqByteData[0] > 10 && _counter > 30 ) {
 			_counter = 0;
 			var addVal:Float = 1 / 30;
 			_lines.countUp( addVal );// Math.random());

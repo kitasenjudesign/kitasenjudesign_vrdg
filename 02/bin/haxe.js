@@ -573,40 +573,6 @@ canvas.primitives.Cubes.prototype = $extend(canvas.primitives.PrimitiveBase.prot
 	}
 	,__class__: canvas.primitives.Cubes
 });
-canvas.primitives.DeDeFace = function() {
-	canvas.primitives.PrimitiveBase.call(this);
-};
-canvas.primitives.DeDeFace.__name__ = true;
-canvas.primitives.DeDeFace.__super__ = canvas.primitives.PrimitiveBase;
-canvas.primitives.DeDeFace.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
-	init: function(o) {
-		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
-		if(this._loader == null) {
-			this._loader = new data.MyDAELoader();
-			this._loader.load("mae_face.dae",$bind(this,this._onLoad));
-		}
-	}
-	,_onLoad: function() {
-		this.visible = false;
-		this._face1 = this._loader.dae;
-		this.add(this._face1);
-		this._face2 = this._loader.dae.clone();
-		this.add(this._face2);
-		this._face1.position.x = 200;
-		this._face2.position.x = -200;
-	}
-	,update: function(a,rotV) {
-		if(this._face1 != null) {
-			this._face1.rotation.x += rotV.x * 0.5 + 0.01;
-			this._face1.rotation.y += rotV.y * 0.45 + 0.01;
-			this._face1.rotation.z += rotV.z * 0.39 + 0.01;
-			this._face2.rotation.x += rotV.y * 0.44 + 0.01;
-			this._face2.rotation.y += rotV.z * 0.49 + 0.01;
-			this._face2.rotation.z += rotV.x * 0.41 + 0.01;
-		}
-	}
-	,__class__: canvas.primitives.DeDeFace
-});
 canvas.primitives.DeDeLogo = function() {
 	canvas.primitives.PrimitiveBase.call(this);
 };
@@ -664,38 +630,89 @@ canvas.primitives.ExMesh.prototype = $extend(THREE.Mesh.prototype,{
 	}
 	,__class__: canvas.primitives.ExMesh
 });
-canvas.primitives.Kitasenju = function() {
-	this.a3 = "M-27,79.1c0.8,0,0.9,0,1.9-0.5c0.3-0.2,3.3-0.5,3.9-0.7c0.5-0.1,0.8-0.3,1.2-0.6c3,0,3.4,0.3,6,2c3.6,2.5,5.8,4.1,6.7,6.2c0.1,0.4,1.1,1.6,1.2,1.9c0.9,1.9,1,2.1,1,2.4c0,0.4-0.2,0.6-0.4,0.8v0.7c-1.6,1.4-1.8,1.6-3.3,2.8c-0.2,0.2-1.1,1.5-1.3,1.7c-1.2,1-1.3,1.1-1.8,2c-0.2,0.4-1.2,2.2-1.4,2.6c-0.3,0.4-1.1,3.2-1.3,3.7c-1.6,3.1-1.8,3.5-3.1,5.7c-0.5,0.7-0.8,1.5-1.2,2.5c1.4,1.2,1.5,1.4,2.5,1.9c0.3,0.1,3.8,4.3,3.8,6.5c0,0.9,0.2,5.1,0.1,6.1c0,0.3-0.3,1.8-0.3,2.2v10.2c0,1.1,0,5.3-0.1,6.1l-0.5,6.8v2c0.3,0.1,0.7,0.3,1,0.3c0.9,0,4.8-1,5.6-1c0.2,0,0.9,0.1,1,0l8.9-1.6c0.5,0,3.7-0.6,5.2-0.6c1.6,0,1.9,0,1.9-1c0-0.3-0.1-1.7-0.1-2L10,139c-0.2,0-3.8,0.4-4.2,0.5C5.4,139.6,4,140,3.7,140c-0.4,0-5.6-0.8-9.3-4.7c-0.6-0.5-4-3.1-4.1-3.7c0.1-0.2,0.5-0.5,0.8-0.5c2.9,0,6.7,0,9.3-0.5l8.3-1.5c1.6-0.3,2-0.3,2-1.4c0-0.4-0.2-2.1-0.2-2.5c0-7.3,0-8.8-1.2-8.8c-0.9,0-4.8,0.6-5.6,0.6c-4.9,0-15.2-5.6-15.3-6.9l-0.6-0.2v-1.1c2.1-0.2,2.7-0.2,3.9,0c0.7-0.4,5.3-1.1,5.5-1.1c1.4,0,1.7-0.1,4.5-0.8c0.8-0.2,4.4-0.6,5.2-0.8l6.8-1.4c0.5-0.1,1.1-0.2,1.5-0.3c1.4,0,3.4-0.4,4.9-0.7c1.3-0.3,7.1-1.1,8.1-1.7c0.3-0.2,1.5-2,1.7-2.3c0.1-0.2,1.3-1,1.5-1.2c0.6,0.3,3.6,0.8,4.2,1c3,1,3.2,1.4,5.4,3c0.5,0.3,2.5,1.6,2.7,2c0.1,0.3,0.7,1.8,0.8,2.1c-0.3,0.9-0.5,1.6-0.8,1.8c-0.7,0.5-2,1.2-2.6,1.7c-3.3,0.5-17.4,4-20.3,4.4v0.2c1.9,1.8,3.7,3.4,3.7,5.5c0,0.3,0,1.9,0.3,2.4c-0.1,0.3-0.6,1.8-0.6,2.1c0,0.3,0,0.5,0.3,1.4c1.4,0.1,1.6-0.1,3.8-1.2c0.2-0.2,1.3-0.9,1.5-0.9c0.3-0.1,1.4-0.6,1.7-0.6c0.3-0.1,1.3-0.2,1.8-0.2c0.4,0,2.2,1.1,2.6,1.2c3.8,1.7,4.4,1.9,6.5,4.5c0.2,0.3,0.5,0.9,0.5,1.5c0,1.3-1,4.1-3.9,4.4c-1.2,0.1-1.4,0.1-2,0.6c-2.6,0.2-5.3,0.4-7.7,0.6c-3.5,0.3-3.9,0.4-5.1,0.9c-0.2,0.8-0.2,1.1-0.2,1.8v0.8l-0.6,8.3l-0.6,1.3v0.4l0.6,0.2l7.7-0.9c0.5,0,2.9,0.1,3.4-0.1c1.8-0.7,2-0.8,2.9-1c0.3-0.1,1.4-1,1.7-1c0.8,0,8.2,5.3,8.3,5.4c0.3,0.3,1.5,1.6,1.7,2.1c1.1,3.8,1.2,4.2,1.2,4.5c0,0.7-0.6,1.5-1,1.9c-0.3,0.1-1.8,0.9-2.1,1c-0.5,0.1-0.8,0.1-1.1,0l-7.8-1c-2.8-0.4-7.2-1.4-10-1.4l-7.5,0.1c-3.8,0.1-4.2,0.3-6.7,0.6c-0.2,0-1.9,0.1-2.6,0.3c-0.3,0-1.9,0.5-2.2,0.6c-0.3,0-1.8,0.1-2.1,0.2c-0.9,0.1-4.6,1.3-5.4,1.2c-0.8,0.3-1,0.4-1.6,0.8c-0.7,0-0.8,0.1-1.1,0.4c-2.3,0-7.3-2.9-8.8-3.8c-0.6-0.4-3-2.5-3.6-2.8c-0.4,3.4-0.5,3.7-1.7,6.2l-0.7,0.3c-0.6,0.9-1.9,2.7-3.3,2.7c-1.3,0-2.1-0.4-2.4-0.6c-0.9-1-5.6-7.6-5.6-9.5c0-0.4,0.4-1.2,0.4-1.3v-2c0.2-0.3,1.3-1.7,1.4-2.1l0.6-0.4l0.2-1.5l1-11l0.5-9v-6.1l-0.1-0.4c-0.5,0.6-0.6,0.8-1.2,2.1c-0.9,1.7-6.5,8.5-9.1,11.1c-0.7,0.7-4.4,3.8-5,4.5c-0.2,0.2-1.2,0.6-1.4,0.7c-3.5,2.3-3.8,2.5-6.7,3.3c-0.2-0.3-0.2-0.4-0.2-0.6c0-0.9,0.2-1.2,2.4-4.4c0.1-0.2,12.5-25.8,13.5-28.2c1.6-3.6,8.3-22.2,8.8-23.2c0.2-2.2-1.5-3.7-3.2-5.2c-0.3-0.3-1.5-2-1.8-2.3L-27,79.1z M2.5,79.3l0.2-0.7c0.9,0.1,4.5,1.7,5.3,2c1.7,0.5,3.9,0.5,6.2,0.5c0.8,0,3.3-0.1,4-0.3c0.4-0.1,1.7-0.9,2.1-0.9c0.1,0,1,0.2,1.1,0.2c2.1,0,5.3,1.6,7.7,3c0.3,0.2,1.9,1.2,2.2,1.3c0.3,0.1,0.7,0.2,0.8,0.2c1,1.6,1.5,2.3,1.5,4.5l-0.4,0.3c-0.1,0.6-1.1,2.3-1.7,2.6c-0.7,0.4-2.3,0.9-3.4,1.3c-3.9,0-4.3,0-6.7,0.3c-2.6,0-9.9-1-11.7-2.8c-0.4-0.4-1.4-0.7-1.9-1.1C7,89,3.4,86,1.8,81.2c-0.1-0.3,0-1,0.1-2.1L2.5,79.3z";
-	this.a2 = "M-44.9-0.7c0.3-0.1,0.9-0.2,1.3-0.1c0.3,0.2,0.9,0.3,1.1,0.4c0.2,0,0.8-0.2,1-0.2c0.7,0,3.9,0.1,4.6,0c0.1,0,1.7,0.3,2.1,0.3c0.1,0,0.8-0.3,0.9-0.3l8.4-1h0.5l10.5-1.3h0.5l8.9-0.8l2.2-0.5l0.2-1.4l-0.2-17.5c0-1.6,0-2.9-1-2.9c-0.5,0-6.5,1.2-7.7,1.2c-3.7,0-5-0.9-5.8-1.5l-5.1-3.7c-0.3-0.2-3-2.1-3.7-2.9c-0.2-0.2-1.8-1.8-3.2-3c0.2-0.1,0.5-0.4,0.7-0.4c0.3,0,1.7,0.4,2,0.5c0.3-0.3,0.5-0.4,0.8-0.4c0.3,0,0.7,0.1,0.9,0.2l0.6-0.2l0.5,0.6l4.1,0.4L-3-36.9l13.3-2.3c0.4-0.1,5.2-1.2,5.4-1.8c0.7-1.3,1-2.1,3-2.1c0.3,0,1,0.1,1.3,0c0.4,0,1.8-0.5,2.1-0.5c2,0,3.7,1.5,5.2,2.9c0.3,0.3,2.3,1.3,2.6,1.5c0.7,0.6,3.5,3.1,3.5,4.4c0,0.5-0.2,2.2-0.9,3c-0.6,0.1-3,1.5-3.5,1.7c-3.9,1.2-4.9,1.3-5.9,1.3c-0.4,0-2.7,0-3,0.1h-0.6l-8.2,1.2c-1,0.1-5.8,0.5-6.7,0.7c0.6,1.3,2.3,2.5,3.8,3.5c1.1,0.8,4.2,5.6,4.2,7.9c0,0.8-1,4-1.1,4.7l-0.3,5.9l0.1,0.3l11.6-0.9l3.9-0.4c1.1-1.5,2.5-3.3,5.8-3.3c2.1,0,5.7,0.9,7.8,2c7.6,4.1,8.4,4.6,8.4,8c0,2.1-0.8,2.7-1.3,3.2L47.1,4c-1.2,1.4-4.2,1.9-5.9,1.9c-0.4,0-2-0.4-2.3-0.4L27.6,4.6l-3.7-0.3L12.1,5.2l-1.5,0.2l-0.2,0.2v0.3l-0.2,11.8v0.7l0.4,8.7c0,0.3-0.2,1-0.2,1.3c0,0.2,0.1,1,0.1,1.2l-0.8,8.5C9.3,42,7.5,48.4,2.9,48.4c-0.3,0-3-0.4-4.7-4.9L-4.3,37c-0.5-1.4-0.6-1.6-0.6-2.5l-0.3-0.3l-0.1-0.4c0.4-0.2,0.5-0.4,0.7-1.2c0.9-0.6,0.9-1,1.1-4.8L-3,17.7l0.1-11.1c-4.3,0-4.9-0.1-9.7,1.1l-7,1.7c-0.5,0.1-3.4,0.8-3.6,0.9c-0.3,0.2-1.9,1.4-2.3,1.4c-0.4,0-3-0.3-3.5-0.3c-0.6-0.1-5.2-2-10-5.9c-0.8-0.7-4.2-4.4-5-5L-44.9-0.7z";
-	this.a1 = "M-24-93.5c1-0.7,5.2-3.8,6.2-4.3c1.3-0.7,1.6-1,1.6-1.9c0-0.7-0.5-3.7-0.5-4.3l0.1-9.6v-2.9l-0.2-0.1c-1.4,0.8-2.1,1.1-2.6,1.3c-0.4,0.2-7.1,2.1-7.8,2.1c-0.2,0-7.6-1.8-8.9-3.3c-0.3-0.5-2.3-2.2-2.5-2.6c-0.4-0.7-1.3-2.8-1.3-3.7c0.5,0,2.4,0.8,2.9,0.8c0.8,0,3-0.5,4.2-0.9l7.8-2.7c0.2-0.1,4.9-2.1,5.9-2.2l1.5-0.7l-0.1-10.3c0-2.7-0.1-8-0.3-8.6c-0.4-0.9-1.9-2.3-3.4-2.9c-0.1-0.1-2-1.9-2.1-2.7c0.8-0.1,4.5-1.8,5.3-1.8c3.9,0,5.8,1.6,8.5,3.8c0.4,0.3,2.1,1.6,2.4,1.9c1.3,1.7,1.4,1.9,2.5,2.9c1.1,1.1,2.3,2.2,2.3,4.8c0,1.1-0.4,1.4-1.2,2.3c-0.5,0.6-0.8,2.3-0.8,2.6l0.1,0.5l-0.5,8.8c0,0.7-0.5,3.5-0.5,4.1c0,0.1,0.2,0.6,0.2,0.7c0,0.2-0.4,1.2-0.4,1.4l-0.2,8.7l-0.1,5.5l0.7-0.3l7-4.7l1.3-1l0.2,0.5c-0.4,0.6-0.7,1.5-1,2.1c0,0.8-0.3,1.8-0.7,2.5c-0.7,1.2-3.8,6.6-4.4,7.7c-0.1,0.1-4.1,4.3-5.4,5.3c-0.2,0.2-0.2,0.4-0.3,0.8c-0.6,0.8-3.6,3.6-4.2,4.2l-5.6,5.8c-0.9,0.9-4.6,4.5-5.2,5.3c-0.3,0.5-0.3,0.8-0.3,1.6c-0.8,0.5-1,0.6-1.8,0.9l-0.1,0.3c-0.1,0-4.9-0.1-6-1c-3.3-2.5-6.8-5.2-7.1-6.3c0-0.2-0.3-1.1-0.4-1.3c0-0.2-0.9-1.1-1-1.3c-0.2-0.4-0.9-2.1-0.8-2.3c0.8,0.1,1.2,0.1,5.4,0.3c0.3,0.1,1.3,0.4,1.6,0.4c0.5,0,4.4-2.4,5-2.8L-24-93.5z M18.7-153.5c1.7,1.3,2.5,3.1,2.5,4.2c0,0.4-0.3,1.1-0.4,1.2c-0.7,0.7-1.9,2.1-1.9,3.3l-0.2,8.2c0,0.3-0.6,2.6-0.7,2.9c0,3.2,0,3.5,0.1,4.3l5.5-3.8c2.4-1.6,5.1-4.4,6.9-6.3c-0.1-0.4-0.3-2.5-0.5-2.8c-1-1.5-1.2-1.7-1.3-2.4c0.8-0.1,1.2,0,4.4,1c0.8,0.2,2.1,0.3,2.9,0.4c0.7,0,1.4,0.8,1.6,1l5.5,6.1c2.4,2.7,2.6,3,3,5.4l-0.3,1.4c-1.6,2.3-2,3-4.6,3c-0.4,0-2.6-0.2-2.7-0.2c-1.4,0-8.1,1.7-10.3,2.4c-1.3,0.5-7,2.8-8.2,2.9c-1.6,0.3-1.6,0.3-2.2,1.2l-0.6,14.7l-0.2,1.2l0.1,12.6c0,2,5.7,2,6.7,2c4.2,0,9.2-0.9,10.5-1.2c4.1-1.1,4.5-1.3,5.7-1.4c0.7-1.9,1.4-8.1,1.4-9.7c0-0.2-0.2-3.3-0.2-4c0-1,0.1-1.7,0.3-2.7c0.6,1.1,0.7,1.4,1.2,2.8l3,8.4l0.7,1.9l1.4,2.4l1.5,0.4c0.4,0.5,2.6,2,2.8,2.5c0.3,0.8,0.7,1.8,1,2.7c0,0.7-0.8,3.5-5.5,6.6c-0.5,0.3-2.7,1.4-3,1.8c-0.9,0.4-1.2,0.5-2.8,0.6c-1.4,0.7-5.8,1.5-7,1.5c-0.4,0-2.2,0.4-2.6,0.4c-0.5,0-3-0.2-3.5-0.2h-1.4L18.2-79c-2.6-0.6-7.7-3.3-9.6-6C5.9-88.8,5-90.2,5.1-95l0.1-6.7l-0.1-1L5-111.4c0-1.7,0.5-9.4,0.5-11l0.1-8.7l0.1-11.3v-10.2c0-0.8-0.2-1-1.6-2.7c-0.2-0.3-1.2-1.9-1.4-2.1c-0.4-0.3-2-1.2-2.1-1.5c-0.9-1.6-1-1.7-1-3.6c0.8,0.1,4.1,0.8,4.8,0.8c0.4,0,0.9,0.1,5.2,1.3c0.8,0.2,3.7,2.8,4.3,3.3L18.7-153.5z";
+canvas.primitives.Hachigatsu = function() {
 	canvas.primitives.PrimitiveBase.call(this);
 };
-canvas.primitives.Kitasenju.__name__ = true;
-canvas.primitives.Kitasenju.__super__ = canvas.primitives.PrimitiveBase;
-canvas.primitives.Kitasenju.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
+canvas.primitives.Hachigatsu.__name__ = true;
+canvas.primitives.Hachigatsu.__super__ = canvas.primitives.PrimitiveBase;
+canvas.primitives.Hachigatsu.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
 	init: function(o) {
 		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
-		var ary = [this.a1,this.a2,this.a3];
-		this._meshes = [];
-		var _g1 = 0;
-		var _g = ary.length;
-		while(_g1 < _g) {
-			var i = _g1++;
-			var shape = common.Svg2Shape.getShape(ary[i]);
-			var g = new THREE.ExtrudeGeometry(shape,{ amount : 60, bevelEnabled : false});
-			var mesh1 = new THREE.Mesh(g,new THREE.MeshLambertMaterial({ color : 16711680}));
-			mesh1.position.z = -30;
-			this.add(mesh1);
-			this._meshes.push(mesh1);
+		if(this._loader == null) {
+			this._loader = new data.MyDAELoader();
+			this._loader.load("dae/8gatsu11.dae",$bind(this,this._onLoad));
 		}
 	}
-	,update: function(a,rotV) {
-		this.scale.z = 0.3 + a.freqByteData[3] / 255;
-		this.scale.x = 0.5 + 0.8 * a.freqByteData[3] / 255;
-		this.scale.y = 0.5 + 0.8 * a.freqByteData[3] / 255;
-		canvas.primitives.PrimitiveBase.prototype.update.call(this,a,rotV);
+	,_onLoad: function() {
+		this.visible = false;
+		this._loader.dae.scale.x = 0.8;
+		this._loader.dae.scale.y = 0.8;
+		this._loader.dae.scale.z = 0.8;
+		this.rotation.x = Math.PI / 2;
+		this.add(this._loader.dae);
 	}
-	,__class__: canvas.primitives.Kitasenju
+	,update: function(a,rotV) {
+		this.rotation.x += 0.01;
+		this.rotation.y += 0.015;
+		this.rotation.z += 0.013;
+	}
+	,__class__: canvas.primitives.Hachigatsu
+});
+canvas.primitives.Ice = function() {
+	canvas.primitives.PrimitiveBase.call(this);
+};
+canvas.primitives.Ice.__name__ = true;
+canvas.primitives.Ice.__super__ = canvas.primitives.PrimitiveBase;
+canvas.primitives.Ice.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
+	init: function(o) {
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
+		if(this._loader == null) {
+			this._loader = new data.MyDAELoader();
+			this._loader.load("dae/ice.dae",$bind(this,this._onLoad));
+		}
+	}
+	,_onLoad: function() {
+		this.visible = false;
+		this._loader.dae.scale.x = 0.7;
+		this._loader.dae.scale.y = 0.7;
+		this._loader.dae.scale.z = 0.7;
+		this.rotation.x = Math.PI / 2;
+		this.add(this._loader.dae);
+	}
+	,update: function(a,rotV) {
+		this.rotation.x += 0.01;
+		this.rotation.y += 0.015;
+		this.rotation.z += 0.013;
+	}
+	,__class__: canvas.primitives.Ice
+});
+canvas.primitives.Katori = function() {
+	canvas.primitives.PrimitiveBase.call(this);
+};
+canvas.primitives.Katori.__name__ = true;
+canvas.primitives.Katori.__super__ = canvas.primitives.PrimitiveBase;
+canvas.primitives.Katori.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
+	init: function(o) {
+		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
+		if(this._loader == null) {
+			this._loader = new data.MyDAELoader();
+			this._loader.load("dae/katori.dae",$bind(this,this._onLoad));
+		}
+	}
+	,_onLoad: function() {
+		this.visible = false;
+		this._loader.dae.scale.x = 1.7;
+		this._loader.dae.scale.y = 1.7;
+		this._loader.dae.scale.z = 1.7;
+		this.rotation.x = Math.PI / 2;
+		this.add(this._loader.dae);
+	}
+	,update: function(a,rotV) {
+		this.rotation.x += 0.01;
+		this.rotation.y += 0.015;
+		this.rotation.z += 0.013;
+	}
+	,__class__: canvas.primitives.Katori
 });
 canvas.primitives.Knot = function() {
 	canvas.primitives.PrimitiveBase.call(this);
@@ -718,9 +735,15 @@ canvas.primitives.Octa.__super__ = canvas.primitives.PrimitiveBase;
 canvas.primitives.Octa.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
 	init: function(o) {
 		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
-		var geo = new THREE.OctahedronGeometry(60);
-		var m = new THREE.MeshPhongMaterial({ color : 8947848, shading : 1});
 		this._cubes = [];
+		if(this._loader == null) {
+			this._loader = new data.MyDAELoader();
+			this._loader.load("dae/tetora.dae",$bind(this,this._onLoad));
+		}
+	}
+	,_onLoad: function() {
+		var geo = this._loader.meshes[0].geometry;
+		var m = new THREE.MeshPhongMaterial({ color : 8947848, shading : 1});
 		var space = 150;
 		var ww = space * 2;
 		var hh = space * 0;
@@ -728,6 +751,7 @@ canvas.primitives.Octa.prototype = $extend(canvas.primitives.PrimitiveBase.proto
 		while(_g < 3) {
 			var i = _g++;
 			var mesh = new canvas.primitives.ExMesh(geo,new THREE.MeshPhongMaterial({ color : Math.floor(16777215 * Math.random()), shading : 1}));
+			mesh.scale.set(0.8,0.8,0.8);
 			this.add(mesh);
 			var amp = 80;
 			mesh.position.x = amp * Math.cos(i / 3 * 2 * Math.PI);
@@ -736,6 +760,7 @@ canvas.primitives.Octa.prototype = $extend(canvas.primitives.PrimitiveBase.proto
 		}
 	}
 	,update: function(a,rotV) {
+		if(this._cubes.length == 0) return;
 		var _g1 = 0;
 		var _g = this._cubes.length;
 		while(_g1 < _g) {
@@ -745,7 +770,7 @@ canvas.primitives.Octa.prototype = $extend(canvas.primitives.PrimitiveBase.proto
 			this._cubes[i].rotation.y += aa * this._cubes[i].vy;
 			this._cubes[i].rotation.z += aa * this._cubes[i].vz / 7;
 		}
-		this.rotation.y += rotV.y * 0.5 + 0.01;
+		this.rotation.y += rotV.y * 0.01 + 0.05;
 	}
 	,__class__: canvas.primitives.Octa
 });
@@ -761,12 +786,16 @@ canvas.primitives.Primitives.prototype = $extend(THREE.Object3D.prototype,{
 		this._primitives = [];
 		this._minV = new THREE.Vector3();
 		this._addV = new THREE.Vector3();
+		this._katori = new canvas.primitives.Katori();
+		this._katori.init(null);
+		this._ice = new canvas.primitives.Ice();
+		this._ice.init(null);
 		this._cube = new canvas.primitives.Cube();
 		this._cube.init({ isDepth : false});
 		this._cubes = new canvas.primitives.Cubes();
 		this._cubes.init(null);
 		this._sphere = new canvas.primitives.Sphere();
-		this._sphere.init(null);
+		this._sphere.init({ pixelType : 1, dynamicScale : true, isDepth : false});
 		this._spheres = new canvas.primitives.Spheres();
 		this._spheres.init(null);
 		this._torus = new canvas.primitives.Torus();
@@ -777,10 +806,6 @@ canvas.primitives.Primitives.prototype = $extend(THREE.Object3D.prototype,{
 		this._octa.init(null);
 		this._knot = new canvas.primitives.Knot();
 		this._knot.init(null);
-		this._kitasen = new canvas.primitives.Kitasenju();
-		this._kitasen.init(null);
-		this._face = new canvas.primitives.DeDeFace();
-		this._face.init(null);
 		this._mouse = new canvas.primitives.DeDeLogo();
 		this._mouse.init({ pixelType : 1, dynamicScale : false, isDepth : false});
 		this.add(this._mouse);
@@ -788,7 +813,9 @@ canvas.primitives.Primitives.prototype = $extend(THREE.Object3D.prototype,{
 		this._walker.init({ pixelType : 1, dynamicScale : false, isDepth : false});
 		this._two = new canvas.primitives.Two();
 		this._two.init(null);
-		this._primitives = [this._walker,this._cube,this._sphere,this._two,this._cubes,this._spheres,this._torus,this._octa,this._knot,this._kitasen,this._face,this._mouse,this._logo];
+		this._hachi = new canvas.primitives.Hachigatsu();
+		this._hachi.init(null);
+		this._primitives = [this._ice,this._hachi,this._katori,this._walker,this._cube,this._sphere,this._two,this._cubes,this._spheres,this._torus,this._octa,this._knot,this._mouse,this._logo];
 		var _g1 = 0;
 		var _g = this._primitives.length;
 		while(_g1 < _g) {
@@ -860,19 +887,13 @@ canvas.primitives.Sphere.__super__ = canvas.primitives.PrimitiveBase;
 canvas.primitives.Sphere.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
 	init: function(o) {
 		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
-		this._mat = new THREE.MeshLambertMaterial({ color : 8947848, shading : 1, side : 2});
-		this._mesh = new THREE.Mesh(new THREE.IcosahedronGeometry(85,1),this._mat);
-		this.add(this._mesh);
+		if(this._mat == null) {
+			this._mat = new THREE.MeshBasicMaterial({ map : THREE.ImageUtils.loadTexture("images/beachball.png"), side : 2});
+			this._mesh = new THREE.Mesh(new THREE.SphereGeometry(70,8,8),this._mat);
+			this.add(this._mesh);
+		}
 	}
 	,start: function() {
-		if(Math.random() < 0.3) {
-			this._mesh.scale.set(6,6,6);
-			this._mat.wireframe = true;
-			this._mat.wireframeLinewidth = 2;
-		} else {
-			this._mesh.scale.set(1,1,1);
-			if(Math.random() < 0.5) this._mat.wireframe = true; else this._mat.wireframe = false;
-		}
 	}
 	,__class__: canvas.primitives.Sphere
 });
@@ -1166,22 +1187,22 @@ common.Dat._onKeyDown = function(e) {
 	}
 };
 common.Dat._goURL1 = function() {
-	common.Dat._goURL("../../01/bin/");
-};
-common.Dat._goURL2 = function() {
-	common.Dat._goURL("../../02/bin/");
-};
-common.Dat._goURL3 = function() {
-	common.Dat._goURL("../../03/bin/");
-};
-common.Dat._goURL4 = function() {
 	common.Dat._goURL("../../04/bin/");
 };
-common.Dat._goURL5 = function() {
+common.Dat._goURL2 = function() {
 	common.Dat._goURL("../../05/bin/");
 };
+common.Dat._goURL3 = function() {
+	common.Dat._goURL("../../02/bin/");
+};
+common.Dat._goURL4 = function() {
+	common.Dat._goURL("../../03/bin/");
+};
+common.Dat._goURL5 = function() {
+	common.Dat._goURL("../../00/bin/");
+};
 common.Dat._goURL6 = function() {
-	common.Dat._goURL("../../06/bin/");
+	common.Dat._goURL("../../01/bin/");
 };
 common.Dat._goURL = function(url) {
 	window.location.href = url;
@@ -1236,6 +1257,7 @@ common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
 	}
 	,_onKeyDown: function(e) {
 		var n = Std.parseInt(e.keyCode);
+		console.debug("_onkeydown " + n);
 		this._dispatch(n);
 	}
 	,_dispatch: function(n) {
@@ -1272,250 +1294,6 @@ common.StageRef.get_stageHeight = function() {
 };
 common.StageRef.prototype = {
 	__class__: common.StageRef
-};
-common.Svg2Shape = function() {
-};
-common.Svg2Shape.__name__ = true;
-common.Svg2Shape.getShape = function(sss) {
-	var path = new THREE.Shape();
-	var pathStr = sss;
-	
-			var DIGIT_0 = 48, DIGIT_9 = 57, COMMA = 44, SPACE = 32, PERIOD = 46,
-			MINUS = 45;
-
-		  var idx = 1, len = pathStr.length, activeCmd,
-			  x = 0, y = 0, nx = 0, ny = 0, firstX = null, firstY = null,
-			  x1 = 0, x2 = 0, y1 = 0, y2 = 0,
-			  rx = 0, ry = 0, xar = 0, laf = 0, sf = 0, cx, cy;
-		  
-		  function eatNum() {
-			var sidx, c, isFloat = false, s;
-			// eat delims
-			while (idx < len) {
-			  c = pathStr.charCodeAt(idx);
-			  if (c !== COMMA && c !== SPACE)
-				break;
-			  idx++;
-			}
-			if (c === MINUS)
-			  sidx = idx++;
-			else
-			  sidx = idx;
-			// eat number
-			while (idx < len) {
-			  c = pathStr.charCodeAt(idx);
-			  if (DIGIT_0 <= c && c <= DIGIT_9) {
-				idx++;
-				continue;
-			  }
-			  else if (c === PERIOD) {
-				idx++;
-				isFloat = true;
-				continue;
-			  }
-			  
-			  s = pathStr.substring(sidx, idx);
-			  return isFloat ? parseFloat(s) : parseInt(s);
-			}
-			
-			s = pathStr.substring(sidx);
-			return isFloat ? parseFloat(s) : parseInt(s);
-		  }
-		  
-		  function nextIsNum() {
-			var c;
-			// do permanently eat any delims...
-			while (idx < len) {
-			  c = pathStr.charCodeAt(idx);
-			  if (c !== COMMA && c !== SPACE)
-				break;
-			  idx++;
-			}
-			c = pathStr.charCodeAt(idx);
-			return (c === MINUS || (DIGIT_0 <= c && c <= DIGIT_9));
-		  }
-		  
-		  var canRepeat;
-		  activeCmd = pathStr[0];
-		  while (idx <= len) {
-			canRepeat = true;
-			switch (activeCmd) {
-				// moveto commands, become lineto's if repeated
-			  case 'M':
-				x = eatNum();
-				y = eatNum();
-				path.moveTo(x, y);
-				activeCmd = 'L';
-				break;
-			  case 'm':
-				x += eatNum();
-				y += eatNum();
-				path.moveTo(x, y);
-				activeCmd = 'l';
-				break;
-			  case 'Z':
-			  case 'z':
-				canRepeat = false;
-				if (x !== firstX || y !== firstY)
-				  path.lineTo(firstX, firstY);
-				break;
-				// - lines!
-			  case 'L':
-			  case 'H':
-			  case 'V':
-				nx = (activeCmd === 'V') ? x : eatNum();
-				ny = (activeCmd === 'H') ? y : eatNum();
-				path.lineTo(nx, ny);
-				x = nx;
-				y = ny;
-				break;
-			  case 'l':
-			  case 'h':
-			  case 'v':
-				nx = (activeCmd === 'v') ? x : (x + eatNum());
-				ny = (activeCmd === 'h') ? y : (y + eatNum());
-				path.lineTo(nx, ny);
-				x = nx;
-				y = ny;
-				break;
-				// - cubic bezier
-			  case 'C':
-				x1 = eatNum(); y1 = eatNum();
-			  case 'S':
-				if (activeCmd === 'S') {
-				  x1 = 2 * x - x2; y1 = 2 * y - y2;
-				}
-				x2 = eatNum();
-				y2 = eatNum();
-				nx = eatNum();
-				ny = eatNum();
-				path.bezierCurveTo(x1, y1, x2, y2, nx, ny);
-				x = nx; y = ny;
-				break;
-			  case 'c':
-				x1 = x + eatNum();
-				y1 = y + eatNum();
-			  case 's':
-				if (activeCmd === 's') {
-				  x1 = 2 * x - x2;
-				  y1 = 2 * y - y2;
-				}
-				x2 = x + eatNum();
-				y2 = y + eatNum();
-				nx = x + eatNum();
-				ny = y + eatNum();
-				path.bezierCurveTo(x1, y1, x2, y2, nx, ny);
-				x = nx; y = ny;
-				break;
-				// - quadratic bezier
-			  case 'Q':
-				x1 = eatNum(); y1 = eatNum();
-			  case 'T':
-				if (activeCmd === 'T') {
-				  x1 = 2 * x - x1;
-				  y1 = 2 * y - y1;
-				}
-				nx = eatNum();
-				ny = eatNum();
-				path.quadraticCurveTo(x1, y1, nx, ny);
-				x = nx;
-				y = ny;
-				break;
-			  case 'q':
-				x1 = x + eatNum();
-				y1 = y + eatNum();
-			  case 't':
-				if (activeCmd === 't') {
-				  x1 = 2 * x - x1;
-				  y1 = 2 * y - y1;
-				}
-				nx = x + eatNum();
-				ny = y + eatNum();
-				path.quadraticCurveTo(x1, y1, nx, ny);
-				x = nx; y = ny;
-				break;
-				// - elliptical arc
-			  case 'A':
-				rx = eatNum();
-				ry = eatNum();
-				xar = eatNum() * DEGS_TO_RADS;
-				laf = eatNum();
-				sf = eatNum();
-				nx = eatNum();
-				ny = eatNum();
-				if (rx !== ry) {
-				  console.warn('Forcing elliptical arc to be a circular one :(',
-							 rx, ry);
-				}
-				// SVG implementation notes does all the math for us! woo!
-				// http://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes
-				// step1, using x1 as x1'
-				x1 = Math.cos(xar) * (x - nx) / 2 + Math.sin(xar) * (y - ny) / 2;
-				y1 = -Math.sin(xar) * (x - nx) / 2 + Math.cos(xar) * (y - ny) / 2;
-				// step 2, using x2 as cx'
-				var norm = Math.sqrt(
-				  (rx*rx * ry*ry - rx*rx * y1*y1 - ry*ry * x1*x1) /
-				  (rx*rx * y1*y1 + ry*ry * x1*x1));
-				if (laf === sf)
-				  norm = -norm;
-				x2 = norm * rx * y1 / ry;
-				y2 = norm * -ry * x1 / rx;
-				// step 3
-				cx = Math.cos(xar) * x2 - Math.sin(xar) * y2 + (x + nx) / 2;
-				cy = Math.sin(xar) * x2 + Math.cos(xar) * y2 + (y + ny) / 2;
-				
-				var u = new THREE.Vector2(1, 0),
-					v = new THREE.Vector2((x1 - x2) / rx,
-										  (y1 - y2) / ry);
-				var startAng = Math.acos(u.dot(v) / u.length() / v.length());
-				if (u.x * v.y - u.y * v.x < 0)
-				  startAng = -startAng;
-				
-				// we can reuse 'v' from start angle as our 'u' for delta angle
-				u.x = (-x1 - x2) / rx;
-				u.y = (-y1 - y2) / ry;
-				
-				var deltaAng = Math.acos(v.dot(u) / v.length() / u.length());
-				// This normalization ends up making our curves fail to triangulate...
-				if (v.x * u.y - v.y * u.x < 0)
-				  deltaAng = -deltaAng;
-				if (!sf && deltaAng > 0)
-				  deltaAng -= Math.PI * 2;
-				if (sf && deltaAng < 0)
-				  deltaAng += Math.PI * 2;
-				
-				path.absarc(cx, cy, rx, startAng, startAng + deltaAng, sf);
-				x = nx;
-				y = ny;
-				break;
-			  default:
-				//throw new Error('weird path command: >> code=' + activeCmd.charCodeAt(0));
-				console.warn('weird path command: >> code=' + activeCmd.charCodeAt(0));
-				
-			}
-			if (firstX === null) {
-			  firstX = x;
-			  firstY = y;
-			}
-			// just reissue the command
-			if (canRepeat && nextIsNum())
-			  continue;
-			activeCmd = pathStr[idx++];
-		  }
-	var list = path.getPoints(0);
-	var sumX = 0;
-	var sumY = 0;
-	var _g1 = 0;
-	var _g = list.length;
-	while(_g1 < _g) {
-		var i = _g1++;
-		sumX += list[i].x;
-		sumY += list[i].y;
-	}
-	return path;
-};
-common.Svg2Shape.prototype = {
-	__class__: common.Svg2Shape
 };
 common.WSocket = function() {
 };
@@ -1618,6 +1396,7 @@ data.MyDAELoader.__name__ = true;
 data.MyDAELoader.__super__ = THREE.Object3D;
 data.MyDAELoader.prototype = $extend(THREE.Object3D.prototype,{
 	load: function(filename,callback) {
+		this.meshes = [];
 		this._callback = callback;
 		var loader = new THREE.ColladaLoader();
 		loader.options.convertUpAxis = true;
@@ -1635,6 +1414,7 @@ data.MyDAELoader.prototype = $extend(THREE.Object3D.prototype,{
 		if(js.Boot.__instanceof(child,THREE.Mesh)) {
 			var m = child;
 			m.material.side = 2;
+			this.meshes.push(child);
 		}
 	}
 	,__class__: data.MyDAELoader
@@ -1669,10 +1449,14 @@ data.Paths.prototype = {
 	}
 	,__class__: data.Paths
 };
-data.TextureData = function(u,w,h) {
+data.TextureData = function(u,w,h,maxx,xxnum) {
+	this.max = 845;
+	this.xnum = 32;
 	this.height = 0;
 	this.width = 0;
 	this.url = "";
+	this.max = maxx;
+	this.xnum = xxnum;
 	this.url = u;
 	this.width = w;
 	this.height = h;
@@ -1725,40 +1509,10 @@ effect.shaders.MyTiltShiftShader.prototype = {
 	__class__: effect.shaders.MyTiltShiftShader
 };
 var emoji = {};
-emoji.EmojiPiece = function() {
-	this._count = 0;
-	this.EMOJI_MAX = 845;
-	this.animationFrameLength = 32;
-	this._texture = THREE.ImageUtils.loadTexture("./emo2048.png");
-	this._texture.minFilter = 1003;
-	this._texture.magFilter = 1003;
-	this._geo = new THREE.PlaneGeometry(80,80,1,1);
-	this._mat = new THREE.MeshBasicMaterial({ map : this._texture, side : 2, shading : 1});
-	THREE.Mesh.call(this,this._geo,this._mat);
-	this.updateEmoji();
-};
-emoji.EmojiPiece.__name__ = true;
-emoji.EmojiPiece.__super__ = THREE.Mesh;
-emoji.EmojiPiece.prototype = $extend(THREE.Mesh.prototype,{
-	updateEmoji: function() {
-		var vv = this._getIconPos(Math.floor(this._count) % 700);
-		this._count += 0.4;
-		this._texture.offset.x = vv.x;
-		this._texture.offset.y = vv.y;
-		this._texture.repeat.x = 1 / this.animationFrameLength;
-		this._texture.repeat.y = 1 / this.animationFrameLength;
-	}
-	,_getIconPos: function(index) {
-		var xx = index % this.animationFrameLength;
-		var yy = this.animationFrameLength - 1 - Math.floor(index / this.animationFrameLength);
-		return new THREE.Vector2(xx / this.animationFrameLength,yy / this.animationFrameLength);
-	}
-	,__class__: emoji.EmojiPiece
-});
 emoji.EmojiShader = function() {
 	this.fragmentShader = "\r\n\t\t  uniform vec3 color;\r\n\t\t  uniform sampler2D texture;\r\n\t\t  uniform vec2 offset;\r\n\t\t  varying vec2 vaOffset;\r\n\t\t  uniform vec2 repeat;\r\n\t\t  void main() {\r\n\t\t\tvec2 uv = vec2(gl_PointCoord.x, 1.0 - gl_PointCoord.y);\r\n\t\t\tvec4 color0 = texture2D( texture, uv * repeat + vaOffset  );//\r\n\t\t\tgl_FragColor = color0;\r\n\t\t  }\r\n\t";
 	this.vertexShader = "\r\n//\r\n// Description : Array and textureless GLSL 2D/3D/4D simplex \r\n//               noise functions.\r\n//      Author : Ian McEwan, Ashima Arts.\r\n//  Maintainer : ijm\r\n//     Lastmod : 20110822 (ijm)\r\n//     License : Copyright (C) 2011 Ashima Arts. All rights reserved.\r\n//               Distributed under the MIT License. See LICENSE file.\r\n//               https://github.com/ashima/webgl-noise\r\n// \r\n\r\nvec3 mod289(vec3 x) {\r\n\treturn x - floor(x * (1.0 / 289.0)) * 289.0;\r\n}\r\n\r\nvec4 mod289(vec4 x) {\r\n\treturn x - floor(x * (1.0 / 289.0)) * 289.0;\r\n}\r\n\r\nvec4 permute(vec4 x) {\r\n\treturn mod289(((x*34.0)+1.0)*x);\r\n}\r\n\r\nvec4 taylorInvSqrt(vec4 r){\r\n\treturn 1.79284291400159 - 0.85373472095314 * r;\r\n}\r\n\r\nfloat snoise(vec3 v) { \r\n\r\n\tconst vec2  C = vec2(1.0/6.0, 1.0/3.0) ;\r\n\tconst vec4  D = vec4(0.0, 0.5, 1.0, 2.0);\r\n\r\n\t// First corner\r\n\tvec3 i  = floor(v + dot(v, C.yyy) );\r\n\tvec3 x0 =   v - i + dot(i, C.xxx) ;\r\n\r\n\t// Other corners\r\n\tvec3 g = step(x0.yzx, x0.xyz);\r\n\tvec3 l = 1.0 - g;\r\n\tvec3 i1 = min( g.xyz, l.zxy );\r\n\tvec3 i2 = max( g.xyz, l.zxy );\r\n\r\n\t//   x0 = x0 - 0.0 + 0.0 * C.xxx;\r\n\t//   x1 = x0 - i1  + 1.0 * C.xxx;\r\n\t//   x2 = x0 - i2  + 2.0 * C.xxx;\r\n\t//   x3 = x0 - 1.0 + 3.0 * C.xxx;\r\n\tvec3 x1 = x0 - i1 + C.xxx;\r\n\tvec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y\r\n\tvec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y\r\n\r\n\t// Permutations\r\n\ti = mod289(i); \r\n\tvec4 p = permute( permute( permute( \r\n\t\t  i.z + vec4(0.0, i1.z, i2.z, 1.0 ))\r\n\t\t+ i.y + vec4(0.0, i1.y, i2.y, 1.0 )) \r\n\t\t+ i.x + vec4(0.0, i1.x, i2.x, 1.0 ));\r\n\r\n\t// Gradients: 7x7 points over a square, mapped onto an octahedron.\r\n\t// The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)\r\n\tfloat n_ = 0.142857142857; // 1.0/7.0\r\n\tvec3  ns = n_ * D.wyz - D.xzx;\r\n\r\n\tvec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)\r\n\r\n\tvec4 x_ = floor(j * ns.z);\r\n\tvec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)\r\n\r\n\tvec4 x = x_ *ns.x + ns.yyyy;\r\n\tvec4 y = y_ *ns.x + ns.yyyy;\r\n\tvec4 h = 1.0 - abs(x) - abs(y);\r\n\r\n\tvec4 b0 = vec4( x.xy, y.xy );\r\n\tvec4 b1 = vec4( x.zw, y.zw );\r\n\r\n\t//vec4 s0 = vec4(lessThan(b0,0.0))*2.0 - 1.0;\r\n\t//vec4 s1 = vec4(lessThan(b1,0.0))*2.0 - 1.0;\r\n\tvec4 s0 = floor(b0)*2.0 + 1.0;\r\n\tvec4 s1 = floor(b1)*2.0 + 1.0;\r\n\tvec4 sh = -step(h, vec4(0.0));\r\n\r\n\tvec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;\r\n\tvec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;\r\n\r\n\tvec3 p0 = vec3(a0.xy,h.x);\r\n\tvec3 p1 = vec3(a0.zw,h.y);\r\n\tvec3 p2 = vec3(a1.xy,h.z);\r\n\tvec3 p3 = vec3(a1.zw,h.w);\r\n\r\n\t//Normalise gradients\r\n\tvec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));\r\n\tp0 *= norm.x;\r\n\tp1 *= norm.y;\r\n\tp2 *= norm.z;\r\n\tp3 *= norm.w;\r\n\r\n\t// Mix final noise value\r\n\tvec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);\r\n\tm = m * m;\r\n\treturn 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ) );\r\n\r\n}\r\n\r\nvec3 snoiseVec3( vec3 x ){\r\n\r\n\tfloat s  = snoise(vec3( x ));\r\n\tfloat s1 = snoise(vec3( x.y - 19.1 , x.z + 33.4 , x.x + 47.2 ));\r\n\tfloat s2 = snoise(vec3( x.z + 74.2 , x.x - 124.5 , x.y + 99.4 ));\r\n\tvec3 c = vec3( s , s1 , s2 );\r\n\treturn c;\r\n\r\n}\r\n\r\nvec3 curlNoise( vec3 p ){\r\n \r\n\tconst float e = .1;\r\n\tvec3 dx = vec3( e   , 0.0 , 0.0 );\r\n\tvec3 dy = vec3( 0.0 , e   , 0.0 );\r\n\tvec3 dz = vec3( 0.0 , 0.0 , e   );\r\n\r\n\tvec3 p_x0 = snoiseVec3( p - dx );\r\n\tvec3 p_x1 = snoiseVec3( p + dx );\r\n\tvec3 p_y0 = snoiseVec3( p - dy );\r\n\tvec3 p_y1 = snoiseVec3( p + dy );\r\n\tvec3 p_z0 = snoiseVec3( p - dz );\r\n\tvec3 p_z1 = snoiseVec3( p + dz );\r\n\r\n\tfloat x = p_y1.z - p_y0.z - p_z1.y + p_z0.y;\r\n\tfloat y = p_z1.x - p_z0.x - p_x1.z + p_x0.z;\r\n\tfloat z = p_x1.y - p_x0.y - p_y1.x + p_y0.x;\r\n\r\n\tconst float divisor = 1.0 / ( 2.0 * e );\r\n\treturn normalize( vec3( x , y , z ) * divisor );\r\n\r\n}\r\n\r\nvec3 curlNoise2( vec3 p ) {\r\n\r\n\tconst float e = .1;\r\n\r\n\tvec3 xNoisePotentialDerivatives = snoiseVec3( p );\r\n\tvec3 yNoisePotentialDerivatives = snoiseVec3( p + e * vec3( 3., -3.,  1. ) );\r\n\tvec3 zNoisePotentialDerivatives = snoiseVec3( p + e * vec3( 2.,  4., -3. ) );\r\n\r\n\tvec3 noiseVelocity = vec3(\r\n\t\tzNoisePotentialDerivatives.y - yNoisePotentialDerivatives.z,\r\n\t\txNoisePotentialDerivatives.z - zNoisePotentialDerivatives.x,\r\n\t\tyNoisePotentialDerivatives.x - xNoisePotentialDerivatives.y\r\n\t);\r\n\r\n\treturn normalize( noiseVelocity );\r\n\r\n}\r\n\r\nvec4 snoiseD(vec3 v) { //returns vec4(value, dx, dy, dz)\r\n  const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;\r\n  const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);\r\n \r\n  vec3 i  = floor(v + dot(v, C.yyy) );\r\n  vec3 x0 =   v - i + dot(i, C.xxx) ;\r\n \r\n  vec3 g = step(x0.yzx, x0.xyz);\r\n  vec3 l = 1.0 - g;\r\n  vec3 i1 = min( g.xyz, l.zxy );\r\n  vec3 i2 = max( g.xyz, l.zxy );\r\n \r\n  vec3 x1 = x0 - i1 + C.xxx;\r\n  vec3 x2 = x0 - i2 + C.yyy;\r\n  vec3 x3 = x0 - D.yyy;\r\n \r\n  i = mod289(i);\r\n  vec4 p = permute( permute( permute(\r\n             i.z + vec4(0.0, i1.z, i2.z, 1.0 ))\r\n           + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))\r\n           + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));\r\n \r\n  float n_ = 0.142857142857; // 1.0/7.0\r\n  vec3  ns = n_ * D.wyz - D.xzx;\r\n \r\n  vec4 j = p - 49.0 * floor(p * ns.z * ns.z);\r\n \r\n  vec4 x_ = floor(j * ns.z);\r\n  vec4 y_ = floor(j - 7.0 * x_ );\r\n \r\n  vec4 x = x_ *ns.x + ns.yyyy;\r\n  vec4 y = y_ *ns.x + ns.yyyy;\r\n  vec4 h = 1.0 - abs(x) - abs(y);\r\n \r\n  vec4 b0 = vec4( x.xy, y.xy );\r\n  vec4 b1 = vec4( x.zw, y.zw );\r\n \r\n  vec4 s0 = floor(b0)*2.0 + 1.0;\r\n  vec4 s1 = floor(b1)*2.0 + 1.0;\r\n  vec4 sh = -step(h, vec4(0.0));\r\n \r\n  vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;\r\n  vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;\r\n \r\n  vec3 p0 = vec3(a0.xy,h.x);\r\n  vec3 p1 = vec3(a0.zw,h.y);\r\n  vec3 p2 = vec3(a1.xy,h.z);\r\n  vec3 p3 = vec3(a1.zw,h.w);\r\n \r\n  vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));\r\n  p0 *= norm.x;\r\n  p1 *= norm.y;\r\n  p2 *= norm.z;\r\n  p3 *= norm.w;\r\n \r\n  vec4 values = vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ); //value of contributions from each corner (extrapolate the gradient)\r\n \r\n  vec4 m = max(0.5 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0); //kernel function from each corner\r\n \r\n  vec4 m2 = m * m;\r\n  vec4 m3 = m * m * m;\r\n \r\n  vec4 temp = -6.0 * m2 * values;\r\n  float dx = temp[0] * x0.x + temp[1] * x1.x + temp[2] * x2.x + temp[3] * x3.x + m3[0] * p0.x + m3[1] * p1.x + m3[2] * p2.x + m3[3] * p3.x;\r\n  float dy = temp[0] * x0.y + temp[1] * x1.y + temp[2] * x2.y + temp[3] * x3.y + m3[0] * p0.y + m3[1] * p1.y + m3[2] * p2.y + m3[3] * p3.y;\r\n  float dz = temp[0] * x0.z + temp[1] * x1.z + temp[2] * x2.z + temp[3] * x3.z + m3[0] * p0.z + m3[1] * p1.z + m3[2] * p2.z + m3[3] * p3.z;\r\n \r\n  return vec4(dot(m3, values), dx, dy, dz) * 42.0;\r\n}\r\n\r\n\r\nvec3 curlNoise3 (vec3 p) {\r\n\r\n    vec3 xNoisePotentialDerivatives = snoiseD( p ).yzw; //yzw are the xyz derivatives\r\n    vec3 yNoisePotentialDerivatives = snoiseD(vec3( p.y - 19.1 , p.z + 33.4 , p.x + 47.2 )).zwy;\r\n    vec3 zNoisePotentialDerivatives = snoiseD(vec3( p.z + 74.2 , p.x - 124.5 , p.y + 99.4 )).wyz;\r\n    vec3 noiseVelocity = vec3(\r\n        zNoisePotentialDerivatives.y - yNoisePotentialDerivatives.z,\r\n        xNoisePotentialDerivatives.z - zNoisePotentialDerivatives.x,\r\n        yNoisePotentialDerivatives.x - xNoisePotentialDerivatives.y\r\n    );\r\n\t\r\n\tconst float e = .1;\r\n\tconst float divisor = 1.0 / ( 2.0 * e );\r\n\treturn normalize( noiseVelocity * divisor );\r\n\r\n}\r\n\t\r\n\t" + "\r\n\t\t\tuniform float strength;\r\n\t\t\tuniform float seed;\r\n\t\t\tuniform float scale;\r\n\t\t\tuniform float scale1;\r\n\t\t\tuniform vec3 posScale;\r\n\t\t\tuniform float counter;\r\n\t\t\tattribute vec2 aOffset;\r\n\t\t\tvarying vec2 vaOffset;\t  \r\n\t\t\tvoid main() {\r\n\t\t\t\t//vec3 ps = vec3(2.0, 2.0, 2.0);\r\n\t\t\t\tvaOffset = aOffset;\r\n\t\t\t\t\r\n\t\t\t\tvec3 cn = curlNoise(position * seed + counter);\r\n\t\t\t\tvec3 pp = position + vec3( cn.x * strength, cn.y * strength, cn.z * strength );\r\n\t\t\t\t//vec3 pp = position + vec3( cn.x, cn.y, cn.z ) * 10.0;\r\n\t\t\t\t\r\n\t\t\t\tgl_Position = projectionMatrix * modelViewMatrix * vec4( pp * posScale, 1.0 );\r\n\t\t\t\tgl_PointSize = scale1 * scale / gl_Position.w;\r\n\t\t\t}\r\n\t";
-	this.animationFrameLength = 32;
+	this.animationFrameLength = 0;
 };
 emoji.EmojiShader.__name__ = true;
 emoji.EmojiShader.prototype = {
@@ -1770,7 +1524,8 @@ emoji.EmojiShader.prototype = {
 			var i = _g1++;
 			this.attributes.aOffset.value[i] = new THREE.Vector2(Math.random(),0);
 		}
-		var tex = data.TextureData.emo2048.texture;
+		var tex = data.TextureData.emo2048b.texture;
+		this.animationFrameLength = data.TextureData.emo2048.xnum;
 		tex.minFilter = 1003;
 		tex.magFilter = 1003;
 		this.uniforms = { strength : { type : "f", value : 100.0}, seed : { type : "f", value : 0.0}, counter : { type : "f", value : 0}, texture : { type : "t", value : tex}, scale1 : { type : "f", value : common.Config.particleSize}, scale : { type : "f", value : 1.0}, posScale : { type : "v3", value : new THREE.Vector3(1.0,1.0,1.0)}, offset : { type : "v2", value : new THREE.Vector2(1 / this.animationFrameLength,0.0)}, repeat : { type : "v2", value : new THREE.Vector2(1 / this.animationFrameLength,1 / this.animationFrameLength)}};
@@ -1786,8 +1541,8 @@ emoji.EmojiSingleShader = function() {
 emoji.EmojiSingleShader.__name__ = true;
 emoji.EmojiSingleShader.prototype = {
 	init: function() {
-		this.animationFrameLength = emoji.EmojiSpritePos.NUMX2;
-		this._pos = new emoji.EmojiSpritePos(emoji.EmojiSpritePos.EMOJI_MAX2,emoji.EmojiSpritePos.NUMX2);
+		this.animationFrameLength = data.TextureData.emo128.xnum;
+		this._pos = new emoji.EmojiSpritePos(data.TextureData.emo128);
 		this.attributes = { };
 		if(emoji.EmojiSingleShader.tex == null) {
 			emoji.EmojiSingleShader.tex = data.TextureData.emo128.texture;
@@ -1798,7 +1553,7 @@ emoji.EmojiSingleShader.prototype = {
 		this.shaderMaterial = new THREE.ShaderMaterial({ uniforms : this.uniforms, attributes : this.attributes, vertexShader : this.vertexShader, fragmentShader : this.fragmentShader, transparent : true, alphaTest : 0.5, depthWrite : false, side : 2});
 	}
 	,setIconIndex: function(n) {
-		n = n % emoji.EmojiSpritePos.EMOJI_MAX2;
+		n = n % data.TextureData.emo128.max;
 		this.uniforms.offset.value = this._pos.getIconPosByIndex(n);
 	}
 	,setHeight: function(ratio) {
@@ -1809,7 +1564,9 @@ emoji.EmojiSingleShader.prototype = {
 	}
 	,__class__: emoji.EmojiSingleShader
 };
-emoji.EmojiSpritePos = function(max,numx) {
+emoji.EmojiSpritePos = function(data) {
+	this._isRandomIdx = false;
+	this._randomIndecies = [];
 	this._isSoundReact = false;
 	this._nn = 0;
 	this._maxRange = 0;
@@ -1821,9 +1578,26 @@ emoji.EmojiSpritePos = function(max,numx) {
 	this.startIndex = 0;
 	this.animationFrameLength = 32;
 	this._max = 845;
-	this._max = max;
+	this._max = data.max;
 	this._maxRange = this._max;
-	this.animationFrameLength = numx;
+	this.animationFrameLength = data.xnum;
+	this._randomIndecies = [];
+	var _g1 = 0;
+	var _g = this._max;
+	while(_g1 < _g) {
+		var i = _g1++;
+		this._randomIndecies[i] = i;
+	}
+	var _g11 = 0;
+	var _g2 = this._max;
+	while(_g11 < _g2) {
+		var i1 = _g11++;
+		var idx1 = Math.floor(Math.random() * this._max);
+		var idx2 = Math.floor(Math.random() * this._max);
+		var tmp = this._randomIndecies[idx1];
+		this._randomIndecies[idx1] = this._randomIndecies[idx2];
+		this._randomIndecies[idx2] = tmp;
+	}
 	this.startIndex = 0;
 	this.endIndex = 50;
 };
@@ -1842,9 +1616,16 @@ emoji.EmojiSpritePos.prototype = {
 		no = no % num;
 		var index = Math.floor(this.startIndex + no);
 		index = (index + this.counterIndex) % this._max;
+		if(this._isRandomIdx) index = this._getRandomIndex(index);
 		var xx = index % this.animationFrameLength;
 		var yy = this.animationFrameLength - 1 - Math.floor(index / this.animationFrameLength);
 		return new THREE.Vector2(xx / this.animationFrameLength,yy / this.animationFrameLength);
+	}
+	,_getRandomIndex: function(idx) {
+		return this._randomIndecies[idx];
+	}
+	,setRandomIndex: function(b) {
+		this._isRandomIdx = b;
 	}
 	,getIconPosByIndex: function(index) {
 		var xx = index % this.animationFrameLength;
@@ -1886,7 +1667,7 @@ emoji.Emojis.prototype = $extend(THREE.Object3D.prototype,{
 		this._camera = camera;
 		this._canvas = new canvas.CanvasSrc();
 		this._canvas.init();
-		this._pos = new emoji.EmojiSpritePos(emoji.EmojiSpritePos.EMOJI_MAX1,emoji.EmojiSpritePos.NUMX1);
+		this._pos = new emoji.EmojiSpritePos(data.TextureData.emo2048b);
 		this._pos.init();
 		this._maxW = maxW;
 		this._maxH = maxH;
@@ -1918,6 +1699,7 @@ emoji.Emojis.prototype = $extend(THREE.Object3D.prototype,{
 		var keyCode = Std.parseInt(e.keyCode);
 		if(keyCode == 78) this._isCurl = !this._isCurl; else if(keyCode == 39) {
 			var data = this._canvas.next(false);
+			this._pos.setRandomIndex(Math.random() < 0.5?true:false);
 			this._pos.setRange(Math.random(),Math.pow(Math.random(),2));
 			this._isBlackPixel = data.getIsBlackPixel();
 			this._depthDir = 1;
@@ -2485,7 +2267,7 @@ planes.IconGenerator.prototype = $extend(THREE.Object3D.prototype,{
 		while(_g2 < num) {
 			var i1 = _g2++;
 			this.icons[i1].visible = true;
-			this.icons[i1].setIcon(Math.floor(emoji.EmojiSpritePos.EMOJI_MAX2 * Math.random()));
+			this.icons[i1].setIcon(Math.floor(data.TextureData.emo128.xnum * Math.random()));
 			if(num == 1) {
 				this.icons[i1].position.x = 0;
 				this.icons[i1].position.y = 0;
@@ -2831,6 +2613,7 @@ var sound = {};
 sound.MyAudio = function() {
 	this.globalVolume = 0.899;
 	this.isStart = false;
+	this.freqByteDataAryEase = [];
 	this._impulse = [];
 };
 sound.MyAudio.__name__ = true;
@@ -2859,6 +2642,7 @@ sound.MyAudio.prototype = {
 		while(_g < 64) {
 			var i = _g++;
 			this.subFreqByteData[i] = 0;
+			this.freqByteDataAryEase[i] = 0;
 			this._oldFreqByteData[i] = 0;
 		}
 		source.connect(this.analyser,0);
@@ -2913,6 +2697,7 @@ sound.MyAudio.prototype = {
 		while(_g15 < _g6) {
 			var i5 = _g15++;
 			this.freqByteDataAry[i5] = this.freqByteData[i5];
+			this.freqByteDataAryEase[i5] += (this.freqByteData[i5] - this.freqByteDataAryEase[i5]) / 2;
 		}
 		this._updateInpulse();
 	}
@@ -3179,12 +2964,9 @@ common.Dat.hoge = 0;
 common.Dat.bg = false;
 common.Dat._showing = true;
 common.StageRef.$name = "webgl";
-data.TextureData.emo2048 = new data.TextureData("emo2048.png",2048,2048);
-data.TextureData.emo128 = new data.TextureData("emo128.png",2048,2048);
-emoji.EmojiSpritePos.EMOJI_MAX1 = 845;
-emoji.EmojiSpritePos.EMOJI_MAX2 = 200;
-emoji.EmojiSpritePos.NUMX1 = 32;
-emoji.EmojiSpritePos.NUMX2 = 16;
+data.TextureData.emo2048 = new data.TextureData("emo2048.png",2048,2048,845,32);
+data.TextureData.emo128 = new data.TextureData("emo128.png",2048,2048,200,32);
+data.TextureData.emo2048b = new data.TextureData("images/emoji2048_64.png",2048,2048,700,32);
 emoji.shader.CurlNoise.glsl = "\r\n//\r\n// Description : Array and textureless GLSL 2D/3D/4D simplex \r\n//               noise functions.\r\n//      Author : Ian McEwan, Ashima Arts.\r\n//  Maintainer : ijm\r\n//     Lastmod : 20110822 (ijm)\r\n//     License : Copyright (C) 2011 Ashima Arts. All rights reserved.\r\n//               Distributed under the MIT License. See LICENSE file.\r\n//               https://github.com/ashima/webgl-noise\r\n// \r\n\r\nvec3 mod289(vec3 x) {\r\n\treturn x - floor(x * (1.0 / 289.0)) * 289.0;\r\n}\r\n\r\nvec4 mod289(vec4 x) {\r\n\treturn x - floor(x * (1.0 / 289.0)) * 289.0;\r\n}\r\n\r\nvec4 permute(vec4 x) {\r\n\treturn mod289(((x*34.0)+1.0)*x);\r\n}\r\n\r\nvec4 taylorInvSqrt(vec4 r){\r\n\treturn 1.79284291400159 - 0.85373472095314 * r;\r\n}\r\n\r\nfloat snoise(vec3 v) { \r\n\r\n\tconst vec2  C = vec2(1.0/6.0, 1.0/3.0) ;\r\n\tconst vec4  D = vec4(0.0, 0.5, 1.0, 2.0);\r\n\r\n\t// First corner\r\n\tvec3 i  = floor(v + dot(v, C.yyy) );\r\n\tvec3 x0 =   v - i + dot(i, C.xxx) ;\r\n\r\n\t// Other corners\r\n\tvec3 g = step(x0.yzx, x0.xyz);\r\n\tvec3 l = 1.0 - g;\r\n\tvec3 i1 = min( g.xyz, l.zxy );\r\n\tvec3 i2 = max( g.xyz, l.zxy );\r\n\r\n\t//   x0 = x0 - 0.0 + 0.0 * C.xxx;\r\n\t//   x1 = x0 - i1  + 1.0 * C.xxx;\r\n\t//   x2 = x0 - i2  + 2.0 * C.xxx;\r\n\t//   x3 = x0 - 1.0 + 3.0 * C.xxx;\r\n\tvec3 x1 = x0 - i1 + C.xxx;\r\n\tvec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y\r\n\tvec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y\r\n\r\n\t// Permutations\r\n\ti = mod289(i); \r\n\tvec4 p = permute( permute( permute( \r\n\t\t  i.z + vec4(0.0, i1.z, i2.z, 1.0 ))\r\n\t\t+ i.y + vec4(0.0, i1.y, i2.y, 1.0 )) \r\n\t\t+ i.x + vec4(0.0, i1.x, i2.x, 1.0 ));\r\n\r\n\t// Gradients: 7x7 points over a square, mapped onto an octahedron.\r\n\t// The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)\r\n\tfloat n_ = 0.142857142857; // 1.0/7.0\r\n\tvec3  ns = n_ * D.wyz - D.xzx;\r\n\r\n\tvec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)\r\n\r\n\tvec4 x_ = floor(j * ns.z);\r\n\tvec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)\r\n\r\n\tvec4 x = x_ *ns.x + ns.yyyy;\r\n\tvec4 y = y_ *ns.x + ns.yyyy;\r\n\tvec4 h = 1.0 - abs(x) - abs(y);\r\n\r\n\tvec4 b0 = vec4( x.xy, y.xy );\r\n\tvec4 b1 = vec4( x.zw, y.zw );\r\n\r\n\t//vec4 s0 = vec4(lessThan(b0,0.0))*2.0 - 1.0;\r\n\t//vec4 s1 = vec4(lessThan(b1,0.0))*2.0 - 1.0;\r\n\tvec4 s0 = floor(b0)*2.0 + 1.0;\r\n\tvec4 s1 = floor(b1)*2.0 + 1.0;\r\n\tvec4 sh = -step(h, vec4(0.0));\r\n\r\n\tvec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;\r\n\tvec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;\r\n\r\n\tvec3 p0 = vec3(a0.xy,h.x);\r\n\tvec3 p1 = vec3(a0.zw,h.y);\r\n\tvec3 p2 = vec3(a1.xy,h.z);\r\n\tvec3 p3 = vec3(a1.zw,h.w);\r\n\r\n\t//Normalise gradients\r\n\tvec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));\r\n\tp0 *= norm.x;\r\n\tp1 *= norm.y;\r\n\tp2 *= norm.z;\r\n\tp3 *= norm.w;\r\n\r\n\t// Mix final noise value\r\n\tvec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);\r\n\tm = m * m;\r\n\treturn 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ) );\r\n\r\n}\r\n\r\nvec3 snoiseVec3( vec3 x ){\r\n\r\n\tfloat s  = snoise(vec3( x ));\r\n\tfloat s1 = snoise(vec3( x.y - 19.1 , x.z + 33.4 , x.x + 47.2 ));\r\n\tfloat s2 = snoise(vec3( x.z + 74.2 , x.x - 124.5 , x.y + 99.4 ));\r\n\tvec3 c = vec3( s , s1 , s2 );\r\n\treturn c;\r\n\r\n}\r\n\r\nvec3 curlNoise( vec3 p ){\r\n \r\n\tconst float e = .1;\r\n\tvec3 dx = vec3( e   , 0.0 , 0.0 );\r\n\tvec3 dy = vec3( 0.0 , e   , 0.0 );\r\n\tvec3 dz = vec3( 0.0 , 0.0 , e   );\r\n\r\n\tvec3 p_x0 = snoiseVec3( p - dx );\r\n\tvec3 p_x1 = snoiseVec3( p + dx );\r\n\tvec3 p_y0 = snoiseVec3( p - dy );\r\n\tvec3 p_y1 = snoiseVec3( p + dy );\r\n\tvec3 p_z0 = snoiseVec3( p - dz );\r\n\tvec3 p_z1 = snoiseVec3( p + dz );\r\n\r\n\tfloat x = p_y1.z - p_y0.z - p_z1.y + p_z0.y;\r\n\tfloat y = p_z1.x - p_z0.x - p_x1.z + p_x0.z;\r\n\tfloat z = p_x1.y - p_x0.y - p_y1.x + p_y0.x;\r\n\r\n\tconst float divisor = 1.0 / ( 2.0 * e );\r\n\treturn normalize( vec3( x , y , z ) * divisor );\r\n\r\n}\r\n\r\nvec3 curlNoise2( vec3 p ) {\r\n\r\n\tconst float e = .1;\r\n\r\n\tvec3 xNoisePotentialDerivatives = snoiseVec3( p );\r\n\tvec3 yNoisePotentialDerivatives = snoiseVec3( p + e * vec3( 3., -3.,  1. ) );\r\n\tvec3 zNoisePotentialDerivatives = snoiseVec3( p + e * vec3( 2.,  4., -3. ) );\r\n\r\n\tvec3 noiseVelocity = vec3(\r\n\t\tzNoisePotentialDerivatives.y - yNoisePotentialDerivatives.z,\r\n\t\txNoisePotentialDerivatives.z - zNoisePotentialDerivatives.x,\r\n\t\tyNoisePotentialDerivatives.x - xNoisePotentialDerivatives.y\r\n\t);\r\n\r\n\treturn normalize( noiseVelocity );\r\n\r\n}\r\n\r\nvec4 snoiseD(vec3 v) { //returns vec4(value, dx, dy, dz)\r\n  const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;\r\n  const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);\r\n \r\n  vec3 i  = floor(v + dot(v, C.yyy) );\r\n  vec3 x0 =   v - i + dot(i, C.xxx) ;\r\n \r\n  vec3 g = step(x0.yzx, x0.xyz);\r\n  vec3 l = 1.0 - g;\r\n  vec3 i1 = min( g.xyz, l.zxy );\r\n  vec3 i2 = max( g.xyz, l.zxy );\r\n \r\n  vec3 x1 = x0 - i1 + C.xxx;\r\n  vec3 x2 = x0 - i2 + C.yyy;\r\n  vec3 x3 = x0 - D.yyy;\r\n \r\n  i = mod289(i);\r\n  vec4 p = permute( permute( permute(\r\n             i.z + vec4(0.0, i1.z, i2.z, 1.0 ))\r\n           + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))\r\n           + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));\r\n \r\n  float n_ = 0.142857142857; // 1.0/7.0\r\n  vec3  ns = n_ * D.wyz - D.xzx;\r\n \r\n  vec4 j = p - 49.0 * floor(p * ns.z * ns.z);\r\n \r\n  vec4 x_ = floor(j * ns.z);\r\n  vec4 y_ = floor(j - 7.0 * x_ );\r\n \r\n  vec4 x = x_ *ns.x + ns.yyyy;\r\n  vec4 y = y_ *ns.x + ns.yyyy;\r\n  vec4 h = 1.0 - abs(x) - abs(y);\r\n \r\n  vec4 b0 = vec4( x.xy, y.xy );\r\n  vec4 b1 = vec4( x.zw, y.zw );\r\n \r\n  vec4 s0 = floor(b0)*2.0 + 1.0;\r\n  vec4 s1 = floor(b1)*2.0 + 1.0;\r\n  vec4 sh = -step(h, vec4(0.0));\r\n \r\n  vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;\r\n  vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;\r\n \r\n  vec3 p0 = vec3(a0.xy,h.x);\r\n  vec3 p1 = vec3(a0.zw,h.y);\r\n  vec3 p2 = vec3(a1.xy,h.z);\r\n  vec3 p3 = vec3(a1.zw,h.w);\r\n \r\n  vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));\r\n  p0 *= norm.x;\r\n  p1 *= norm.y;\r\n  p2 *= norm.z;\r\n  p3 *= norm.w;\r\n \r\n  vec4 values = vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ); //value of contributions from each corner (extrapolate the gradient)\r\n \r\n  vec4 m = max(0.5 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0); //kernel function from each corner\r\n \r\n  vec4 m2 = m * m;\r\n  vec4 m3 = m * m * m;\r\n \r\n  vec4 temp = -6.0 * m2 * values;\r\n  float dx = temp[0] * x0.x + temp[1] * x1.x + temp[2] * x2.x + temp[3] * x3.x + m3[0] * p0.x + m3[1] * p1.x + m3[2] * p2.x + m3[3] * p3.x;\r\n  float dy = temp[0] * x0.y + temp[1] * x1.y + temp[2] * x2.y + temp[3] * x3.y + m3[0] * p0.y + m3[1] * p1.y + m3[2] * p2.y + m3[3] * p3.y;\r\n  float dz = temp[0] * x0.z + temp[1] * x1.z + temp[2] * x2.z + temp[3] * x3.z + m3[0] * p0.z + m3[1] * p1.z + m3[2] * p2.z + m3[3] * p3.z;\r\n \r\n  return vec4(dot(m3, values), dx, dy, dz) * 42.0;\r\n}\r\n\r\n\r\nvec3 curlNoise3 (vec3 p) {\r\n\r\n    vec3 xNoisePotentialDerivatives = snoiseD( p ).yzw; //yzw are the xyz derivatives\r\n    vec3 yNoisePotentialDerivatives = snoiseD(vec3( p.y - 19.1 , p.z + 33.4 , p.x + 47.2 )).zwy;\r\n    vec3 zNoisePotentialDerivatives = snoiseD(vec3( p.z + 74.2 , p.x - 124.5 , p.y + 99.4 )).wyz;\r\n    vec3 noiseVelocity = vec3(\r\n        zNoisePotentialDerivatives.y - yNoisePotentialDerivatives.z,\r\n        xNoisePotentialDerivatives.z - zNoisePotentialDerivatives.x,\r\n        yNoisePotentialDerivatives.x - xNoisePotentialDerivatives.y\r\n    );\r\n\t\r\n\tconst float e = .1;\r\n\tconst float divisor = 1.0 / ( 2.0 * e );\r\n\treturn normalize( noiseVelocity * divisor );\r\n\r\n}\r\n\t\r\n\t";
 planes.IconGenerator.MAX = 10;
 planes.rtt.RTTTexture.width = 512;
@@ -3201,3 +2983,5 @@ three._WebGLRenderer.RenderPrecision_Impl_.mediump = "mediump";
 three._WebGLRenderer.RenderPrecision_Impl_.lowp = "lowp";
 Main.main();
 })();
+
+//# sourceMappingURL=haxe.js.map

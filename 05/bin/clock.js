@@ -877,22 +877,22 @@ common.Dat._onKeyDown = function(e) {
 	}
 };
 common.Dat._goURL1 = function() {
-	common.Dat._goURL("../../01/bin/");
-};
-common.Dat._goURL2 = function() {
-	common.Dat._goURL("../../02/bin/");
-};
-common.Dat._goURL3 = function() {
-	common.Dat._goURL("../../03/bin/");
-};
-common.Dat._goURL4 = function() {
 	common.Dat._goURL("../../04/bin/");
 };
-common.Dat._goURL5 = function() {
+common.Dat._goURL2 = function() {
 	common.Dat._goURL("../../05/bin/");
 };
+common.Dat._goURL3 = function() {
+	common.Dat._goURL("../../02/bin/");
+};
+common.Dat._goURL4 = function() {
+	common.Dat._goURL("../../03/bin/");
+};
+common.Dat._goURL5 = function() {
+	common.Dat._goURL("../../00/bin/");
+};
 common.Dat._goURL6 = function() {
-	common.Dat._goURL("../../06/bin/");
+	common.Dat._goURL("../../01/bin/");
 };
 common.Dat._goURL = function(url) {
 	window.location.href = url;
@@ -1854,7 +1854,7 @@ dede.cuts.DeDeCutOneLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 	}
 	,update: function(audio) {
 		this._counter++;
-		if(audio.subFreqByteData[5] > 10 && this._counter > 30) {
+		if(audio.subFreqByteData[0] > 10 && this._counter > 30) {
 			this._counter = 0;
 			var addVal = 0.0333333333333333329;
 			this._lines.countUp(addVal);

@@ -22,10 +22,9 @@ class MyDAELoader extends Object3D
 	private var _callback:Void->Void;
 	
 	public var dae:Object3D;
-	public var geometry:Geometry;
+	//public var geometries:Array<Geometry>;
+	public var meshes:Array<Mesh>;
 	public var material:MeshBasicMaterial;
-	public var baseGeo:Array<Vector3>;
-	
 	
 	public function new() 
 	{
@@ -33,6 +32,9 @@ class MyDAELoader extends Object3D
 	}
 
 	public function load(filename:String, callback:Void->Void):Void {
+		
+		//geometries = [];
+		meshes = [];
 		
 		_callback = callback;		
 		var loader = untyped __js__("new THREE.ColladaLoader()");
@@ -78,7 +80,8 @@ class MyDAELoader extends Object3D
 		if( Std.is(child,Mesh) ){
 			var m:Mesh = cast child;
 			m.material.side = Three.DoubleSide;
-			
+			meshes.push( cast child );
+			//geometries.push( m.geometry );
 		}
 	}
 	

@@ -1,6 +1,7 @@
 package canvas.primitives;
 import three.DirectionalLight;
 import three.IcosahedronGeometry;
+import three.ImageUtils;
 import three.Mesh;
 import three.MeshBasicMaterial;
 import three.MeshLambertMaterial;
@@ -16,7 +17,7 @@ class Sphere extends PrimitiveBase
 {
 	
 	private var _mesh:Mesh;
-	private var _mat:MeshLambertMaterial;
+	private var _mat:MeshBasicMaterial;
 
 	public function new() 
 	{
@@ -27,18 +28,22 @@ class Sphere extends PrimitiveBase
 	
 	override public function init(o:Dynamic):Void {
 		super.init(o);
+		
+		if(_mat==null){
 		/*var light:DirectionalLight = new DirectionalLight(0xffffff, 0.1);light.position.set( -10, 5, 3);add(light);*/
-		_mat = new MeshLambertMaterial( { color:0x888888, shading:Three.FlatShading, side:Three.DoubleSide } );
+		_mat = new MeshBasicMaterial( { map:ImageUtils.loadTexture("images/beachball.png"),  side:Three.DoubleSide } );
 		_mesh = new Mesh( 	
-		//new SphereGeometry(100, 8, 8),	
-			new IcosahedronGeometry(85, 1),	
+			new SphereGeometry(70, 8, 8),	
+			//new IcosahedronGeometry(85, 1),	
 			_mat
 		);
 		add(_mesh);
+		}
 	}
 	
 	override public function start():Void {
 	
+		/*
 		if(Math.random()<0.3){
 			_mesh.scale.set(6, 6, 6);
 			_mat.wireframe = true;
@@ -51,7 +56,7 @@ class Sphere extends PrimitiveBase
 				_mat.wireframe = false;
 			}
 		}
-		
+		*/
 		
 		
 	}	

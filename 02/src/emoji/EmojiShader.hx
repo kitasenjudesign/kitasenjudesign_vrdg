@@ -15,7 +15,8 @@ import three.Vector3;
  */
 class EmojiShader
 {
-	var animationFrameLength:Int=32;
+	
+	var animationFrameLength:Int = 0;// 32;
 	
 	
 	public var vertexShader:String = CurlNoise.glsl + '
@@ -79,7 +80,10 @@ class EmojiShader
 			attributes.aOffset.value[i] = new Vector2(Math.random(), 0);//
 		}
 		
-		var tex:Texture = TextureData.emo2048.texture;// ImageUtils.loadTexture("./emo2048.png");// icons.png");
+		//var tex:Texture = TextureData.emo2048.texture;// ImageUtils.loadTexture("./emo2048.png");// icons.png");
+		var tex:Texture = TextureData.emo2048b.texture;// ImageUtils.loadTexture("./emo2048.png");// icons.png");
+		
+		animationFrameLength = TextureData.emo2048.xnum;
 		tex.minFilter = Three.NearestFilter;
 		tex.magFilter = Three.NearestFilter;
 		

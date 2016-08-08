@@ -65,9 +65,8 @@ class EmojiSingleShader
 	
 	public function init():Void {
 	
-		animationFrameLength = EmojiSpritePos.NUMX2;
-		_pos = new EmojiSpritePos(EmojiSpritePos.EMOJI_MAX2,EmojiSpritePos.NUMX2);
-
+		animationFrameLength = TextureData.emo128.xnum;
+		_pos = new EmojiSpritePos(TextureData.emo128);
 		attributes = {
             //aOffset:{type: 'v2', value:[]},
             //aStart:{type: 'f', value:[]}
@@ -112,7 +111,7 @@ class EmojiSingleShader
 	
 	public function setIconIndex(n:Int):Void {
 	
-		n = n % EmojiSpritePos.EMOJI_MAX2;
+		n = n % TextureData.emo128.max;
 		uniforms.offset.value = _pos.getIconPosByIndex(n);
 		
 	}

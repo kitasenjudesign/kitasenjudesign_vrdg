@@ -3,6 +3,7 @@ import camera.ExCamera;
 import canvas.CanvasSrc;
 import canvas.primitives.data.EffectData;
 import common.Dat;
+import data.TextureData;
 import js.Browser;
 import sound.MyAudio;
 import three.Geometry;
@@ -71,7 +72,7 @@ class Emojis extends Object3D
 		_canvas = new CanvasSrc();
 		_canvas.init();
 		
-		_pos = new EmojiSpritePos(EmojiSpritePos.EMOJI_MAX1,EmojiSpritePos.NUMX1);
+		_pos = new EmojiSpritePos(TextureData.emo2048b);
 		_pos.init();
 		
 		_maxW = maxW;
@@ -135,6 +136,7 @@ class Emojis extends Object3D
 			var data:EffectData = _canvas.next(false);//random
 			
 			//
+			_pos.setRandomIndex( Math.random() < 0.5 ? true : false);
 			_pos.setRange(
 				Math.random(),
 				Math.pow(Math.random(),2)

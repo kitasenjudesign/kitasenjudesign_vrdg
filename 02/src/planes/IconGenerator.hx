@@ -1,4 +1,5 @@
 package planes;
+import data.TextureData;
 import emoji.EmojiSingleShader;
 import emoji.EmojiSpritePos;
 import three.Object3D;
@@ -60,7 +61,7 @@ class IconGenerator extends Object3D
 		currentIcons = [];
 		for (i in 0...num) {
 			icons[i].visible = true;
-			icons[i].setIcon( Math.floor( EmojiSpritePos.EMOJI_MAX2 * Math.random() ) );
+			icons[i].setIcon( Math.floor( TextureData.emo128.xnum * Math.random() ) );
 			
 			if (num == 1) {
 				icons[i].position.x = 0;

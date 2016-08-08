@@ -4,7 +4,7 @@ import canvas.primitives.Cube;
 import canvas.primitives.data.EffectData;
 import canvas.primitives.Primitives;
 import effect.PostProcessing2;
-import emoji.EmojiPiece;
+//import emoji.EmojiPiece;
 import js.Browser;
 import js.html.Uint8Array;
 import js.html.webgl.RenderingContext;
@@ -41,7 +41,7 @@ class CanvasSrc
 	private var _canvas:CanvasData;
 	private var _imageData:Uint8Array;
 	private var _pp:PostProcessing2;
-	private var p:EmojiPiece;
+	//private var p:EmojiPiece;
 	private var _depthMat:MeshDepthMaterial;
 	
 	public function new() 

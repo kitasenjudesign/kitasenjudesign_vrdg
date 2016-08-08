@@ -1,6 +1,8 @@
 package canvas.primitives;
 import canvas.primitives.Cubes;
 import canvas.primitives.data.EffectData;
+import canvas.primitives.Hachigatsu;
+import canvas.primitives.Katori;
 import canvas.primitives.Knot;
 import canvas.primitives.Octa;
 import canvas.primitives.PrimitiveBase;
@@ -36,13 +38,16 @@ class Primitives extends Object3D
 	private var _tgtScale:Float = 1;
 	private var _octa:Octa;
 	private var _knot:Knot;
-	private var _kitasen:Kitasenju;
+	//private var _kitasen:Kitasenju;
 	private var _cubes:Cubes;
 	private var _spheres:Spheres;
 	private var _two:Two;
-	private var _face:DeDeFace;
+	private var _ice:Ice;
 	private var _walker:VideoPlane;
+	
 	var _current:PrimitiveBase;
+	var _katori:Katori;
+	var _hachi:Hachigatsu;
 	
 	public function new() 
 	{
@@ -64,6 +69,13 @@ class Primitives extends Object3D
 		//dynamicScale = o.dynamicScale;
 		//isDepth = o.isDepth;
 		
+		_katori = new Katori();
+		_katori.init(null);
+		
+		_ice = new Ice();
+		_ice.init(null);
+		
+		
 		_cube = new Cube();
 		_cube.init({isDepth:false});
 		
@@ -71,7 +83,7 @@ class Primitives extends Object3D
 		_cubes.init(null);
 		
 		_sphere = new Sphere();
-		_sphere.init(null);
+		_sphere.init({pixelType:EffectData.BLACK_TRUE,dynamicScale:true,isDepth:false});
 		
 		_spheres = new Spheres();
 		_spheres.init(null);
@@ -87,12 +99,6 @@ class Primitives extends Object3D
 		
 		_knot = new Knot();
 		_knot.init(null);
-		
-		_kitasen = new Kitasenju();
-		_kitasen.init(null);
-		
-		_face = new DeDeFace();
-		_face.init(null);
 		
 		_mouse = new DeDeLogo();
 		_mouse.init({pixelType:EffectData.BLACK_TRUE,dynamicScale:false,isDepth:false});
@@ -113,7 +119,13 @@ class Primitives extends Object3D
 			//_face
 		];*/
 		
+		_hachi = new Hachigatsu();
+		_hachi.init(null);
+		
 		_primitives = [
+		_ice,
+			_hachi,
+			_katori,
 			_walker,
 			_cube,
 			_sphere,
@@ -125,8 +137,7 @@ class Primitives extends Object3D
 			
 			_octa,
 			_knot,
-			_kitasen,
-			_face,
+			
 			_mouse,
 			_logo
 		];
@@ -148,6 +159,11 @@ class Primitives extends Object3D
 		}
 	}*/
 	
+	/**
+	 * next();
+	 * @param	isRandom
+	 * @return
+	 */
 	public function next(isRandom:Bool):EffectData {
 	
 		if (isRandom) {

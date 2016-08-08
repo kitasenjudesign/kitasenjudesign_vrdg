@@ -42,6 +42,7 @@ class Cubes extends PrimitiveBase
 		var mm	:MeshFaceMaterial = new MeshFaceMaterial(materials);
 		var geo	:BoxGeometry = new BoxGeometry(130, 130, 130, 10, 10, 10 );
 			
+		//konnna 
 		_cubes = [];
 		for (i in 0...16) {
 			
@@ -61,18 +62,6 @@ class Cubes extends PrimitiveBase
 			_cubes.push(cube);			
 		}
 		
-		/*
-			//new MeshBasicMaterial({color:0xff0000}));add(cube);var w:Float = 100.1 / 2;
-			var g:Geometry = new Geometry(); g.vertices.push(new Vector3(w, w, w));
-			g.vertices.push(new Vector3( -w, w, w)); g.vertices.push(new Vector3( -w, w, -w)); g.vertices.push(new Vector3( w, w, -w)); g.vertices.push(new Vector3(w, w, w)); g.vertices.push(new Vector3(w, -w, w)); g.vertices.push(new Vector3( -w, -w, w)); g.vertices.push(new Vector3( -w, -w, -w)); g.vertices.push(new Vector3(w, -w, -w)); g.vertices.push(new Vector3(w, -w, w)); var g2:Geometry = new Geometry(); g2.vertices.push(new Vector3( -w, w, w)); g2.vertices.push(new Vector3( -w, -w, w));	var g3:Geometry = new Geometry(); g3.vertices.push(new Vector3(w, w, -w)); g3.vertices.push(new Vector3(w, -w, -w));	var g4:Geometry = new Geometry(); g4.vertices.push(new Vector3( -w, w, -w)); g4.vertices.push(new Vector3( -w, -w, -w));
-			
-
-		var line:LineBasicMaterial = new LineBasicMaterial( { color:0xffffff } );
-		var mesh1:Line = new Line(	g,	line); add(mesh1);
-		var mesh2:Line = new Line(	g2,	line); add(mesh2);
-		var mesh3:Line = new Line(	g3,	line); add(mesh3);
-		var mesh4:Line = new Line(	g4,	line);add(mesh4);		
-		*/
 	}
 	
 	
