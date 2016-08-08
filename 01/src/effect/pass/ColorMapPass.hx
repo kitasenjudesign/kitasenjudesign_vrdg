@@ -74,10 +74,9 @@ class ColorMapPass extends ShaderPass
 	{
 		
 		_textures = [];
-		_textures.push( ImageUtils.loadTexture("grade.png") );
-		_textures.push( ImageUtils.loadTexture("grade2.png") );
-		_textures.push( ImageUtils.loadTexture("grade3.png") );
-		
+		_textures.push( ImageUtils.loadTexture("grade/grade.png") );
+		_textures.push( ImageUtils.loadTexture("grade/grade2.png") );
+		_textures.push( ImageUtils.loadTexture("grade/grade3.png") );
 		
 		super( {
 			uniforms: {

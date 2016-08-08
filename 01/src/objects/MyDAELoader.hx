@@ -51,7 +51,8 @@ class MyDAELoader
 		loader.options.convertUpAxis = true;		
 		//loader.load( 'mae_face.dae', _onComplete );
 
-		loader.load( 'dede_160806_2high.dae', _onComplete );
+		//loader.load( 'dede_160806_2high.dae', _onComplete );
+		loader.load( 'face/dede_c4d.dae', _onComplete );
 
 		//loader.load( 'dede_160805_7b.dae', _onComplete );
 		//loader.load( 'mae_face_hole.dae', _onComplete );
@@ -69,7 +70,7 @@ class MyDAELoader
 	
 		//material = untyped dae.children[0].children[0].material;
 		
-		_texture1 = ImageUtils.loadTexture("dede_face_diff.png");// mae_face.png");
+		_texture1 = ImageUtils.loadTexture("face/dede_face_diff.png");// mae_face.png");
 		_texture1.minFilter = Three.NearestFilter;
 		_texture1.magFilter = Three.NearestFilter;
 		

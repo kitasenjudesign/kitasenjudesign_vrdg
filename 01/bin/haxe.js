@@ -38,6 +38,15 @@ HxOverrides.cca = function(s,index) {
 	if(x != x) return undefined;
 	return x;
 };
+HxOverrides.substr = function(s,pos,len) {
+	if(pos != null && pos != 0 && len != null && len < 0) return "";
+	if(len == null) len = s.length;
+	if(pos < 0) {
+		pos = s.length + pos;
+		if(pos < 0) pos = 0;
+	} else if(len < 0) len = s.length + len - pos;
+	return s.substr(pos,len);
+};
 var Lambda = function() { };
 Lambda.exists = function(it,f) {
 	var $it0 = it.iterator();
@@ -141,6 +150,7 @@ Main3d.prototype = {
 		window.requestAnimationFrame($bind(this,this._run));
 	}
 };
+var IMap = function() { };
 var Std = function() { };
 Std.parseInt = function(x) {
 	var v = parseInt(x,10);
@@ -172,6 +182,48 @@ Three.requestAnimationFrame = function(f) {
 };
 Three.cancelAnimationFrame = function(f) {
 	window.cancelAnimationFrame(id);
+};
+var Tracer = function() {
+};
+Tracer.assert = function(condition,p1,p2,p3,p4,p5) {
+};
+Tracer.clear = function(p1,p2,p3,p4,p5) {
+};
+Tracer.count = function(p1,p2,p3,p4,p5) {
+};
+Tracer.debug = function(p1,p2,p3,p4,p5) {
+};
+Tracer.dir = function(p1,p2,p3,p4,p5) {
+};
+Tracer.dirxml = function(p1,p2,p3,p4,p5) {
+};
+Tracer.error = function(p1,p2,p3,p4,p5) {
+};
+Tracer.group = function(p1,p2,p3,p4,p5) {
+};
+Tracer.groupCollapsed = function(p1,p2,p3,p4,p5) {
+};
+Tracer.groupEnd = function() {
+};
+Tracer.info = function(p1,p2,p3,p4,p5) {
+};
+Tracer.log = function(p1,p2,p3,p4,p5) {
+};
+Tracer.markTimeline = function(p1,p2,p3,p4,p5) {
+};
+Tracer.profile = function(title) {
+};
+Tracer.profileEnd = function(title) {
+};
+Tracer.time = function(title) {
+};
+Tracer.timeEnd = function(title,p1,p2,p3,p4,p5) {
+};
+Tracer.timeStamp = function(p1,p2,p3,p4,p5) {
+};
+Tracer.trace = function(p1,p2,p3,p4,p5) {
+};
+Tracer.warn = function(p1,p2,p3,p4,p5) {
 };
 var camera = {};
 camera.ExCamera = function(fov,aspect,near,far) {
@@ -306,6 +358,7 @@ common.Config.prototype = {
 		common.Config.host = data.host;
 		var win = window;
 		win.host = common.Config.host;
+		if(common.QueryGetter.getQuery("host") != null) win.host = common.QueryGetter.getQuery("host");
 		common.Config.canvasOffsetY = data.canvasOffsetY;
 		common.Config.globalVol = data.globalVol;
 		common.Config.particleSize = data.particleSize;
@@ -363,22 +416,22 @@ common.Dat._onKeyDown = function(e) {
 	}
 };
 common.Dat._goURL1 = function() {
-	common.Dat._goURL("../../01/bin/");
-};
-common.Dat._goURL2 = function() {
-	common.Dat._goURL("../../02/bin/");
-};
-common.Dat._goURL3 = function() {
-	common.Dat._goURL("../../03/bin/");
-};
-common.Dat._goURL4 = function() {
 	common.Dat._goURL("../../04/bin/");
 };
-common.Dat._goURL5 = function() {
+common.Dat._goURL2 = function() {
 	common.Dat._goURL("../../05/bin/");
 };
+common.Dat._goURL3 = function() {
+	common.Dat._goURL("../../02/bin/");
+};
+common.Dat._goURL4 = function() {
+	common.Dat._goURL("../../03/bin/");
+};
+common.Dat._goURL5 = function() {
+	common.Dat._goURL("../../00/bin/");
+};
 common.Dat._goURL6 = function() {
-	common.Dat._goURL("../../06/bin/");
+	common.Dat._goURL("../../01/bin/");
 };
 common.Dat._goURL = function(url) {
 	window.location.href = url;
@@ -427,7 +480,7 @@ common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
 	}
 	,_onKeyDown: function(e) {
 		var n = Std.parseInt(e.keyCode);
-		console.debug("_onkeydown " + n);
+		Tracer.debug("_onkeydown " + n);
 		this._dispatch(n);
 	}
 	,_dispatch: function(n) {
@@ -435,6 +488,30 @@ common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
 		this.dispatchEvent({ type : "keydown", keyCode : n});
 	}
 });
+common.QueryGetter = function() {
+};
+common.QueryGetter.init = function() {
+	common.QueryGetter._map = new haxe.ds.StringMap();
+	var str = window.location.search;
+	if(str.indexOf("?") < 0) Tracer.log("query nashi"); else {
+		str = HxOverrides.substr(str,1,str.length - 1);
+		var list = str.split("&");
+		Tracer.log(list);
+		var _g1 = 0;
+		var _g = list.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var fuga = list[i].split("=");
+			common.QueryGetter._map.set(fuga[0],fuga[1]);
+		}
+	}
+	if(common.QueryGetter._map.get("t") != null) common.QueryGetter.t = Std.parseInt(common.QueryGetter._map.get("t"));
+	common.QueryGetter._isInit = true;
+};
+common.QueryGetter.getQuery = function(idd) {
+	if(!common.QueryGetter._isInit) common.QueryGetter.init();
+	return common.QueryGetter._map.get(idd);
+};
 common.StageRef = function() {
 };
 common.StageRef.fadeIn = function() {
@@ -563,9 +640,9 @@ effect.pass.ColorMapPass = function() {
 	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\tuniform sampler2D texture;\r\n\t\t\t\t\tuniform float strength;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tuniform float mono;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 texel = texture2D( tDiffuse, vUv );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 out1 = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tif( mono == 0.0){\r\n\t\t\t\t\t\tvec2 pp = vec2( 0.5, fract( texel.x * strength + counter ) );//akarusanioujite\t\t\t\t\t\r\n\t\t\t\t\t\tif ( pp.y < 0.5) {\r\n\t\t\t\t\t\t\t\tpp.y = pp.y * 2.0;\r\n\t\t\t\t\t\t\t\tout1 = texture2D( texture, pp );\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\t\tpp.y = (1.0 - (pp.y - 0.5) * 2.0);\t\t\t\t\r\n\t\t\t\t\t\t\t\tout1 = texture2D( texture, pp );\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\tif ( texel.x == 0.0 ) {\r\n\t\t\t\t\t\t\t\tout1 = vec4(0.0, 0.0, 0.0, 1.0);\r\n\t\t\t\t\t\t}\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t}else{\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t//bakibaki\r\n\t\t\t\t\t\tfloat nn = 10000. + 9995. * sin(counter*0.01);\r\n\t\t\t\t\t\tif ( texel.x == 0.0 || mod( floor( texel.x * nn ),2.0) == 0.0 ) {\r\n\t\t\t\t\t\t\tout1.x = 0.0;\r\n\t\t\t\t\t\t\tout1.y = 0.0;\r\n\t\t\t\t\t\t\tout1.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\tout1.x = 1.0;\r\n\t\t\t\t\t\t\tout1.y = 1.0;\r\n\t\t\t\t\t\t\tout1.z = 1.0;\t\t\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\tgl_FragColor = out1;// out1;// texel;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
 	this._vertex = "\r\n\t\tvarying vec2 vUv;\r\n\t\tvoid main() {\r\n\t\t\tvUv = uv;\r\n\t\t\tgl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\r\n\t\t}\t\t\r\n\t";
 	this._textures = [];
-	this._textures.push(THREE.ImageUtils.loadTexture("grade.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("grade2.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("grade3.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("grade/grade.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("grade/grade2.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("grade/grade3.png"));
 	THREE.ShaderPass.call(this,{ uniforms : { tDiffuse : { type : "t", value : null}, texture : { type : "t", value : this._textures[0]}, strength : { type : "f", value : 0}, counter : { type : "f", value : 0}, mono : { type : "f", value : 1}}, vertexShader : this._vertex, fragmentShader : this._fragment});
 };
 effect.pass.ColorMapPass.__super__ = THREE.ShaderPass;
@@ -586,12 +663,17 @@ effect.pass.DisplacementPass = function() {
 	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\tuniform sampler2D disTexture;\r\n\t\t\t\t\tuniform sampler2D colTexture;\r\n\t\t\t\t\tuniform float strengthX;\r\n\t\t\t\t\tuniform float strengthY;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tuniform float isDisplace;\r\n\t\t\t\t\tuniform float isColor;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\t\r\n\t\t\t\t\tvec4 getColor(vec4 texel) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 out1 = vec4(0.0);\r\n\t\t\t\t\t\tvec2 pp = vec2( 0.5, fract( texel.x + counter ) );\r\n\t\t\t\t\t\t\tif ( pp.y < 0.5) {\r\n\t\t\t\t\t\t\t\tpp.y = pp.y * 2.0;\r\n\t\t\t\t\t\t\t\tout1 = texture2D( colTexture, pp );\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\t\tpp.y = (1.0 - (pp.y - 0.5) * 2.0);\t\t\t\t\r\n\t\t\t\t\t\t\t\tout1 = texture2D( colTexture, pp );\r\n\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\tif ( texel.x == 0.0 ) {\r\n\t\t\t\t\t\t\t\tout1 = vec4(0.0, 0.0, 0.0, 1.0);\r\n\t\t\t\t\t\t\t}\t\t\r\n\t\t\t\t\t\t\treturn out1;\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//dispace\r\n\t\t\t\t\t\tvec4 texel = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tif(isDisplace == 1.0){\r\n\t\t\t\t\t\t\tvec4 col = texture2D( disTexture, vUv);\r\n\t\t\t\t\t\t\tfloat f1 = strengthX * sin(counter*0.17);// pow(counter, 2.0 + 3.0 * col.x);//sin(counter * 3.9) * 0.23;\r\n\t\t\t\t\t\t\tfloat f2 = strengthY * sin(counter*0.22);// pow(counter, 2.0 + 3.0 * col.x) * 0.001;// pow(counter, 2.0 + 3.0 * col.y);//cos(counter * 3.7) * 0.23;\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\tvec2 axis = vec2( \r\n\t\t\t\t\t\t\t\tvUv.x + (col.y-0.5)*f1, vUv.y + (col.z-0.5)*f2\r\n\t\t\t\t\t\t\t);\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\ttexel = texture2D( tDiffuse, axis );\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\ttexel = texture2D( tDiffuse, vUv );\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//vec4 texel = texture2D( colTexture, axis );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//vec3 luma = vec3( 0.299, 0.587, 0.114 );\r\n\t\t\t\t\t\t//float v = dot( texel.xyz, luma );//akarusa\r\n\t\t\t\t\t\t//vec2 axis = vec2( 0.5,v );\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//position\r\n\t\t\t\t\t\tvec4 out1 = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tif( isColor == 1.0){\r\n\t\t\t\t\t\t\tout1 = getColor(texel);\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\tout1 = texel;\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\t\r\n\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\tif ( texel.x == 0.0 || mod( floor( texel.x * 1000.0 + counter ),2.0) == 0.0 ) {\r\n\t\t\t\t\t\t\ttexel.x = 0.0;\r\n\t\t\t\t\t\t\ttexel.y = 0.0;\r\n\t\t\t\t\t\t\ttexel.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\ttexel.x = out1.x;//1.0;\r\n\t\t\t\t\t\t\ttexel.y = out1.y;//1.0;\r\n\t\t\t\t\t\t\ttexel.z = out1.z;//1.0;\t\t\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}*/\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\t\ttexel.x = out1.x;//1.0;\r\n\t\t\t\t\t\t\ttexel.y = out1.y;//1.0;\r\n\t\t\t\t\t\t\ttexel.z = out1.z;//1.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t*/\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tgl_FragColor = out1;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
 	this._vertex = "\r\n\t\tvarying vec2 vUv;\r\n\t\tvoid main() {\r\n\t\t\tvUv = uv;\r\n\t\t\tgl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\r\n\t\t}\t\t\r\n\t";
 	this._textures = [];
-	var _g = 1;
-	while(_g < 11) {
-		var i = _g++;
-		this._textures.push(THREE.ImageUtils.loadTexture("displace" + i + ".png"));
-	}
-	this._colors = [THREE.ImageUtils.loadTexture("grade.png"),THREE.ImageUtils.loadTexture("grade2.png"),THREE.ImageUtils.loadTexture("grade3.png"),THREE.ImageUtils.loadTexture("grade4.png")];
+	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace0.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace1.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace2.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace3.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace4.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace5.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace6.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace7.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace8.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("displace/displace9.png"));
+	this._colors = [THREE.ImageUtils.loadTexture("./grade/grade.png"),THREE.ImageUtils.loadTexture("./grade/grade2.png"),THREE.ImageUtils.loadTexture("./grade/grade3.png"),THREE.ImageUtils.loadTexture("./grade/grade4.png")];
 	THREE.ShaderPass.call(this,{ uniforms : { tDiffuse : { type : "t", value : null}, isDisplace : { type : "f", value : 1}, isColor : { type : "f", value : 1}, disTexture : { type : "t", value : this._textures[0]}, colTexture : { type : "t", value : this._colors[3]}, strengthX : { type : "f", value : 0}, strengthY : { type : "f", value : 0}, counter : { type : "f", value : 0}}, vertexShader : this._vertex, fragmentShader : this._fragment});
 };
 effect.pass.DisplacementPass.__super__ = THREE.ShaderPass;
@@ -610,16 +692,10 @@ effect.pass.DisplacementPass.prototype = $extend(THREE.ShaderPass.prototype,{
 	}
 });
 effect.pass.XLoopPass = function() {
-	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\tuniform sampler2D disTexture;\r\n\t\t\t\t\tuniform sampler2D colTexture;\r\n\t\t\t\t\tuniform float strength;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tuniform float isDisplace;\r\n\t\t\t\t\tuniform float isColor;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\t\r\n\t\t\t\t\tfloat yama(float rr, float beki) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tfloat hoge = 0.5 + 0.5 * sin(rr * 3.14 - 3.14 * 0.5);\r\n\t\t\t\t\t\t//out = pow(out, beki);\r\n\t\t\t\t\t\treturn hoge;// out;\r\n\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t\tfloat yama2(float rr, float beki) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tfloat hoge = rr * 2.0;\r\n\t\t\t\t\t\tif ( hoge < 1.0) {\r\n\t\t\t\t\t\t\thoge = pow(hoge, 1./beki) * 0.5;\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\thoge = pow(hoge-1.0, beki) * 0.5 + 0.5;\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t//out = pow(out, beki);\r\n\t\t\t\t\t\treturn hoge;// out;\r\n\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//dispace\r\n\t\t\t\t\t\tvec4 texel = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//0.4-0.6 no hani wo kurikaesu\r\n\t\t\t\t\t\tfloat minX = 0.45;\r\n\t\t\t\t\t\tfloat maxX = 0.55;\r\n\t\t\t\t\t\tfloat amp = maxX - minX;\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//float xx = clamp( vUv.x, minX, maxX );\r\n\t\t\t\t\t\t//xx = (xx - minX) / len;//0-1\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tfloat nn = 10. * sin( counter * 0.07 );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tfloat xx = minX + amp * (0.5 + 0.5 * sin(yama2(vUv.x, 2.0) * nn * 3.14 - 3.14 * 0.5));\r\n\t\t\t\t\tfloat minA = 0.3;// 1;\r\n\t\t\t\t\tfloat maxA = 0.7;// 9;\r\n\t\t\t\t\t\r\n\t\t\t\t\tif (vUv.x < minA) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\txx = xx * pow(vUv.x / minA, 0.2);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t}else if (vUv.x > maxA) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\txx = mix(xx, vUv.x, pow((vUv.x - maxA) / (1.0 - maxA), 7.0));\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\txx += 0.01 * sin(vUv.y * 2. * 3.14);\r\n\t\t\t\t\tfloat yy = vUv.y + 0.05 * sin(vUv.x * 6.0 * 3.14);\r\n\t\t\t\t\t\r\n\t\t\t\t\t//float ss = strength;\r\n\t\t\t\t\tfloat ss = 0.5 + 0.5 * sin(counter * 0.1);\r\n\t\t\t\t\tss = ss * strength;\r\n\t\t\t\t\txx = mix(vUv.x, xx, ss );\r\n\t\t\t\t\tyy = mix(vUv.y, yy, ss );\r\n\t\t\t\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t\t//xx = 0.5+0.5*sin( 2.*3.14*vUv.x -3.14/2.0);\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t//xx = 0.5 + 0.5 * sin(xx * 2.0 * 3.14 * 5.0);\r\n\t\t\t\t\t\t//vUv.x\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tvec2 axis = vec2( xx, yy );\r\n\t\t\t\t\ttexel = texture2D( tDiffuse, axis );\r\n\t\t\t\t\tvec4 out1 = texel;\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t//color\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\tvec3 luma = vec3( 0.299, 0.587, 0.114 );\r\n\t\t\t\t\t\tfloat v = dot( texel.xyz, luma );//akarusa\r\n\t\t\t\t\t\tv = fract( v*20.0 + counter * 0.01 ) * 2.0;\r\n\t\t\t\t\t\tif (v > 1.0) {\r\n\t\t\t\t\t\t\tv = 1.0 - (v - 1.0);\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\taxis = vec2( 0.5,v );\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 out1 = texture2D( colTexture, axis );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tif ( texel.x == 0.0 ) {\r\n\t\t\t\t\t\t\tout1.x = 0.0;\r\n\t\t\t\t\t\t\tout1.y = 0.0;\r\n\t\t\t\t\t\t\tout1.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}*/\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\tif ( texel.x == 0.0 || mod( floor( texel.x * 1000.0 + counter ),2.0) == 0.0 ) {\r\n\t\t\t\t\t\t\tout1.x = 0.0;\r\n\t\t\t\t\t\t\tout1.y = 0.0;\r\n\t\t\t\t\t\t\tout1.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\tout1.x = out1.x;// 1.0;\r\n\t\t\t\t\t\t\tout1.y = out1.y;// 1.0;\r\n\t\t\t\t\t\t\tout1.z = out1.z;// 1.0;\t\t\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}*/\r\n\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\t\ttexel.x = out1.x;//1.0;\r\n\t\t\t\t\t\t\ttexel.y = out1.y;//1.0;\r\n\t\t\t\t\t\t\ttexel.z = out1.z;//1.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t*/\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tgl_FragColor = out1;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
+	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\t//uniform sampler2D disTexture;\r\n\t\t\t\t\t//uniform sampler2D colTexture;\r\n\t\t\t\t\tuniform float strength;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tuniform float isDisplace;\r\n\t\t\t\t\tuniform float isColor;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\t\r\n\t\t\t\t\tfloat yama(float rr, float beki) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tfloat hoge = 0.5 + 0.5 * sin(rr * 3.14 - 3.14 * 0.5);\r\n\t\t\t\t\t\t//out = pow(out, beki);\r\n\t\t\t\t\t\treturn hoge;// out;\r\n\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t\tfloat yama2(float rr, float beki) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tfloat hoge = rr * 2.0;\r\n\t\t\t\t\t\tif ( hoge < 1.0) {\r\n\t\t\t\t\t\t\thoge = pow(hoge, 1./beki) * 0.5;\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\thoge = pow(hoge-1.0, beki) * 0.5 + 0.5;\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t//out = pow(out, beki);\r\n\t\t\t\t\t\treturn hoge;// out;\r\n\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//dispace\r\n\t\t\t\t\t\tvec4 texel = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//0.4-0.6 no hani wo kurikaesu\r\n\t\t\t\t\t\tfloat minX = 0.45;\r\n\t\t\t\t\t\tfloat maxX = 0.55;\r\n\t\t\t\t\t\tfloat amp = maxX - minX;\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//float xx = clamp( vUv.x, minX, maxX );\r\n\t\t\t\t\t\t//xx = (xx - minX) / len;//0-1\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\tfloat nn = 10. * sin( counter * 0.07 );\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\tfloat xx = minX + amp * (0.5 + 0.5 * sin(yama2(vUv.x, 2.0) * nn * 3.14 - 3.14 * 0.5));\r\n\t\t\t\t\t\tfloat minA = 0.3;// 1;\r\n\t\t\t\t\t\tfloat maxA = 0.7;// 9;\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tif (vUv.x < minA) {\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\txx = xx * pow(vUv.x / minA, 0.2);\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else if (vUv.x > maxA) {\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\txx = mix(xx, vUv.x, pow((vUv.x - maxA) / (1.0 - maxA), 7.0));\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\txx += 0.01 * sin(vUv.y * 2. * 3.14);\r\n\t\t\t\t\t\tfloat yy = vUv.y + 0.05 * sin(vUv.x * 6.0 * 3.14);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//float ss = strength;\r\n\t\t\t\t\t\tfloat ss = 0.5 + 0.5 * sin(counter * 0.1);\r\n\t\t\t\t\t\tss = ss * strength;\r\n\t\t\t\t\t\txx = mix(vUv.x, xx, ss );\r\n\t\t\t\t\t\tyy = mix(vUv.y, yy, ss );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//xx = 0.5+0.5*sin( 2.*3.14*vUv.x -3.14/2.0);\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t//xx = 0.5 + 0.5 * sin(xx * 2.0 * 3.14 * 5.0);\r\n\t\t\t\t\t\t//vUv.x\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec2 axis = vec2( xx, yy );\r\n\t\t\t\t\t\ttexel = texture2D( tDiffuse, axis );\r\n\t\t\t\t\t\tvec4 out1 = texel;\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tgl_FragColor = out1;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
 	this._vertex = "\r\n\t\tvarying vec2 vUv;\r\n\t\tvoid main() {\r\n\t\t\tvUv = uv;\r\n\t\t\tgl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\r\n\t\t}\t\t\r\n\t";
 	this._textures = [];
-	var _g = 1;
-	while(_g < 11) {
-		var i = _g++;
-		this._textures.push(THREE.ImageUtils.loadTexture("displace" + i + ".png"));
-	}
-	this._colors = [THREE.ImageUtils.loadTexture("grade.png"),THREE.ImageUtils.loadTexture("grade2.png"),THREE.ImageUtils.loadTexture("grade3.png"),THREE.ImageUtils.loadTexture("grade4.png")];
-	THREE.ShaderPass.call(this,{ uniforms : { tDiffuse : { type : "t", value : null}, isDisplace : { type : "f", value : 1}, isColor : { type : "f", value : 1}, disTexture : { type : "t", value : this._textures[0]}, colTexture : { type : "t", value : this._colors[3]}, strength : { type : "f", value : 0}, counter : { type : "f", value : 0}}, vertexShader : this._vertex, fragmentShader : this._fragment});
+	THREE.ShaderPass.call(this,{ uniforms : { tDiffuse : { type : "t", value : null}, isDisplace : { type : "f", value : 1}, isColor : { type : "f", value : 1}, strength : { type : "f", value : 0}, counter : { type : "f", value : 0}}, vertexShader : this._vertex, fragmentShader : this._fragment});
 };
 effect.pass.XLoopPass.__super__ = THREE.ShaderPass;
 effect.pass.XLoopPass.prototype = $extend(THREE.ShaderPass.prototype,{
@@ -631,8 +707,6 @@ effect.pass.XLoopPass.prototype = $extend(THREE.ShaderPass.prototype,{
 	,setTexture: function(isColor,isDisplace) {
 		if(isColor) this.uniforms.isColor.value = 1; else this.uniforms.isColor.value = 0;
 		if(isDisplace) this.uniforms.isDisplace.value = 1; else this.uniforms.isDisplace.value = 0;
-		this.uniforms.disTexture.value = this._textures[Math.floor(Math.random() * this._textures.length)];
-		this.uniforms.colTexture.value = this._colors[Math.floor(Math.random() * this._colors.length)];
 	}
 });
 effect.shaders = {};
@@ -724,6 +798,19 @@ haxe.Http.prototype = {
 	,onStatus: function(status) {
 	}
 };
+haxe.ds = {};
+haxe.ds.StringMap = function() {
+	this.h = { };
+};
+haxe.ds.StringMap.__interfaces__ = [IMap];
+haxe.ds.StringMap.prototype = {
+	set: function(key,value) {
+		this.h["$" + key] = value;
+	}
+	,get: function(key) {
+		return this.h["$" + key];
+	}
+};
 var js = {};
 js.Browser = function() { };
 js.Browser.createXMLHttpRequest = function() {
@@ -754,12 +841,12 @@ objects.MyDAELoader.prototype = {
 		this._callback = callback;
 		var loader = new THREE.ColladaLoader();
 		loader.options.convertUpAxis = true;
-		loader.load("dede_160806_2high.dae",$bind(this,this._onComplete));
+		loader.load("face/dede_c4d.dae",$bind(this,this._onComplete));
 	}
 	,_onComplete: function(collada) {
 		this.dae = collada.scene;
 		this.dae.scale.x = this.dae.scale.y = this.dae.scale.z = 150;
-		this._texture1 = THREE.ImageUtils.loadTexture("dede_face_diff.png");
+		this._texture1 = THREE.ImageUtils.loadTexture("face/dede_face_diff.png");
 		this._texture1.minFilter = 1003;
 		this._texture1.magFilter = 1003;
 		this._texture2 = THREE.ImageUtils.loadTexture("mae_faceD.png");
@@ -1687,6 +1774,10 @@ common.Dat.Z = 90;
 common.Dat.hoge = 0;
 common.Dat.bg = false;
 common.Dat._showing = true;
+common.QueryGetter.NORMAL = 0;
+common.QueryGetter.SKIP = 1;
+common.QueryGetter._isInit = false;
+common.QueryGetter.t = 0;
 common.StageRef.$name = "webgl";
 effect.PostProcessing2.MODE_NORMAL = "MODE_NORMAL";
 effect.PostProcessing2.MODE_DISPLACEMENT_A = "MODE_DISPLACEMENT_A";
@@ -1719,5 +1810,3 @@ three._WebGLRenderer.RenderPrecision_Impl_.mediump = "mediump";
 three._WebGLRenderer.RenderPrecision_Impl_.lowp = "lowp";
 Main.main();
 })();
-
-//# sourceMappingURL=haxe.js.map
