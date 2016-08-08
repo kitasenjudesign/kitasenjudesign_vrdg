@@ -40,6 +40,11 @@ class Config
 		//host
 		var win:Dynamic = Browser.window;
 		win.host = host;	
+		
+		if ( QueryGetter.getQuery("host") != null ) {
+			win.host = QueryGetter.getQuery("host");
+		}
+		
 		canvasOffsetY = data.canvasOffsetY;
 		globalVol = data.globalVol;
 		particleSize = data.particleSize;

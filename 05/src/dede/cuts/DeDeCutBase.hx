@@ -60,6 +60,16 @@ class DeDeCutBase
 	}
 	
 	/**
+	 * @param	b
+	 */
+	public function setRotate(b:Bool):Void {
+		
+		_lines.setRotate(b);
+		_vrdg.setRotate(b);
+		
+	}
+	
+	/**
 	 * 
 	 * @param	sec
 	 */

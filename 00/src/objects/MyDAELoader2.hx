@@ -38,7 +38,7 @@ class MyDAELoader2
 		
 		var loader = untyped __js__("new THREE.ColladaLoader()");
 		loader.options.convertUpAxis = true;		
-		loader.load( 'mae_face.dae', _onComplete );
+		loader.load( 'face/mae_face.dae', _onComplete );
 		
 	}
 	

@@ -1,4 +1,5 @@
 package dede.cuts;
+import js.Browser;
 import sound.MyAudio;
 import typo.StrokeUtil;
 
@@ -54,13 +55,12 @@ class DeDeCutOneLine  extends DeDeCutBase
 	 */
 	override public function next():Void
 	{
-		//set dot type
-		//_lines.next();
-		//
+		
 		
 		var isRotate:Bool = _nextCounter%5==4 ? true : false;
 		
 		if (_nextCounter == 0) {
+			//Browser.
 			_lines.setSec(0, false);
 		}else{
 			_lines.setSec(Math.random(), true);			

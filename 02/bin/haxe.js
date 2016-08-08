@@ -198,9 +198,6 @@ Std.parseInt = function(x) {
 	if(isNaN(v)) return null;
 	return v;
 };
-Std.parseFloat = function(x) {
-	return parseFloat(x);
-};
 var _Three = {};
 _Three.CullFace_Impl_ = function() { };
 _Three.CullFace_Impl_.__name__ = true;
@@ -243,6 +240,52 @@ Three.requestAnimationFrame = function(f) {
 };
 Three.cancelAnimationFrame = function(f) {
 	window.cancelAnimationFrame(id);
+};
+var Tracer = function() {
+};
+Tracer.__name__ = true;
+Tracer.assert = function(condition,p1,p2,p3,p4,p5) {
+};
+Tracer.clear = function(p1,p2,p3,p4,p5) {
+};
+Tracer.count = function(p1,p2,p3,p4,p5) {
+};
+Tracer.debug = function(p1,p2,p3,p4,p5) {
+};
+Tracer.dir = function(p1,p2,p3,p4,p5) {
+};
+Tracer.dirxml = function(p1,p2,p3,p4,p5) {
+};
+Tracer.error = function(p1,p2,p3,p4,p5) {
+};
+Tracer.group = function(p1,p2,p3,p4,p5) {
+};
+Tracer.groupCollapsed = function(p1,p2,p3,p4,p5) {
+};
+Tracer.groupEnd = function() {
+};
+Tracer.info = function(p1,p2,p3,p4,p5) {
+};
+Tracer.log = function(p1,p2,p3,p4,p5) {
+};
+Tracer.markTimeline = function(p1,p2,p3,p4,p5) {
+};
+Tracer.profile = function(title) {
+};
+Tracer.profileEnd = function(title) {
+};
+Tracer.time = function(title) {
+};
+Tracer.timeEnd = function(title,p1,p2,p3,p4,p5) {
+};
+Tracer.timeStamp = function(p1,p2,p3,p4,p5) {
+};
+Tracer.trace = function(p1,p2,p3,p4,p5) {
+};
+Tracer.warn = function(p1,p2,p3,p4,p5) {
+};
+Tracer.prototype = {
+	__class__: Tracer
 };
 var camera = {};
 camera.ExCamera = function(fov,aspect,near,far) {
@@ -889,19 +932,6 @@ canvas.primitives.Katoris.prototype = $extend(canvas.primitives.PrimitiveBase.pr
 	}
 	,__class__: canvas.primitives.Katoris
 });
-canvas.primitives.Knot = function() {
-	canvas.primitives.PrimitiveBase.call(this);
-};
-canvas.primitives.Knot.__name__ = true;
-canvas.primitives.Knot.__super__ = canvas.primitives.PrimitiveBase;
-canvas.primitives.Knot.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
-	init: function(o) {
-		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
-		var mesh = new THREE.Mesh(new THREE.TorusKnotGeometry(50,18,60,10,2,3),new THREE.MeshPhongMaterial({ color : 16746547}));
-		this.add(mesh);
-	}
-	,__class__: canvas.primitives.Knot
-});
 canvas.primitives.Octa = function() {
 	canvas.primitives.PrimitiveBase.call(this);
 };
@@ -1156,8 +1186,12 @@ canvas.primitives.VideoPlane.__super__ = canvas.primitives.PrimitiveBase;
 canvas.primitives.VideoPlane.prototype = $extend(canvas.primitives.PrimitiveBase.prototype,{
 	init: function(o) {
 		canvas.primitives.PrimitiveBase.prototype.init.call(this,o);
+		this._initVideo("walker_out.mov");
+	}
+	,_initVideo: function(src) {
 		if(this._video == null) {
 			this._video = window.document.getElementById("walker");
+			this._video.src = src;
 			this._video.loop = true;
 			var _this = window.document;
 			this._canvas = _this.createElement("canvas");
@@ -1307,6 +1341,7 @@ common.Config.prototype = {
 		common.Config.host = data.host;
 		var win = window;
 		win.host = common.Config.host;
+		if(common.QueryGetter.getQuery("host") != null) win.host = common.QueryGetter.getQuery("host");
 		common.Config.canvasOffsetY = data.canvasOffsetY;
 		common.Config.globalVol = data.globalVol;
 		common.Config.particleSize = data.particleSize;
@@ -1436,7 +1471,7 @@ common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
 	}
 	,_onKeyDown: function(e) {
 		var n = Std.parseInt(e.keyCode);
-		console.debug("_onkeydown " + n);
+		Tracer.debug("_onkeydown " + n);
 		this._dispatch(n);
 	}
 	,_dispatch: function(n) {
@@ -1475,6 +1510,34 @@ common.MyDAELoader.prototype = $extend(THREE.Object3D.prototype,{
 	}
 	,__class__: common.MyDAELoader
 });
+common.QueryGetter = function() {
+};
+common.QueryGetter.__name__ = true;
+common.QueryGetter.init = function() {
+	common.QueryGetter._map = new haxe.ds.StringMap();
+	var str = window.location.search;
+	if(str.indexOf("?") < 0) Tracer.log("query nashi"); else {
+		str = HxOverrides.substr(str,1,str.length - 1);
+		var list = str.split("&");
+		Tracer.log(list);
+		var _g1 = 0;
+		var _g = list.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var fuga = list[i].split("=");
+			common.QueryGetter._map.set(fuga[0],fuga[1]);
+		}
+	}
+	if(common.QueryGetter._map.get("t") != null) common.QueryGetter.t = Std.parseInt(common.QueryGetter._map.get("t"));
+	common.QueryGetter._isInit = true;
+};
+common.QueryGetter.getQuery = function(idd) {
+	if(!common.QueryGetter._isInit) common.QueryGetter.init();
+	return common.QueryGetter._map.get(idd);
+};
+common.QueryGetter.prototype = {
+	__class__: common.QueryGetter
+};
 common.StageRef = function() {
 };
 common.StageRef.__name__ = true;
@@ -1529,75 +1592,6 @@ common.WSocket.prototype = {
 	,__class__: common.WSocket
 };
 var data = {};
-data.LogoPaths = function() {
-};
-data.LogoPaths.__name__ = true;
-data.LogoPaths.init = function() {
-	var str = "367.6,65.8 311.1,9.7 324.9,9.7 381.4,65.8\r\n348.2,65.8 320,37.8 333.8,37.8 362,65.8\r\n251.2,103 223,74.7 209.2,74.7 171.5,112.4 185.3,112.4 216.1,81.6 237.3,103\r\n175.9,103 162.1,103 200.7,66.3 181.5,46.9 195.3,46.9 214.5,66.3\r\n286.2,103 272.4,103 320.3,57 309.9,46.6 323.7,46.6 334.1,57\r\n257.4,103 271.2,103 232.6,66.3 251.8,46.9 238,46.9 218.7,66.3\r\n98,9.3 84.2,9.3 102.4,27.6 100.2,30.2 70.1,0 56.3,0 93.9,37.8 107.7,37.8 116.2,27.6\r\n144.8,37.8 131,37.8 93.5,0 107.3,0\r\n79.9,84.6 9.7,84.6 0,74.7 70.4,74.7\r\n324.8,27.6 254.7,27.6 245,37.6 315.3,37.6\r\n554.7,93 467,93 457.3,103 545.2,103\r\n392.7,53.7 444.1,53.7 453.8,63.6 402.2,63.6\r\n60.2,9.3 46.4,9.3 84,47.1 65.2,66.3 79,66.3 97.8,47.1\r\n115.9,47.1 116.1,47.1 118.9,44.4 121.7,47.1 135.8,47.1 125.9,37.8 111.9,37.8 102.1,47.1 139.7,84.8 153.5,84.8\r\n144.8,94.1 109.1,57 95.1,57 95.1,57 95.1,57 75.3,74.7 89.4,74.7 101.6,63.7 130.8,94.1\r\n183.2,57 130.4,57 140.5,46.6 173.1,46.6\r\n270.8,122.4 217.9,122.4 228.1,112 260.6,112\r\n352.1,156.6 352.1,93.6 362.5,103.7 362.5,146.4\r\n414.9,85 346.8,85 357,74.7 404.8,74.7\r\n229.9,37.8 217,50.3 204.2,37.8 190.6,37.8 210.2,57 223.8,57 243.5,37.8\r\n359.3,18.1 355.7,21.2 334.6,0 320.8,0 348.2,27.6 362,27.6 373.1,18.1\r\n371.1,37.8 371.4,37.8 381.4,27.6 367.3,27.6 357.3,37.8 385.6,65.8 399.4,65.8\r\n353.6,74.7 343.4,66.3 328.7,66.3 281.7,112.4 296.4,112.4 336.7,72.8 338.9,74.7\r\n451.4,46.6 438.1,46.6 485.7,0 499.1,0\r\n462.1,54.1 448.7,54.1 496.4,7.5 509.7,7.5\r\n440.5,81.8 521.4,0 534.7,0 453.8,81.8\r\n459.4,81.8 534.7,7.5 548.1,7.5 472.7,81.8";
-	var ary = str.split("\r");
-	data.LogoPaths.points = [];
-	var maxX = -1000;
-	var maxY = -1000;
-	var minX = 1000;
-	var minY = 1000;
-	var width = 554.7;
-	var height = 156.6;
-	var _g1 = 0;
-	var _g = ary.length;
-	while(_g1 < _g) {
-		var i = _g1++;
-		data.LogoPaths.points[i] = [];
-		var line = ary[i];
-		var pstrs = line.split(" ");
-		var _g3 = 0;
-		var _g2 = pstrs.length;
-		while(_g3 < _g2) {
-			var j = _g3++;
-			var pp = pstrs[j].split(",");
-			var xx = Std.parseFloat(pp[0]);
-			var yy = Std.parseFloat(pp[1]);
-			var v = new THREE.Vector2(xx - width / 2,-yy + height / 2);
-			data.LogoPaths.points[i].push(v);
-			maxX = Math.max(maxX,xx);
-			maxY = Math.max(maxY,yy);
-			minX = Math.min(minX,xx);
-			minY = Math.min(minY,yy);
-		}
-	}
-};
-data.LogoPaths.getPaths = function() {
-	var out = [];
-	var _g1 = 0;
-	var _g = data.LogoPaths.points.length;
-	while(_g1 < _g) {
-		var i = _g1++;
-		var p = new data.Paths();
-		p.init(data.LogoPaths.points[i]);
-		out.push(p);
-	}
-	return out;
-};
-data.LogoPaths.prototype = {
-	getPoint: function(r,points) {
-		var n = Math.floor(r * points.length);
-		var index1 = n;
-		var index2 = n + 1;
-		var p1 = points[index1];
-		var p2;
-		if(index2 >= points.length) p2 = points[0]; else p2 = points[index2];
-		var p = null;
-		if(p1 != null && p2 != null) {
-			var xx = r * p1.x + (1 - r) * p2.x;
-			var yy = r * p1.y + (1 - r) * p2.y;
-			p = new THREE.Vector2(xx,yy);
-		} else {
-			if(p1 != null) p = p1;
-			if(p2 != null) p = p2;
-		}
-		return p;
-	}
-	,__class__: data.LogoPaths
-};
 data.Paths = function() {
 };
 data.Paths.__name__ = true;
@@ -3142,6 +3136,10 @@ common.Dat.Z = 90;
 common.Dat.hoge = 0;
 common.Dat.bg = false;
 common.Dat._showing = true;
+common.QueryGetter.NORMAL = 0;
+common.QueryGetter.SKIP = 1;
+common.QueryGetter._isInit = false;
+common.QueryGetter.t = 0;
 common.StageRef.$name = "webgl";
 data.TextureData.emo2048 = new data.TextureData("emo2048.png",2048,2048,845,32);
 data.TextureData.emo128 = new data.TextureData("emo128.png",2048,2048,200,32);
@@ -3162,5 +3160,3 @@ three._WebGLRenderer.RenderPrecision_Impl_.mediump = "mediump";
 three._WebGLRenderer.RenderPrecision_Impl_.lowp = "lowp";
 Main.main();
 })();
-
-//# sourceMappingURL=haxe.js.map

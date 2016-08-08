@@ -46,7 +46,7 @@ uniform float amplitude;
 uniform float maxDistance;
 uniform float freqByteData[32];
 uniform vec3 freqs;
-
+uniform vec3 start;
 void main() {
 
     vec3 pos = texture2D( texture, vUv ).xyz;
@@ -69,7 +69,7 @@ void main() {
 	
 	if ( nn > 0.95 ) {
 		//if (length(pos) > 500.0) {
-		pos = curlNoise( vec3(vLife*10.0,vLife*11.1,vLife*13.3) ) * 10.0;// * 0.01;
+		pos = start + curlNoise( vec3(vLife*10.0,vLife*11.1,vLife*13.3) ) * 10.0;// * 0.01;
 	}
 	
     gl_FragColor = vec4( pos, 1. );//pos wo hozon
@@ -81,6 +81,7 @@ void main() {
 	private var _idx1:Int = 0;
 	private var _idx2:Int = 1;
 	private var _idx3:Int = 2;
+	var _rad:Float =0;
 	
 	
 	public function new(ww:Int, hh:Int) 
@@ -112,7 +113,8 @@ void main() {
                     amplitude: { type: "f", value: 96 },
                     maxDistance: { type: "f", value: 48 },
 					freqByteData:{type:"fv1",	value:MyAudio.a.freqByteDataAry},//Uint8Array
-					freqs:{ type: "v3", value: new Vector3( 0, 1, 2 ) }
+					freqs: { type: "v3", value: new Vector3( 0, 1, 2 ) },
+					start:{ type: "v3", value: new Vector3( 0, 1, 2 ) }
                 },
                 vertexShader: _vertex,
                 fragmentShader:  _fragment
@@ -128,6 +130,10 @@ void main() {
 		
 	}
 	
+	/**
+	 * 
+	 * @param	a
+	 */
 	public function update(a:MyAudio):Void {
 		
 		uniforms.timer.value += 0.001;
@@ -135,6 +141,14 @@ void main() {
 		uniforms.freqs.value.x = a.freqByteDataAry[_idx1];
 		uniforms.freqs.value.y = a.freqByteDataAry[_idx2];
 		uniforms.freqs.value.z = a.freqByteDataAry[_idx3];
+		
+		var amp:Float = Math.pow( a.freqByteDataAry[10] / 255, 2) * 300;
+		_rad += 0.01;
+		
+		uniforms.start.value.x = amp * Math.sin( _rad*0.86 );
+		uniforms.start.value.y = amp * Math.cos( _rad*0.79 );
+		uniforms.start.value.z = amp * Math.sin( _rad * 0.90 );
+		
 	}
 	
 	

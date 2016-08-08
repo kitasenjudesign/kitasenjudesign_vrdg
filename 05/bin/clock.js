@@ -264,6 +264,9 @@ MyPointCloud.prototype = $extend(THREE.Object3D.prototype,{
 		}
 		this._offsetIndex = 2;
 	}
+	,changeOffsetIndex: function() {
+		this._offsetIndex = Math.floor(1000 * Math.random());
+	}
 	,connectRandomLine: function() {
 		if(!this._isRandom) return;
 		var len1 = this._cloud.geometry.vertices.length;
@@ -338,6 +341,48 @@ Three.requestAnimationFrame = function(f) {
 };
 Three.cancelAnimationFrame = function(f) {
 	window.cancelAnimationFrame(id);
+};
+var Tracer = function() {
+};
+Tracer.assert = function(condition,p1,p2,p3,p4,p5) {
+};
+Tracer.clear = function(p1,p2,p3,p4,p5) {
+};
+Tracer.count = function(p1,p2,p3,p4,p5) {
+};
+Tracer.debug = function(p1,p2,p3,p4,p5) {
+};
+Tracer.dir = function(p1,p2,p3,p4,p5) {
+};
+Tracer.dirxml = function(p1,p2,p3,p4,p5) {
+};
+Tracer.error = function(p1,p2,p3,p4,p5) {
+};
+Tracer.group = function(p1,p2,p3,p4,p5) {
+};
+Tracer.groupCollapsed = function(p1,p2,p3,p4,p5) {
+};
+Tracer.groupEnd = function() {
+};
+Tracer.info = function(p1,p2,p3,p4,p5) {
+};
+Tracer.log = function(p1,p2,p3,p4,p5) {
+};
+Tracer.markTimeline = function(p1,p2,p3,p4,p5) {
+};
+Tracer.profile = function(title) {
+};
+Tracer.profileEnd = function(title) {
+};
+Tracer.time = function(title) {
+};
+Tracer.timeEnd = function(title,p1,p2,p3,p4,p5) {
+};
+Tracer.timeStamp = function(p1,p2,p3,p4,p5) {
+};
+Tracer.trace = function(p1,p2,p3,p4,p5) {
+};
+Tracer.warn = function(p1,p2,p3,p4,p5) {
 };
 var camera = {};
 camera.DoubleCamera = function() {
@@ -820,6 +865,7 @@ common.Config.prototype = {
 		common.Config.host = data.host;
 		var win = window;
 		win.host = common.Config.host;
+		if(common.QueryGetter.getQuery("host") != null) win.host = common.QueryGetter.getQuery("host");
 		common.Config.canvasOffsetY = data.canvasOffsetY;
 		common.Config.globalVol = data.globalVol;
 		common.Config.particleSize = data.particleSize;
@@ -952,7 +998,7 @@ common.Key.prototype = $extend(THREE.EventDispatcher.prototype,{
 	}
 	,_onKeyDown: function(e) {
 		var n = Std.parseInt(e.keyCode);
-		console.debug("_onkeydown " + n);
+		Tracer.debug("_onkeydown " + n);
 		this._dispatch(n);
 	}
 	,_dispatch: function(n) {
@@ -969,6 +1015,30 @@ common.MathUtil.getOtherInt = function(n,num) {
 		if(nn != n) break;
 	}
 	return nn;
+};
+common.QueryGetter = function() {
+};
+common.QueryGetter.init = function() {
+	common.QueryGetter._map = new haxe.ds.StringMap();
+	var str = window.location.search;
+	if(str.indexOf("?") < 0) Tracer.log("query nashi"); else {
+		str = HxOverrides.substr(str,1,str.length - 1);
+		var list = str.split("&");
+		Tracer.log(list);
+		var _g1 = 0;
+		var _g = list.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			var fuga = list[i].split("=");
+			common.QueryGetter._map.set(fuga[0],fuga[1]);
+		}
+	}
+	if(common.QueryGetter._map.get("t") != null) common.QueryGetter.t = Std.parseInt(common.QueryGetter._map.get("t"));
+	common.QueryGetter._isInit = true;
+};
+common.QueryGetter.getQuery = function(idd) {
+	if(!common.QueryGetter._isInit) common.QueryGetter.init();
+	return common.QueryGetter._map.get(idd);
 };
 common.StageRef = function() {
 };
@@ -1053,7 +1123,7 @@ dede.DeDeCuts.prototype = {
 		common.Key.board.addEventListener("keydown",$bind(this,this._onKeyDown));
 	}
 	,_onKeyDown: function(e) {
-		console.log("_onKeyDown");
+		Tracer.log("_onKeyDown");
 		if(Std.parseInt(e.keyCode) == 67) {
 			this._cutIndex++;
 			this._currentCut = this._cuts[this._cutIndex % this._cuts.length];
@@ -1194,6 +1264,9 @@ dede.DeDeDigit.prototype = $extend(THREE.Object3D.prototype,{
 		this._vx += Math.random() - 0.5;
 		this._vy += Math.random() - 0.5;
 		this._vz += Math.random() - 0.5;
+	}
+	,setRotate: function(b) {
+		this.isRotate = b;
 	}
 	,update: function(speed) {
 		if(this.isRotate) {
@@ -1388,6 +1461,14 @@ dede.DeDeLine.prototype = $extend(THREE.Object3D.prototype,{
 		while(_g1 < _g) {
 			var i = _g1++;
 			this._digits[i].setType(type,isRotate);
+		}
+	}
+	,setRotate: function(b) {
+		var _g1 = 0;
+		var _g = this._digits.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this._digits[i].setRotate(b);
 		}
 	}
 	,setSec: function(r,boost) {
@@ -1586,6 +1667,14 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 			this._lines[i].setSec(f,boost);
 		}
 	}
+	,setRotate: function(b) {
+		var _g1 = 0;
+		var _g = this._lines.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this._lines[i].setRotate(b);
+		}
+	}
 	,setGeoMax: function(n,enables) {
 		var ok = false;
 		if(enables == null) ok = true;
@@ -1756,6 +1845,10 @@ dede.cuts.DeDeCutBase.prototype = {
 	}
 	,coundDown: function() {
 	}
+	,setRotate: function(b) {
+		this._lines.setRotate(b);
+		this._vrdg.setRotate(b);
+	}
 	,setRandomLine: function() {
 		this._isLine = !this._isLine;
 		MyPointCloud.cloud.setRandom(this._isLine);
@@ -1772,7 +1865,7 @@ dede.cuts.DeDeCutMultiLine = function() {
 dede.cuts.DeDeCutMultiLine.__super__ = dede.cuts.DeDeCutBase;
 dede.cuts.DeDeCutMultiLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 	start: function() {
-		console.debug("start");
+		Tracer.debug("start");
 		this._reposThree();
 		this.next();
 	}
@@ -1885,7 +1978,7 @@ dede.cuts.DeDeCutVRDG.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		this._cam.setZoom(2);
 	}
 	,next: function() {
-		console.log("next");
+		Tracer.log("next");
 		var data = new dede.cuts.DeDeParam();
 		data.txt = "VRDGTH";
 		data.speed = 2;
@@ -3193,6 +3286,10 @@ common.Dat.Z = 90;
 common.Dat.hoge = 0;
 common.Dat.bg = false;
 common.Dat._showing = true;
+common.QueryGetter.NORMAL = 0;
+common.QueryGetter.SKIP = 1;
+common.QueryGetter._isInit = false;
+common.QueryGetter.t = 0;
 common.StageRef.$name = "webgl";
 dede.DeDeDigit.Z_MAX = 3000;
 dede.DeDeDigit.TYPE_DOT_MONOSPACE = 0;
@@ -3220,5 +3317,3 @@ typo.StrokeUtil.VRDG = 0;
 typo.StrokeUtil.FUTURA = 1;
 Main.main();
 })();
-
-//# sourceMappingURL=clock.js.map

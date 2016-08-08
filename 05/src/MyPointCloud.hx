@@ -186,6 +186,14 @@ class MyPointCloud extends Object3D
 		
 	}
 	
+	//
+	public function changeOffsetIndex():Void {
+		
+		_offsetIndex = Math.floor( 1000 * Math.random() );
+		
+	}
+	
+	
 	
 	/**
 	 * _isRandom=trueだとこれが炸裂する

@@ -260,6 +260,10 @@ class DeDeDigit extends Object3D
 		
 	}
 	
+	public function setRotate(b:Bool):Void {
+		isRotate = b;
+	}
+	
 	/**
 	 * 
 	 * @param	sec 0-59.999

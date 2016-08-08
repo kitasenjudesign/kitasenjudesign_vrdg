@@ -220,7 +220,7 @@ void main()
 	public function new() 
 	{
 		if (_texture1 == null) {
-			_texture1 = ImageUtils.loadTexture("dede_face_diff_red.png");// mae_face.png");
+			_texture1 = ImageUtils.loadTexture("face/dede_face_diff.png");// mae_face.png");
 		}
 		
 		_indecies = [];
@@ -258,11 +258,11 @@ void main()
 		
 		if ( _colorTextures == null ) {
 			_colorTextures = [
-				ImageUtils.loadTexture("grade.png"),
-				ImageUtils.loadTexture("grade2.png"),
-				ImageUtils.loadTexture("grade3.png"),
-				ImageUtils.loadTexture("grade4.png"),
-				ImageUtils.loadTexture("grade8.png")
+				ImageUtils.loadTexture("grade/grade.png"),
+				ImageUtils.loadTexture("grade/grade2.png"),
+				ImageUtils.loadTexture("grade/grade3.png"),
+				ImageUtils.loadTexture("grade/grade4.png"),
+				ImageUtils.loadTexture("grade/grade8.png")
 			];
 		}
 		_currentTexture = _colorTextures[Math.floor(_colorTextures.length*Math.random())];

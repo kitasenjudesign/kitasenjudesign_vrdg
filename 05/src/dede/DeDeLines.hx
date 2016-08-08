@@ -133,6 +133,9 @@ class DeDeLines extends Object3D
 	}
 	
 	
+	
+	
+	
 	private function _flash():Void
 	{
 		//_tweening = true;		
@@ -164,6 +167,11 @@ class DeDeLines extends Object3D
 		}
 	}
 	
+	public function setRotate(b:Bool):Void {
+		for (i in 0..._lines.length) {
+			_lines[i].setRotate(b);
+		}	
+	}	
 	
 	public function setGeoMax(n:Int,enables:Array<Bool>=null):Void {
 			

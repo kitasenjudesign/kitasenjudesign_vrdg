@@ -2,22 +2,16 @@ package canvas.primitives;
 import canvas.primitives.Chochin;
 import canvas.primitives.Chochins;
 import canvas.primitives.Cubes;
-import canvas.primitives.Cubes;
 import canvas.primitives.data.EffectData;
 import canvas.primitives.Hachigatsu;
 import canvas.primitives.Ices;
 import canvas.primitives.Katori;
 import canvas.primitives.Katoris;
-import canvas.primitives.Knot;
 import canvas.primitives.Octa;
 import canvas.primitives.PrimitiveBase;
 import canvas.primitives.Two;
 import canvas.primitives.VideoPlane;
-import common.Dat;
-import data.LogoPaths;
-import js.Browser;
 import sound.MyAudio;
-import three.Face;
 import three.Object3D;
 import three.Vector3;
 
@@ -39,11 +33,11 @@ class Primitives extends Object3D
 	private var _torus		:Torus;
 	private var _logo		:VrdgLogo;
 	private var _mouse		:DeDeLogo;
+	
 	private var _primitives:Array<PrimitiveBase>;
 	private var _tgtScale:Float = 1;
+
 	private var _octa:Octa;
-	//private var _knot:Knot;
-	//private var _kitasen:Kitasenju;
 	private var _cubes:Cubes;
 	private var _spheres:Spheres;
 	private var _two:Two;

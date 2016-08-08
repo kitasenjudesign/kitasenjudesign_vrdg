@@ -45,12 +45,10 @@ class MyDAELoader extends Object3D
 		loader.options.convertUpAxis = true;		
 		//loader.load( 'mae_face.dae', _onComplete );
 		//loader.load( 'dede_160805_7c.dae', _onComplete );
-		loader.load( 'dede_160807_3c4d.dae', _onComplete );
+		loader.load( 'face/dede_c4d.dae', _onComplete );
 
 		//loader.load( 'de.dae', _onComplete );
-		
 		//loader.load( 'mae_face_hole.dae', _onComplete );
-		
 		
 	}
 	
@@ -61,12 +59,8 @@ class MyDAELoader extends Object3D
 		
 		dae = collada.scene;
 		//dae.scale.x = dae.scale.y = dae.scale.z =150;
-	
-		
 		//_texture1.minFilter = Three.NearestFilter;
 		//_texture1.magFilter = Three.NearestFilter;
-		
-		
 		
 		material = new MyShaderMaterial();// untyped dae.children[0].children[0].material;
 	

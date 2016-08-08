@@ -33,11 +33,23 @@ class VideoPlane extends PrimitiveBase
 		super();
 	}
 	
+	
 	override public function init(o:Dynamic):Void {
-		super.init(o);
 		
+		super.init(o);
+		_initVideo("walker_out.mov");
+		
+	}
+	
+	/**
+	 * _initVideo
+	 * @param	src
+	 */
+	private function _initVideo(src:String):Void{
+	
 		if(_video==null){
 			_video = cast Browser.document.getElementById("walker");
+			_video.src = src;
 			_video.loop = true;
 			
 			_canvas = Browser.document.createCanvasElement();
@@ -52,9 +64,9 @@ class VideoPlane extends PrimitiveBase
 			var s:Float = 3.5;
 			_plane = new Mesh(untyped new PlaneBufferGeometry(W*s, H*s, 1, 1), _material);
 			add(_plane);
-		}
+		}		
+		
 	}
-	
 	
 	override public function start():Void {
 	
@@ -70,8 +82,6 @@ class VideoPlane extends PrimitiveBase
 		
 		_context.drawImage(_video,0,0);
 		_texture.needsUpdate = true;
-		//this.rotation.y += rotV.y * 0.5 + 0.01;
-		//super.update(a, rotV);
 		
 	}		
 	

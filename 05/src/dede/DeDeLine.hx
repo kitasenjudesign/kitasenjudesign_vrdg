@@ -105,6 +105,11 @@ class DeDeLine extends Object3D
 		}
 	}
 	
+	public function setRotate(b:Bool):Void {
+		for (i in 0..._digits.length) {
+			_digits[i].setRotate( b );
+		}		
+	}
 	
 	/**
 	 * setSec,,,
