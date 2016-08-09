@@ -136,17 +136,19 @@ class Main3d
 	 */
 	private function _run():Void
 	{
+		//_bure.update();
+		camera.update();
+		//camera.lookAt(new Vector3());		
+		
 		if (_audio != null) {
 			_audio.update();
 		}
 		
 		if (_maeFaces != null && _audio != null) {
-			_maeFaces.update(_audio);
+			_maeFaces.update(_audio,camera);
 		}
 		
-		//_bure.update();
-		camera.update();
-		camera.lookAt(new Vector3());
+		
 		
 		renderer.render(scene, camera);
 		

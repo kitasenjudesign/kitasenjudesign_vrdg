@@ -188,7 +188,6 @@ class Dat
 		Tracer.log("goURL " + url );
 		Browser.window.location.href = url + Browser.location.hash;
 		
-		
 	}
 	
 	

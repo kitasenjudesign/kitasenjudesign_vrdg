@@ -71,16 +71,25 @@ class MainDeDe
 		_bg = new BlinkPlane();
 		_bg.position.z = -40;
 		_bg.scale.set(2, 2, 2);
-		//_scene.add(_bg);
+		_scene.add(_bg);
 		
+		if( Dat.bg ){
+			_bg.visible = true;
+		}else {
+			_bg.visible = false;
+		}
+		
+		#if debug
 		_dummy = new DummyBars();
 		_dummy.init();
 		_scene.add(_dummy);
+		#end
+		
 		//
 		StageRef.setCenter();
 		Browser.document.addEventListener("keydown", _onKeyDown);
 		
-		
+		Dat.gui.add(_bg,"visible");
 	}
 	
 	private function _onKeyDown(e):Void {
@@ -136,8 +145,13 @@ class MainDeDe
 	{
 		_audio.update();
 	
-		_dummy.update(_audio);
-		_bg.setLight(_audio);
+		if(_dummy!=null){
+			_dummy.update(_audio);
+		}
+		
+		if(_bg.visible){
+			_bg.setLight(_audio);
+		}
 		
 		MyColor.update();
 		

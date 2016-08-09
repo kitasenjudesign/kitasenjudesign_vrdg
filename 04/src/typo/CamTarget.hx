@@ -27,6 +27,12 @@ class CamTarget extends Mesh
 			new MeshBasicMaterial( { wireframe:true, color:0xffffff } )
 		);
 		
+		#if debug
+			this.visible = true;
+		#else
+			this.visible = false;		
+		#end
+		
 	}
 
 	public function init(data:CutData):Void {

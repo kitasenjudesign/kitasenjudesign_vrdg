@@ -66,7 +66,6 @@ class Main3d
 		_camera = new ExCamera(35, W / H, 10, Dat.bg ? 20000 : 2000);
 		_camera.bure = _bure;
 		
-		
 		var light:AmbientLight = new AmbientLight(0x666666);
 		//new AmbientLight(0x999999);//new AmbientLight(0xaaaaaa);
 		_scene.add(light);

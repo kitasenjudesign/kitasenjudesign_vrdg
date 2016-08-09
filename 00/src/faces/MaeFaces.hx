@@ -1,4 +1,5 @@
 package faces;
+import camera.ExCamera;
 import common.Dat;
 import common.Key;
 import faces.data.MaeFormation;
@@ -127,7 +128,7 @@ class MaeFaces extends Object3D
 	/**
 	 * update,audio
 	 */
-	public function update(audio:MyAudio):Void {
+	public function update(audio:MyAudio,camera:ExCamera):Void {
 		
 		for (i in 0..._faces.length) {
 			
@@ -135,7 +136,7 @@ class MaeFaces extends Object3D
 			
 		}
 		_formation.update();
-		_lines.update(audio);
+		_lines.update(audio,camera);
 		
 	}
 	

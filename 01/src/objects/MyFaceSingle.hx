@@ -8,6 +8,7 @@ import three.MeshDepthMaterial;
 import three.Object3D;
 import three.Vector3;
 import tween.easing.Cubic;
+import tween.easing.Power0;
 import tween.TweenMax;
 import tween.TweenMaxHaxe;
 /**
@@ -102,24 +103,29 @@ class MyFaceSingle extends Object3D
 		_baseRadY = d.baseRadY;
 		
 		//this.rotation.z = Math.PI / 2;
-		vr = (Math.random()-0.5) * Math.PI / 140;
+		vr = (Math.random() - 0.5) * Math.PI / 140;
+		
+		
+		//show
+		this.scale.set(0, 0, 0);
+		this.rotation.y = 6 * Math.PI;
+		var time:Float = 15;
+		TweenMax.to(this.rotation, time, {
+			y:0,
+			ease:Power0.easeInOut
+		});
+		TweenMax.to(this.scale, time, {
+			x:1,
+			y:1,
+			z:1,
+			ease:Power0.easeInOut
+		});
+		
+		
 	}
 	
 
-	public function updateMaterial(matMode:Int):Void {
-		
-		if (Dat.bg) return;
-		
-		switch( matMode ) {
-			case MyFace.MAT_DEFAULT:
-				dae.material = cast _daeLoader.material;
-				
-			case MyFace.MAT_DEPTH:
-				dae.material = cast new MeshDepthMaterial();
-			
-		}
-		
-	}
+
 	
 	
 	
@@ -248,27 +254,6 @@ class MyFaceSingle extends Object3D
 
 	
 	
-	/**
-	 * 
-	 * @param	mode
-	 */
-	public function setMode(mode:String):Void {
-	
-		_mode = mode;
-		//_daeLoader.changeMap();
-		
-		switch(_mode) {
-			case MyWorld.MODE_SINGLE:
-				isSplit = false;
-				
-			case MyWorld.MODE_SPLIT:
-				isSplit = true;
-			
-			case MyWorld.MODE_SPLIT2:
-				isSplit = true;
-			
-		}
-		
-	}
+
 	
 }

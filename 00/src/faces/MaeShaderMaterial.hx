@@ -25,6 +25,7 @@ class MaeShaderMaterial extends ShaderMaterial
 		uniform float _isColor;
 		uniform float _brightness;
 		uniform float _counter;
+		uniform float _colLoop;
 		
 		// vertexShaderで処理されて渡されるテクスチャ座標
 		varying vec2 vUv;                                             
@@ -68,7 +69,7 @@ class MaeShaderMaterial extends ShaderMaterial
 				if ( _isColor == 1.0 ) {
 						//vPos
 						//vec2 pp = vec2( 0.5, fract( length(vAbs) + _counter ) );
-						vec2 pp = vec2( 0.5, fract( length(vVertex.z*0.01) + _counter ) );
+						vec2 pp = vec2( 0.5, fract( length(vVertex.z*_colLoop) + _counter ) );
 						if ( pp.y < 0.5) {
 							pp.y = pp.y * 2.0;
 						}else {
@@ -79,7 +80,12 @@ class MaeShaderMaterial extends ShaderMaterial
 						//vec2 pp = vec2( fract(vUv.x+vAbs.x*0.03), fract(vUv.y+vAbs.z*0.03) );
 						vec4 out1 = texture2D( colTexture, pp );
 						
-						diffuse = out1.xyz * dotNL * 0.3 + out1.xyz * 0.7;
+						//float ratio = clamp(length(vAbs), 0.0, 1.0) / 1.0;
+						//diffuse = diffuse.xyz * (1.0-ratio) + out1.xyz * (ratio);
+						diffuse = diffuse.xyz * 0.2 + out1.xyz * 0.9;
+						//diffuse = out1.xyz * dotNL * 0.1 + out1.xyz * 0.9;
+						
+						
 						
 						/*
 						float mNear = 400.0;
@@ -265,7 +271,8 @@ void main()
 					_isColor: { type:"f",		value:1 },
 					_brightness: { type:"f",		value:1 },
 					_strength: { type:"f", value:1 },
-					_counter: { type:"f", value:0 }
+					_counter: { type:"f", value:0 },
+					_colLoop: { type:"f",value:1 }
 					
 				}
 		});
@@ -335,6 +342,7 @@ void main()
 			= Math.pow( a.freqByteData[_indecies[8]] / 255, 2) * 0.5;
 			uniforms._count.value += speed;// Math.random();// Math.random();
 			uniforms._freqByteData.value = _freq;// Math.random();// Math.random();
+			uniforms._colLoop.value = 0.01+Math.pow( a.freqByteData[_indecies[3]] / 255, 1.5)*100;// Math.random();// Math.random();
 			
 			uniforms._counter.value += 0.01;
 		}

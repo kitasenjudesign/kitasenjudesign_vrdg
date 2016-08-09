@@ -1,4 +1,5 @@
 package faces;
+import camera.ExCamera;
 import sound.MyAudio;
 import three.BoxGeometry;
 import three.Color;
@@ -74,7 +75,7 @@ class MaeLines extends Object3D
 	 * update 
 	 * @param	audio
 	 */
-	public function update(audio:MyAudio):Void {
+	public function update(audio:MyAudio,cam:ExCamera):Void {
 		
 		_resetLine();//resetLine;
 		

@@ -142,11 +142,11 @@ MainDeDe.prototype = {
 		this._bg = new dede.BlinkPlane();
 		this._bg.position.z = -40;
 		this._bg.scale.set(2,2,2);
-		this._dummy = new sound.DummyBars();
-		this._dummy.init();
-		this._scene.add(this._dummy);
+		this._scene.add(this._bg);
+		if(common.Dat.bg) this._bg.visible = true; else this._bg.visible = false;
 		common.StageRef.setCenter();
 		window.document.addEventListener("keydown",$bind(this,this._onKeyDown));
+		common.Dat.gui.add(this._bg,"visible");
 	}
 	,_onKeyDown: function(e) {
 		if(Std.parseInt(e.keyCode) == 39) {
@@ -172,8 +172,8 @@ MainDeDe.prototype = {
 	}
 	,_run: function() {
 		this._audio.update();
-		this._dummy.update(this._audio);
-		this._bg.setLight(this._audio);
+		if(this._dummy != null) this._dummy.update(this._audio);
+		if(this._bg.visible) this._bg.setLight(this._audio);
 		MyColor.update();
 		this._points.update();
 		this._cuts.update(this._audio);
@@ -212,6 +212,7 @@ MyPointCloud.prototype = $extend(THREE.Object3D.prototype,{
 	init: function() {
 		MyPointCloud.cloud = this;
 		this._mat = new THREE.PointCloudMaterial({ color : 16777215, size : 15});
+		if(common.Dat.bg) this._mat.size = 10; else this._mat.size = 15;
 		this._mat.depthTest = false;
 		var g1 = new THREE.Geometry();
 		var _g = 0;
@@ -901,6 +902,7 @@ common.Config.prototype = {
 		common.Config.canvasOffsetY = data.canvasOffsetY;
 		common.Config.globalVol = data.globalVol;
 		common.Config.particleSize = data.particleSize;
+		common.Config.bgLight = data.bgLight;
 		if(this._callback != null) this._callback();
 	}
 };
@@ -923,7 +925,7 @@ common.Dat._onInit = function() {
 	common.Dat.gui.domElement.style.zIndex = 10;
 	common.Key.init();
 	common.Key.board.addEventListener("keydown",common.Dat._onKeyDown);
-	common.Dat.show();
+	common.Dat.show(false);
 	if(common.Dat._callback != null) common.Dat._callback();
 };
 common.Dat._onKeyDown = function(e) {
@@ -932,7 +934,7 @@ common.Dat._onKeyDown = function(e) {
 	case 65:
 		break;
 	case 68:
-		if(common.Dat.gui.domElement.style.display == "block") common.Dat.hide(); else common.Dat.show();
+		if(common.Dat.gui.domElement.style.display == "block") common.Dat.hide(); else common.Dat.show(true);
 		break;
 	case 49:
 		common.StageRef.fadeOut(common.Dat._goURL1);
@@ -976,10 +978,13 @@ common.Dat._goURL = function(url) {
 	Tracer.log("goURL " + url);
 	window.location.href = url + window.location.hash;
 };
-common.Dat.show = function() {
+common.Dat.show = function(isBorder) {
+	if(isBorder == null) isBorder = false;
+	if(isBorder) common.StageRef.showBorder();
 	common.Dat.gui.domElement.style.display = "block";
 };
 common.Dat.hide = function() {
+	common.StageRef.hideBorder();
 	common.Dat.gui.domElement.style.display = "none";
 };
 common.ExVector3 = function(xx,yy,zz) {
@@ -1076,6 +1081,14 @@ common.QueryGetter.getQuery = function(idd) {
 };
 common.StageRef = function() {
 };
+common.StageRef.showBorder = function() {
+	var dom = window.document.getElementById("webgl");
+	dom.style.border = "solid 1px #cccccc";
+};
+common.StageRef.hideBorder = function() {
+	var dom = window.document.getElementById("webgl");
+	dom.style.border = "solid 0px";
+};
 common.StageRef.fadeIn = function() {
 	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
 	common.StageRef.sheet.fadeIn();
@@ -1085,19 +1098,17 @@ common.StageRef.fadeOut = function(callback) {
 	common.StageRef.sheet.fadeOut(callback);
 };
 common.StageRef.setCenter = function() {
-	if(!common.Dat.bg) {
-		var dom = window.document.getElementById("webgl");
-		var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
-		dom.style.position = "absolute";
-		dom.style.zIndex = "1000";
-		dom.style.top = Math.round(yy) + "px";
-	}
+	var dom = window.document.getElementById("webgl");
+	var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
+	dom.style.position = "absolute";
+	dom.style.zIndex = "1000";
+	dom.style.top = Math.round(yy) + "px";
 };
 common.StageRef.get_stageWidth = function() {
 	return window.innerWidth;
 };
 common.StageRef.get_stageHeight = function() {
-	if(common.Dat.bg) return window.innerHeight;
+	if(common.Dat.bg) return Math.floor(window.innerWidth * 816 / 1920);
 	return Math.floor(window.innerWidth * 576 / 1920);
 };
 common.WSocket = function() {
@@ -1132,6 +1143,7 @@ dede.BlinkPlane = function() {
 dede.BlinkPlane.__super__ = THREE.Mesh;
 dede.BlinkPlane.prototype = $extend(THREE.Mesh.prototype,{
 	setLight: function(a) {
+		if(!this.visible) return;
 		var ff = a.subFreqByteData[9];
 		if(ff < 0) ff = 0;
 		if(ff > 10) ff = 10;
@@ -3351,6 +3363,7 @@ clock.DotDigit.NUM_TYPE = 4;
 common.Config.canvasOffsetY = 0;
 common.Config.globalVol = 1.0;
 common.Config.particleSize = 3000;
+common.Config.bgLight = 0.5;
 common.Dat.UP = 38;
 common.Dat.DOWN = 40;
 common.Dat.LEFT = 37;

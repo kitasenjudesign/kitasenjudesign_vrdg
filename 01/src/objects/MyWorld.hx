@@ -110,6 +110,12 @@ class MyWorld extends Object3D
 				sphere.changeBg();
 				_impulese();
 							
+				
+			case Dat.UP:
+				_showColor();
+			case Dat.DOWN:
+				_hideColor();
+				
 			case Dat.RIGHT:	
 				_nextEffect();///////////////////////////////
 				
@@ -121,18 +127,54 @@ class MyWorld extends Object3D
 	}
 	
 	
+	
+	public function _showColor():Void {
+		
+		var data:EffectData = EffectData.EFFECT_COLOR_WIRE;
+		var rr:Float = 0;
+		for ( i in 0...faces.length) {
+			faces[i].rotateZ( rr );
+			faces[i].updateMaterial(MyFace.MAT_DEPTH,true);
+			faces[i].s = data.strength;
+		}
+		
+		//Browser.window.alert(data.name);
+		effectName = data.name;
+		_pp.changeColor(data);		
+		
+	}
+	
+	
+	public function _hideColor():Void {
+		
+		var data:EffectData = EffectData.EFFECT_COLOR_WIRE;
+		var rr:Float = 0;
+		for ( i in 0...faces.length) {
+			faces[i].rotateZ( rr );
+			faces[i].updateMaterial(MyFace.MAT_DEFAULT,false);
+			faces[i].s = data.strength;
+		}
+		
+		//Browser.window.alert(data.name);
+		effectName = data.name;
+		_pp.changeColor(data);		
+		
+	}
+		
+	
+	
+	
+	
 	/**
 	 * _nextEffect
 	 */
 	public function _nextEffect():Void {
 		
-		
-		
 		//koko
 		var data:EffectData = EffectData.getNext();		
 		//Browser.window.alert(data.name);
 		effectName = data.name;
-		_pp.change(data);// isColor, isDisplace);
+		_pp.changeDisplace(data);// isColor, isDisplace);
 
 		var mat:Int = 0;
 		if (data.colorType==EffectData.COLOR_MONO || data.colorType==EffectData.COLOR_GRADE) {
@@ -164,8 +206,6 @@ class MyWorld extends Object3D
 		_impulese();				
 		
 	}
-	
-	
 	
 	private function _nextSingle():Void {
 			

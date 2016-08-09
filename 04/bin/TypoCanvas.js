@@ -466,6 +466,7 @@ common.Config.prototype = {
 		common.Config.canvasOffsetY = data.canvasOffsetY;
 		common.Config.globalVol = data.globalVol;
 		common.Config.particleSize = data.particleSize;
+		common.Config.bgLight = data.bgLight;
 		if(this._callback != null) this._callback();
 	}
 };
@@ -488,7 +489,7 @@ common.Dat._onInit = function() {
 	common.Dat.gui.domElement.style.zIndex = 10;
 	common.Key.init();
 	common.Key.board.addEventListener("keydown",common.Dat._onKeyDown);
-	common.Dat.show();
+	common.Dat.show(false);
 	if(common.Dat._callback != null) common.Dat._callback();
 };
 common.Dat._onKeyDown = function(e) {
@@ -497,7 +498,7 @@ common.Dat._onKeyDown = function(e) {
 	case 65:
 		break;
 	case 68:
-		if(common.Dat.gui.domElement.style.display == "block") common.Dat.hide(); else common.Dat.show();
+		if(common.Dat.gui.domElement.style.display == "block") common.Dat.hide(); else common.Dat.show(true);
 		break;
 	case 49:
 		common.StageRef.fadeOut(common.Dat._goURL1);
@@ -541,10 +542,13 @@ common.Dat._goURL = function(url) {
 	Tracer.log("goURL " + url);
 	window.location.href = url + window.location.hash;
 };
-common.Dat.show = function() {
+common.Dat.show = function(isBorder) {
+	if(isBorder == null) isBorder = false;
+	if(isBorder) common.StageRef.showBorder();
 	common.Dat.gui.domElement.style.display = "block";
 };
 common.Dat.hide = function() {
+	common.StageRef.hideBorder();
 	common.Dat.gui.domElement.style.display = "none";
 };
 common.FadeSheet = function(ee) {
@@ -621,6 +625,14 @@ common.QueryGetter.getQuery = function(idd) {
 };
 common.StageRef = function() {
 };
+common.StageRef.showBorder = function() {
+	var dom = window.document.getElementById("webgl");
+	dom.style.border = "solid 1px #cccccc";
+};
+common.StageRef.hideBorder = function() {
+	var dom = window.document.getElementById("webgl");
+	dom.style.border = "solid 0px";
+};
 common.StageRef.fadeIn = function() {
 	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
 	common.StageRef.sheet.fadeIn();
@@ -630,19 +642,17 @@ common.StageRef.fadeOut = function(callback) {
 	common.StageRef.sheet.fadeOut(callback);
 };
 common.StageRef.setCenter = function() {
-	if(!common.Dat.bg) {
-		var dom = window.document.getElementById("webgl");
-		var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
-		dom.style.position = "absolute";
-		dom.style.zIndex = "1000";
-		dom.style.top = Math.round(yy) + "px";
-	}
+	var dom = window.document.getElementById("webgl");
+	var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
+	dom.style.position = "absolute";
+	dom.style.zIndex = "1000";
+	dom.style.top = Math.round(yy) + "px";
 };
 common.StageRef.get_stageWidth = function() {
 	return window.innerWidth;
 };
 common.StageRef.get_stageHeight = function() {
-	if(common.Dat.bg) return window.innerHeight;
+	if(common.Dat.bg) return Math.floor(window.innerWidth * 816 / 1920);
 	return Math.floor(window.innerWidth * 576 / 1920);
 };
 common.WSocket = function() {
@@ -1060,6 +1070,7 @@ typo.CamTarget = function() {
 	this._speed = 0;
 	this._count = new THREE.Vector3();
 	THREE.Mesh.call(this,new THREE.OctahedronGeometry(30),new THREE.MeshBasicMaterial({ wireframe : true, color : 16777215}));
+	this.visible = false;
 };
 typo.CamTarget.__super__ = THREE.Mesh;
 typo.CamTarget.prototype = $extend(THREE.Mesh.prototype,{
@@ -2051,6 +2062,7 @@ camera.ExCamera.POS_FOLLOW = "MODE_FOLLOW";
 common.Config.canvasOffsetY = 0;
 common.Config.globalVol = 1.0;
 common.Config.particleSize = 3000;
+common.Config.bgLight = 0.5;
 common.Dat.UP = 38;
 common.Dat.DOWN = 40;
 common.Dat.LEFT = 37;

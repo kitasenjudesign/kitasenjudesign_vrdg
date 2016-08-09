@@ -31,16 +31,21 @@ class ColorMapPass extends ShaderPass
 						vec4 texel = texture2D( tDiffuse, vUv );
 						vec4 out1 = vec4(0.0);
 						
+					//mono == false
 					if ( mono == 0.0) {
 						
-						vec2 pp = vec2( 0.5, fract( texel.x * strength + counter ) );//akarusanioujite					
+						vec2 pp = vec2( 0.5, fract( texel.x * strength + counter ) );//akarusanioujite	
+						float rr = texel.x * 2.0;
+						if (rr > 1.0) rr = 1.0;
+					
 						if ( pp.y < 0.5) {
 								pp.y = pp.y * 2.0;
-								out1 = texture2D( texture, pp );						
+								out1 = texture2D( texture, pp ) * rr;					
 						}else {
 								pp.y = (1.0 - (pp.y - 0.5) * 2.0);				
-								out1 = texture2D( texture, pp );
+								out1 = texture2D( texture, pp ) * rr;
 						}
+						
 						if ( texel.x == 0.0 ) {
 								out1 = vec4(0.0, 0.0, 0.0, 1.0);
 						}		
@@ -110,6 +115,10 @@ class ColorMapPass extends ShaderPass
 	public function setTexture():Void
 	{
 		uniforms.texture.value = _textures[ Math.floor( Math.random() * _textures.length ) ];	
+	}
+	
+	public function setColor():Void {
+		
 	}
 	
 	public function setMono(b:Bool) 

@@ -1,5 +1,7 @@
 package objects ;
+import common.Dat;
 import sound.MyAudio;
+import three.MeshDepthMaterial;
 import tween.easing.Cubic;
 import tween.TweenMax;
 
@@ -13,6 +15,7 @@ class MyFace extends MyFaceSplitA
 
 	public static inline var MAT_DEFAULT:Int = 0;
 	public static inline var MAT_DEPTH:Int = 1;
+	//public static inline var MAT_DEPTH_WIRE:Int = 2;
 	
 	public var baseY:Float = 0;
 	
@@ -40,6 +43,23 @@ class MyFace extends MyFaceSplitA
 		
 	}	
 	
+	public function updateMaterial(matMode:Int,isWire:Bool=false):Void {
+		
+		if (Dat.bg) return;
+		
+		switch( matMode ) {
+			case MyFace.MAT_DEFAULT:
+				dae.material = cast _daeLoader.material;
+				
+			case MyFace.MAT_DEPTH:
+				dae.material = cast new MeshDepthMaterial();
+				
+		}
+		
+		untyped dae.material.wireframe = isWire;
+		
+	}	
+	
 	public function update(audio:MyAudio):Void {
 		
 		switch( _mode ) {
@@ -55,6 +75,31 @@ class MyFace extends MyFaceSplitA
 		
 		
 	}
+	
+	
+	
+	/**
+	 * 
+	 * @param	mode
+	 */
+	public function setMode(mode:String):Void {
+	
+		_mode = mode;
+		//_daeLoader.changeMap();
+		
+		switch(_mode) {
+			case MyWorld.MODE_SINGLE:
+				isSplit = false;
+				
+			case MyWorld.MODE_SPLIT:
+				isSplit = true;
+			
+			case MyWorld.MODE_SPLIT2:
+				isSplit = true;
+			
+		}
+		
+	}	
 	
 
 	

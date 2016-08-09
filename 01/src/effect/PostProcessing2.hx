@@ -99,7 +99,7 @@ class PostProcessing2
 	//color 
 	//displace1
 	//displace2
-	public function change(data:EffectData):Void {
+	public function changeDisplace(data:EffectData):Void {
 		
 		switch ( data.displaceType ) {
 			case EffectData.DISPLACE_NONE:
@@ -121,6 +121,10 @@ class PostProcessing2
 				
 		}
 		
+	}
+	
+	public function changeColor(data:EffectData):Void{
+		
 		switch ( data.colorType ) {
 			case EffectData.COLOR_NONE:
 				_colorPass.enabled = false;
@@ -132,8 +136,8 @@ class PostProcessing2
 				_colorPass.enabled = true;
 				_colorPass.setMono(false);				
 				_colorPass.setTexture();
-				
 		}
+		
 	}
 	
 	//changeMode 

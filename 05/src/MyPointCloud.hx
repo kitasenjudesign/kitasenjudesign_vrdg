@@ -46,6 +46,8 @@ class MyPointCloud extends Object3D
 			//{ /*transparent:true,*/ color:0xffffff, size:15, map:ImageUtils.loadTexture("dotA.png") }
 			{ /*transparent:true,*/ color:0xffffff, size:15}
 		);
+		_mat.size = Dat.bg ? 10 : 15;
+		
 		//_mat.blending = Three.AdditiveBlending;
 		_mat.depthTest = false;
 		//_mat.vertexColors = true;// Three.VertexColors;

@@ -385,7 +385,7 @@ common.Dat._onInit = function() {
 	common.Dat.gui.domElement.style.zIndex = 10;
 	common.Key.init();
 	common.Key.board.addEventListener("keydown",common.Dat._onKeyDown);
-	common.Dat.show();
+	common.Dat.show(false);
 	if(common.Dat._callback != null) common.Dat._callback();
 };
 common.Dat._onKeyDown = function(e) {
@@ -394,7 +394,7 @@ common.Dat._onKeyDown = function(e) {
 	case 65:
 		break;
 	case 68:
-		if(common.Dat.gui.domElement.style.display == "block") common.Dat.hide(); else common.Dat.show();
+		if(common.Dat.gui.domElement.style.display == "block") common.Dat.hide(); else common.Dat.show(true);
 		break;
 	case 49:
 		common.StageRef.fadeOut(common.Dat._goURL1);
@@ -438,10 +438,13 @@ common.Dat._goURL = function(url) {
 	Tracer.log("goURL " + url);
 	window.location.href = url + window.location.hash;
 };
-common.Dat.show = function() {
+common.Dat.show = function(isBorder) {
+	if(isBorder == null) isBorder = false;
+	if(isBorder) common.StageRef.showBorder();
 	common.Dat.gui.domElement.style.display = "block";
 };
 common.Dat.hide = function() {
+	common.StageRef.hideBorder();
 	common.Dat.gui.domElement.style.display = "none";
 };
 common.FadeSheet = function(ee) {
@@ -518,6 +521,14 @@ common.QueryGetter.getQuery = function(idd) {
 };
 common.StageRef = function() {
 };
+common.StageRef.showBorder = function() {
+	var dom = window.document.getElementById("webgl");
+	dom.style.border = "solid 1px #cccccc";
+};
+common.StageRef.hideBorder = function() {
+	var dom = window.document.getElementById("webgl");
+	dom.style.border = "solid 0px";
+};
 common.StageRef.fadeIn = function() {
 	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
 	common.StageRef.sheet.fadeIn();
@@ -593,7 +604,7 @@ effect.PostProcessing2.prototype = {
 		this._copyPass.renderToScreen = true;
 		if(this._callback != null) this._callback();
 	}
-	,change: function(data) {
+	,changeDisplace: function(data) {
 		var _g = data.displaceType;
 		switch(_g) {
 		case 0:
@@ -611,8 +622,10 @@ effect.PostProcessing2.prototype = {
 			this._displacePass.setTexture(false,true);
 			break;
 		}
-		var _g1 = data.colorType;
-		switch(_g1) {
+	}
+	,changeColor: function(data) {
+		var _g = data.colorType;
+		switch(_g) {
 		case 0:
 			this._colorPass.enabled = false;
 			break;
@@ -640,7 +653,7 @@ effect.PostProcessing2.prototype = {
 };
 effect.pass = {};
 effect.pass.ColorMapPass = function() {
-	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\tuniform sampler2D texture;\r\n\t\t\t\t\tuniform float strength;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tuniform float mono;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 texel = texture2D( tDiffuse, vUv );\r\n\t\t\t\t\t\tvec4 out1 = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\tif ( mono == 0.0) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec2 pp = vec2( 0.5, fract( texel.x * strength + counter ) );//akarusanioujite\t\t\t\t\t\r\n\t\t\t\t\t\tif ( pp.y < 0.5) {\r\n\t\t\t\t\t\t\t\tpp.y = pp.y * 2.0;\r\n\t\t\t\t\t\t\t\tout1 = texture2D( texture, pp );\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\t\tpp.y = (1.0 - (pp.y - 0.5) * 2.0);\t\t\t\t\r\n\t\t\t\t\t\t\t\tout1 = texture2D( texture, pp );\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\tif ( texel.x == 0.0 ) {\r\n\t\t\t\t\t\t\t\tout1 = vec4(0.0, 0.0, 0.0, 1.0);\r\n\t\t\t\t\t\t}\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t}else{\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t//bakibaki\r\n\t\t\t\t\t\tfloat nn = 10000. + 9995. * sin(counter*0.01);\r\n\t\t\t\t\t\tif ( texel.x == 0.0 || mod( floor( texel.x * nn ),2.0) == 0.0 ) {\r\n\t\t\t\t\t\t\tout1.x = 0.0;\r\n\t\t\t\t\t\t\tout1.y = 0.0;\r\n\t\t\t\t\t\t\tout1.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\tout1.x = 1.0;\r\n\t\t\t\t\t\t\tout1.y = 1.0;\r\n\t\t\t\t\t\t\tout1.z = 1.0;\t\t\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\tgl_FragColor = out1;// out1;// texel;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
+	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\tuniform sampler2D texture;\r\n\t\t\t\t\tuniform float strength;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tuniform float mono;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 texel = texture2D( tDiffuse, vUv );\r\n\t\t\t\t\t\tvec4 out1 = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t//mono == false\r\n\t\t\t\t\tif ( mono == 0.0) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec2 pp = vec2( 0.5, fract( texel.x * strength + counter ) );//akarusanioujite\t\r\n\t\t\t\t\t\tfloat rr = texel.x * 2.0;\r\n\t\t\t\t\t\tif (rr > 1.0) rr = 1.0;\r\n\t\t\t\t\t\r\n\t\t\t\t\t\tif ( pp.y < 0.5) {\r\n\t\t\t\t\t\t\t\tpp.y = pp.y * 2.0;\r\n\t\t\t\t\t\t\t\tout1 = texture2D( texture, pp ) * rr;\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\t\tpp.y = (1.0 - (pp.y - 0.5) * 2.0);\t\t\t\t\r\n\t\t\t\t\t\t\t\tout1 = texture2D( texture, pp ) * rr;\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tif ( texel.x == 0.0 ) {\r\n\t\t\t\t\t\t\t\tout1 = vec4(0.0, 0.0, 0.0, 1.0);\r\n\t\t\t\t\t\t}\t\t\r\n\t\t\t\t\t\r\n\t\t\t\t\t}else{\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t//bakibaki\r\n\t\t\t\t\t\tfloat nn = 10000. + 9995. * sin(counter*0.01);\r\n\t\t\t\t\t\tif ( texel.x == 0.0 || mod( floor( texel.x * nn ),2.0) == 0.0 ) {\r\n\t\t\t\t\t\t\tout1.x = 0.0;\r\n\t\t\t\t\t\t\tout1.y = 0.0;\r\n\t\t\t\t\t\t\tout1.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\tout1.x = 1.0;\r\n\t\t\t\t\t\t\tout1.y = 1.0;\r\n\t\t\t\t\t\t\tout1.z = 1.0;\t\t\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\tgl_FragColor = out1;// out1;// texel;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
 	this._vertex = "\r\n\t\tvarying vec2 vUv;\r\n\t\tvoid main() {\r\n\t\t\tvUv = uv;\r\n\t\t\tgl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\r\n\t\t}\t\t\r\n\t";
 	this._textures = [];
 	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade.png"));
@@ -657,6 +670,8 @@ effect.pass.ColorMapPass.prototype = $extend(THREE.ShaderPass.prototype,{
 	}
 	,setTexture: function() {
 		this.uniforms.texture.value = this._textures[Math.floor(Math.random() * this._textures.length)];
+	}
+	,setColor: function() {
 	}
 	,setMono: function(b) {
 		if(b) this.uniforms.mono.value = 1; else this.uniforms.mono.value = 0;
@@ -947,17 +962,11 @@ objects.MyFaceSingle.prototype = $extend(THREE.Object3D.prototype,{
 		this._baseRadX = d.baseRadX;
 		this._baseRadY = d.baseRadY;
 		this.vr = (Math.random() - 0.5) * Math.PI / 140;
-	}
-	,updateMaterial: function(matMode) {
-		if(common.Dat.bg) return;
-		switch(matMode) {
-		case 0:
-			this.dae.material = this._daeLoader.material;
-			break;
-		case 1:
-			this.dae.material = new THREE.MeshDepthMaterial();
-			break;
-		}
+		this.scale.set(0,0,0);
+		this.rotation.y = 6 * Math.PI;
+		var time = 15;
+		TweenMax.to(this.rotation,time,{ y : 0, ease : Power0.easeInOut});
+		TweenMax.to(this.scale,time,{ x : 1, y : 1, z : 1, ease : Power0.easeInOut});
 	}
 	,_getNoise: function(xx,yy,zz) {
 		var f = noise.perlin3;
@@ -1023,21 +1032,6 @@ objects.MyFaceSingle.prototype = $extend(THREE.Object3D.prototype,{
 		vv.z = tgtZ * ratio;
 		vv.y = th - dy / 100;
 	}
-	,setMode: function(mode) {
-		this._mode = mode;
-		var _g = this._mode;
-		switch(_g) {
-		case "single":
-			this.isSplit = false;
-			break;
-		case "split":
-			this.isSplit = true;
-			break;
-		case "split2":
-			this.isSplit = true;
-			break;
-		}
-	}
 });
 objects.MyFaceSplitA = function(idx) {
 	objects.MyFaceSingle.call(this,idx);
@@ -1063,6 +1057,19 @@ objects.MyFace.prototype = $extend(objects.MyFaceSplitA.prototype,{
 		if(this._twn != null) this._twn.kill();
 		this._twn = TweenMax.to(this.rotation,0.5,{ ease : Cubic.easeOut, z : rotZ});
 	}
+	,updateMaterial: function(matMode,isWire) {
+		if(isWire == null) isWire = false;
+		if(common.Dat.bg) return;
+		switch(matMode) {
+		case 0:
+			this.dae.material = this._daeLoader.material;
+			break;
+		case 1:
+			this.dae.material = new THREE.MeshDepthMaterial();
+			break;
+		}
+		this.dae.material.wireframe = isWire;
+	}
 	,update: function(audio) {
 		var _g = this._mode;
 		switch(_g) {
@@ -1074,6 +1081,21 @@ objects.MyFace.prototype = $extend(objects.MyFaceSplitA.prototype,{
 			break;
 		case "split2":
 			this.updateSplitB(audio);
+			break;
+		}
+	}
+	,setMode: function(mode) {
+		this._mode = mode;
+		var _g = this._mode;
+		switch(_g) {
+		case "single":
+			this.isSplit = false;
+			break;
+		case "split":
+			this.isSplit = true;
+			break;
+		case "split2":
+			this.isSplit = true;
 			break;
 		}
 	}
@@ -1241,6 +1263,12 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 			this.sphere.changeBg();
 			this._impulese();
 			break;
+		case 38:
+			this._showColor();
+			break;
+		case 40:
+			this._hideColor();
+			break;
 		case 39:
 			this._nextEffect();
 			break;
@@ -1249,10 +1277,38 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 			break;
 		}
 	}
+	,_showColor: function() {
+		var data = objects.data.EffectData.EFFECT_COLOR_WIRE;
+		var rr = 0;
+		var _g1 = 0;
+		var _g = this.faces.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.faces[i].rotateZ(rr);
+			this.faces[i].updateMaterial(1,true);
+			this.faces[i].s = data.strength;
+		}
+		this.effectName = data.name;
+		this._pp.changeColor(data);
+	}
+	,_hideColor: function() {
+		var data = objects.data.EffectData.EFFECT_COLOR_WIRE;
+		var rr = 0;
+		var _g1 = 0;
+		var _g = this.faces.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.faces[i].rotateZ(rr);
+			this.faces[i].updateMaterial(0,false);
+			this.faces[i].s = data.strength;
+		}
+		this.effectName = data.name;
+		this._pp.changeColor(data);
+	}
 	,_nextEffect: function() {
 		var data = objects.data.EffectData.getNext();
 		this.effectName = data.name;
-		this._pp.change(data);
+		this._pp.changeDisplace(data);
 		var mat = 0;
 		if(data.colorType == 2 || data.colorType == 1) mat = 1; else mat = 0;
 		var rr = 0;
@@ -1425,6 +1481,7 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 });
 objects.data = {};
 objects.data.EffectData = function(o) {
+	this.wireframe = false;
 	this.name = "";
 	this.strength = 1;
 	this.displaceType = 0;
@@ -1434,6 +1491,7 @@ objects.data.EffectData = function(o) {
 		this.colorType = o.colorType;
 		this.displaceType = o.displaceType;
 		this.strength = o.strength;
+		this.wireframe = o.wireframe;
 	}
 };
 objects.data.EffectData.getNext = function() {
@@ -1831,12 +1889,13 @@ objects.data.EffectData.COLOR_MONO = 2;
 objects.data.EffectData.DISPLACE_NONE = 0;
 objects.data.EffectData.DISPLACE_X = 1;
 objects.data.EffectData.DISPLACE_MAP = 2;
-objects.data.EffectData.EFFECT_NORMAL = new objects.data.EffectData({ name : "EFFECT_NORMAL", colorType : 0, displaceType : 0, strength : 1});
-objects.data.EffectData.EFFECT_MONO = new objects.data.EffectData({ name : "EFFECT_MONO", colorType : 2, displaceType : 0, strength : 1});
-objects.data.EffectData.EFFECT_DISPLACE_X = new objects.data.EffectData({ name : "EFFECT_DISPLACE_X", colorType : 0, displaceType : 1, strength : 0.3});
-objects.data.EffectData.EFFECT_DISPLACE_MAP = new objects.data.EffectData({ name : "EFFECT_DISPLACE_MAP", colorType : 0, displaceType : 2, strength : 0.8});
-objects.data.EffectData.EFFECT_COLOR = new objects.data.EffectData({ name : "EFFECT_COLOR", colorType : 1, displaceType : 0, strength : 1});
-objects.data.EffectData.effects = [objects.data.EffectData.EFFECT_NORMAL,objects.data.EffectData.EFFECT_MONO,objects.data.EffectData.EFFECT_DISPLACE_X,objects.data.EffectData.EFFECT_DISPLACE_MAP,objects.data.EffectData.EFFECT_COLOR];
+objects.data.EffectData.EFFECT_NORMAL = new objects.data.EffectData({ name : "EFFECT_NORMAL", colorType : 0, displaceType : 0, strength : 1, wireframe : false});
+objects.data.EffectData.EFFECT_MONO = new objects.data.EffectData({ name : "EFFECT_MONO", colorType : 2, displaceType : 0, strength : 1, wireframe : false});
+objects.data.EffectData.EFFECT_DISPLACE_X = new objects.data.EffectData({ name : "EFFECT_DISPLACE_X", colorType : 0, displaceType : 1, strength : 0.3, wireframe : false});
+objects.data.EffectData.EFFECT_DISPLACE_MAP = new objects.data.EffectData({ name : "EFFECT_DISPLACE_MAP", colorType : 0, displaceType : 2, strength : 0.8, wireframe : false});
+objects.data.EffectData.EFFECT_COLOR = new objects.data.EffectData({ name : "EFFECT_COLOR", colorType : 1, displaceType : 0, strength : 1, wireframe : false});
+objects.data.EffectData.EFFECT_COLOR_WIRE = new objects.data.EffectData({ name : "EFFECT_COLOR_WIRE", colorType : 1, displaceType : 0, strength : 1, wireframe : true});
+objects.data.EffectData.effects = [objects.data.EffectData.EFFECT_NORMAL,objects.data.EffectData.EFFECT_DISPLACE_X,objects.data.EffectData.EFFECT_DISPLACE_MAP];
 objects.data.EffectData._count = -1;
 sound.MyAudio.FFTSIZE = 64;
 three._WebGLRenderer.RenderPrecision_Impl_.highp = "highp";

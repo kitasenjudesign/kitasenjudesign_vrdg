@@ -31,6 +31,8 @@ class BlinkPlane extends Mesh
 	
 	public function setLight(a:MyAudio):Void {
 		
+		if (!visible) return;
+		
 		var ff:Float = a.subFreqByteData[9];
 		if (ff < 0) ff = 0;
 		
