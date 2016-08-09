@@ -1,6 +1,7 @@
 package fbo;
 import camera.ExCamera;
 import common.Dat;
+import common.Key;
 import common.StageRef;
 import effect.PostProcessing2;
 import emoji.Emoji;
@@ -31,6 +32,7 @@ class FboMain
 	private var _audio		:MyAudio;
 	private var _pp			:PostProcessing2;
 	private var _line		:Line;
+	private var _isPP		:Bool = false;
 	
 	public function new() 
 	{
@@ -72,7 +74,7 @@ class FboMain
 		StageRef.setCenter();
 		
 		_scene = new Scene();
-		_camera = new ExCamera(40, Browser.window.innerWidth / Browser.window.innerHeight, 1, 10000);
+		_camera = new ExCamera(40, Browser.window.innerWidth / Browser.window.innerHeight, 30, 3000);
 		_camera.init(_renderer.domElement);
 		_camera.amp = 1000;
 		
@@ -84,7 +86,9 @@ class FboMain
 		
 		
 		_fbo = new Fbo();
+		//var num:Int = 128;
 		var num:Int = 128;
+		
 		_fbo.init(num, num);
 		_particles = _fbo.getParticles();
 		_scene.add(_particles);
@@ -108,11 +112,33 @@ class FboMain
 		Dat.gui.add(this, "changeLine");
 		Dat.gui.add(this, "next");
 		
+		Key.board.addEventListener(Key.keydown, _onKeyDown);
+		
 		update();
 	}
 	
+	private function _onKeyDown(e:Dynamic):Void {
+	
+		var n:Int = Std.parseInt(e.keyCode);
+		switch(n) {
+			case Dat.RIGHT:
+				next();
+				
+			case Dat.UP:
+				changePP();
+				
+			case Dat.L:
+				changeLine();
+		}
+		
+		
+	}
+	
+	
 	public function next():Void {
+		
 		_fbo.next();
+		
 	}
 	
 	
@@ -123,7 +149,8 @@ class FboMain
 	}
 	
 	public function changePP():Void {
-		
+
+		_isPP = true;
 		_pp.change(false, true);
 		
 	}
@@ -144,7 +171,11 @@ class FboMain
 		_camera.radX += Math.PI / 720;// 180;
 		_camera.update();
 		
-		_pp.update(_audio);
+		if (_isPP) {
+			_pp.update(_audio);
+		}else {
+			_renderer.render(_scene, _camera);
+		}
 		
 		Three.requestAnimationFrame( untyped update);		
 

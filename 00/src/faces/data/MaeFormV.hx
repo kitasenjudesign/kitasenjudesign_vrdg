@@ -53,7 +53,8 @@ class MaeFormV extends MaeFormBase
 				ff.position.y = yy * spaceY;	
 				ff.position.z = 0;// 100 * (Math.random() - 0.5);
 				ff.rotation.y = 0;
-				
+								ff.updatePlate();
+
 			}else{
 				
 				ff.enabled = false;

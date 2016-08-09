@@ -1,4 +1,5 @@
 package fbo;
+import common.Path;
 import three.ImageUtils;
 import three.ShaderMaterial;
 import three.Texture;
@@ -25,7 +26,7 @@ varying float size;
 
 uniform float scale;
 attribute vec2 aOffset;
-attribute float life;
+attribute float rand;
 varying vec2 vaOffset;	  
 
 void main() {
@@ -36,7 +37,7 @@ void main() {
 	vUv = uv;
 
 	vaOffset = aOffset;
-	gl_Position = projectionMatrix * modelViewMatrix * vec4( pos, 1.0 );
+	gl_Position = projectionMatrix * modelViewMatrix * vec4( pos + rand, 1.0 );
 	gl_PointSize = 2.0 * scale / gl_Position.w;	
 	
     //pos now contains the position of a point in space taht can be transformed
@@ -64,8 +65,8 @@ void main()
 	
 	public function new() 
 	{
-		var tex:Texture = ImageUtils.loadTexture("emo2048.png");
-		tex.format = Three.RGBAFormat;
+		var tex:Texture = ImageUtils.loadTexture(Path.assets + "emoji/emoji2048_64.png");
+		//tex.format = Three.RGBAFormat;
 		
            super( {
                 uniforms: {
@@ -83,8 +84,10 @@ void main()
             } );		
 			depthTest = true;
 			transparent = true;
-			blending = Three.NormalBlending;      
+			//blending = Three.AdditiveBlending;      
 			alphaTest = 0.5;
+			
+			
 	}
 	
 }

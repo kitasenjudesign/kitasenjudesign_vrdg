@@ -98,7 +98,7 @@ class Dat
 		gui.domElement.style.right = "0px";
 		gui.domElement.style.top = "0px";
 		gui.domElement.style.opacity = 0.7;
-		gui.domElement.style.zIndex = 999999;
+		gui.domElement.style.zIndex = 10;
 
 		
 		

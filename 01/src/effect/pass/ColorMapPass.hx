@@ -29,10 +29,10 @@ class ColorMapPass extends ShaderPass
 					void main() {
 						
 						vec4 texel = texture2D( tDiffuse, vUv );
-						
 						vec4 out1 = vec4(0.0);
 						
-					if( mono == 0.0){
+					if ( mono == 0.0) {
+						
 						vec2 pp = vec2( 0.5, fract( texel.x * strength + counter ) );//akarusanioujite					
 						if ( pp.y < 0.5) {
 								pp.y = pp.y * 2.0;

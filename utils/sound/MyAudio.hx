@@ -31,7 +31,7 @@ class MyAudio
 	
 	
 	public var isStart:Bool = false;
-	public var globalVolume:Float = 0.899;
+	public var globalVolume:Float = 0.897;
 	
 	static public inline var FFTSIZE:Int = 64;
 	public static var a:MyAudio;
@@ -92,7 +92,7 @@ class MyAudio
 		
 		isStart = true;
 		
-		Dat.gui.add(this, "globalVolume", 0.1, 3).step(0.1);
+		Dat.gui.add(this, "globalVolume", 0.01, 3.00).step(0.01);
 		Dat.gui.add(this, "setImpulse" );
 		
 		setImpulse();

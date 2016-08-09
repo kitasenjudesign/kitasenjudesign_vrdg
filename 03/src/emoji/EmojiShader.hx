@@ -1,4 +1,5 @@
 package emoji;
+import common.Path;
 import three.ImageUtils;
 import three.ShaderMaterial;
 import three.Texture;
@@ -51,7 +52,8 @@ class EmojiShader extends ShaderMaterial
 	public function new() 
 	{
 		
-		_texture = new TextureLoader().load("./emo2048.png");// ImageUtils.loadTexture("./emo2048.png");// icons.png");
+		_texture = new TextureLoader().load(Path.assets+ "emoji/emo2048_64.png");
+		// ImageUtils.loadTexture("./emo2048.png");// icons.png");
 		_texture.minFilter = Three.NearestFilter;
 		_texture.magFilter = Three.NearestFilter;
 		_texture.needsUpdate = true;

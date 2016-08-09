@@ -51,12 +51,19 @@
 			left: 192px;
 			z-index: 0;		
 		}
+		#fireworks{
+			position: absolute;
+			top: 0;
+			left: 384px;
+			z-index: 0;		
+		}		
 	</style>
 </head>
 
 <body ontouchmove="event.preventDefault()">
 
-	<video id="walker" src="fireworks.mov"></video>
+	<video id="walker" src="walker.mov"></video>
+	<video id="fireworks" src="fireworks.mov"></video>
 	
 	<script src="three.min69.js"></script>
 	<script src="ColladaLoader.js"></script>
@@ -71,11 +78,11 @@
 		
 	<script src="OrbitControls.js"></script>
 	
-	<script src="Detector.js"></script>
-	<script src="haxe.js"></script>
-	<script src="dat.gui.min.js"></script>
-	<script src="TweenMax.min.js"></script>
+	<script src="../../lib/Detector.js"></script>
+	<script src="../../lib/dat.gui.min.js"></script>
+	<script src="../../lib/TweenMax.min.js"></script>
 	
-
+	<script src="haxe.js"></script>
+	
 </body>
 </html>

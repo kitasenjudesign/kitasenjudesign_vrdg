@@ -12,6 +12,7 @@ class MaeFormVpers extends MaeFormBase
 		super();
 	}
 	
+	//http://www20.atpages.jp/katwat/three.js/examples/mytest2/menu.html
 	
 	
 	override public function setFormation(faces:Array<MaeFace>):Void

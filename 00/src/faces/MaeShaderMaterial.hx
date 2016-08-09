@@ -24,6 +24,7 @@ class MaeShaderMaterial extends ShaderMaterial
 		uniform float _wireframe;
 		uniform float _isColor;
 		uniform float _brightness;
+		uniform float _counter;
 		
 		// vertexShaderで処理されて渡されるテクスチャ座標
 		varying vec2 vUv;                                             
@@ -64,12 +65,30 @@ class MaeShaderMaterial extends ShaderMaterial
 				
 				//diffuse = diffuse * vAbs.xyz;
 				
-				if( _isColor == 1.0 ){
-						vec2 pp = vec2( 0.5, fract( length(vAbs) ) );
+				if ( _isColor == 1.0 ) {
+						//vPos
+						//vec2 pp = vec2( 0.5, fract( length(vAbs) + _counter ) );
+						vec2 pp = vec2( 0.5, fract( length(vVertex.z*0.01) + _counter ) );
+						if ( pp.y < 0.5) {
+							pp.y = pp.y * 2.0;
+						}else {
+							pp.y = (1.0 - (pp.y - 0.5) * 2.0);				
+						}
+						//0-1 ni suru
+						
 						//vec2 pp = vec2( fract(vUv.x+vAbs.x*0.03), fract(vUv.y+vAbs.z*0.03) );
 						vec4 out1 = texture2D( colTexture, pp );
 						
 						diffuse = out1.xyz * dotNL * 0.3 + out1.xyz * 0.7;
+						
+						/*
+						float mNear = 400.0;
+						float mFar = 800.0;
+						float depth = gl_FragCoord.z / gl_FragCoord.w;
+						float color = 1.0 - smoothstep( mNear, mFar, depth );
+						diffuse = vec3( color );
+						*/
+						
 						//diffuse.x += out1.x;
 						//diffuse.y += out1.y;
 						//diffuse.z += out1.z;
@@ -245,7 +264,9 @@ void main()
 					_wireframe: { type:"f",		value:1 },
 					_isColor: { type:"f",		value:1 },
 					_brightness: { type:"f",		value:1 },
-					_strength: { type:"f", value:1 }
+					_strength: { type:"f", value:1 },
+					_counter: { type:"f", value:0 }
+					
 				}
 		});
 		
@@ -314,6 +335,8 @@ void main()
 			= Math.pow( a.freqByteData[_indecies[8]] / 255, 2) * 0.5;
 			uniforms._count.value += speed;// Math.random();// Math.random();
 			uniforms._freqByteData.value = _freq;// Math.random();// Math.random();
+			
+			uniforms._counter.value += 0.01;
 		}
 		//needsUpdate = true;
 		

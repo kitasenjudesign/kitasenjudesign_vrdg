@@ -1,4 +1,5 @@
 package data;
+import common.Path;
 import three.ImageUtils;
 import three.Texture;
 
@@ -10,9 +11,9 @@ class TextureData
 {
 	
 	
-	public static var emo2048	:TextureData = new TextureData("emo2048.png", 2048, 2048,845,32);
-	public static var emo128	:TextureData = new TextureData("emo128.png", 2048, 2048,200,32);
-	public static var emo2048b	:TextureData = new TextureData("images/emoji2048_64.png", 2048, 2048,700,32);
+	public static var emo2048	:TextureData = new TextureData(Path.assets + "emoji/emo2048.png", 2048, 2048,845,32);
+	public static var emo128	:TextureData = new TextureData(Path.assets + "emoji/emo128.png", 2048, 2048,200,32);
+	public static var emo2048b	:TextureData = new TextureData(Path.assets + "emoji/emoji2048_64.png", 2048, 2048,700,32);
 	//public static var img2:TextureData;// = new TextureData("128/b.png", 512, 512);
 	//public static var img3:TextureData;// = new TextureData("128/c.png", 512, 512);
 	//public static var img4:TextureData;// = new TextureData("128/d.png", 256, 512);

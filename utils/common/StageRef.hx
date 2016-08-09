@@ -15,6 +15,7 @@ class StageRef
 	public static var stageWidth(get, null)		:Int;
 	public static var stageHeight(get, null)	:Int;
 	
+	
 	public function new() 
 	{
 		//
@@ -43,6 +44,7 @@ class StageRef
 			var dom:Element = Browser.document.getElementById(name);
 			var yy:Float = (Browser.window.innerHeight / 2 - StageRef.stageHeight / 2) + Config.canvasOffsetY;
 			dom.style.position = "absolute";
+			dom.style.zIndex = "1000";
 			dom.style.top = Math.round(yy) + "px";
 			
 		}

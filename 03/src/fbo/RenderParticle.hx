@@ -1,4 +1,5 @@
 package fbo;
+import emoji.Emoji;
 import js.html.Float32Array;
 import three.BufferAttribute;
 import three.BufferGeometry;
@@ -30,6 +31,8 @@ class RenderParticle extends Points
 
 		super(cast _particleGeo, _renderShaderMat);
 		
+		this.sortParticles = true;
+		
 	}
 	
 	private function _getParticleGeo():BufferGeometry
@@ -46,7 +49,7 @@ class RenderParticle extends Points
 		var aOffsets:Float32Array = new Float32Array( l * 2 );
         for ( i in 0...l) {
             var i2:Int = i * 2;
-			var pos:Vector2 = _getIconPos(Math.floor(Math.random() * 845));
+			var pos:Vector2 = _getIconPos(Math.floor(Math.random() * Emoji.NUM));
             aOffsets[ i2 ] = pos.x;
             aOffsets[ i2 + 1 ] = pos.y;
         }
@@ -56,11 +59,16 @@ class RenderParticle extends Points
             life[ i ] = Math.random();
         }
 		
+		var rand:Float32Array = new Float32Array( l );
+         for ( i in 0...l) {
+            rand[ i ] = Math.random();
+        }
+		
         //create the particles geometry
         var geometry:BufferGeometry = new BufferGeometry();
         geometry.addAttribute( 'position',  new BufferAttribute( vertices, 3 ) );
 		geometry.addAttribute( 'aOffset', new BufferAttribute( aOffsets, 2 ) );
-		//geometry.addAttribute( 'life', new BufferAttribute( life, 1 ) );
+		geometry.addAttribute( 'rand', new BufferAttribute( rand, 1 ) );
 			
 		return geometry;
 		
@@ -75,7 +83,7 @@ class RenderParticle extends Points
 		var l:Int = _width * _height;
 		for ( i in 0...l) {
             var i2:Int = i * 2;
-			var pos:Vector2 = (isRandom) ? _getIconPos(Math.floor(Math.random()*845)) : _getIconPos(idx);
+			var pos:Vector2 = (isRandom) ? _getIconPos(Math.floor(Math.random()*Emoji.NUM)) : _getIconPos(idx);
 			ary[ i2 ] = pos.x;
 			ary[ i2 + 1 ] = pos.y;
         }
@@ -87,7 +95,7 @@ class RenderParticle extends Points
 	private function _getIconPos(index:Int):Vector2 {
 		
 		var nn:Int = RenderShaderMat.animationFrameLength;
-		index = index % 845;
+		index = index % Emoji.NUM;
 		var xx:Int = (index) % nn;
 		var yy:Int = nn - 1 - Math.floor( index / nn );		
 		

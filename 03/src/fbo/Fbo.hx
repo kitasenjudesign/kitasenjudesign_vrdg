@@ -1,4 +1,5 @@
 package fbo;
+import emoji.Emoji;
 import js.html.Float32Array;
 import sound.MyAudio;
 import three.BufferAttribute;
@@ -111,11 +112,15 @@ class Fbo
        // _mesh = new Mesh( cast _renderGeo, _renderShaderMat );
 	}
 	
+	/**
+	 * 
+	 */
 	public function next():Void {
 		
 		var isRandom:Bool = Math.random() < 0.5 ? true : false;
+		
 		_line.visible = Math.random() < 0.5 ? true : false;
-		_particles.updateIconPos( Math.floor( Math.random() * 845 ), isRandom );
+		_particles.updateIconPos( Math.floor( Math.random() * Emoji.NUM ), isRandom );
 		_simuShaderMat.next();
 		
 	}

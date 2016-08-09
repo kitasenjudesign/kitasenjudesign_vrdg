@@ -16,6 +16,8 @@ import three.Vector3;
 class Emoji extends Object3D
 {
 
+	public static inline var NUM:Int = 700;
+	
 	private var _points		:Points;
 	private var _emojiMat	:EmojiShader;
 	private var _emoji		:Points;
@@ -43,7 +45,7 @@ class Emoji extends Object3D
 		var aOffsets:Float32Array = new Float32Array( l * 2 );
         for ( i in 0...l) {
             var i2:Int = i * 2;
-			var pos:Vector2 = getIconPos(Math.floor(Math.random() * 845));
+			var pos:Vector2 = getIconPos(Math.floor(Math.random() * 700));
             aOffsets[ i2 ] = pos.x;
             aOffsets[ i2 + 1 ] = pos.y;
         }
@@ -71,7 +73,7 @@ class Emoji extends Object3D
 		no = no % num;
 		var index:Int = Math.floor( startIndex + no );
 		*/
-		index = index % 845;
+		index = index % Emoji.NUM;
 		//counter++;
 		
 		var xx:Int = (index) % animationFrameLength;

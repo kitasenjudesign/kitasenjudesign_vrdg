@@ -46,7 +46,8 @@ class MaeFormH3 extends MaeFormBase
 				ff.position.y = yy * spaceY + offsetY;	
 				ff.position.z = 0;
 				ff.rotation.y = 0;
-				
+				ff.updatePlate();
+
 			}else {
 				
 				ff.enabled = false;

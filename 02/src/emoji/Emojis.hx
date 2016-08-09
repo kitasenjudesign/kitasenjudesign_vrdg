@@ -45,7 +45,6 @@ class Emojis extends Object3D
 	private var _depth:Float = 0;
 	private var _camera:ExCamera;
 	private var _mode:Int = 0;
-	private var _squre:Line;
 	
 	//
 	//private var _isSphere		:Bool = false;
@@ -94,6 +93,7 @@ class Emojis extends Object3D
         
 		particles = new PointCloud(geometry, shader.shaderMaterial);
         particles.sortParticles = true;
+		
 		//particles.scale.set(5, 5, 5);
 		
         scene.add(particles);
@@ -102,21 +102,6 @@ class Emojis extends Object3D
 		_twnWide();
 		//Browser.window.alert( "hoge" );
 		
-		if (_squre == null) {
-			/*
-			var wd:Float = maxW*3.7;
-			var gg:Geometry = new Geometry();
-			gg.vertices.push(new Vector3(wd, 0, wd));
-			gg.vertices.push(new Vector3(wd, 0, -wd));
-			gg.vertices.push(new Vector3(-wd, 0, -wd));
-			gg.vertices.push(new Vector3(-wd, 0, wd));
-			gg.vertices.push(new Vector3(wd, 0, wd));			
-			_squre = new Line(gg, new LineBasicMaterial( { color:0xcccccc } ));
-			_squre.position.y = 0;
-			_squre.scale.set(1, 1, 9/16);
-			scene.add(_squre);
-			*/
-		}
 		
 		Browser.document.addEventListener("keydown", _onDown);
 	}
@@ -128,11 +113,17 @@ class Emojis extends Object3D
 		
 		var keyCode:Int = Std.parseInt( e.keyCode );
 		
-		if ( keyCode == Dat.N) {
+		if ( keyCode == Dat.I) {
+			
+			_pos.setCounterIndex(Math.random());
+			
+		}else if ( keyCode == Dat.N) {
 			_isCurl = !_isCurl;// Math.random() < 0.5 ? true : false;
 			
 		}else if ( keyCode == Dat.RIGHT ) {
 		
+			_isCurl = Math.random() < 0.2 ? true : false;
+			
 			var data:EffectData = _canvas.next(false);//random
 			
 			//
@@ -179,7 +170,7 @@ class Emojis extends Object3D
 	//
 	private function _tweenZoom(loop:Bool=false):Void {
 		var ary:Array<Float> = [
-			0.04,0.1,0.2,0.2,0.2
+			0.1,0.2
 		];
 		if (_tween != null)_tween.kill();
 		

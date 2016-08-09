@@ -45,6 +45,7 @@ uniform float frequency;
 uniform float amplitude;
 uniform float maxDistance;
 uniform float freqByteData[32];
+uniform float strength;
 uniform vec3 freqs;
 uniform vec3 start;
 void main() {
@@ -54,11 +55,13 @@ void main() {
     //vec3 tar = pos + curl( pos.x * frequency, pos.y * frequency, pos.z * frequency ) * amplitude;
     //float d = length( pos-tar ) / maxDistance;
     //pos = mix( pos, tar, pow( d, 5. ) );
-	float rr = 0.2*sin(timer*0.1);
+	
+	float rr = 0.2 * sin(timer * 0.1);
 	vec3 vv = curlNoise(pos * rr);/////koko
-	vv.x *= freqs.x / 255.0 * 10.0;
-	vv.y *= freqs.y / 255.0 * 10.0;
-	vv.z *= freqs.z / 255.0 * 10.0;
+	vv.x *= freqs.x / 255.0 * 10.0 * strength;
+	vv.y *= freqs.y / 255.0 * 10.0 * strength;
+	vv.z *= freqs.z / 255.0 * 10.0 * strength;
+	
     //pos = pos + vv * 2.5;
 	pos = pos + vv;// * freqByteData[3] / 255.0 * 10.0;
 	
@@ -114,7 +117,8 @@ void main() {
                     maxDistance: { type: "f", value: 48 },
 					freqByteData:{type:"fv1",	value:MyAudio.a.freqByteDataAry},//Uint8Array
 					freqs: { type: "v3", value: new Vector3( 0, 1, 2 ) },
-					start:{ type: "v3", value: new Vector3( 0, 1, 2 ) }
+					start: { type: "v3", value: new Vector3( 0, 1, 2 ) },
+					strength: { type: "f", value: 1 }
                 },
                 vertexShader: _vertex,
                 fragmentShader:  _fragment

@@ -9,6 +9,7 @@ import three.EventDispatcher;
 class Key extends EventDispatcher
 {
 
+	public static inline var keydown = "keydown";
 	public static var board:Key;
 	private var _socket:WSocket;
 		

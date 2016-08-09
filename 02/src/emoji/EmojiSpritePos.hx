@@ -108,6 +108,11 @@ class EmojiSpritePos
 		_isRandomIdx = b;
 	}
 	//public function cou
+	public function setCounterIndex(ratio:Float):Void {
+		
+		counterIndex = Math.floor( _max * ratio );
+		
+	}
 	
 	
 	public function getIconPosByIndex(index:Int) {

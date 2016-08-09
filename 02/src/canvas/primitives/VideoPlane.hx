@@ -37,7 +37,7 @@ class VideoPlane extends PrimitiveBase
 	override public function init(o:Dynamic):Void {
 		
 		super.init(o);
-		_initVideo("walker_out.mov");
+		//_initVideo("walker_out.mov");
 		
 	}
 	
@@ -45,12 +45,10 @@ class VideoPlane extends PrimitiveBase
 	 * _initVideo
 	 * @param	src
 	 */
-	private function _initVideo(src:String):Void{
+	private function _initVideo(id:String,src:String):Void{
 	
-		if(_video==null){
-			_video = cast Browser.document.getElementById("walker");
-			_video.src = src;
-			_video.loop = true;
+		if(_canvas==null){
+			
 			
 			_canvas = Browser.document.createCanvasElement();
 			_canvas.width = W;
@@ -66,13 +64,21 @@ class VideoPlane extends PrimitiveBase
 			add(_plane);
 		}		
 		
+			_video = cast Browser.document.getElementById(id);
+			_video.src = src;
+			_video.loop = true;		
+		
+		
 	}
 	
 	override public function start():Void {
 	
 		if (_video != null) {
+			
 			_video.play();
 			_video.loop = true;
+			_video.currentTime = 0;
+
 		}
 		
 	}

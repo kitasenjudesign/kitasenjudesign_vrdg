@@ -11,6 +11,9 @@ import canvas.primitives.Octa;
 import canvas.primitives.PrimitiveBase;
 import canvas.primitives.Two;
 import canvas.primitives.VideoPlane;
+import canvas.primitives.VideoPlaneFire;
+import canvas.primitives.VideoPlaneWalker;
+import canvas.primitives.VideoPlaneWalker;
 import sound.MyAudio;
 import three.Object3D;
 import three.Vector3;
@@ -51,6 +54,7 @@ class Primitives extends Object3D
 	var _ices:Ices;
 	var _chochins:Chochins;
 	var _katoris:Katoris;
+	var _fireworks:VideoPlaneFire;
 	
 	public function new() 
 	{
@@ -106,8 +110,12 @@ class Primitives extends Object3D
 		_mouse.init({pixelType:EffectData.BLACK_TRUE,dynamicScale:false,isDepth:false});
 		add(_mouse);
 		
-		_walker = new VideoPlane();
-		_walker.init({pixelType:EffectData.BLACK_TRUE,dynamicScale:false,isDepth:false});
+		_walker = new VideoPlaneWalker();
+		_walker.init( { pixelType:EffectData.BLACK_TRUE, dynamicScale:false, isDepth:false } );
+		
+		_fireworks = new VideoPlaneFire();
+		_fireworks.init( { pixelType:EffectData.BLACK_TRUE, dynamicScale:false, isDepth:false } );
+		
 		//_beyond = new BeyondCode();
 		//_beyond.init();
 		//add(_beyond);
@@ -150,6 +158,7 @@ class Primitives extends Object3D
 			_chochins,//
 			_sphere,
 			_katori,
+			_fireworks,
 			_ice,
 			_mouse,
 			_spheres,//
@@ -158,7 +167,7 @@ class Primitives extends Object3D
 			_logo
 		];
 		for (i in 0..._primitives.length) {
-			add(_primitives[i]);
+			//add(_primitives[i]);
 		}
 		
 		
