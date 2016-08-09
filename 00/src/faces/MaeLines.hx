@@ -10,6 +10,7 @@ import three.LineSegments;
 import three.Mesh;
 import three.MeshBasicMaterial;
 import three.Object3D;
+import three.PlaneBufferGeometry;
 import three.Vector3;
 
 /**
@@ -23,6 +24,7 @@ class MaeLines extends Object3D
 	private var _faces:Array<MaeFace>;
 	private var _lineIdx:Int = 0;
 	private var _hMesh:Mesh;
+	private var _tgtPlane:Mesh;
 	public var startY:Float = -150;
 	
 	
@@ -68,6 +70,10 @@ class MaeLines extends Object3D
 		);
 		add(_line);
 		
+		#if debug
+		//_tgtPlane = new Mesh(untyped new PlaneBufferGeometry(100, 100, 1, 1), new MeshBasicMaterial( { color:0xff0000, wireframe:true } ));
+		//add(_tgtPlane);
+		#end
 	}
 	
 	
@@ -79,8 +85,15 @@ class MaeLines extends Object3D
 		
 		
 		//
-		
-		
+		/*
+		var pos:Vector3 = new Vector3(0,0,-400);
+		pos.applyQuaternion(cam.quaternion);		
+		pos.x = pos.x + cam.position.x;
+		pos.y = pos.y + cam.position.y;
+		pos.z = pos.z + cam.position.z;
+		_tgtPlane.position.copy(pos);
+		_tgtPlane.lookAt(cam.position);
+		*/
 		//obj3d.position = pos;
 
 		
@@ -120,8 +133,11 @@ class MaeLines extends Object3D
 					
 					face.addForce(j,freqs[j]);
 					
-					var pos:Vector3 = new Vector3(scaleX * 100 * (Math.random() - 0.5),-180,-400);
+					var pos:Vector3 = new Vector3(scaleX * 100 * (Math.random() - 0.5),-120,-400);
 					pos.applyQuaternion(cam.quaternion);
+					pos.x = cam.position.x + pos.x;
+					pos.y = cam.position.y + pos.y;
+					pos.z = cam.position.z + pos.z;
 					
 					face.connectLine(
 						//j, new Vector3(scaleX * 100 * (Math.random() - 0.5), offY, -100),1//start

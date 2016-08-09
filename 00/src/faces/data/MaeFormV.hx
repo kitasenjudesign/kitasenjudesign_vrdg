@@ -8,9 +8,10 @@ class MaeFormV extends MaeFormBase
 {
 
 	private var _cams:Array<CamData> = [
-		new CamData(255, 0, 0 ),
-		new CamData(255, 0, -0.5 ),
-		new CamData(255, 0, 0.5 )
+		new CamData(215, 0, 0 ),
+		new CamData(116, 0, 0 ),
+		new CamData(215, 0, -0.5 ),
+		new CamData(215, 0, 0.5 )
 	];
 	
 	

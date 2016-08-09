@@ -9,9 +9,9 @@ class MaeFormH1 extends MaeFormBase
 
 	
 	private var _cams:Array<CamData> = [
-		new CamData(255, 0, 0 ),
-		new CamData(255, 0.4, 0.03 ),
-		new CamData(255, -0.4, 0.03 )
+		new CamData(195, 0, 0 ),
+		new CamData(225, 0.4, 0.03 ),
+		new CamData(225, -0.4, 0.03 )
 	];
 	
 	
@@ -41,7 +41,7 @@ class MaeFormH1 extends MaeFormBase
 		_camera.radX = data.radX;
 		_camera.radY = data.radY;
 		
-		_camera.setFOV(30);//
+		_camera.setFOV(35);//
 		
 		var offsetY:Float = 0;
 		var spaceX:Float = 35;

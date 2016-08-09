@@ -1134,8 +1134,11 @@ faces.MaeLines.prototype = $extend(THREE.Object3D.prototype,{
 				var j = _g2++;
 				if(freqs[j] > 0.2 && face.visible) {
 					face.addForce(j,freqs[j]);
-					var pos = new THREE.Vector3(scaleX * 100 * (Math.random() - 0.5),-180,-400);
+					var pos = new THREE.Vector3(scaleX * 100 * (Math.random() - 0.5),-120,-400);
 					pos.applyQuaternion(cam.quaternion);
+					pos.x = cam.position.x + pos.x;
+					pos.y = cam.position.y + pos.y;
+					pos.z = cam.position.z + pos.z;
 					face.connectLine(j,pos,1);
 				} else {
 				}
@@ -1346,7 +1349,7 @@ faces.data.MaeFormBase.prototype = {
 	}
 };
 faces.data.MaeFormH1 = function() {
-	this._cams = [new faces.data.CamData(255,0,0),new faces.data.CamData(255,0.4,0.03),new faces.data.CamData(255,-0.4,0.03)];
+	this._cams = [new faces.data.CamData(195,0,0),new faces.data.CamData(225,0.4,0.03),new faces.data.CamData(225,-0.4,0.03)];
 	faces.data.MaeFormBase.call(this);
 };
 faces.data.MaeFormH1.__super__ = faces.data.MaeFormBase;
@@ -1361,7 +1364,7 @@ faces.data.MaeFormH1.prototype = $extend(faces.data.MaeFormBase.prototype,{
 		this._camera.amp = data.amp;
 		this._camera.radX = data.radX;
 		this._camera.radY = data.radY;
-		this._camera.setFOV(30);
+		this._camera.setFOV(35);
 		var offsetY = 0;
 		var spaceX = 35;
 		var xnum = 20;
@@ -1403,7 +1406,7 @@ faces.data.MaeFormH1.prototype = $extend(faces.data.MaeFormBase.prototype,{
 	}
 });
 faces.data.MaeFormH3 = function() {
-	this._cams = [new faces.data.CamData(255,0,0),new faces.data.CamData(255,0,0.4),new faces.data.CamData(255,0,-0.4)];
+	this._cams = [new faces.data.CamData(255,0,0),new faces.data.CamData(255,0,0.4),new faces.data.CamData(255,0,-0.4),new faces.data.CamData(255,0.55,0.87),new faces.data.CamData(255,0.75,-0.8)];
 	faces.data.MaeFormBase.call(this);
 };
 faces.data.MaeFormH3.__super__ = faces.data.MaeFormBase;
@@ -1417,7 +1420,7 @@ faces.data.MaeFormH3.prototype = $extend(faces.data.MaeFormBase.prototype,{
 		this._camera.amp = data.amp;
 		this._camera.radX = data.radX;
 		this._camera.radY = data.radY;
-		this._camera.setFOV(30);
+		this._camera.setFOV(35);
 		var offsetY = 10;
 		var spaceX = 45;
 		var spaceY = 45;
@@ -1460,7 +1463,7 @@ faces.data.MaeFormH3.prototype = $extend(faces.data.MaeFormBase.prototype,{
 	}
 });
 faces.data.MaeFormV = function() {
-	this._cams = [new faces.data.CamData(255,0,0),new faces.data.CamData(255,0,-0.5),new faces.data.CamData(255,0,0.5)];
+	this._cams = [new faces.data.CamData(215,0,0),new faces.data.CamData(116,0,0),new faces.data.CamData(215,0,-0.5),new faces.data.CamData(215,0,0.5)];
 	faces.data.MaeFormBase.call(this);
 };
 faces.data.MaeFormV.__super__ = faces.data.MaeFormBase;
