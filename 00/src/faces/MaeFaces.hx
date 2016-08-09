@@ -103,6 +103,9 @@ class MaeFaces extends Object3D
 			case Dat.UP:
 				_setMaterial();//
 				
+			case Dat.DOWN:
+				_resetMaterial();
+				
 		}
 	}
 	
@@ -114,13 +117,23 @@ class MaeFaces extends Object3D
 	 */
 	private function _setMaterial():Void {
 		
-		var type:Int = Math.floor( Math.random() * 4 ); //Math.random() < 0.5 ? 0 : 1;
-		//var mode:Int = Math.floor( Math.random() * 4 );
-		
+		var mats:Array<Int> = [
+			MaeFace.MAT_COLOR,
+			MaeFace.MAT_WIRE_COLOR,
+			MaeFace.MAT_WIRE_WHITE
+		];
+		var type:Int = mats[Math.floor(mats.length * Math.random())];
 		for (i in 0..._faces.length) {
 			_faces[i].setMaterial( type );
-			//_faces[i].setRotMode( mode );
 		}
+		
+	}
+	
+	public function _resetMaterial():Void {
+		
+		for (i in 0..._faces.length) {
+			_faces[i].setMaterial( MaeFace.MAT_NORMAL );
+		}		
 		
 	}
 	

@@ -173,7 +173,7 @@ MainDeDe.prototype = {
 	,_run: function() {
 		this._audio.update();
 		if(this._dummy != null) this._dummy.update(this._audio);
-		if(this._bg.visible) this._bg.setLight(this._audio);
+		if(this._bg.visible && dede.Boost.isBoost) this._bg.setLight(this._audio);
 		MyColor.update();
 		this._points.update();
 		this._cuts.update(this._audio);

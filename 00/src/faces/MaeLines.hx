@@ -77,6 +77,14 @@ class MaeLines extends Object3D
 	 */
 	public function update(audio:MyAudio,cam:ExCamera):Void {
 		
+		
+		//
+		
+		
+		//obj3d.position = pos;
+
+		
+		
 		_resetLine();//resetLine;
 		
 		_line.geometry.verticesNeedUpdate = true;		
@@ -90,6 +98,8 @@ class MaeLines extends Object3D
 		_hMesh.scale.x = scaleX;
 		_hMesh.position.z = -100;
 		_hMesh.position.y = offY;
+		
+		
 		
 		for (i in 0..._faces.length) {
 			var face:MaeFace = _faces[i];
@@ -110,10 +120,13 @@ class MaeLines extends Object3D
 					
 					face.addForce(j,freqs[j]);
 					
+					var pos:Vector3 = new Vector3(scaleX * 100 * (Math.random() - 0.5),-180,-400);
+					pos.applyQuaternion(cam.quaternion);
+					
 					face.connectLine(
-						j, new Vector3(scaleX * 100 * (Math.random() - 0.5), offY, -100),1//start
+						//j, new Vector3(scaleX * 100 * (Math.random() - 0.5), offY, -100),1//start
+						j, pos, 1//start
 						//j, new Vector3(idxs[j]*10, offY, -100),1//start
-						
 					);
 					//face.updateGauge(j, freqs[j]);
 					

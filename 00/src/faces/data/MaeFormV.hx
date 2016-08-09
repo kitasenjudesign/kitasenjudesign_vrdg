@@ -7,6 +7,13 @@ package faces.data;
 class MaeFormV extends MaeFormBase
 {
 
+	private var _cams:Array<CamData> = [
+		new CamData(255, 0, 0 ),
+		new CamData(255, 0, -0.5 ),
+		new CamData(255, 0, 0.5 )
+	];
+	
+	
 	public function new() 
 	{
 		super();
@@ -17,6 +24,9 @@ class MaeFormV extends MaeFormBase
 	{
 		_faces = faces;
 		
+		var data:CamData = _cams[_camIndex % _cams.length];
+		_camIndex++;
+		
 		//30zutsu
 		var rotMode:Int = MaeFaceMesh.getRandomRot();
 		_setRot(rotMode);
@@ -24,7 +34,10 @@ class MaeFormV extends MaeFormBase
 		
 		
 		_lines.startY = -80;
-		_camera.amp = 215;
+		_camera.amp = data.amp;
+		_camera.radX = data.radX;
+		_camera.radY = data.radY;
+		
 		_camera.setFOV(35);//
 		
 		var spaceX:Float = 50;

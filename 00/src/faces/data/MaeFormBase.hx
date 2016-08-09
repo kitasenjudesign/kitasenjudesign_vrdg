@@ -16,6 +16,8 @@ class MaeFormBase
 	private var _width:Float = 0;
 	private var _height:Float = 0;
 	
+	private var _camIndex:Int = 0;
+	
 	public function new() 
 	{
 		

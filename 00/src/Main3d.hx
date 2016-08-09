@@ -91,14 +91,20 @@ class Main3d
 		_onResize(null);
 		
 		camera.amp = 300;
-		camera.radX = 0;
-		camera.radY = 0;
+		camera.radX = 0.001;
+		camera.radY = 0.001;
 
 		dae = new MyDAELoader();
 		dae.load(_onLoadDAE);
 		//_scene.add(dae);
 		//Dat.gui.add(this, "goFullScreen");
 		Dat.gui.add(camera, "amp").listen();
+		Dat.gui.add(camera, "radX",0,2*Math.PI).step(0.001).listen();
+		Dat.gui.add(camera, "radY",-Math.PI,Math.PI).step(0.001).listen();
+		
+		camera.radX = 0.000;
+		camera.radY = 0.000;
+		
 		
 	}
 	

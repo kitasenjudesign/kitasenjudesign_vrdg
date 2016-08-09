@@ -4,6 +4,7 @@ import camera.DoubleCamera;
 import common.Dat;
 import common.StageRef;
 import dede.BlinkPlane;
+import dede.Boost;
 import dede.DeDeCuts;
 import dede.DeDeLines;
 import dede.VrdgLines;
@@ -149,7 +150,7 @@ class MainDeDe
 			_dummy.update(_audio);
 		}
 		
-		if(_bg.visible){
+		if(_bg.visible && Boost.isBoost){
 			_bg.setLight(_audio);
 		}
 		

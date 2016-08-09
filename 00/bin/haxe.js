@@ -109,11 +109,15 @@ Main3d.prototype = {
 		window.onresize = $bind(this,this._onResize);
 		this._onResize(null);
 		this.camera.amp = 300;
-		this.camera.radX = 0;
-		this.camera.radY = 0;
+		this.camera.radX = 0.001;
+		this.camera.radY = 0.001;
 		this.dae = new objects.MyDAELoader();
 		this.dae.load($bind(this,this._onLoadDAE));
 		common.Dat.gui.add(this.camera,"amp").listen();
+		common.Dat.gui.add(this.camera,"radX",0,2 * Math.PI).step(0.001).listen();
+		common.Dat.gui.add(this.camera,"radY",-Math.PI,Math.PI).step(0.001).listen();
+		this.camera.radX = 0.000;
+		this.camera.radY = 0.000;
 	}
 	,_onLoadDAE: function() {
 		this._maeFaces = new faces.MaeFaces();
@@ -219,7 +223,7 @@ camera.ExCamera = function(fov,aspect,near,far) {
 	this.tgtOffsetY = 0;
 	this.isActive = false;
 	this.radY = 0;
-	this.radX = Math.PI / 5;
+	this.radX = 0;
 	this.amp = 900.0;
 	this._oRadY = 0;
 	this._oRadX = 0;
@@ -1007,15 +1011,27 @@ faces.MaeFaces.prototype = $extend(THREE.Object3D.prototype,{
 		case 38:
 			this._setMaterial();
 			break;
+		case 40:
+			this._resetMaterial();
+			break;
 		}
 	}
 	,_setMaterial: function() {
-		var type = Math.floor(Math.random() * 4);
+		var mats = [1,3,2];
+		var type = mats[Math.floor(mats.length * Math.random())];
 		var _g1 = 0;
 		var _g = this._faces.length;
 		while(_g1 < _g) {
 			var i = _g1++;
 			this._faces[i].setMaterial(type);
+		}
+	}
+	,_resetMaterial: function() {
+		var _g1 = 0;
+		var _g = this._faces.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this._faces[i].setMaterial(0);
 		}
 	}
 	,update: function(audio,camera) {
@@ -1118,7 +1134,9 @@ faces.MaeLines.prototype = $extend(THREE.Object3D.prototype,{
 				var j = _g2++;
 				if(freqs[j] > 0.2 && face.visible) {
 					face.addForce(j,freqs[j]);
-					face.connectLine(j,new THREE.Vector3(scaleX * 100 * (Math.random() - 0.5),offY,-100),1);
+					var pos = new THREE.Vector3(scaleX * 100 * (Math.random() - 0.5),-180,-400);
+					pos.applyQuaternion(cam.quaternion);
+					face.connectLine(j,pos,1);
 				} else {
 				}
 			}
@@ -1294,7 +1312,16 @@ faces.MaeShaderMaterial.prototype = $extend(THREE.ShaderMaterial.prototype,{
 	}
 });
 faces.data = {};
+faces.data.CamData = function(a,rx,ry) {
+	this.radY = 0;
+	this.radX = 0;
+	this.amp = 0;
+	this.amp = a;
+	this.radX = rx;
+	this.radY = ry;
+};
 faces.data.MaeFormBase = function() {
+	this._camIndex = 0;
 	this._height = 0;
 	this._width = 0;
 };
@@ -1319,6 +1346,7 @@ faces.data.MaeFormBase.prototype = {
 	}
 };
 faces.data.MaeFormH1 = function() {
+	this._cams = [new faces.data.CamData(255,0,0),new faces.data.CamData(255,0.4,0.03),new faces.data.CamData(255,-0.4,0.03)];
 	faces.data.MaeFormBase.call(this);
 };
 faces.data.MaeFormH1.__super__ = faces.data.MaeFormBase;
@@ -1328,8 +1356,11 @@ faces.data.MaeFormH1.prototype = $extend(faces.data.MaeFormBase.prototype,{
 		var rotMode = 0;
 		this._setRot(rotMode);
 		Tracer.log("_setForm1");
-		this._lines.startY = -110;
-		this._camera.amp = 350;
+		var data = this._cams[this._camIndex % this._cams.length];
+		this._camIndex++;
+		this._camera.amp = data.amp;
+		this._camera.radX = data.radX;
+		this._camera.radY = data.radY;
 		this._camera.setFOV(30);
 		var offsetY = 0;
 		var spaceX = 35;
@@ -1349,7 +1380,7 @@ faces.data.MaeFormH1.prototype = $extend(faces.data.MaeFormBase.prototype,{
 				ff.visible = true;
 				ff.position.x = xx * spaceX;
 				ff.position.y = 8 + offsetY;
-				ff.position.z = 230;
+				ff.position.z = 100;
 				ff.rotation.y = 0;
 				ff.updatePlate();
 			} else {
@@ -1372,6 +1403,7 @@ faces.data.MaeFormH1.prototype = $extend(faces.data.MaeFormBase.prototype,{
 	}
 });
 faces.data.MaeFormH3 = function() {
+	this._cams = [new faces.data.CamData(255,0,0),new faces.data.CamData(255,0,0.4),new faces.data.CamData(255,0,-0.4)];
 	faces.data.MaeFormBase.call(this);
 };
 faces.data.MaeFormH3.__super__ = faces.data.MaeFormBase;
@@ -1380,8 +1412,11 @@ faces.data.MaeFormH3.prototype = $extend(faces.data.MaeFormBase.prototype,{
 		this._faces = faces1;
 		var rotMode = faces.MaeFaceMesh.getRandomRot();
 		this._setRot(rotMode);
-		this._lines.startY = -100;
-		this._camera.amp = 300;
+		var data = this._cams[this._camIndex % this._cams.length];
+		this._camIndex++;
+		this._camera.amp = data.amp;
+		this._camera.radX = data.radX;
+		this._camera.radY = data.radY;
 		this._camera.setFOV(30);
 		var offsetY = 10;
 		var spaceX = 45;
@@ -1425,16 +1460,21 @@ faces.data.MaeFormH3.prototype = $extend(faces.data.MaeFormBase.prototype,{
 	}
 });
 faces.data.MaeFormV = function() {
+	this._cams = [new faces.data.CamData(255,0,0),new faces.data.CamData(255,0,-0.5),new faces.data.CamData(255,0,0.5)];
 	faces.data.MaeFormBase.call(this);
 };
 faces.data.MaeFormV.__super__ = faces.data.MaeFormBase;
 faces.data.MaeFormV.prototype = $extend(faces.data.MaeFormBase.prototype,{
 	setFormation: function(faces1) {
 		this._faces = faces1;
+		var data = this._cams[this._camIndex % this._cams.length];
+		this._camIndex++;
 		var rotMode = faces.MaeFaceMesh.getRandomRot();
 		this._setRot(rotMode);
 		this._lines.startY = -80;
-		this._camera.amp = 215;
+		this._camera.amp = data.amp;
+		this._camera.radX = data.radX;
+		this._camera.radY = data.radY;
 		this._camera.setFOV(35);
 		var spaceX = 50;
 		var spaceY = 50;
@@ -1481,6 +1521,7 @@ faces.data.MaeFormV.prototype = $extend(faces.data.MaeFormBase.prototype,{
 	}
 });
 faces.data.MaeFormVpers = function() {
+	this._cams = [new faces.data.CamData(255,0,0),new faces.data.CamData(255,0,-0.1),new faces.data.CamData(255,0,0.1)];
 	faces.data.MaeFormBase.call(this);
 };
 faces.data.MaeFormVpers.__super__ = faces.data.MaeFormBase;
@@ -1489,8 +1530,11 @@ faces.data.MaeFormVpers.prototype = $extend(faces.data.MaeFormBase.prototype,{
 		this._faces = faces1;
 		var rotMode = faces.MaeFaceMesh.getRandomRot();
 		this._setRot(rotMode);
-		this._lines.startY = -100;
-		this._camera.amp = 255;
+		var data = this._cams[this._camIndex % this._cams.length];
+		this._camIndex++;
+		this._camera.amp = data.amp;
+		this._camera.radX = data.radX;
+		this._camera.radY = data.radY;
 		this._camera.setFOV(35);
 		var spaceX = 60;
 		var spaceY = 60;
