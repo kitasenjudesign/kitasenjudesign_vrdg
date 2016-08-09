@@ -1,21 +1,14 @@
 package;
 import clock.DotDigit;
+import common.Dat;
 import common.ExVector3;
-import haxe.io.BufferInput;
-import three.Color;
 import three.Geometry;
-import three.ImageUtils;
-import three.Line;
 import three.LineBasicMaterial;
 import three.LineSegments;
-import three.MeshBasicMaterial;
 import three.Object3D;
 import three.PointCloud;
 import three.PointCloudMaterial;
 import three.Vector3;
-import tween.easing.Cubic;
-import tween.easing.Power0;
-import tween.TweenMax;
 import tween.TweenMaxHaxe;
 
 /**
@@ -96,6 +89,9 @@ class MyPointCloud extends Object3D
 		
 		//_cloud.position.z = -100;
 		
+		Dat.gui.add(this, "_offsetIndex", 0, 10000).listen();
+		Dat.gui.add(this, "changeOffsetIndex");
+		
 	}
 	
 	
@@ -169,14 +165,14 @@ class MyPointCloud extends Object3D
 	public function setRandom(b:Bool):Void {
 		_isRandom = b;
 		if (_isRandom) {
-			_lineMat.opacity = 0.9;
+			_lineMat.opacity = 1;// 0.9;
 			_lineMat.transparent = true;			
 		}else {
 			_lineMat.opacity = 1;
 			_lineMat.transparent = false;
 		}
 		
-		_offsetIndex = 2;// GEO_MAX;// Math.floor( 1000 * Math.random() );
+		_offsetIndex = 50;// 2;// GEO_MAX;// Math.floor( 1000 * Math.random() );
 		
 		/*
 		TweenMax.to(this, 1, {
@@ -206,36 +202,39 @@ class MyPointCloud extends Object3D
 		var okDots:Array<ExVector3> = [];
 		for (i in 0...len1) {
 			var v:ExVector3 = cast _cloud.geometry.vertices[i];
+			v.connect = false;
 			if (v.enabled) {
 				okDots.push(v);
 			}
 		}
 		
 		var index2:Int = Math.floor(Math.random() * 6000);
-		
-		
 		for (i in 0...okDots.length) {
 			var lines:Array<Vector3> = getNextLine();
 			
-			var vv:ExVector3 = cast _cloud.geometry.vertices[ okDots[i].rIndex ];
-
-			//random ni tsunagu
-			if (vv.enabled) {
-				lines[0].copy( okDots[i] );
-				//lines[0].z = 0;
-				lines[1].copy( vv );
-				//lines[1].z = 0;			
-			}else {
+			var cnt:Int = 0;
+			while(true){
+				var dot1:ExVector3 = okDots[ i ];
+				//var dot2:ExVector3 = okDots[ Math.floor(okDots.length*Math.random()) ];
+				var dot2:ExVector3 = okDots[ (i+(cnt+1))%okDots.length ];
 				
-				lines[0].copy( okDots[i] );//okDots[(i+33)%okDots.length] );
-				//lines[0].z = 0;
-				lines[1].copy( okDots[(i+Math.floor(_offsetIndex))%okDots.length] );
-				//lines[1].z = 0;
+				// okDots[ okDots[i].rIndex % okDots.length ];
+				var nn:Float = dot1.distanceTo(dot2);
+				if (!dot1.connect && !dot2.connect && nn < 600 && nn>100) {
+					dot1.connect = true;
+					dot2.connect = true;
+					lines[0].copy( dot1 );
+					lines[1].copy( dot2 );
+					break;
+				}
 				
+				if (cnt++ > 8) break;
 			}
 			
-			//connectしたい人がenable のとき
+			
 			/*
+			var vv:ExVector3 = cast _cloud.geometry.vertices[ okDots[i].rIndex ];
+			
 			if (vv.enabled) {
 				lines[0].copy( okDots[i] );
 				//lines[0].z = 0;

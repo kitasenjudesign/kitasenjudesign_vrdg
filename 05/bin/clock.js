@@ -7,6 +7,24 @@ function $extend(from, fields) {
 }
 var BeyondCodeGeo = function() {
 };
+BeyondCodeGeo.getFillMesh = function(nn,font) {
+	if(BeyondCodeGeo.mat == null) {
+		BeyondCodeGeo.mat = new THREE.LineBasicMaterial({ color : 16777215});
+		BeyondCodeGeo.mat.transparent = true;
+	}
+	var o = new THREE.Object3D();
+	var geos = BeyondCodeGeo.getGeo(nn,font);
+	var _g1 = 0;
+	var _g = geos.length;
+	while(_g1 < _g) {
+		var i = _g1++;
+		var line = new THREE.Line(geos[i],BeyondCodeGeo.mat);
+		line.renderOrder = BeyondCodeGeo._renderOrder;
+		BeyondCodeGeo._renderOrder++;
+		o.add(line);
+	}
+	return o;
+};
 BeyondCodeGeo.getMesh = function(nn,font) {
 	if(BeyondCodeGeo.mat == null) {
 		BeyondCodeGeo.mat = new THREE.LineBasicMaterial({ color : 16777215});
@@ -124,6 +142,9 @@ MainDeDe.prototype = {
 		this._bg = new dede.BlinkPlane();
 		this._bg.position.z = -40;
 		this._bg.scale.set(2,2,2);
+		this._dummy = new sound.DummyBars();
+		this._dummy.init();
+		this._scene.add(this._dummy);
 		common.StageRef.setCenter();
 		window.document.addEventListener("keydown",$bind(this,this._onKeyDown));
 	}
@@ -151,6 +172,8 @@ MainDeDe.prototype = {
 	}
 	,_run: function() {
 		this._audio.update();
+		this._dummy.update(this._audio);
+		this._bg.setLight(this._audio);
 		MyColor.update();
 		this._points.update();
 		this._cuts.update(this._audio);
@@ -219,6 +242,8 @@ MyPointCloud.prototype = $extend(THREE.Object3D.prototype,{
 		this._cloud.renderOrder = 9;
 		this._line.position.z = 0.5;
 		this.add(this._line);
+		common.Dat.gui.add(this,"_offsetIndex",0,10000).listen();
+		common.Dat.gui.add(this,"changeOffsetIndex");
 	}
 	,getNextPoint: function() {
 		this._count++;
@@ -256,13 +281,13 @@ MyPointCloud.prototype = $extend(THREE.Object3D.prototype,{
 	,setRandom: function(b) {
 		this._isRandom = b;
 		if(this._isRandom) {
-			this._lineMat.opacity = 0.9;
+			this._lineMat.opacity = 1;
 			this._lineMat.transparent = true;
 		} else {
 			this._lineMat.opacity = 1;
 			this._lineMat.transparent = false;
 		}
-		this._offsetIndex = 2;
+		this._offsetIndex = 50;
 	}
 	,changeOffsetIndex: function() {
 		this._offsetIndex = Math.floor(1000 * Math.random());
@@ -275,6 +300,7 @@ MyPointCloud.prototype = $extend(THREE.Object3D.prototype,{
 		while(_g < len1) {
 			var i = _g++;
 			var v = this._cloud.geometry.vertices[i];
+			v.connect = false;
 			if(v.enabled) okDots.push(v);
 		}
 		var index2 = Math.floor(Math.random() * 6000);
@@ -283,13 +309,19 @@ MyPointCloud.prototype = $extend(THREE.Object3D.prototype,{
 		while(_g1 < _g2) {
 			var i1 = _g1++;
 			var lines = this.getNextLine();
-			var vv = this._cloud.geometry.vertices[okDots[i1].rIndex];
-			if(vv.enabled) {
-				lines[0].copy(okDots[i1]);
-				lines[1].copy(vv);
-			} else {
-				lines[0].copy(okDots[i1]);
-				lines[1].copy(okDots[(i1 + Math.floor(this._offsetIndex)) % okDots.length]);
+			var cnt = 0;
+			while(true) {
+				var dot1 = okDots[i1];
+				var dot2 = okDots[(i1 + (cnt + 1)) % okDots.length];
+				var nn = dot1.distanceTo(dot2);
+				if(!dot1.connect && !dot2.connect && nn < 600 && nn > 100) {
+					dot1.connect = true;
+					dot2.connect = true;
+					lines[0].copy(dot1);
+					lines[1].copy(dot2);
+					break;
+				}
+				if(cnt++ > 8) break;
 			}
 		}
 	}
@@ -888,7 +920,7 @@ common.Dat._onInit = function() {
 	common.Dat.gui.domElement.style.right = "0px";
 	common.Dat.gui.domElement.style.top = "0px";
 	common.Dat.gui.domElement.style.opacity = 0.7;
-	common.Dat.gui.domElement.style.zIndex = 999999;
+	common.Dat.gui.domElement.style.zIndex = 10;
 	common.Key.init();
 	common.Key.board.addEventListener("keydown",common.Dat._onKeyDown);
 	common.Dat.show();
@@ -941,7 +973,8 @@ common.Dat._goURL6 = function() {
 	common.Dat._goURL("../../01/bin/");
 };
 common.Dat._goURL = function(url) {
-	window.location.href = url;
+	Tracer.log("goURL " + url);
+	window.location.href = url + window.location.hash;
 };
 common.Dat.show = function() {
 	common.Dat.gui.domElement.style.display = "block";
@@ -950,6 +983,7 @@ common.Dat.hide = function() {
 	common.Dat.gui.domElement.style.display = "none";
 };
 common.ExVector3 = function(xx,yy,zz) {
+	this.connect = false;
 	this.rIndex = 0;
 	this.pos = 0;
 	this.sr = 0;
@@ -1055,6 +1089,7 @@ common.StageRef.setCenter = function() {
 		var dom = window.document.getElementById("webgl");
 		var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
 		dom.style.position = "absolute";
+		dom.style.zIndex = "1000";
 		dom.style.top = Math.round(yy) + "px";
 	}
 };
@@ -1096,7 +1131,14 @@ dede.BlinkPlane = function() {
 };
 dede.BlinkPlane.__super__ = THREE.Mesh;
 dede.BlinkPlane.prototype = $extend(THREE.Mesh.prototype,{
-	flash: function() {
+	setLight: function(a) {
+		var ff = a.subFreqByteData[9];
+		if(ff < 0) ff = 0;
+		if(ff > 10) ff = 10;
+		ff = ff / 10;
+		this._mat.color.setRGB(ff,ff,ff);
+	}
+	,flash: function() {
 		if(this._twn != null) this._twn.kill();
 		this._light = 1;
 		this._twn = TweenMax.to(this,0.5,{ _light : 0, ease : Power0.easeInOut, onUpdate : $bind(this,this._onUpdate)});
@@ -1105,6 +1147,8 @@ dede.BlinkPlane.prototype = $extend(THREE.Mesh.prototype,{
 		this._mat.color.setRGB(this._light,this._light,this._light);
 	}
 });
+dede.Boost = function() {
+};
 dede.DeDeCuts = function() {
 	this._cutIndex = 0;
 };
@@ -1121,15 +1165,18 @@ dede.DeDeCuts.prototype = {
 		this._currentCut = this._cuts[0];
 		this._currentCut.start();
 		common.Key.board.addEventListener("keydown",$bind(this,this._onKeyDown));
+		common.Dat.gui.add(dede.Boost,"isBoost").listen();
 	}
 	,_onKeyDown: function(e) {
 		Tracer.log("_onKeyDown");
+		if(Std.parseInt(e.keyCode) == 66) dede.Boost.isBoost = !dede.Boost.isBoost;
 		if(Std.parseInt(e.keyCode) == 67) {
 			this._cutIndex++;
 			this._currentCut = this._cuts[this._cutIndex % this._cuts.length];
 			this._currentCut.start();
 		}
 		if(Std.parseInt(e.keyCode) == 39) this._currentCut.next();
+		if(Std.parseInt(e.keyCode) == 82) this._currentCut.setRotate();
 		if(Std.parseInt(e.keyCode) == 38) this._currentCut.countUp();
 		if(Std.parseInt(e.keyCode) == 37) this._currentCut.setRandomLine();
 	}
@@ -1200,7 +1247,7 @@ dede.DeDeDigit.prototype = $extend(THREE.Object3D.prototype,{
 		if(this._numDots >= this._geoMax) console.log("====koeteru==== ");
 		if(this.outline != null) this.remove(this.outline);
 		this.outline = BeyondCodeGeo.getMesh(str,this._font);
-		this.outline.position.z = 0;
+		this.outline.position.z = 1;
 		this.add(this.outline);
 		this._moji = str;
 		this.update(2);
@@ -1599,7 +1646,7 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 			line.addSec(addX,true);
 		}
 		this._countUpNum++;
-		if(this._countUpNum % 6 == 0) this._flash();
+		if(dede.Boost.isBoost) this._flashBoost(addX); else if(this._countUpNum % 6 == 0) this._flash();
 	}
 	,changeType: function(data) {
 		var _g = data.sameType;
@@ -1649,6 +1696,10 @@ dede.DeDeLines.prototype = $extend(THREE.Object3D.prototype,{
 		this.showOutline();
 		BeyondCodeGeo.mat.opacity = 1;
 		this._twn = TweenMax.to(BeyondCodeGeo.mat,0.9,{ opacity : 0, onComplete : $bind(this,this.hideOutline)});
+	}
+	,_flashBoost: function(addX) {
+		this.showOutline();
+		BeyondCodeGeo.mat.opacity = addX;
 	}
 	,setDotType: function(type,isRotate) {
 		var _g1 = 0;
@@ -1777,7 +1828,7 @@ dede.VrdgLine.prototype = $extend(dede.DeDeLine.prototype,{
 	}
 });
 dede.VrdgLines = function() {
-	this._typeCounter = 0;
+	this._typeCounter = -1;
 	dede.DeDeLines.call(this);
 };
 dede.VrdgLines.__super__ = dede.DeDeLines;
@@ -1790,9 +1841,15 @@ dede.VrdgLines.prototype = $extend(dede.DeDeLines.prototype,{
 		this._lines.push(this._vrdg);
 	}
 	,changeType: function(data) {
-		var types = [0,3,2,4,1,5];
+		var types = [0,3,1,2,4,0,2];
 		this._typeCounter++;
 		var type = types[this._typeCounter % types.length];
+		if(type == 2) {
+			if(this._typeCounter % types.length == 6) {
+				data.startSec = 0;
+				if(this._typeCounter >= 8) data.startSec = Math.random();
+			} else data.startSec = 0.8;
+		}
 		var _g1 = 0;
 		var _g = this._lines.length;
 		while(_g1 < _g) {
@@ -1826,6 +1883,7 @@ dede.VrdgLines.prototype = $extend(dede.DeDeLines.prototype,{
 });
 dede.cuts = {};
 dede.cuts.DeDeCutBase = function() {
+	this._isRotate = false;
 	this._isLine = false;
 	this._nextCounter = 0;
 	this._counter = 0;
@@ -1845,9 +1903,10 @@ dede.cuts.DeDeCutBase.prototype = {
 	}
 	,coundDown: function() {
 	}
-	,setRotate: function(b) {
-		this._lines.setRotate(b);
-		this._vrdg.setRotate(b);
+	,setRotate: function() {
+		this._isRotate = !this._isRotate;
+		this._lines.setRotate(this._isRotate);
+		this._vrdg.setRotate(this._isRotate);
 	}
 	,setRandomLine: function() {
 		this._isLine = !this._isLine;
@@ -1901,13 +1960,21 @@ dede.cuts.DeDeCutMultiLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		this._lines.changeType(data);
 	}
 	,update: function(audio) {
+		if(dede.Boost.isBoost) this.updateBoost(audio); else this.updateNormal(audio);
+		this._lines.update(audio);
+	}
+	,updateNormal: function(audio) {
 		this._counter++;
-		if(audio.subFreqByteData[5] > 10 && this._counter > 15) {
+		if(audio.subFreqByteData[8] > 8 && this._counter > 15) {
 			this._counter = 0;
-			var addVal = 0.0333333333333333329;
+			this._lines.countUp(0.0333333333333333329);
+		}
+	}
+	,updateBoost: function(audio) {
+		if(audio.subFreqByteData[10] > 5) {
+			var addVal = audio.subFreqByteData[10] * 0.2 / 30;
 			this._lines.countUp(addVal);
 		}
-		this._lines.update(audio);
 	}
 });
 dede.cuts.DeDeCutOneLine = function() {
@@ -1976,6 +2043,7 @@ dede.cuts.DeDeCutVRDG.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		this._vrdg.visible = true;
 		this._vrdg.setGeoMax(300);
 		this._cam.setZoom(2);
+		this.next();
 	}
 	,next: function() {
 		Tracer.log("next");
@@ -1985,11 +2053,11 @@ dede.cuts.DeDeCutVRDG.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		data.space = 30 + 30 * Math.random();
 		if(this._nextCounter % 2 == 0) data.space = 60;
 		if(this._nextCounter % 4 == 0) data.startSec = 0; else data.startSec = Math.random();
-		if(this._nextCounter % 10 == 4) {
+		if(this._nextCounter % 10 == 5) {
 			data.isRotate = true;
 			MyPointCloud.cloud.setRandom(true);
-		} else if(this._nextCounter % 10 == 8) {
-			data.isRotate = false;
+		} else if(this._nextCounter % 10 == 9) {
+			data.isRotate = true;
 			MyPointCloud.cloud.setRandom(true);
 		} else {
 			data.isRotate = false;
@@ -2144,13 +2212,6 @@ haxe.ds.StringMap.prototype = {
 	}
 	,get: function(key) {
 		return this.h["$" + key];
-	}
-};
-haxe.io = {};
-haxe.io.Eof = function() { };
-haxe.io.Eof.prototype = {
-	toString: function() {
-		return "Eof";
 	}
 };
 var js = {};
@@ -2684,8 +2745,55 @@ net.badimon.five3D.typography.VrdgRegular.prototype = $extend(net.badimon.five3D
 	}
 });
 var sound = {};
+sound.DummyBars = function() {
+	THREE.Object3D.call(this);
+};
+sound.DummyBars.__super__ = THREE.Object3D;
+sound.DummyBars.prototype = $extend(THREE.Object3D.prototype,{
+	init: function() {
+		this._lines = [];
+		this._lines2 = [];
+		var m = new THREE.LineBasicMaterial({ color : 16711680});
+		var m2 = new THREE.LineBasicMaterial({ color : 16777215});
+		var _g = 0;
+		while(_g < 64) {
+			var i = _g++;
+			var g = new THREE.Geometry();
+			g.vertices.push(new THREE.Vector3(0,0,0));
+			g.vertices.push(new THREE.Vector3(100,0,0));
+			var line = new THREE.Line(g,m);
+			line.position.y = (i - 32.) * 3;
+			line.position.z = 0;
+			this.add(line);
+			this._lines.push(line);
+		}
+		var _g1 = 0;
+		while(_g1 < 64) {
+			var i1 = _g1++;
+			var g1 = new THREE.Geometry();
+			g1.vertices.push(new THREE.Vector3(0,0,0));
+			g1.vertices.push(new THREE.Vector3(100,0,0));
+			var line1 = new THREE.Line(g1,m2);
+			line1.position.y = (i1 - 32.) * 3 + 1;
+			line1.position.z = 0;
+			this.add(line1);
+			this._lines2.push(line1);
+		}
+	}
+	,update: function(audio) {
+		if(audio != null && audio.isStart) {
+			var _g1 = 0;
+			var _g = this._lines.length;
+			while(_g1 < _g) {
+				var i = _g1++;
+				this._lines[i].scale.set(audio.freqByteData[i] / 255 * 2,1,1);
+				this._lines2[i].scale.set(audio.subFreqByteData[i] / 255 * 2,1,1);
+			}
+		}
+	}
+});
 sound.MyAudio = function() {
-	this.globalVolume = 0.899;
+	this.globalVolume = 0.897;
 	this.isStart = false;
 	this.freqByteDataAryEase = [];
 	this._impulse = [];
@@ -2720,7 +2828,7 @@ sound.MyAudio.prototype = {
 		}
 		source.connect(this.analyser,0);
 		this.isStart = true;
-		common.Dat.gui.add(this,"globalVolume",0.1,3).step(0.1);
+		common.Dat.gui.add(this,"globalVolume",0.01,3.00).step(0.01);
 		common.Dat.gui.add(this,"setImpulse");
 		this.setImpulse();
 		this.update();
@@ -3286,11 +3394,13 @@ common.Dat.Z = 90;
 common.Dat.hoge = 0;
 common.Dat.bg = false;
 common.Dat._showing = true;
+common.Key.keydown = "keydown";
 common.QueryGetter.NORMAL = 0;
 common.QueryGetter.SKIP = 1;
 common.QueryGetter._isInit = false;
 common.QueryGetter.t = 0;
 common.StageRef.$name = "webgl";
+dede.Boost.isBoost = false;
 dede.DeDeDigit.Z_MAX = 3000;
 dede.DeDeDigit.TYPE_DOT_MONOSPACE = 0;
 dede.DeDeDigit.TYPE_DOT_CONTINUE = 1;

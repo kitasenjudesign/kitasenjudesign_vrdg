@@ -64,9 +64,16 @@ class DeDeLines extends Object3D
 		}
 		
 		_countUpNum++;
-		if (_countUpNum % 6 == 0) {
-			_flash(); 
+		//dedemouse
+		
+		if( Boost.isBoost ){
+			_flashBoost(addX);
+		}else {
+			if (_countUpNum % 6 == 0) {
+				_flash(); 
+			}
 		}
+		
 		//_flash();
 		//}
 		
@@ -154,6 +161,17 @@ class DeDeLines extends Object3D
 			onComplete:hideOutline
 		});
 	}
+	
+	private function _flashBoost(addX:Float):Void {
+		
+		//
+		showOutline();
+		BeyondCodeGeo.mat.opacity = addX;
+		
+	}
+	//flash
+	
+	
 	
 	public function setDotType(type:Int,isRotate:Bool):Void {
 		for (i in 0..._lines.length) {

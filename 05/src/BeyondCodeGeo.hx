@@ -20,14 +20,35 @@ class BeyondCodeGeo
 	
 	private static var _mojiGeo:Map<String,Array<Geometry>>;
 	private static var _renderOrder:Int = 0;
-	public static var mat:LineBasicMaterial;// = new LineBasicMaterial( { color:0xffffff } );
-	
+	public static var mat	:LineBasicMaterial;// = new LineBasicMaterial( { color:0xffffff } );
+	public static var mat2	:MeshBasicMaterial;
 	public function new() 
 	{
 		
 	}
 	
 	
+	public static function getFillMesh(nn:String, font:Int):Object3D {
+		
+		if (mat == null) {
+			mat = new LineBasicMaterial( { color:0xffffff } );
+			mat.transparent = true;
+			//mat.blending = Three.AdditiveBlending;
+			//mat.color.setHSL(0, 0, 0);
+		}
+		
+		var o:Object3D = new Object3D();
+		var geos:Array<Geometry> = getGeo(nn, font);
+		for (i in 0...geos.length) {
+			var line:Line = new Line(geos[i], mat);
+			line.renderOrder = _renderOrder;
+			_renderOrder++;
+			o.add(line);
+		}
+		
+		return o;		
+		
+	}
 	
 	
 	/**

@@ -37,7 +37,11 @@ class CanvasTest3d extends Test3d
 		
 	}
 	
-	private function initA():Void{
+	private function initA():Void {
+		
+		//bg nara nanimoshinai
+		if (Dat.bg) return;
+		
 		Logos.init(initB);
 	}
 	

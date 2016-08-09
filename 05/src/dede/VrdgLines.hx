@@ -1,4 +1,5 @@
 package dede;
+import clock.DotDigit;
 import common.Dat;
 import dede.cuts.DeDeParam;
 import sound.MyAudio;
@@ -15,7 +16,7 @@ class VrdgLines extends DeDeLines
 {
 	
 	private var _vrdg:VrdgLine;
-	private var _typeCounter:Int = 0;
+	private var _typeCounter:Int = -1;
 	
 	public function new() 
 	{
@@ -44,9 +45,43 @@ class VrdgLines extends DeDeLines
 		//MyPointCloud.cloud.setRandom(data.isRandomLine);
 		
 		//全部同じ
-		var types:Array<Int> = [0, 3, 2, 4, 1, 5];
+		/*
+	public static inline var TYPE_DOT_MONOSPACE:Int = 0;	
+	public static inline var TYPE_DOT_CONTINUE:Int = 1;
+	
+	public static inline var TYPE_LINE_MONOSPACE:Int = 2;
+	public static inline var TYPE_LINE_CONTINUE:Int = 3;
+	
+	public static inline var TYPE_RANDOM_MONOSPACE:Int = 4;
+	public static inline var TYPE_RANDOM_CONTINUE:Int = 5;		
+		*/
+	
+		var types:Array<Int> = [
+			//0, 3, 2, 4, 1, 5
+			DotDigit.TYPE_DOT_MONOSPACE,
+			DotDigit.TYPE_LINE_CONTINUE,
+			DotDigit.TYPE_DOT_CONTINUE,					
+			DotDigit.TYPE_LINE_MONOSPACE,
+			DotDigit.TYPE_RANDOM_MONOSPACE,
+			DotDigit.TYPE_DOT_MONOSPACE,	
+			//DotDigit.TYPE_RANDOM_CONTINUE
+			DotDigit.TYPE_LINE_MONOSPACE
+		];
 		_typeCounter++;
 		var type:Int = types[_typeCounter % types.length];
+		
+		if (type == DotDigit.TYPE_LINE_MONOSPACE) {
+			if ( _typeCounter % types.length == 6) {
+				data.startSec = 0;
+				if ( _typeCounter >= 8) {
+					data.startSec = Math.random();					
+				}				
+			}else {
+				data.startSec = 0.8; 	
+			}
+		}
+		
+		
 		for (i in 0..._lines.length) {
 			
 			var line:DeDeLine = _lines[i];

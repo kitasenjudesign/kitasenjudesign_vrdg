@@ -25,8 +25,9 @@ class DeDeCutVRDG extends DeDeCutBase
 		_vrdg.visible = true;
 		_vrdg.setGeoMax(300);
 		
-		_cam.setZoom(2);
+		_cam.setZoom( 2 );// * 70 / 100);
 		
+		next();
 	}
 
 	
@@ -47,6 +48,8 @@ class DeDeCutVRDG extends DeDeCutBase
 			data.space = 60;
 		}
 		
+		
+			
 		if (_nextCounter % 4 == 0) {
 			data.startSec = 0;
 		}else{
@@ -58,11 +61,11 @@ class DeDeCutVRDG extends DeDeCutBase
 		//reset("VRDGTH", Math.floor(Math.random() * 4), false, 0, 0, 0, 50);
 		//reset( Math.floor(Math.random() * 4), data);
 		
-		if(_nextCounter%10==4){
+		if(_nextCounter%10==5){
 			data.isRotate = true;
 			MyPointCloud.cloud.setRandom(true);			
-		}else if ( _nextCounter % 10 == 8) {
-			data.isRotate = false;
+		}else if ( _nextCounter % 10 == 9) {
+			data.isRotate = true;
 			MyPointCloud.cloud.setRandom(true);						
 		}else {
 			data.isRotate = false;

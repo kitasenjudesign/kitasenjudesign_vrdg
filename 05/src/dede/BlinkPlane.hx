@@ -1,5 +1,6 @@
 package dede;
 import common.StageRef;
+import sound.MyAudio;
 import three.Geometry;
 import three.Mesh;
 import three.MeshBasicMaterial;
@@ -25,6 +26,18 @@ class BlinkPlane extends Mesh
 		_geo = new PlaneBufferGeometry(StageRef.stageWidth, StageRef.stageHeight, 1, 1);
 		_mat = new MeshBasicMaterial( { color:0x000000 } );
 		super(cast _geo, _mat);
+		
+	}
+	
+	public function setLight(a:MyAudio):Void {
+		
+		var ff:Float = a.subFreqByteData[9];
+		if (ff < 0) ff = 0;
+		
+		if (ff > 10) ff = 10;
+		ff = ff / 10;
+		
+		_mat.color.setRGB(ff, ff, ff);
 		
 	}
 	

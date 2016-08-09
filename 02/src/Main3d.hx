@@ -74,6 +74,9 @@ class Main3d
 	
 	private function _onInit0():Void{
 
+		//bg nara nanimoshinai
+		if (Dat.bg) return;		
+		
         _audio = new MyAudio();
 		_audio.init(_onInit);		
 		

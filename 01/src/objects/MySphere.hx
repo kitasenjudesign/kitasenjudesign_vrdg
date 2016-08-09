@@ -1,4 +1,5 @@
 package objects;
+import common.Config;
 import common.Dat;
 import sound.MyAudio;
 import three.Geometry;
@@ -37,6 +38,7 @@ class MySphere extends Object3D
 	private var _textures:Array<Texture>;
 	private var mate:MeshBasicMaterial;
 	private var _yokoRatio:Float = 0;
+	private var _baseAmp:Array<Float>;
 	public var power:Float = 1;
 
 	
@@ -47,14 +49,14 @@ class MySphere extends Object3D
 	
 		if (!Dat.bg) return;
 		
-		var texture:Texture = ImageUtils.loadTexture( 'R0010035.JPG' );
+		var texture:Texture = ImageUtils.loadTexture( 'bg/twilight.png' );
 
 		_textures = [
 			texture,
-			ImageUtils.loadTexture( 'bg/dedebg4.jpg' ),
-			
-			ImageUtils.loadTexture( 'bg/R0010042.jpg' ),
-			ImageUtils.loadTexture( 'bg/R0010046.jpg' ),
+			ImageUtils.loadTexture( 'bg/twilight.png' ),
+			ImageUtils.loadTexture( 'bg/01.jpg' ),
+			ImageUtils.loadTexture( 'bg/02.jpg' ),
+			/*
 			ImageUtils.loadTexture( 'bg/R0010047.jpg' ),
 			ImageUtils.loadTexture( 'bg/R0010048.jpg' ),
 			ImageUtils.loadTexture( 'bg/R0010051.jpg' ),
@@ -70,8 +72,10 @@ class MySphere extends Object3D
 			ImageUtils.loadTexture( 'bg/R0010066.jpg' ),
 			ImageUtils.loadTexture( 'bg/R0010068.jpg' ),
 			ImageUtils.loadTexture( 'bg/R0010069.jpg' ),
+			*/
 			ImageUtils.loadTexture( 'img/IMG_5796B.jpg' ),
 			ImageUtils.loadTexture( 'img/IMG_5796.jpg' ),
+			
 			ImageUtils.loadTexture( 'img/a.jpg' ),
 			ImageUtils.loadTexture( 'img/b.jpg' ),
 			ImageUtils.loadTexture( 'img/hoge.jpg' ),
@@ -82,6 +86,8 @@ class MySphere extends Object3D
 		
 		
 		mate = new MeshBasicMaterial( { map: texture/*,side:Three.DoubleSide*/ } );
+		mate.color.setRGB(Config.bgLight, Config.bgLight, Config.bgLight);
+		
 		var g:SphereGeometry = new SphereGeometry(1000, 60, 30 );
 		
 		mesh = new Mesh( g,mate);
@@ -94,10 +100,12 @@ class MySphere extends Object3D
 
 		mesh.geometry.verticesNeedUpdate = true;
 		_base = [];
-		
+		_baseAmp = [];
 		
 		for (i in 0...g.vertices.length) {
-			_base.push(g.vertices[i].clone());
+			var vv:Vector3 = g.vertices[i].clone();
+			_base.push(vv);
+			_baseAmp.push( vv.length() );
 		}
 		
 		
@@ -180,8 +188,7 @@ class MySphere extends Object3D
 		for (i in 0...len) {
 			
 			var vv:Vector3 = _base[i];
-
-			var a:Float = Math.sqrt( vv.x * vv.x + vv.y * vv.y + vv.z * vv.z);
+			var a:Float = _baseAmp[i];// Math.sqrt( vv.x * vv.x + vv.y * vv.y + vv.z * vv.z);
 			var radX:Float = -Math.atan2(vv.z, vv.x) + vv.y * Math.sin(_count+vv.y/ (500*_scale) ) * _nejireX;//横方向の角度
 			var radY:Float = Math.asin(vv.y / a);// + _nejireY;//縦方向の角度
 

@@ -9,7 +9,6 @@ class DeDeCutMultiLine  extends DeDeCutBase
 {
 
 	private var _lineType:Int = 0;
-	
 	public function new() 
 	{
 		super();
@@ -86,16 +85,34 @@ class DeDeCutMultiLine  extends DeDeCutBase
 	override public function update(audio:MyAudio):Void {
 		
 		//_lines.up
-		_counter++;
-		if ( audio.subFreqByteData[5] > 10 && _counter > 15 ) {
-			_counter = 0;
-			var addVal:Float = 1 / 30;
-			_lines.countUp( addVal );// Math.random());
+		
+		if (Boost.isBoost) {
+			updateBoost(audio);
+		}else {
+			updateNormal(audio);
 		}
 		
 		_lines.update(audio);
 		
 	}		
+	
+	private function updateNormal(audio:MyAudio):Void {
+		_counter++;
+		if ( audio.subFreqByteData[8] > 8 && _counter > 15 ) {
+			_counter = 0;
+			_lines.countUp( 1/30 );// Math.random());
+		}
+	}
+	
+	private function updateBoost(audio:MyAudio):Void {
+		
+		if (audio.subFreqByteData[10] > 5 ){
+			var addVal:Float = audio.subFreqByteData[10] * 0.2 / 30;
+			_lines.countUp( addVal );// Math.random());		
+		}
+	}
+	
+	
 	
 	
 	

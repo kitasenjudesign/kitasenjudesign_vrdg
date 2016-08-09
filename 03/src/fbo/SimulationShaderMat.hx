@@ -1,6 +1,6 @@
 package fbo;
 import js.html.Float32Array;
-import objects.shaders.CurlNoise;
+import fbo.shaders.CurlNoise;
 import sound.MyAudio;
 import three.DataTexture;
 import three.Mapping;

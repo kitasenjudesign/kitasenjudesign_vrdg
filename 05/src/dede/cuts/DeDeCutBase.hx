@@ -19,6 +19,7 @@ class DeDeCutBase
 	private var _scene:Scene;
 	private var _nextCounter:Int = 0;
 	private var _isLine:Bool = false;
+	private var _isRotate:Bool = false;
 	
 	public function new() 
 	{
@@ -36,12 +37,11 @@ class DeDeCutBase
 		_lines = main._lines;
 		_vrdg = main._vrdg;
 		_scene = main._scene;
-		
 		//Browser.window.alert( ">>>" + main._lines );
-		
 	}
 	
 	public function start():Void {
+		
 		
 		
 	}
@@ -62,10 +62,11 @@ class DeDeCutBase
 	/**
 	 * @param	b
 	 */
-	public function setRotate(b:Bool):Void {
+	public function setRotate():Void {
 		
-		_lines.setRotate(b);
-		_vrdg.setRotate(b);
+		_isRotate = !_isRotate;
+		_lines.setRotate(_isRotate);
+		_vrdg.setRotate(_isRotate);
 		
 	}
 	

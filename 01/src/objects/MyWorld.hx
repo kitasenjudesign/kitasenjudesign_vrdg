@@ -141,8 +141,15 @@ class MyWorld extends Object3D
 			mat = MyFace.MAT_DEFAULT;
 		}
 		
+		var rr:Float = 0;
+		if(data.displaceType == EffectData.DISPLACE_X){
+			if (Math.random() < 0.5) {
+				rr = Math.random() < 0.5 ? Math.PI / 2 : -Math.PI / 2;
+			}
+		}
+		
 		for ( i in 0...faces.length) {
-			
+			faces[i].rotateZ( rr );
 			faces[i].updateMaterial(mat);
 			faces[i].s = data.strength;
 		}

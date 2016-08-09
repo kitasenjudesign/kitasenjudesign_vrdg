@@ -362,6 +362,7 @@ common.Config.prototype = {
 		common.Config.canvasOffsetY = data.canvasOffsetY;
 		common.Config.globalVol = data.globalVol;
 		common.Config.particleSize = data.particleSize;
+		common.Config.bgLight = data.bgLight;
 		if(this._callback != null) this._callback();
 	}
 };
@@ -381,7 +382,7 @@ common.Dat._onInit = function() {
 	common.Dat.gui.domElement.style.right = "0px";
 	common.Dat.gui.domElement.style.top = "0px";
 	common.Dat.gui.domElement.style.opacity = 0.7;
-	common.Dat.gui.domElement.style.zIndex = 999999;
+	common.Dat.gui.domElement.style.zIndex = 10;
 	common.Key.init();
 	common.Key.board.addEventListener("keydown",common.Dat._onKeyDown);
 	common.Dat.show();
@@ -434,7 +435,8 @@ common.Dat._goURL6 = function() {
 	common.Dat._goURL("../../01/bin/");
 };
 common.Dat._goURL = function(url) {
-	window.location.href = url;
+	Tracer.log("goURL " + url);
+	window.location.href = url + window.location.hash;
 };
 common.Dat.show = function() {
 	common.Dat.gui.domElement.style.display = "block";
@@ -525,18 +527,17 @@ common.StageRef.fadeOut = function(callback) {
 	common.StageRef.sheet.fadeOut(callback);
 };
 common.StageRef.setCenter = function() {
-	if(!common.Dat.bg) {
-		var dom = window.document.getElementById("webgl");
-		var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
-		dom.style.position = "absolute";
-		dom.style.top = Math.round(yy) + "px";
-	}
+	var dom = window.document.getElementById("webgl");
+	var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
+	dom.style.position = "absolute";
+	dom.style.zIndex = "1000";
+	dom.style.top = Math.round(yy) + "px";
 };
 common.StageRef.get_stageWidth = function() {
 	return window.innerWidth;
 };
 common.StageRef.get_stageHeight = function() {
-	if(common.Dat.bg) return window.innerHeight;
+	if(common.Dat.bg) return Math.floor(window.innerWidth * 816 / 1920);
 	return Math.floor(window.innerWidth * 576 / 1920);
 };
 common.WSocket = function() {
@@ -1058,7 +1059,11 @@ objects.MyFace = function(idx) {
 };
 objects.MyFace.__super__ = objects.MyFaceSplitA;
 objects.MyFace.prototype = $extend(objects.MyFaceSplitA.prototype,{
-	update: function(audio) {
+	rotateZ: function(rotZ) {
+		if(this._twn != null) this._twn.kill();
+		this._twn = TweenMax.to(this.rotation,0.5,{ ease : Cubic.easeOut, z : rotZ});
+	}
+	,update: function(audio) {
 		var _g = this._mode;
 		switch(_g) {
 		case "single":
@@ -1089,9 +1094,10 @@ objects.MySphere = function() {
 	this._count = 0;
 	THREE.Object3D.call(this);
 	if(!common.Dat.bg) return;
-	var texture = THREE.ImageUtils.loadTexture("R0010035.JPG");
-	this._textures = [texture,THREE.ImageUtils.loadTexture("bg/dedebg4.jpg"),THREE.ImageUtils.loadTexture("bg/R0010042.jpg"),THREE.ImageUtils.loadTexture("bg/R0010046.jpg"),THREE.ImageUtils.loadTexture("bg/R0010047.jpg"),THREE.ImageUtils.loadTexture("bg/R0010048.jpg"),THREE.ImageUtils.loadTexture("bg/R0010051.jpg"),THREE.ImageUtils.loadTexture("bg/R0010053.jpg"),THREE.ImageUtils.loadTexture("bg/R0010053.jpg"),THREE.ImageUtils.loadTexture("bg/R0010055.jpg"),THREE.ImageUtils.loadTexture("bg/R0010057.jpg"),THREE.ImageUtils.loadTexture("bg/R0010059.jpg"),THREE.ImageUtils.loadTexture("bg/R0010061.jpg"),THREE.ImageUtils.loadTexture("bg/R0010062.jpg"),THREE.ImageUtils.loadTexture("bg/R0010063.jpg"),THREE.ImageUtils.loadTexture("bg/R0010065.jpg"),THREE.ImageUtils.loadTexture("bg/R0010066.jpg"),THREE.ImageUtils.loadTexture("bg/R0010068.jpg"),THREE.ImageUtils.loadTexture("bg/R0010069.jpg"),THREE.ImageUtils.loadTexture("img/IMG_5796B.jpg"),THREE.ImageUtils.loadTexture("img/IMG_5796.jpg"),THREE.ImageUtils.loadTexture("img/a.jpg"),THREE.ImageUtils.loadTexture("img/b.jpg"),THREE.ImageUtils.loadTexture("img/hoge.jpg"),THREE.ImageUtils.loadTexture("img/fuga.jpg"),THREE.ImageUtils.loadTexture("bg/white.png")];
+	var texture = THREE.ImageUtils.loadTexture("bg/twilight.png");
+	this._textures = [texture,THREE.ImageUtils.loadTexture("bg/twilight.png"),THREE.ImageUtils.loadTexture("bg/01.jpg"),THREE.ImageUtils.loadTexture("bg/02.jpg"),THREE.ImageUtils.loadTexture("img/IMG_5796B.jpg"),THREE.ImageUtils.loadTexture("img/IMG_5796.jpg"),THREE.ImageUtils.loadTexture("img/a.jpg"),THREE.ImageUtils.loadTexture("img/b.jpg"),THREE.ImageUtils.loadTexture("img/hoge.jpg"),THREE.ImageUtils.loadTexture("img/fuga.jpg"),THREE.ImageUtils.loadTexture("bg/white.png")];
 	this.mate = new THREE.MeshBasicMaterial({ map : texture});
+	this.mate.color.setRGB(common.Config.bgLight,common.Config.bgLight,common.Config.bgLight);
 	var g = new THREE.SphereGeometry(1000,60,30);
 	this.mesh = new THREE.Mesh(g,this.mate);
 	this.mesh.position.z = 0;
@@ -1100,11 +1106,14 @@ objects.MySphere = function() {
 	this.mesh.receiveShadow = true;
 	this.mesh.geometry.verticesNeedUpdate = true;
 	this._base = [];
+	this._baseAmp = [];
 	var _g1 = 0;
 	var _g = g.vertices.length;
 	while(_g1 < _g) {
 		var i = _g1++;
-		this._base.push(g.vertices[i].clone());
+		var vv = g.vertices[i].clone();
+		this._base.push(vv);
+		this._baseAmp.push(vv.length());
 	}
 	this.add(this.mesh);
 };
@@ -1157,7 +1166,7 @@ objects.MySphere.prototype = $extend(THREE.Object3D.prototype,{
 		while(_g < len) {
 			var i = _g++;
 			var vv = this._base[i];
-			var a = Math.sqrt(vv.x * vv.x + vv.y * vv.y + vv.z * vv.z);
+			var a = this._baseAmp[i];
 			var radX = -Math.atan2(vv.z,vv.x) + vv.y * Math.sin(this._count + vv.y / (500 * this._scale)) * this._nejireX;
 			var radY = Math.asin(vv.y / a);
 			var amp = (1 - this._sphere) * a + this._sphere;
@@ -1246,10 +1255,15 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 		this._pp.change(data);
 		var mat = 0;
 		if(data.colorType == 2 || data.colorType == 1) mat = 1; else mat = 0;
+		var rr = 0;
+		if(data.displaceType == 1) {
+			if(Math.random() < 0.5) if(Math.random() < 0.5) rr = Math.PI / 2; else rr = -Math.PI / 2;
+		}
 		var _g1 = 0;
 		var _g = this.faces.length;
 		while(_g1 < _g) {
 			var i = _g1++;
+			this.faces[i].rotateZ(rr);
 			this.faces[i].updateMaterial(mat);
 			this.faces[i].s = data.strength;
 		}
@@ -1440,7 +1454,9 @@ sound.DummyBars.__super__ = THREE.Object3D;
 sound.DummyBars.prototype = $extend(THREE.Object3D.prototype,{
 	init: function() {
 		this._lines = [];
+		this._lines2 = [];
 		var m = new THREE.LineBasicMaterial({ color : 16711680});
+		var m2 = new THREE.LineBasicMaterial({ color : 16777215});
 		var _g = 0;
 		while(_g < 64) {
 			var i = _g++;
@@ -1448,10 +1464,22 @@ sound.DummyBars.prototype = $extend(THREE.Object3D.prototype,{
 			g.vertices.push(new THREE.Vector3(0,0,0));
 			g.vertices.push(new THREE.Vector3(100,0,0));
 			var line = new THREE.Line(g,m);
-			line.position.y = i * 10;
-			line.position.z = 1400;
+			line.position.y = (i - 32.) * 3;
+			line.position.z = 0;
 			this.add(line);
 			this._lines.push(line);
+		}
+		var _g1 = 0;
+		while(_g1 < 64) {
+			var i1 = _g1++;
+			var g1 = new THREE.Geometry();
+			g1.vertices.push(new THREE.Vector3(0,0,0));
+			g1.vertices.push(new THREE.Vector3(100,0,0));
+			var line1 = new THREE.Line(g1,m2);
+			line1.position.y = (i1 - 32.) * 3 + 1;
+			line1.position.z = 0;
+			this.add(line1);
+			this._lines2.push(line1);
 		}
 	}
 	,update: function(audio) {
@@ -1461,12 +1489,13 @@ sound.DummyBars.prototype = $extend(THREE.Object3D.prototype,{
 			while(_g1 < _g) {
 				var i = _g1++;
 				this._lines[i].scale.set(audio.freqByteData[i] / 255 * 2,1,1);
+				this._lines2[i].scale.set(audio.subFreqByteData[i] / 255 * 2,1,1);
 			}
 		}
 	}
 });
 sound.MyAudio = function() {
-	this.globalVolume = 0.899;
+	this.globalVolume = 0.897;
 	this.isStart = false;
 	this.freqByteDataAryEase = [];
 	this._impulse = [];
@@ -1501,7 +1530,7 @@ sound.MyAudio.prototype = {
 		}
 		source.connect(this.analyser,0);
 		this.isStart = true;
-		common.Dat.gui.add(this,"globalVolume",0.1,3).step(0.1);
+		common.Dat.gui.add(this,"globalVolume",0.01,3.00).step(0.01);
 		common.Dat.gui.add(this,"setImpulse");
 		this.setImpulse();
 		this.update();
@@ -1733,6 +1762,7 @@ Three.LinePieces = 1;
 common.Config.canvasOffsetY = 0;
 common.Config.globalVol = 1.0;
 common.Config.particleSize = 3000;
+common.Config.bgLight = 0.5;
 common.Dat.UP = 38;
 common.Dat.DOWN = 40;
 common.Dat.LEFT = 37;
@@ -1776,6 +1806,7 @@ common.Dat.Z = 90;
 common.Dat.hoge = 0;
 common.Dat.bg = false;
 common.Dat._showing = true;
+common.Key.keydown = "keydown";
 common.Path.assets = "../../assets/";
 common.QueryGetter.NORMAL = 0;
 common.QueryGetter.SKIP = 1;

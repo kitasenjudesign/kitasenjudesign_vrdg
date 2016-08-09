@@ -1,19 +1,15 @@
 package objects ;
-import camera.ExCamera;
 import common.Dat;
-import js.Browser;
 import sound.MyAudio;
 import three.CubeCamera;
 import three.Geometry;
 import three.Mesh;
-import three.MeshBasicMaterial;
 import three.MeshDepthMaterial;
-import three.MeshPhongMaterial;
 import three.Object3D;
 import three.Vector3;
 import tween.easing.Cubic;
-import tween.easing.Power0;
 import tween.TweenMax;
+import tween.TweenMaxHaxe;
 /**
  * ...
  * @author nab
@@ -26,6 +22,7 @@ class MyFaceSingle extends Object3D
 	public var dae:Mesh;// Object3D;
 	//public var dae2:Mesh;
 	
+	private var _twn:TweenMaxHaxe;
 	private var _base:Array<Vector3>;
 	private var _count:Float = 0;
 	
@@ -145,11 +142,6 @@ class MyFaceSingle extends Object3D
 		g.verticesNeedUpdate = true;
 		_count += _speed;
 		
-		//dae.rotation.y += _vr;
-		//dae.position.y = 20 * Math.sin(_count * 0.81);
-		
-		//_vr *= 0.95;
-		
 		if (_audio!=null && _audio.isStart) {
 			_audio.update();
 			
@@ -251,6 +243,10 @@ class MyFaceSingle extends Object3D
 			vv.y = th - dy /100;
 		
 	}
+	
+	
+
+	
 	
 	/**
 	 * 

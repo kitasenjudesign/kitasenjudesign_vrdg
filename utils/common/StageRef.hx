@@ -22,6 +22,15 @@ class StageRef
 	}
 	
 
+	public static function showBorder():Void {
+		var dom:Element = Browser.document.getElementById(name);
+		dom.style.border = "solid 1px #cccccc";
+	}
+	public static function hideBorder():Void {
+		var dom:Element = Browser.document.getElementById(name);
+		dom.style.border = "solid 0px";
+	}
+	
 	public static function fadeIn():Void {
 		if(sheet == null){	
 			sheet = new FadeSheet(Browser.document.getElementById(name));
@@ -39,16 +48,12 @@ class StageRef
 	
 	public static function setCenter():Void {
 		
-		if (!Dat.bg) {
+		var dom:Element = Browser.document.getElementById(name);
 			
-			var dom:Element = Browser.document.getElementById(name);
 			var yy:Float = (Browser.window.innerHeight / 2 - StageRef.stageHeight / 2) + Config.canvasOffsetY;
 			dom.style.position = "absolute";
 			dom.style.zIndex = "1000";
 			dom.style.top = Math.round(yy) + "px";
-			
-		}
-				
 		
 	}
 	
@@ -59,7 +64,7 @@ class StageRef
 	static public function get_stageHeight():Int
 	{
 		if ( Dat.bg ) {
-			return Browser.window.innerHeight;
+			return Math.floor( Browser.window.innerWidth * 816 / 1920 );
 		}
 		
 		return Math.floor( Browser.window.innerWidth * 576 / 1920 );

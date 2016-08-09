@@ -13,6 +13,7 @@ class ExVector3 extends Vector3
 	public var sr:Float = 0;
 	public var pos:Float = 0;
 	public var rIndex:Int = 0;
+	public var connect:Bool = false;
 	/*
 	public var ox:Float = 0;
 	public var oy:Float = 0;

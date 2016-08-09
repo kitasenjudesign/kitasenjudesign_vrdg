@@ -71,7 +71,7 @@ class DeDeCuts
 		_currentCut.start();
 		
 		Key.board.addEventListener("keydown", _onKeyDown);
-		
+		Dat.gui.add(Boost, "isBoost").listen();
 	}
 	
 	/**
@@ -82,29 +82,33 @@ class DeDeCuts
 
 		Tracer.log("_onKeyDown");
 		
+		//boost
+		if (Std.parseInt(e.keyCode) == Dat.B) {
+			Boost.isBoost = !Boost.isBoost;
+		}
+		
 		//mode wo kaeru
 		if (Std.parseInt(e.keyCode) == Dat.C) {
-			
 			_cutIndex++;
 			_currentCut = _cuts[_cutIndex%_cuts.length];
 			_currentCut.start();
-			
 		}
-		
 		
 		if (Std.parseInt(e.keyCode) == Dat.RIGHT) {
 			_currentCut.next();
 		}
+		
+		if (Std.parseInt(e.keyCode) == Dat.R) {
+			_currentCut.setRotate();
+		}
+		
 		if (Std.parseInt(e.keyCode) == Dat.UP) {
 			_currentCut.countUp();
 		}
 		if (Std.parseInt(e.keyCode) == Dat.LEFT) {
 			//_currentCut.countDown();
 			_currentCut.setRandomLine();
-		}		
-		
-		
-		
+		}
 		
 		//_currentCut.onKeyDown( Std.parseInt(e.keyCode) );
 		

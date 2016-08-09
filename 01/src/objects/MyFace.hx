@@ -1,5 +1,7 @@
 package objects ;
 import sound.MyAudio;
+import tween.easing.Cubic;
+import tween.TweenMax;
 
 
 /**
@@ -14,13 +16,30 @@ class MyFace extends MyFaceSplitA
 	
 	public var baseY:Float = 0;
 	
-	
-	
 	public function new(idx:Int) 
 	{
 		super(idx);
 	}
 
+	
+	/**
+	 * rotateZ
+	 * @param	rotZ
+	 */
+	public function rotateZ(rotZ:Float):Void {
+		
+		if ( _twn != null ) {
+			_twn.kill();
+		}
+		
+		_twn = TweenMax.to(this.rotation, 0.5, {
+			ease:Cubic.easeOut,
+			z:rotZ
+		});
+		
+		
+	}	
+	
 	public function update(audio:MyAudio):Void {
 		
 		switch( _mode ) {

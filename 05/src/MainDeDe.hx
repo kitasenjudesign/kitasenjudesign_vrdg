@@ -8,6 +8,7 @@ import dede.DeDeCuts;
 import dede.DeDeLines;
 import dede.VrdgLines;
 import js.Browser;
+import sound.DummyBars;
 import sound.MyAudio;
 import three.Scene;
 import three.WebGLRenderer;
@@ -34,6 +35,7 @@ class MainDeDe
 	private var _cuts		:DeDeCuts;
 	private var _audio		:MyAudio;
 	private var _bg:BlinkPlane;
+	private var _dummy:DummyBars;
 	
 	
 	public function new() {
@@ -71,6 +73,9 @@ class MainDeDe
 		_bg.scale.set(2, 2, 2);
 		//_scene.add(_bg);
 		
+		_dummy = new DummyBars();
+		_dummy.init();
+		_scene.add(_dummy);
 		//
 		StageRef.setCenter();
 		Browser.document.addEventListener("keydown", _onKeyDown);
@@ -130,6 +135,9 @@ class MainDeDe
 	private function _run():Void
 	{
 		_audio.update();
+	
+		_dummy.update(_audio);
+		_bg.setLight(_audio);
 		
 		MyColor.update();
 		

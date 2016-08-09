@@ -98,7 +98,6 @@ class Main3d
 		_scene.add( _cubeCamera );
 		//_scene.overrideMaterial = new MeshDepthMaterial();
 		
-		
 		_camera.radY = 0;
 
 		dae = new MyDAELoader();
@@ -126,7 +125,6 @@ class Main3d
 	
 	private function _onResize(e):Void
 	{
-		
 		W = StageRef.stageWidth;
 		H = StageRef.stageHeight;
 		_renderer.domElement.width = W;// + "px";
@@ -135,7 +133,6 @@ class Main3d
 		_camera.aspect = W / H;// , 10, 50000);
 		_camera.updateProjectionMatrix();
 		_pp.resize(W, H);
-		
 	}
 	
 	/**

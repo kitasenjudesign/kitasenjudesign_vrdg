@@ -136,7 +136,7 @@ class DeDeDigit extends Object3D
 				remove(outline);
 			}
 			outline = BeyondCodeGeo.getMesh(str,_font);
-			outline.position.z = 0;// -1;
+			outline.position.z = 1;
 			
 			add(outline);
 		//}

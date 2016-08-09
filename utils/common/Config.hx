@@ -17,6 +17,7 @@ class Config
 	public static var canvasOffsetY:Float = 0;
 	public static var globalVol:Float = 1.0;
 	public static var particleSize:Float = 3000;
+	public static var bgLight:Float = 0.5;
 	
 	public function new() 
 	{
@@ -48,6 +49,7 @@ class Config
 		canvasOffsetY = data.canvasOffsetY;
 		globalVol = data.globalVol;
 		particleSize = data.particleSize;
+		bgLight = data.bgLight;
 		
 		if ( _callback != null ) {
 			_callback();

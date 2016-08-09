@@ -108,7 +108,7 @@ class Dat
 		
 		Key.init();
 		Key.board.addEventListener("keydown" , _onKeyDown);
-		show();
+		show(false);
 		
 		if (_callback != null) {
 			_callback();
@@ -128,7 +128,7 @@ class Dat
 				if ( gui.domElement.style.display == "block"){
 					hide();
 				}else{
-					show();
+					show(true);
 				}
 			//case Dat.F :
 				//untyped Browser.document.body.webkitRequestFullscreen();
@@ -152,6 +152,7 @@ class Dat
 	
 	//typofish
 	private static function _goURL1():Void {
+		
 		_goURL( "../../04/bin/" );
 	}
 	
@@ -184,16 +185,20 @@ class Dat
 	
 	private static function _goURL(url:String):Void {
 		
-		Browser.window.location.href = url;
+		Tracer.log("goURL " + url );
+		Browser.window.location.href = url + Browser.location.hash;
+		
 		
 	}
 	
 	
 
-	public static function show():Void{
+	public static function show(isBorder:Bool=false):Void {
+		if(isBorder)StageRef.showBorder();
 		gui.domElement.style.display = "block";
 	}
-	public static function hide():Void{
+	public static function hide():Void {
+		StageRef.hideBorder();
 		gui.domElement.style.display = "none";
 	}
 	

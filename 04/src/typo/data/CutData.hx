@@ -233,7 +233,7 @@ class CutData
 				camPosMode = ExCamera.POS_NORMAL;//target ga zero
 				_gene = true;
 			case 2:
-				camPosMode = ExCamera.POS_FOLLOW;//camera ga zero
+				camPosMode = ExCamera.POS_NORMAL;// ExCamera.POS_FOLLOW;//camera ga zero
 				_gene = true;
 				
 		}

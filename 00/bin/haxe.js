@@ -89,6 +89,7 @@ Main3d.prototype = {
 		common.Dat.init($bind(this,this._onInit));
 	}
 	,_onInit: function() {
+		if(common.Dat.bg) return;
 		this._audio = new sound.MyAudio();
 		this._audio.init($bind(this,this._onAudio));
 	}
@@ -423,7 +424,7 @@ common.Dat._goURL6 = function() {
 	common.Dat._goURL("../../01/bin/");
 };
 common.Dat._goURL = function(url) {
-	window.location.href = url;
+	window.location.href = url + window.location.hash;
 };
 common.Dat.show = function() {
 	common.Dat.gui.domElement.style.display = "block";
