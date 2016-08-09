@@ -370,7 +370,7 @@ common.Dat._onInit = function() {
 	common.Dat.gui.domElement.style.right = "0px";
 	common.Dat.gui.domElement.style.top = "0px";
 	common.Dat.gui.domElement.style.opacity = 0.7;
-	common.Dat.gui.domElement.style.zIndex = 999999;
+	common.Dat.gui.domElement.style.zIndex = 10;
 	common.Key.init();
 	common.Key.board.addEventListener("keydown",common.Dat._onKeyDown);
 	common.Dat.show();
@@ -518,6 +518,7 @@ common.StageRef.setCenter = function() {
 		var dom = window.document.getElementById("webgl");
 		var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
 		dom.style.position = "absolute";
+		dom.style.zIndex = "1000";
 		dom.style.top = Math.round(yy) + "px";
 	}
 };
@@ -1938,7 +1939,7 @@ objects.shaders.CurlNoise = function() {
 };
 var sound = {};
 sound.MyAudio = function() {
-	this.globalVolume = 0.899;
+	this.globalVolume = 0.897;
 	this.isStart = false;
 	this.freqByteDataAryEase = [];
 	this._impulse = [];
@@ -1973,7 +1974,7 @@ sound.MyAudio.prototype = {
 		}
 		source.connect(this.analyser,0);
 		this.isStart = true;
-		common.Dat.gui.add(this,"globalVolume",0.1,3).step(0.1);
+		common.Dat.gui.add(this,"globalVolume",0.01,3.00).step(0.01);
 		common.Dat.gui.add(this,"setImpulse");
 		this.setImpulse();
 		this.update();
@@ -2248,6 +2249,7 @@ common.Dat.Z = 90;
 common.Dat.hoge = 0;
 common.Dat.bg = false;
 common.Dat._showing = true;
+common.Key.keydown = "keydown";
 common.Path.assets = "../../assets/";
 common.QueryGetter.NORMAL = 0;
 common.QueryGetter.SKIP = 1;
