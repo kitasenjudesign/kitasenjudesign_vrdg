@@ -1101,6 +1101,7 @@ objects.MyFace.prototype = $extend(objects.MyFaceSplitA.prototype,{
 	}
 });
 objects.MySphere = function() {
+	this._texIndex = 0;
 	this.power = 1;
 	this._yokoRatio = 0;
 	this._tateScaleXZ = 1;
@@ -1116,8 +1117,8 @@ objects.MySphere = function() {
 	this._count = 0;
 	THREE.Object3D.call(this);
 	if(!common.Dat.bg) return;
-	var texture = THREE.ImageUtils.loadTexture("bg/twilight.png");
-	this._textures = [texture,THREE.ImageUtils.loadTexture("bg/twilight.png"),THREE.ImageUtils.loadTexture("bg/01.jpg"),THREE.ImageUtils.loadTexture("bg/02.jpg"),THREE.ImageUtils.loadTexture("img/IMG_5796B.jpg"),THREE.ImageUtils.loadTexture("img/IMG_5796.jpg"),THREE.ImageUtils.loadTexture("img/a.jpg"),THREE.ImageUtils.loadTexture("img/b.jpg"),THREE.ImageUtils.loadTexture("img/hoge.jpg"),THREE.ImageUtils.loadTexture("img/fuga.jpg"),THREE.ImageUtils.loadTexture("bg/white.png")];
+	var texture = THREE.ImageUtils.loadTexture("../../assets/" + "bg/m01.jpg");
+	this._textures = [texture,THREE.ImageUtils.loadTexture("../../assets/" + "bg/m02.jpg"),THREE.ImageUtils.loadTexture("../../assets/" + "bg/00.jpg"),THREE.ImageUtils.loadTexture("../../assets/" + "bg/01.jpg"),THREE.ImageUtils.loadTexture("../../assets/" + "bg/02.jpg"),THREE.ImageUtils.loadTexture("../../assets/" + "bg/03.jpg")];
 	this.mate = new THREE.MeshBasicMaterial({ map : texture});
 	this.mate.color.setRGB(common.Config.bgLight,common.Config.bgLight,common.Config.bgLight);
 	var g = new THREE.SphereGeometry(1000,60,30);
@@ -1143,15 +1144,8 @@ objects.MySphere.__super__ = THREE.Object3D;
 objects.MySphere.prototype = $extend(THREE.Object3D.prototype,{
 	changeBg: function() {
 		if(!common.Dat.bg) return false;
-		var idx = Math.floor(Math.random() * (this._textures.length - 1));
-		if(Math.random() < 0.05) {
-			this.mate.map = this._textures[this._textures.length - 1];
-			this.mate.wireframe = true;
-			return true;
-		} else {
-			this.mate.wireframe = false;
-			this.mate.map = this._textures[idx];
-		}
+		this.mate.map = this._textures[this._texIndex % this._textures.length];
+		this._texIndex++;
 		return false;
 	}
 	,update: function(audio) {

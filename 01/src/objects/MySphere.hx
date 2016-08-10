@@ -1,6 +1,7 @@
 package objects;
 import common.Config;
 import common.Dat;
+import common.Path;
 import sound.MyAudio;
 import three.Geometry;
 import three.ImageUtils;
@@ -41,6 +42,8 @@ class MySphere extends Object3D
 	private var _baseAmp:Array<Float>;
 	public var power:Float = 1;
 
+	private var _texIndex:Int = 0;
+	
 	
 	public function new() 
 	{
@@ -49,39 +52,15 @@ class MySphere extends Object3D
 	
 		if (!Dat.bg) return;
 		
-		var texture:Texture = ImageUtils.loadTexture( 'bg/twilight.png' );
+		var texture:Texture = ImageUtils.loadTexture( Path.assets + 'bg/m01.jpg' );
 
 		_textures = [
 			texture,
-			ImageUtils.loadTexture( 'bg/twilight.png' ),
-			ImageUtils.loadTexture( 'bg/01.jpg' ),
-			ImageUtils.loadTexture( 'bg/02.jpg' ),
-			/*
-			ImageUtils.loadTexture( 'bg/R0010047.jpg' ),
-			ImageUtils.loadTexture( 'bg/R0010048.jpg' ),
-			ImageUtils.loadTexture( 'bg/R0010051.jpg' ),
-			ImageUtils.loadTexture( 'bg/R0010053.jpg' ),
-			ImageUtils.loadTexture( 'bg/R0010053.jpg' ),
-			ImageUtils.loadTexture( 'bg/R0010055.jpg' ),
-			ImageUtils.loadTexture( 'bg/R0010057.jpg' ),
-			ImageUtils.loadTexture( 'bg/R0010059.jpg' ),
-			ImageUtils.loadTexture( 'bg/R0010061.jpg' ),
-			ImageUtils.loadTexture( 'bg/R0010062.jpg' ),
-			ImageUtils.loadTexture( 'bg/R0010063.jpg' ),
-			ImageUtils.loadTexture( 'bg/R0010065.jpg' ),
-			ImageUtils.loadTexture( 'bg/R0010066.jpg' ),
-			ImageUtils.loadTexture( 'bg/R0010068.jpg' ),
-			ImageUtils.loadTexture( 'bg/R0010069.jpg' ),
-			*/
-			ImageUtils.loadTexture( 'img/IMG_5796B.jpg' ),
-			ImageUtils.loadTexture( 'img/IMG_5796.jpg' ),
-			
-			ImageUtils.loadTexture( 'img/a.jpg' ),
-			ImageUtils.loadTexture( 'img/b.jpg' ),
-			ImageUtils.loadTexture( 'img/hoge.jpg' ),
-			ImageUtils.loadTexture( 'img/fuga.jpg' ),
-			ImageUtils.loadTexture( 'bg/white.png' )
-			
+			ImageUtils.loadTexture( Path.assets + 'bg/m02.jpg' ),
+			ImageUtils.loadTexture( Path.assets + 'bg/00.jpg' ),
+			ImageUtils.loadTexture( Path.assets + 'bg/01.jpg' ),
+			ImageUtils.loadTexture( Path.assets + 'bg/02.jpg' ),			
+			ImageUtils.loadTexture( Path.assets + 'bg/03.jpg' )
 		];
 		
 		
@@ -117,7 +96,10 @@ class MySphere extends Object3D
 	
 		if (!Dat.bg) return false;
 		
+		mate.map = _textures[_texIndex%_textures.length];
+		_texIndex++;
 		
+		/*
 		var idx:Int = Math.floor( Math.random() * (_textures.length - 1));
 		if ( Math.random() < 0.05 ) {
 
@@ -128,8 +110,11 @@ class MySphere extends Object3D
 			mate.wireframe = false;
 			mate.map = _textures[ idx ];
 		}		
+		*/
+		
 		return false;
 	}
+	
 	
 	
 	public function update(audio:MyAudio):Void {
