@@ -681,16 +681,9 @@ effect.pass.DisplacementPass = function() {
 	this._fragment = "\r\n\t\t\t\t\tuniform sampler2D tDiffuse;\r\n\t\t\t\t\tuniform sampler2D disTexture;\r\n\t\t\t\t\tuniform sampler2D colTexture;\r\n\t\t\t\t\tuniform float strengthX;\r\n\t\t\t\t\tuniform float strengthY;\r\n\t\t\t\t\tuniform float counter;\r\n\t\t\t\t\tuniform float isDisplace;\r\n\t\t\t\t\tuniform float isColor;\r\n\t\t\t\t\tvarying vec2 vUv;\r\n\t\t\t\t\t\r\n\t\t\t\t\tvec4 getColor(vec4 texel) {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tvec4 out1 = vec4(0.0);\r\n\t\t\t\t\t\tvec2 pp = vec2( 0.5, fract( texel.x + counter ) );\r\n\t\t\t\t\t\t\tif ( pp.y < 0.5) {\r\n\t\t\t\t\t\t\t\tpp.y = pp.y * 2.0;\r\n\t\t\t\t\t\t\t\tout1 = texture2D( colTexture, pp );\t\t\t\t\t\t\r\n\t\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\t\tpp.y = (1.0 - (pp.y - 0.5) * 2.0);\t\t\t\t\r\n\t\t\t\t\t\t\t\tout1 = texture2D( colTexture, pp );\r\n\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\tif ( texel.x == 0.0 ) {\r\n\t\t\t\t\t\t\t\tout1 = vec4(0.0, 0.0, 0.0, 1.0);\r\n\t\t\t\t\t\t\t}\t\t\r\n\t\t\t\t\t\t\treturn out1;\r\n\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\tvoid main() {\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//dispace\r\n\t\t\t\t\t\tvec4 texel = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tif(isDisplace == 1.0){\r\n\t\t\t\t\t\t\tvec4 col = texture2D( disTexture, vUv);\r\n\t\t\t\t\t\t\tfloat f1 = strengthX * sin(counter*0.17);// pow(counter, 2.0 + 3.0 * col.x);//sin(counter * 3.9) * 0.23;\r\n\t\t\t\t\t\t\tfloat f2 = strengthY * sin(counter*0.22);// pow(counter, 2.0 + 3.0 * col.x) * 0.001;// pow(counter, 2.0 + 3.0 * col.y);//cos(counter * 3.7) * 0.23;\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\tvec2 axis = vec2( \r\n\t\t\t\t\t\t\t\tvUv.x + (col.y-0.5)*f1, vUv.y + (col.z-0.5)*f2\r\n\t\t\t\t\t\t\t);\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\ttexel = texture2D( tDiffuse, axis );\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t\ttexel = texture2D( tDiffuse, vUv );\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//vec4 texel = texture2D( colTexture, axis );\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//vec3 luma = vec3( 0.299, 0.587, 0.114 );\r\n\t\t\t\t\t\t//float v = dot( texel.xyz, luma );//akarusa\r\n\t\t\t\t\t\t//vec2 axis = vec2( 0.5,v );\t\t\t\t\t\t\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t//position\r\n\t\t\t\t\t\tvec4 out1 = vec4(0.0);\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tif( isColor == 1.0){\r\n\t\t\t\t\t\t\tout1 = getColor(texel);\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\tout1 = texel;\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\r\n\t\t\t\t\t\r\n\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\tif ( texel.x == 0.0 || mod( floor( texel.x * 1000.0 + counter ),2.0) == 0.0 ) {\r\n\t\t\t\t\t\t\ttexel.x = 0.0;\r\n\t\t\t\t\t\t\ttexel.y = 0.0;\r\n\t\t\t\t\t\t\ttexel.z = 0.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}else {\r\n\t\t\t\t\t\t\ttexel.x = out1.x;//1.0;\r\n\t\t\t\t\t\t\ttexel.y = out1.y;//1.0;\r\n\t\t\t\t\t\t\ttexel.z = out1.z;//1.0;\t\t\t\t\t\t\t\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t}*/\r\n\t\t\t\t\t\t/*\r\n\t\t\t\t\t\t\ttexel.x = out1.x;//1.0;\r\n\t\t\t\t\t\t\ttexel.y = out1.y;//1.0;\r\n\t\t\t\t\t\t\ttexel.z = out1.z;//1.0;\t\t\t\t\t\t\t\r\n\t\t\t\t\t\t*/\r\n\t\t\t\t\t\t\r\n\t\t\t\t\t\tgl_FragColor = out1;\r\n\t\t\t\t\t\t//gl_FragColor =  out1;// texel;\r\n\t\t\t\t\t}\r\n\t";
 	this._vertex = "\r\n\t\tvarying vec2 vUv;\r\n\t\tvoid main() {\r\n\t\t\tvUv = uv;\r\n\t\t\tgl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\r\n\t\t}\t\t\r\n\t";
 	this._textures = [];
-	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace0.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace1.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace2.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace3.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace4.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace5.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace6.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace7.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace8.png"));
-	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace9.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displaceV.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displaceA.png"));
+	this._textures.push(THREE.ImageUtils.loadTexture("../../assets/" + "displace/displace.png"));
 	this._colors = [THREE.ImageUtils.loadTexture("../../assets/" + "/grade/grade.png"),THREE.ImageUtils.loadTexture("../../assets/" + "/grade/grade2.png"),THREE.ImageUtils.loadTexture("../../assets/" + "/grade/grade3.png"),THREE.ImageUtils.loadTexture("../../assets/" + "/grade/grade4.png")];
 	THREE.ShaderPass.call(this,{ uniforms : { tDiffuse : { type : "t", value : null}, isDisplace : { type : "f", value : 1}, isColor : { type : "f", value : 1}, disTexture : { type : "t", value : this._textures[0]}, colTexture : { type : "t", value : this._colors[3]}, strengthX : { type : "f", value : 0}, strengthY : { type : "f", value : 0}, counter : { type : "f", value : 0}}, vertexShader : this._vertex, fragmentShader : this._fragment});
 };
@@ -1204,6 +1197,7 @@ objects.MySphere.prototype = $extend(THREE.Object3D.prototype,{
 	}
 });
 objects.MyWorld = function() {
+	this._isWire = false;
 	this._tgtBorder = 0;
 	this._counter = 0;
 	this.faces = [];
@@ -1232,9 +1226,6 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 			this.faces.push(face);
 		}
 		common.Key.board.addEventListener("keydown",$bind(this,this._KeyDownFunc));
-		common.Dat.gui.add(this,"changeMode1");
-		common.Dat.gui.add(this,"changeMode2");
-		common.Dat.gui.add(this,"changeMode3");
 		common.Dat.gui.add(this,"effectName").listen();
 		this.changeMode1();
 		this._nextEffect();
@@ -1260,6 +1251,10 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 		case 38:
 			this._showColor();
 			break;
+		case 76:
+			this._isWire = !this._isWire;
+			this._showColor();
+			break;
 		case 40:
 			this._hideColor();
 			break;
@@ -1267,7 +1262,7 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 			this._nextEffect();
 			break;
 		case 37:
-			this._prevEffect();
+			this._resetEffect();
 			break;
 		}
 	}
@@ -1279,7 +1274,7 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 		while(_g1 < _g) {
 			var i = _g1++;
 			this.faces[i].rotateZ(rr);
-			this.faces[i].updateMaterial(1,true);
+			this.faces[i].updateMaterial(1,this._isWire);
 			this.faces[i].s = data.strength;
 		}
 		this.effectName = data.name;
@@ -1318,10 +1313,19 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 			this.faces[i].s = data.strength;
 		}
 	}
-	,_prevEffect: function() {
-		this.changeMode1();
-		this._dae.changeMap(this.sphere.changeBg());
-		this.sphere.power = 0.7 + 0.3 * Math.random();
+	,_resetEffect: function() {
+		var data = objects.data.EffectData.EFFECT_NORMAL;
+		var rr = 0;
+		var _g1 = 0;
+		var _g = this.faces.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.faces[i].rotateZ(rr);
+			this.faces[i].updateMaterial(1,this._isWire);
+			this.faces[i].s = data.strength;
+		}
+		this.effectName = data.name;
+		this._pp.changeDisplace(data);
 		this._impulese();
 	}
 	,_nextSingle: function() {

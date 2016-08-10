@@ -78,9 +78,9 @@ class MyWorld extends Object3D
 		Key.board.addEventListener("keydown" , _KeyDownFunc);
 		//e.keyCode
 
-		Dat.gui.add(this, "changeMode1");
-		Dat.gui.add(this, "changeMode2");
-		Dat.gui.add(this, "changeMode3");
+		//Dat.gui.add(this, "changeMode1");
+		//Dat.gui.add(this, "changeMode2");
+		//Dat.gui.add(this, "changeMode3");
 		
 		Dat.gui.add(this, "effectName").listen();
 		
@@ -111,6 +111,11 @@ class MyWorld extends Object3D
 				
 			case Dat.UP:
 				_showColor();
+				
+			case Dat.L://line
+				_isWire = !_isWire;
+				_showColor();
+				
 			case Dat.DOWN:
 				_hideColor();
 				
@@ -118,7 +123,7 @@ class MyWorld extends Object3D
 				_nextEffect();///////////////////////////////
 				
 			case Dat.LEFT:	
-				_prevEffect();///////////////////////////////
+				_resetEffect();///////////////////////////////
 
 		}
 		
@@ -132,7 +137,7 @@ class MyWorld extends Object3D
 		var rr:Float = 0;
 		for ( i in 0...faces.length) {
 			faces[i].rotateZ( rr );
-			faces[i].updateMaterial(MyFace.MAT_DEPTH,true);
+			faces[i].updateMaterial(MyFace.MAT_DEPTH,_isWire);
 			faces[i].s = data.strength;
 		}
 		
@@ -196,12 +201,22 @@ class MyWorld extends Object3D
 		
 	}
 	
-	public function _prevEffect():Void {
+	public function _resetEffect():Void {
 		
-		changeMode1();
-		_dae.changeMap( sphere.changeBg() );
-		sphere.power = 0.7 + 0.3 * Math.random();
-		_impulese();				
+		var data:EffectData = EffectData.EFFECT_NORMAL;
+		var rr:Float = 0;
+		for ( i in 0...faces.length) {
+			faces[i].rotateZ( rr );
+			faces[i].updateMaterial(MyFace.MAT_DEPTH,_isWire);
+			faces[i].s = data.strength;
+		}
+		
+		//Browser.window.alert(data.name);
+		effectName = data.name;
+		_pp.changeDisplace(data);		
+		
+		_impulese();	
+		
 		
 	}
 	
@@ -268,6 +283,7 @@ class MyWorld extends Object3D
 	private var _audio:MyAudio;
 	var _camera:ExCamera;
 	var _pp:PostProcessing2;
+	var _isWire:Bool=false;
 	
 	
 	/**
