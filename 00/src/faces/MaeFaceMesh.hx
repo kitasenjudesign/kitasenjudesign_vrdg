@@ -57,9 +57,9 @@ class MaeFaceMesh extends Mesh
 		//this.visible = false;
 	}
 	
-	public function setColor(b:Bool):Void
+	public function setColor(b:Bool,typ:Int=0):Void
 	{
-		_material.setColor(b);	
+		_material.setColor(b, typ);
 	}
 	
 	public function setWireframe(b:Bool):Void

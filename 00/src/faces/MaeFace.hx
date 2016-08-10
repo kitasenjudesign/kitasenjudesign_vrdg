@@ -20,6 +20,7 @@ class MaeFace extends Object3D
 	public static inline var MAT_COLOR:Int = 1;	
 	public static inline var MAT_WIRE_WHITE:Int = 2;
 	public static inline var MAT_WIRE_COLOR:Int = 3;
+	public static inline var MAT_COLOR_RED:Int = 4;	
 	
 	
 	//private var _geometry	:Geometry;
@@ -150,7 +151,7 @@ class MaeFace extends Object3D
 				
 			case MAT_COLOR:
 				_face.setWireframe(false);
-				_face.setColor(true);
+				_face.setColor(true,MaeShaderMaterial.MAT_COLOR_RANDOM);
 				
 			case MAT_WIRE_WHITE:
 				_face.setWireframe(true);
@@ -158,7 +159,13 @@ class MaeFace extends Object3D
 				
 			case MAT_WIRE_COLOR:
 				_face.setWireframe(true);
-				_face.setColor(true);			
+				_face.setColor(true,MaeShaderMaterial.MAT_COLOR_RANDOM);	
+				
+			case MAT_COLOR_RED:
+				_face.setWireframe(false);
+				_face.setColor(true,MaeShaderMaterial.MAT_COLOR_RED);
+				
+				
 		}
 		
 		//_material

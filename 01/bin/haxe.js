@@ -1286,7 +1286,7 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 		this._pp.changeColor(data);
 	}
 	,_hideColor: function() {
-		var data = objects.data.EffectData.EFFECT_COLOR_WIRE;
+		var data = objects.data.EffectData.EFFECT_NORMAL;
 		var rr = 0;
 		var _g1 = 0;
 		var _g = this.faces.length;

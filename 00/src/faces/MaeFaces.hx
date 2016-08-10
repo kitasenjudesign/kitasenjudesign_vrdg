@@ -27,6 +27,7 @@ class MaeFaces extends Object3D
 	private var _lines:MaeLines;
 	private var _formation:MaeFormation;
 	private var _main:Main3d;
+	private var _matType:Int =0;
 	
 	
 	public function new() 
@@ -120,9 +121,12 @@ class MaeFaces extends Object3D
 		var mats:Array<Int> = [
 			MaeFace.MAT_COLOR,
 			MaeFace.MAT_WIRE_COLOR,
-			MaeFace.MAT_WIRE_WHITE
+			MaeFace.MAT_WIRE_WHITE,
+			MaeFace.MAT_COLOR_RED
 		];
-		var type:Int = mats[Math.floor(mats.length * Math.random())];
+		var type:Int = mats[_matType % mats.length];
+		_matType++;
+		
 		for (i in 0..._faces.length) {
 			_faces[i].setMaterial( type );
 		}

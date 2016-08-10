@@ -104,12 +104,10 @@ class MyWorld extends Object3D
 				_impulese();
 				
 			case Dat.E:
-				
 				changeMode3();		
 				sphere.power = 0.4 + 0.2 * Math.random();
 				sphere.changeBg();
 				_impulese();
-							
 				
 			case Dat.UP:
 				_showColor();
@@ -147,7 +145,7 @@ class MyWorld extends Object3D
 	
 	public function _hideColor():Void {
 		
-		var data:EffectData = EffectData.EFFECT_COLOR_WIRE;
+		var data:EffectData = EffectData.EFFECT_NORMAL;
 		var rr:Float = 0;
 		for ( i in 0...faces.length) {
 			faces[i].rotateZ( rr );

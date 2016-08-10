@@ -231,10 +231,13 @@ void main()
 	";
 	
 	//akarusa wo setsuru
-	
+	public static var MAT_COLOR_RANDOM:Int = 0;
+	public static var MAT_COLOR_RED:Int = 1;
 	
 	private static var _texture1:Texture;
 	private static var _colorTextures:Array<Texture>;
+	private static var _colorTexturesRed:Array<Texture>;
+	
 	private var _indecies:Array<Int>;
 	private var _freq:Array<Float>;
 	private var _currentTexture:Texture;
@@ -283,6 +286,8 @@ void main()
 		
 	}
 	
+	
+	
 	public function changeTexture():Void {
 		
 		if ( _colorTextures == null ) {
@@ -294,9 +299,23 @@ void main()
 				ImageUtils.loadTexture(Path.assets + "grade/grade8.png")
 			];
 		}
-		_currentTexture = _colorTextures[Math.floor(_colorTextures.length*Math.random())];
+		_currentTexture = _colorTextures[Math.floor(_colorTextures.length * Math.random())];
+
+	}
+
+	public function changeTextureRed():Void {
+		
+		if ( _colorTexturesRed == null ) {
+			_colorTexturesRed = [
+				ImageUtils.loadTexture(Path.assets + "grade/grade_red1.jpg"),
+				ImageUtils.loadTexture(Path.assets + "grade/grade_red2.jpg"),
+				ImageUtils.loadTexture(Path.assets + "grade/grade_red3.jpg")
+			];
+		}
+		_currentTexture = _colorTexturesRed[Math.floor(_colorTexturesRed.length*Math.random())];
 		
 	}
+	
 	
 	private function _getIndex():Array<Int>
 	{
@@ -307,10 +326,17 @@ void main()
 		return ary;
 	}
 	
-	public function setColor(b:Bool):Void {
+	public function setColor(b:Bool,texType:Int):Void {
 		
 		if (b) {
 			uniforms._isColor.value = 1;//colorful
+			if (texType == MAT_COLOR_RANDOM) {
+				changeTexture();
+			}else {
+				changeTextureRed();				
+			}
+			uniforms.colTexture.value = _currentTexture;
+
 		}else {
 			uniforms._isColor.value = 0;//normal
 		}

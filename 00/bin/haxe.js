@@ -830,7 +830,7 @@ faces.MaeFace.prototype = $extend(THREE.Object3D.prototype,{
 			break;
 		case 1:
 			this._face.setWireframe(false);
-			this._face.setColor(true);
+			this._face.setColor(true,faces.MaeShaderMaterial.MAT_COLOR_RANDOM);
 			break;
 		case 2:
 			this._face.setWireframe(true);
@@ -838,7 +838,11 @@ faces.MaeFace.prototype = $extend(THREE.Object3D.prototype,{
 			break;
 		case 3:
 			this._face.setWireframe(true);
-			this._face.setColor(true);
+			this._face.setColor(true,faces.MaeShaderMaterial.MAT_COLOR_RANDOM);
+			break;
+		case 4:
+			this._face.setWireframe(false);
+			this._face.setColor(true,faces.MaeShaderMaterial.MAT_COLOR_RED);
 			break;
 		}
 	}
@@ -889,8 +893,9 @@ faces.MaeFaceMesh.getRandomRot = function() {
 };
 faces.MaeFaceMesh.__super__ = THREE.Mesh;
 faces.MaeFaceMesh.prototype = $extend(THREE.Mesh.prototype,{
-	setColor: function(b) {
-		this._material.setColor(b);
+	setColor: function(b,typ) {
+		if(typ == null) typ = 0;
+		this._material.setColor(b,typ);
 	}
 	,setWireframe: function(b) {
 		this._material.setWireframe(b);
@@ -961,6 +966,7 @@ faces.MaeFaceMesh.prototype = $extend(THREE.Mesh.prototype,{
 	}
 });
 faces.MaeFaces = function() {
+	this._matType = 0;
 	this._faces = [];
 	this._offsetY = 0;
 	this._currentForm = 0;
@@ -1017,8 +1023,9 @@ faces.MaeFaces.prototype = $extend(THREE.Object3D.prototype,{
 		}
 	}
 	,_setMaterial: function() {
-		var mats = [1,3,2];
-		var type = mats[Math.floor(mats.length * Math.random())];
+		var mats = [1,3,2,4];
+		var type = mats[this._matType % mats.length];
+		this._matType++;
 		var _g1 = 0;
 		var _g = this._faces.length;
 		while(_g1 < _g) {
@@ -1267,6 +1274,10 @@ faces.MaeShaderMaterial.prototype = $extend(THREE.ShaderMaterial.prototype,{
 		if(faces.MaeShaderMaterial._colorTextures == null) faces.MaeShaderMaterial._colorTextures = [THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade.png"),THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade2.png"),THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade3.png"),THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade4.png"),THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade8.png")];
 		this._currentTexture = faces.MaeShaderMaterial._colorTextures[Math.floor(faces.MaeShaderMaterial._colorTextures.length * Math.random())];
 	}
+	,changeTextureRed: function() {
+		if(faces.MaeShaderMaterial._colorTexturesRed == null) faces.MaeShaderMaterial._colorTexturesRed = [THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade_red1.jpg"),THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade_red2.jpg"),THREE.ImageUtils.loadTexture("../../assets/" + "grade/grade_red3.jpg")];
+		this._currentTexture = faces.MaeShaderMaterial._colorTexturesRed[Math.floor(faces.MaeShaderMaterial._colorTexturesRed.length * Math.random())];
+	}
 	,_getIndex: function() {
 		var ary = [];
 		var _g = 0;
@@ -1276,8 +1287,12 @@ faces.MaeShaderMaterial.prototype = $extend(THREE.ShaderMaterial.prototype,{
 		}
 		return ary;
 	}
-	,setColor: function(b) {
-		if(b) this.uniforms._isColor.value = 1; else this.uniforms._isColor.value = 0;
+	,setColor: function(b,texType) {
+		if(b) {
+			this.uniforms._isColor.value = 1;
+			if(texType == faces.MaeShaderMaterial.MAT_COLOR_RANDOM) this.changeTexture(); else this.changeTextureRed();
+			this.uniforms.colTexture.value = this._currentTexture;
+		} else this.uniforms._isColor.value = 0;
 	}
 	,setWireframe: function(b) {
 		if(b) {
@@ -2326,12 +2341,15 @@ faces.MaeFace.MAT_NORMAL = 0;
 faces.MaeFace.MAT_COLOR = 1;
 faces.MaeFace.MAT_WIRE_WHITE = 2;
 faces.MaeFace.MAT_WIRE_COLOR = 3;
+faces.MaeFace.MAT_COLOR_RED = 4;
 faces.MaeFaceMesh.ROT_MODE_X = 0;
 faces.MaeFaceMesh.ROT_MODE_X2 = 1;
 faces.MaeFaceMesh.ROT_MODE_XYZ = 2;
 faces.MaeFaceMesh.ROT_MODE_NNM = 3;
 faces.MaeFaces.MAX = 150;
 faces.MaePlate._index = 0;
+faces.MaeShaderMaterial.MAT_COLOR_RANDOM = 0;
+faces.MaeShaderMaterial.MAT_COLOR_RED = 1;
 faces.data.MaeFormation.FORM_H1 = 0;
 faces.data.MaeFormation.FORM_H3 = 1;
 faces.data.MaeFormation.FORM_VP = 2;
