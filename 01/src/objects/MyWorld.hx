@@ -83,11 +83,27 @@ class MyWorld extends Object3D
 		//Dat.gui.add(this, "changeMode3");
 		
 		Dat.gui.add(this, "effectName").listen();
+		Dat.gui.add(this, "_changeIndex");
+		Dat.gui.add(this, "_idx").listen();
+		
 		
 		changeMode1();
 		_nextEffect();
 		
 	}
+	
+	private var _idx:Int = 0;
+	private function _changeIndex():Void {
+		
+		for (i in 0...faces.length) {
+			
+			faces[i].changeIndex(_idx);
+			
+		}
+		_idx++;
+		
+	}
+	
 	
 	private function _KeyDownFunc(e):Void 
 	{

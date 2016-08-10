@@ -43,15 +43,27 @@ class MyFaceSingle extends Object3D
 	public var vr:Float=0;
 	public var gui:Dynamic;
 	private var music:String = "";
-	
+	/*
 	private var _idxNejireX:Int = 0;
 	private var _idxNejireY:Int = 0;
 	private var _idxNejireNoise:Int = 0;
 	private var _idxSphereNoise:Int = 0;
 	private var _idxSpeedNoise:Int = 0;
-	
 	private var _idxNoiseSpeed:Int = 0;
+	*/
 	
+	private var _idxNejireX:Int = 16;
+	private var _idxNejireY:Int = 18;
+	private var _idxNoise:Int = 12;
+	private var _idxSpeed:Int = 8;
+	private var _idxSphere:Int = 4;
+	private var _idxNoiseSpeed:Int =19;
+	private var _idxScale:Int = 1;			
+	private var _idxYokoRatio:Int =  5;
+	private var _idxYokoSpeed:Int =  13;
+	private var _idxZengoRatio:Int =  19;		
+	
+				
 	private var _bottom:Bool = false;
 	
 	public var border:Float = 0;
@@ -79,13 +91,16 @@ class MyFaceSingle extends Object3D
 		if (Dat.bg) return;
 		
 		_daeLoader = d;
+		
+		/*
 		_idxNejireX = Math.floor(Math.random() * 20 );
 		_idxNejireY = Math.floor(Math.random() * 20 );
 		_idxNejireNoise = Math.floor(Math.random() * 20 );
 		_idxSphereNoise = Math.floor(Math.random() * 20 );
 		_idxNoiseSpeed = Math.floor(Math.random() * 20 );
 		_idxSpeedNoise = Math.floor(Math.random() * 20 );
-
+		*/
+		
 		//d.material.envMap = untyped cubecam.renderTarget;		
 		//dae = new Mesh( d.geometry.clone(), d.material);
 		dae = new Mesh( _daeLoader.geometry.clone(), new MeshDepthMaterial());
@@ -124,8 +139,51 @@ class MyFaceSingle extends Object3D
 		
 	}
 	
+	
+	/**
+	 * changeIndex
+	 */
+	public function changeIndex(idx:Int=0):Void {
+		
+		if (idx%2==0) {
+			
+				_idxNejireX = 16;
+				_idxNejireY = 18;
+				
+				_idxNoise = 12;
+				_idxSpeed = 8;
+				_idxSphere = 4;
+				_idxNoiseSpeed =19;
+				_idxScale = 1;			
+				
+				_idxYokoRatio =  5;
+				_idxYokoSpeed =  13;
+				_idxZengoRatio =  19;					
+			
+		}else {
+			
+				_idxNejireX = Math.floor(20*Math.random());
+				_idxNejireY = Math.floor(20*Math.random());
+				
+				_idxNoise = Math.floor(20*Math.random());
+				_idxSpeed = Math.floor(20*Math.random());
+				_idxSphere = Math.floor(20*Math.random());
+				_idxNoiseSpeed =Math.floor(20*Math.random());
+				_idxScale = Math.floor(20*Math.random());	
+				
+				_idxYokoRatio =  Math.floor(20*Math.random());
+				_idxYokoSpeed =  Math.floor(20*Math.random());
+				_idxZengoRatio =  Math.floor(20 * Math.random());
+				
+			
+		}
+		
+		
+		
+	}
 
-
+	
+	
 	
 	
 	
@@ -148,23 +206,39 @@ class MyFaceSingle extends Object3D
 		g.verticesNeedUpdate = true;
 		_count += _speed;
 		
+		/*
+				_idxNejireX = 16;
+				_idxNejireY = 18;
+				
+				_idxNoise = 12;
+				_idxSpeed = 8;
+				_idxSphere = 4;
+				_idxNoiseSpeed =19;
+				_idxScale = 1;			
+				
+				_idxYokoRatio =  5;
+				_idxYokoSpeed =  13;
+				_idxZengoRatio =  19;		
+				
+		*/
+		
 		if (_audio!=null && _audio.isStart) {
 			_audio.update();
 			
 			if(_audio.freqByteData.length>19){
 			
-				_nejireX = Math.pow(s * _audio.freqByteData[16] / 255, 1.5) * 10;
-				_nejireY = Math.pow(s * _audio.freqByteData[18] / 255, 2) * Math.PI * 2;// * 0.5;
+				_nejireX = Math.pow(s * _audio.freqByteData[_idxNejireX] / 255, 1.5) * 10;
+				_nejireY = Math.pow(s * _audio.freqByteData[_idxNejireY] / 255, 2) * Math.PI * 2;// * 0.5;
 				
-				_noise = Math.pow(s * _audio.freqByteData[12] / 255,1) * 4.5;
-				_speed = Math.pow( s * _audio.freqByteData[8] / 255, 2) * 0.5;
-				_sphere = Math.pow( s * _audio.freqByteData[4]/255, 5);
-				_noiseSpeed = 0.1 + Math.pow( s * _audio.freqByteData[19] / 255, 4) * 0.05;
-				_scale = 1 + Math.pow(s * _audio.freqByteData[1] / 255, 3) * 0.4;				
+				_noise = Math.pow(s * _audio.freqByteData[_idxNoise] / 255,1) * 4.5;
+				_speed = Math.pow( s * _audio.freqByteData[_idxSpeed] / 255, 2) * 0.5;
+				_sphere = Math.pow( s * _audio.freqByteData[_idxSphere]/255, 5);
+				_noiseSpeed = 0.1 + Math.pow( s * _audio.freqByteData[_idxNoiseSpeed] / 255, 4) * 0.05;
+				_scale = 1 + Math.pow(s * _audio.freqByteData[_idxScale] / 255, 3) * 0.4;				
 				
-				_yokoRatio =  Math.pow(s * _audio.freqByteData[5] / 255, 2);
-				_yokoSpeed =  Math.pow(s * _audio.freqByteData[13] / 255, 2) * 4;
-				_zengoRatio =  Math.pow(s * _audio.freqByteData[19] / 255, 2);
+				_yokoRatio =  Math.pow(s * _audio.freqByteData[_idxYokoRatio] / 255, 2);
+				_yokoSpeed =  Math.pow(s * _audio.freqByteData[_idxYokoSpeed] / 255, 2) * 4;
+				_zengoRatio =  Math.pow(s * _audio.freqByteData[_idxZengoRatio] / 255, 2);
 				
 			}
 		}else {

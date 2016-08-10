@@ -37,7 +37,7 @@ class DeDeCutOneLine  extends DeDeCutBase
 		data.font = StrokeUtil.FUTURA;
 		data.speedX = DeDeLine.SPEEDX0;
 		data.spaceX = 20;
-		data.startX = DeDeLine.WIDTH/2+400;
+		data.startX = DeDeLine.WIDTH/2+340;
 		data.space = 3;// + 7 * Math.random();
 		data.startSec = 0;
 		data.sameType = DeDeParam.SAME_LINE;

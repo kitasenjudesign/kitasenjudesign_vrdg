@@ -97,7 +97,7 @@ Main3d.prototype = {
 		this._scene = new THREE.Scene();
 		this._camera = new camera.ExCamera(35,Main3d.W / Main3d.H,10,common.Dat.bg?20000:2000);
 		this._camera.bure = this._bure;
-		var light = new THREE.AmbientLight(6710886);
+		var light = new THREE.AmbientLight(8947848);
 		this._scene.add(light);
 		var d = new THREE.DirectionalLight(16777215,0.9);
 		d.castShadow = true;
@@ -911,12 +911,16 @@ objects.MyFaceSingle = function(idx) {
 	this.borderHeight = 0;
 	this.border = 0;
 	this._bottom = false;
-	this._idxNoiseSpeed = 0;
-	this._idxSpeedNoise = 0;
-	this._idxSphereNoise = 0;
-	this._idxNejireNoise = 0;
-	this._idxNejireY = 0;
-	this._idxNejireX = 0;
+	this._idxZengoRatio = 19;
+	this._idxYokoSpeed = 13;
+	this._idxYokoRatio = 5;
+	this._idxScale = 1;
+	this._idxNoiseSpeed = 19;
+	this._idxSphere = 4;
+	this._idxSpeed = 8;
+	this._idxNoise = 12;
+	this._idxNejireY = 18;
+	this._idxNejireX = 16;
 	this.music = "";
 	this.vr = 0;
 	this._scale = 1;
@@ -939,12 +943,6 @@ objects.MyFaceSingle.prototype = $extend(THREE.Object3D.prototype,{
 	init: function(d,cubecam) {
 		if(common.Dat.bg) return;
 		this._daeLoader = d;
-		this._idxNejireX = Math.floor(Math.random() * 20);
-		this._idxNejireY = Math.floor(Math.random() * 20);
-		this._idxNejireNoise = Math.floor(Math.random() * 20);
-		this._idxSphereNoise = Math.floor(Math.random() * 20);
-		this._idxNoiseSpeed = Math.floor(Math.random() * 20);
-		this._idxSpeedNoise = Math.floor(Math.random() * 20);
 		this.dae = new THREE.Mesh(this._daeLoader.geometry.clone(),new THREE.MeshDepthMaterial());
 		this.dae.rotation.y = Math.PI / 2;
 		if(this.index == 0) this.dae.castShadow = true;
@@ -961,6 +959,32 @@ objects.MyFaceSingle.prototype = $extend(THREE.Object3D.prototype,{
 		TweenMax.to(this.rotation,time,{ y : 0, ease : Power0.easeInOut});
 		TweenMax.to(this.scale,time,{ x : 1, y : 1, z : 1, ease : Power0.easeInOut});
 	}
+	,changeIndex: function(idx) {
+		if(idx == null) idx = 0;
+		if(idx % 2 == 0) {
+			this._idxNejireX = 16;
+			this._idxNejireY = 18;
+			this._idxNoise = 12;
+			this._idxSpeed = 8;
+			this._idxSphere = 4;
+			this._idxNoiseSpeed = 19;
+			this._idxScale = 1;
+			this._idxYokoRatio = 5;
+			this._idxYokoSpeed = 13;
+			this._idxZengoRatio = 19;
+		} else {
+			this._idxNejireX = Math.floor(20 * Math.random());
+			this._idxNejireY = Math.floor(20 * Math.random());
+			this._idxNoise = Math.floor(20 * Math.random());
+			this._idxSpeed = Math.floor(20 * Math.random());
+			this._idxSphere = Math.floor(20 * Math.random());
+			this._idxNoiseSpeed = Math.floor(20 * Math.random());
+			this._idxScale = Math.floor(20 * Math.random());
+			this._idxYokoRatio = Math.floor(20 * Math.random());
+			this._idxYokoSpeed = Math.floor(20 * Math.random());
+			this._idxZengoRatio = Math.floor(20 * Math.random());
+		}
+	}
 	,_getNoise: function(xx,yy,zz) {
 		var f = noise.perlin3;
 		var n = f(xx,yy,zz);
@@ -976,16 +1000,16 @@ objects.MyFaceSingle.prototype = $extend(THREE.Object3D.prototype,{
 		if(this._audio != null && this._audio.isStart) {
 			this._audio.update();
 			if(this._audio.freqByteData.length > 19) {
-				this._nejireX = Math.pow(this.s * this._audio.freqByteData[16] / 255,1.5) * 10;
-				this._nejireY = Math.pow(this.s * this._audio.freqByteData[18] / 255,2) * Math.PI * 2;
-				this._noise = Math.pow(this.s * this._audio.freqByteData[12] / 255,1) * 4.5;
-				this._speed = Math.pow(this.s * this._audio.freqByteData[8] / 255,2) * 0.5;
-				this._sphere = Math.pow(this.s * this._audio.freqByteData[4] / 255,5);
-				this._noiseSpeed = 0.1 + Math.pow(this.s * this._audio.freqByteData[19] / 255,4) * 0.05;
-				this._scale = 1 + Math.pow(this.s * this._audio.freqByteData[1] / 255,3) * 0.4;
-				this._yokoRatio = Math.pow(this.s * this._audio.freqByteData[5] / 255,2);
-				this._yokoSpeed = Math.pow(this.s * this._audio.freqByteData[13] / 255,2) * 4;
-				this._zengoRatio = Math.pow(this.s * this._audio.freqByteData[19] / 255,2);
+				this._nejireX = Math.pow(this.s * this._audio.freqByteData[this._idxNejireX] / 255,1.5) * 10;
+				this._nejireY = Math.pow(this.s * this._audio.freqByteData[this._idxNejireY] / 255,2) * Math.PI * 2;
+				this._noise = Math.pow(this.s * this._audio.freqByteData[this._idxNoise] / 255,1) * 4.5;
+				this._speed = Math.pow(this.s * this._audio.freqByteData[this._idxSpeed] / 255,2) * 0.5;
+				this._sphere = Math.pow(this.s * this._audio.freqByteData[this._idxSphere] / 255,5);
+				this._noiseSpeed = 0.1 + Math.pow(this.s * this._audio.freqByteData[this._idxNoiseSpeed] / 255,4) * 0.05;
+				this._scale = 1 + Math.pow(this.s * this._audio.freqByteData[this._idxScale] / 255,3) * 0.4;
+				this._yokoRatio = Math.pow(this.s * this._audio.freqByteData[this._idxYokoRatio] / 255,2);
+				this._yokoSpeed = Math.pow(this.s * this._audio.freqByteData[this._idxYokoSpeed] / 255,2) * 4;
+				this._zengoRatio = Math.pow(this.s * this._audio.freqByteData[this._idxZengoRatio] / 255,2);
 			}
 		} else return;
 		var _g1 = 0;
@@ -1199,6 +1223,7 @@ objects.MySphere.prototype = $extend(THREE.Object3D.prototype,{
 objects.MyWorld = function() {
 	this._isWire = false;
 	this._tgtBorder = 0;
+	this._idx = 0;
 	this._counter = 0;
 	this.faces = [];
 	this.border = 0;
@@ -1227,8 +1252,19 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 		}
 		common.Key.board.addEventListener("keydown",$bind(this,this._KeyDownFunc));
 		common.Dat.gui.add(this,"effectName").listen();
+		common.Dat.gui.add(this,"_changeIndex");
+		common.Dat.gui.add(this,"_idx").listen();
 		this.changeMode1();
 		this._nextEffect();
+	}
+	,_changeIndex: function() {
+		var _g1 = 0;
+		var _g = this.faces.length;
+		while(_g1 < _g) {
+			var i = _g1++;
+			this.faces[i].changeIndex(this._idx);
+		}
+		this._idx++;
 	}
 	,_KeyDownFunc: function(e) {
 		var _g = Std.parseInt(e.keyCode);
