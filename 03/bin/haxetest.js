@@ -712,7 +712,7 @@ fbo.FboMain.prototype = {
 		this._particles = this._fbo.getParticles();
 		this._scene.add(this._particles);
 		this._line = this._fbo.getLine();
-		this._scene.add(this._line);
+		if(!common.Dat.bg) this._scene.add(this._line);
 		var mesh = new THREE.Mesh(new THREE.BoxGeometry(50,50,50,1,1,1),new THREE.MeshBasicMaterial({ color : 16711680, wireframe : true}));
 		window.onresize = $bind(this,this._onResize);
 		this._onResize(null);

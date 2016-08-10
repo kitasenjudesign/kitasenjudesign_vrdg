@@ -93,7 +93,11 @@ class FboMain
 		_particles = _fbo.getParticles();
 		_scene.add(_particles);
 		_line = _fbo.getLine();
-		_scene.add(_line);
+		
+		if(!Dat.bg){
+			_scene.add(_line);
+		}
+		
 		//_scene.add(_fbo.getMesh());
 		//_emoji = new Emoji();
 		//_emoji.init();
