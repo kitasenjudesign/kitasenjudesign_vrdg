@@ -103,9 +103,13 @@ class MaePlate extends Object3D
 		updateText();
 	}
 	
-	public function updateText():Void {
+	public function updateText(id:Int=-1):Void {
 	
-		_textNo.update("DE"+StringUtils.addZero(_index, 4));
+		if (id >= 0) {
+			_textNo.update("DE"+StringUtils.addZero(id, 4));			
+		}else{
+			_textNo.update("DE"+StringUtils.addZero(_index, 4));
+		}
 		
 		_textTime.update( TimeCounter.getTime() ); 
 		

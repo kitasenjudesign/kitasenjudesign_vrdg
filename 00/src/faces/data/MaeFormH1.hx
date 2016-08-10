@@ -7,6 +7,8 @@ package faces.data;
 class MaeFormH1 extends MaeFormBase
 {
 
+	private var _count:Int = -1;
+	
 	
 	private var _cams:Array<CamData> = [
 		new CamData(195, 0, 0 ),
@@ -26,6 +28,7 @@ class MaeFormH1 extends MaeFormBase
 	override public function setFormation(faces:Array<MaeFace>):Void
 	{
 		_faces = faces;
+		_count++;
 		
 		
 		var rotMode:Int = MaeFaceMesh.ROT_MODE_X;
@@ -48,23 +51,34 @@ class MaeFormH1 extends MaeFormBase
 		var xnum:Int = 20;
 		var ynum:Int = 3;
 		_width = xnum * spaceX;
-
 		
 		var len:Int = _faces.length;
+		
+		var ox:Float = 0;
+		if (_count == 0) {
+			ox = _width*0.7;
+		}
+		
 		for (i in 0...len) {
 			var ff:MaeFace = _faces[i];	
 			ff.setMaterial( MaeFaceMesh.ROT_MODE_X );
 		
-			if(i<20){
+			if (i < 20) {
+				
 				var xx:Float = i % xnum - (xnum-1)/2;
 				var yy:Float = Math.floor(i / xnum) - (ynum - 1) / 2;
 				ff.enabled = true;
 				ff.visible = true;
-				ff.position.x = xx * spaceX;
+				ff.position.x = xx * spaceX + ox;
 				ff.position.y = 8 + offsetY;
 				ff.position.z = 100;
 				ff.rotation.y = 0;
-				ff.updatePlate();
+				if(_count==0){
+					ff.updatePlate(i);
+				}else {
+					ff.updatePlate();					
+				}
+				
 			}else {
 				ff.visible = false;
 				ff.enabled = false;

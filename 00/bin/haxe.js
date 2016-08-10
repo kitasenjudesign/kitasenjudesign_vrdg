@@ -846,8 +846,9 @@ faces.MaeFace.prototype = $extend(THREE.Object3D.prototype,{
 			break;
 		}
 	}
-	,updatePlate: function() {
-		this._plate.updateText();
+	,updatePlate: function(id) {
+		if(id == null) id = -1;
+		this._plate.updateText(id);
 	}
 	,addLineVertex: function(v1,v2) {
 		this._line.addVertex(v1,v2);
@@ -1201,8 +1202,9 @@ faces.MaePlate.prototype = $extend(THREE.Object3D.prototype,{
 		this._material.transparent = true;
 		this.updateText();
 	}
-	,updateText: function() {
-		this._textNo.update("DE" + common.StringUtils.addZero(faces.MaePlate._index,4));
+	,updateText: function(id) {
+		if(id == null) id = -1;
+		if(id >= 0) this._textNo.update("DE" + common.StringUtils.addZero(id,4)); else this._textNo.update("DE" + common.StringUtils.addZero(faces.MaePlate._index,4));
 		this._textTime.update(common.TimeCounter.getTime());
 		this._stage.update();
 		this._material.map.needsUpdate = true;
@@ -1365,12 +1367,14 @@ faces.data.MaeFormBase.prototype = {
 };
 faces.data.MaeFormH1 = function() {
 	this._cams = [new faces.data.CamData(195,0,0),new faces.data.CamData(225,0.4,0.03),new faces.data.CamData(225,-0.4,0.03)];
+	this._count = -1;
 	faces.data.MaeFormBase.call(this);
 };
 faces.data.MaeFormH1.__super__ = faces.data.MaeFormBase;
 faces.data.MaeFormH1.prototype = $extend(faces.data.MaeFormBase.prototype,{
 	setFormation: function(faces) {
 		this._faces = faces;
+		this._count++;
 		var rotMode = 0;
 		this._setRot(rotMode);
 		Tracer.log("_setForm1");
@@ -1386,6 +1390,8 @@ faces.data.MaeFormH1.prototype = $extend(faces.data.MaeFormBase.prototype,{
 		var ynum = 3;
 		this._width = xnum * spaceX;
 		var len = this._faces.length;
+		var ox = 0;
+		if(this._count == 0) ox = this._width * 0.7;
 		var _g = 0;
 		while(_g < len) {
 			var i = _g++;
@@ -1396,11 +1402,11 @@ faces.data.MaeFormH1.prototype = $extend(faces.data.MaeFormBase.prototype,{
 				var yy = Math.floor(i / xnum) - (ynum - 1) / 2;
 				ff.enabled = true;
 				ff.visible = true;
-				ff.position.x = xx * spaceX;
+				ff.position.x = xx * spaceX + ox;
 				ff.position.y = 8 + offsetY;
 				ff.position.z = 100;
 				ff.rotation.y = 0;
-				ff.updatePlate();
+				if(this._count == 0) ff.updatePlate(i); else ff.updatePlate();
 			} else {
 				ff.visible = false;
 				ff.enabled = false;

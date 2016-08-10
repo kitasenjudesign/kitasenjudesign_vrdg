@@ -176,9 +176,9 @@ class MaeFace extends Object3D
 	}
 	
 	
-	public function updatePlate():Void {
+	public function updatePlate(id:Int=-1):Void {
 		
-		_plate.updateText();
+		_plate.updateText(id);
 		
 	}
 	
