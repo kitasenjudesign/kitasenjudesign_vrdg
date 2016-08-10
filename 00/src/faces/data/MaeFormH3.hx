@@ -7,6 +7,7 @@ package faces.data;
 class MaeFormH3 extends MaeFormBase
 {
 
+	
 	private var _cams:Array<CamData> = [
 		new CamData(255, 0, 0 ),
 		new CamData(255, 0, 0.4 ),
@@ -27,7 +28,7 @@ class MaeFormH3 extends MaeFormBase
 	{
 		_faces = faces;
 		
-		var rotMode:Int = MaeFaceMesh.getRandomRot();
+		var rotMode:Int = (_camIndex==0) ? MaeFaceMesh.ROT_MODE_X : MaeFaceMesh.getRandomRot();
 		_setRot(rotMode);
 		
 		var data:CamData = _cams[_camIndex % _cams.length];

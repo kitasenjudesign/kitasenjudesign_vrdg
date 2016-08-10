@@ -378,7 +378,7 @@ common.Dat._onInit = function() {
 	common.Dat.gui.domElement.style.top = yy + "px";
 	common.Dat.gui.domElement.style.opacity = 1;
 	common.Dat.gui.domElement.style.zIndex = 10;
-	common.Dat.gui.domElement.style.transformOrigin = "0 0";
+	common.Dat.gui.domElement.style.transformOrigin = "1 0";
 	common.Dat.gui.domElement.style.transform = "scale(0.8,0.8)";
 	common.Key.init();
 	common.Key.board.addEventListener("keydown",common.Dat._onKeyDown);
@@ -1027,7 +1027,7 @@ faces.MaeFaces.prototype = $extend(THREE.Object3D.prototype,{
 		}
 	}
 	,_setMaterial: function() {
-		var mats = [1,3,2,4];
+		var mats = [1,4];
 		var type = mats[this._matType % mats.length];
 		this._matType++;
 		var _g1 = 0;
@@ -1087,7 +1087,7 @@ faces.MaeGauge.prototype = $extend(THREE.Mesh.prototype,{
 	}
 });
 faces.MaeLines = function() {
-	this.posY = -70;
+	this.posY = -60;
 	this._lineIdx = 0;
 	THREE.Object3D.call(this);
 };
@@ -1369,7 +1369,7 @@ faces.data.MaeFormBase.prototype = {
 	}
 };
 faces.data.MaeFormH1 = function() {
-	this._cams = [new faces.data.CamData(195,0,0),new faces.data.CamData(225,0.4,0.03),new faces.data.CamData(225,-0.4,0.03)];
+	this._cams = [new faces.data.CamData(195,0,0),new faces.data.CamData(225,0.87,0.03),new faces.data.CamData(195,0,0),new faces.data.CamData(225,-0.4,0.03)];
 	this._count = -1;
 	faces.data.MaeFormBase.call(this);
 };
@@ -1437,7 +1437,8 @@ faces.data.MaeFormH3.__super__ = faces.data.MaeFormBase;
 faces.data.MaeFormH3.prototype = $extend(faces.data.MaeFormBase.prototype,{
 	setFormation: function(faces1) {
 		this._faces = faces1;
-		var rotMode = faces.MaeFaceMesh.getRandomRot();
+		var rotMode;
+		if(this._camIndex == 0) rotMode = 0; else rotMode = faces.MaeFaceMesh.getRandomRot();
 		this._setRot(rotMode);
 		var data = this._cams[this._camIndex % this._cams.length];
 		this._camIndex++;
@@ -1487,7 +1488,7 @@ faces.data.MaeFormH3.prototype = $extend(faces.data.MaeFormBase.prototype,{
 	}
 });
 faces.data.MaeFormV = function() {
-	this._cams = [new faces.data.CamData(215,0,0),new faces.data.CamData(116,0,0),new faces.data.CamData(215,0,-0.5),new faces.data.CamData(215,0,0.5)];
+	this._cams = [new faces.data.CamData(215,0,0),new faces.data.CamData(215,0,-0.5),new faces.data.CamData(215,0,0.5),new faces.data.CamData(116,-0.34,-0.59)];
 	faces.data.MaeFormBase.call(this);
 };
 faces.data.MaeFormV.__super__ = faces.data.MaeFormBase;
@@ -1554,7 +1555,9 @@ faces.data.MaeFormVpers.__super__ = faces.data.MaeFormBase;
 faces.data.MaeFormVpers.prototype = $extend(faces.data.MaeFormBase.prototype,{
 	setFormation: function(faces1) {
 		this._faces = faces1;
-		var rotMode = faces.MaeFaceMesh.getRandomRot();
+		var rotMode;
+		if(this._camIndex == 0) rotMode = 0; else rotMode = faces.MaeFaceMesh.getRandomRot();
+		this._setRot(rotMode);
 		this._setRot(rotMode);
 		var data = this._cams[this._camIndex % this._cams.length];
 		this._camIndex++;

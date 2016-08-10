@@ -27,7 +27,7 @@ class MaeLines extends Object3D
 	private var _hMesh:Mesh;
 	private var _tgtPlane:Mesh;
 	//public var startY:Float = -150;
-	public var posY:Float = -70;
+	public var posY:Float = -60;
 	
 	public function new() 
 	{

@@ -484,9 +484,12 @@ common.Dat._onInit = function() {
 	window.document.body.appendChild(common.Dat.gui.domElement);
 	common.Dat.gui.domElement.style.position = "absolute";
 	common.Dat.gui.domElement.style.right = "0px";
-	common.Dat.gui.domElement.style.top = "0px";
-	common.Dat.gui.domElement.style.opacity = 0.7;
+	var yy = window.innerHeight / 2 + common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
+	common.Dat.gui.domElement.style.top = yy + "px";
+	common.Dat.gui.domElement.style.opacity = 1;
 	common.Dat.gui.domElement.style.zIndex = 10;
+	common.Dat.gui.domElement.style.transformOrigin = "1 0";
+	common.Dat.gui.domElement.style.transform = "scale(0.8,0.8)";
 	common.Key.init();
 	common.Key.board.addEventListener("keydown",common.Dat._onKeyDown);
 	common.Dat.show(false);
@@ -987,7 +990,7 @@ sound.MyAudio.prototype = {
 		}
 		source.connect(this.analyser,0);
 		this.isStart = true;
-		common.Dat.gui.add(this,"globalVolume",0.01,3.00).step(0.01);
+		common.Dat.gui.add(this,"globalVolume",0,3.00).step(0.01).listen();
 		common.Dat.gui.add(this,"setImpulse");
 		this.setImpulse();
 		this.update();
@@ -1055,6 +1058,9 @@ sound.MyAudio.prototype = {
 			var i = _g++;
 			this._impulse[i] = 255 * Math.random() * stlength;
 		}
+	}
+	,tweenVol: function(tgt) {
+		TweenMax.to(this,0.2,{ globalVolume : tgt});
 	}
 };
 var three = {};
@@ -2067,6 +2073,7 @@ common.Dat.UP = 38;
 common.Dat.DOWN = 40;
 common.Dat.LEFT = 37;
 common.Dat.RIGHT = 39;
+common.Dat.SPACE = 32;
 common.Dat.K1 = 49;
 common.Dat.K2 = 50;
 common.Dat.K3 = 51;

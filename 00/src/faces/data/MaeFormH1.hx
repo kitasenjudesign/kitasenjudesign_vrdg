@@ -12,7 +12,8 @@ class MaeFormH1 extends MaeFormBase
 	
 	private var _cams:Array<CamData> = [
 		new CamData(195, 0, 0 ),
-		new CamData(225, 0.4, 0.03 ),
+		new CamData(225, 0.87, 0.03 ),
+		new CamData(195, 0, 0 ),		
 		new CamData(225, -0.4, 0.03 )
 	];
 	

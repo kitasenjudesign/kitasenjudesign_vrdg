@@ -126,8 +126,8 @@ class MaeFaces extends Object3D
 		
 		var mats:Array<Int> = [
 			MaeFace.MAT_COLOR,
-			MaeFace.MAT_WIRE_COLOR,
-			MaeFace.MAT_WIRE_WHITE,
+			//MaeFace.MAT_WIRE_COLOR,
+			//MaeFace.MAT_WIRE_WHITE,
 			MaeFace.MAT_COLOR_RED
 		];
 		var type:Int = mats[_matType % mats.length];
