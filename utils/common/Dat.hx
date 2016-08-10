@@ -17,6 +17,7 @@ class Dat
 	public static inline var DOWN:Int = 40;
 	public static inline var LEFT:Int = 37;
 	public static inline var RIGHT:Int = 39;
+	public static inline var SPACE:Int = 32;
 	
 	public static inline var K1:Int = 49;
 	public static inline var K2:Int = 50;
@@ -96,11 +97,14 @@ class Dat
 		Browser.document.body.appendChild(gui.domElement);
 		gui.domElement.style.position = "absolute";
 		gui.domElement.style.right = "0px";
-		gui.domElement.style.top = "0px";
-		gui.domElement.style.opacity = 0.7;
-		gui.domElement.style.zIndex = 10;
-
 		
+		var yy:Float = (Browser.window.innerHeight / 2 + StageRef.stageHeight / 2) + Config.canvasOffsetY;
+			
+		gui.domElement.style.top = yy + "px";//"0px";
+		gui.domElement.style.opacity = 1;
+		gui.domElement.style.zIndex = 10;
+		gui.domElement.style.transformOrigin = "0 0";		
+		gui.domElement.style.transform = "scale(0.8,0.8)";
 		
 		//StatsGUI.init();
 		//Browser.document.onkeydown = _onDown;

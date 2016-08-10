@@ -34,7 +34,7 @@ class MaeFormV extends MaeFormBase
 		
 		
 		
-		_lines.startY = -80;
+		//_lines.startY = -80;
 		_camera.amp = data.amp;
 		_camera.radX = data.radX;
 		_camera.radY = data.radY;

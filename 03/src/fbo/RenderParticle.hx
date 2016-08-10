@@ -77,13 +77,26 @@ class RenderParticle extends Points
 	
 	public function updateIconPos(idx:Int,isRandom:Bool=false):Void {
 		
+		
+		if (!isRandom) {
+			if(Math.random() < 0.2) {
+				//chochin
+				idx = 7 * 32 + 1;
+				//12 smile hoppe
+				//83 star
+			}
+			
+		}
+
+		
 		_particleGeo.attributes.aOffset.needsUpdate = true;
 		var ary:Array<Dynamic> = _particleGeo.attributes.aOffset.array;
 		
 		var l:Int = _width * _height;
 		for ( i in 0...l) {
             var i2:Int = i * 2;
-			var pos:Vector2 = (isRandom) ? _getIconPos(Math.floor(Math.random()*Emoji.NUM)) : _getIconPos(idx);
+			var pos:Vector2 = (isRandom) ? _getIconPos(Math.floor(Math.random() * Emoji.NUM)) : _getIconPos(idx);
+			
 			ary[ i2 ] = pos.x;
 			ary[ i2 + 1 ] = pos.y;
         }

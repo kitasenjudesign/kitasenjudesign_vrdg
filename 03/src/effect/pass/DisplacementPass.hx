@@ -82,9 +82,6 @@ class DisplacementPass extends ShaderPass
 						}else {
 							out1 = texel;
 						}
-					
-					
-
 						
 						/*
 						if ( texel.x == 0.0 || mod( floor( texel.x * 1000.0 + counter ),2.0) == 0.0 ) {
@@ -110,7 +107,7 @@ class DisplacementPass extends ShaderPass
 	
 	private var _textures:Array<Texture>;
 	private var _colors:Array<Texture>;
-	
+	private var _displaceIndex:Int = 0;
 	
 	
 	public function new() 
@@ -164,12 +161,13 @@ class DisplacementPass extends ShaderPass
 	 */
 	public function setTexture(isColor:Bool, isDisplace:Bool):Void
 	{
+		_displaceIndex++;
 		
 		uniforms.isColor.value = (isColor) ? 1 : 0;
 		uniforms.isDisplace.value = (isDisplace) ? 1 : 0;
 		
 		uniforms.disTexture.value = _textures[ Math.floor( Math.random() * _textures.length ) ];
-		uniforms.colTexture.value = _colors[ Math.floor( Math.random() * _colors.length ) ];
+		uniforms.colTexture.value = _colors[ _displaceIndex % _colors.length ];
 		
 	}
 	

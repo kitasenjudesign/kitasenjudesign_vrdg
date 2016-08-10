@@ -118,7 +118,8 @@ class DisplacementPass extends ShaderPass
 		
 		_textures = [];
 		
-		_textures.push( ImageUtils.loadTexture(Path.assets + "displace/displaceV.png") );
+		_textures.push( ImageUtils.loadTexture(Path.assets + "displace/displaceV2.png") );
+		//_textures.push( ImageUtils.loadTexture(Path.assets + "displace/displaceV.png") );
 		_textures.push( ImageUtils.loadTexture(Path.assets + "displace/displaceA.png") );
 		_textures.push( ImageUtils.loadTexture(Path.assets + "displace/displace.png") );
 		

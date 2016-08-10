@@ -1,5 +1,6 @@
 package faces;
 import camera.ExCamera;
+import common.Dat;
 import sound.MyAudio;
 import three.BoxGeometry;
 import three.Color;
@@ -25,8 +26,8 @@ class MaeLines extends Object3D
 	private var _lineIdx:Int = 0;
 	private var _hMesh:Mesh;
 	private var _tgtPlane:Mesh;
-	public var startY:Float = -150;
-	
+	//public var startY:Float = -150;
+	public var posY:Float = -50;
 	
 	public function new() 
 	{
@@ -70,6 +71,8 @@ class MaeLines extends Object3D
 		);
 		add(_line);
 		
+		Dat.gui.add(this, "posY").listen();
+		
 		#if debug
 		//_tgtPlane = new Mesh(untyped new PlaneBufferGeometry(100, 100, 1, 1), new MeshBasicMaterial( { color:0xff0000, wireframe:true } ));
 		//add(_tgtPlane);
@@ -103,14 +106,14 @@ class MaeLines extends Object3D
 		_line.geometry.verticesNeedUpdate = true;		
 		_line.geometry.colorsNeedUpdate = true;
 		
-		var offY:Float = startY;// -150;
+		//var offY:Float = startY;// -150;
 		
 		var scaleX:Float = audio.freqByteData[5] / 255 * 2;
 		if (scaleX < 0) scaleX = 0;
 		
 		_hMesh.scale.x = scaleX;
 		_hMesh.position.z = -100;
-		_hMesh.position.y = offY;
+		_hMesh.position.y = 0;
 		
 		
 		
@@ -133,7 +136,7 @@ class MaeLines extends Object3D
 					
 					face.addForce(j,freqs[j]);
 					
-					var pos:Vector3 = new Vector3(scaleX * 100 * (Math.random() - 0.5),-120,-400);
+					var pos:Vector3 = new Vector3(scaleX * 100 * (Math.random() - 0.5),posY,-400);
 					pos.applyQuaternion(cam.quaternion);
 					pos.x = cam.position.x + pos.x;
 					pos.y = cam.position.y + pos.y;

@@ -112,14 +112,22 @@ class FboMain
 		Browser.window.onresize = _onResize;
 		_onResize(null);
 		
-		Dat.gui.add(this, "changePP");
 		Dat.gui.add(this, "changeLine");
 		Dat.gui.add(this, "next");
+		Dat.gui.add(this, "reset");
+		Dat.gui.add(this, "_isPP");
 		
 		Key.board.addEventListener(Key.keydown, _onKeyDown);
 		
 		update();
 	}
+	
+	public function reset():Void {
+		
+		_fbo.reset();
+		
+	}
+	
 	
 	private function _onKeyDown(e:Dynamic):Void {
 	
@@ -129,7 +137,10 @@ class FboMain
 				next();
 				
 			case Dat.UP:
-				changePP();
+				setPP();//random effect
+				
+			case Dat.DOWN:
+				resetPP();
 				
 			case Dat.L:
 				changeLine();
@@ -152,12 +163,23 @@ class FboMain
 		
 	}
 	
-	public function changePP():Void {
+	//pp
+	public function setPP():Void {
 
 		_isPP = true;
 		_pp.change(false, true);
 		
 	}
+	
+	//pp
+	public function resetPP():Void {
+
+		_isPP = false;
+		//_pp.change(false, true);
+		
+	}
+	
+	
 	
 	/**
 	 * update

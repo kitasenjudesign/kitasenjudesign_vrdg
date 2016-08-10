@@ -81,10 +81,10 @@ class MaeFace extends Object3D
 		_bg.position.z = 0;
 		add(_bg);
 		
-		_face.visible = false;
-		_gauge.visible = false;
-		_plate.visible = false;
-		
+		_face.visible = true;
+		_gauge.visible = true;
+		_plate.visible = true;
+		show();
 		//
 		_line = new MaeFaceLine();
 	}

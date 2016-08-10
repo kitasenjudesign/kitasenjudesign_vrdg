@@ -105,7 +105,7 @@ class Main3d
 		camera.radX = 0.000;
 		camera.radY = 0.000;
 		
-		
+		MyAudio.a.globalVolume = 0.0;
 	}
 	
 	

@@ -35,56 +35,59 @@ class SimulationShaderMat extends ShaderMaterial
 /////////////////////////////////////	
 	private var _fragment:String = CurlNoise.glsl+ "
 
-// simulation
+		// simulation
 
-varying vec2 vUv;
-varying float vLife;
-uniform sampler2D texture;
-uniform float timer;
-uniform float frequency;
-uniform float amplitude;
-uniform float maxDistance;
-uniform float freqByteData[32];
-uniform float strength;
-uniform vec3 freqs;
-uniform vec3 start;
-void main() {
+		varying vec2 vUv;
+		varying float vLife;
+		uniform sampler2D texture;
+		uniform float timer;//timer = 0;
+		uniform float frequency;
+		uniform float amplitude;
+		uniform float maxDistance;
+		uniform float freqByteData[32];
+		uniform float strength;
+		uniform vec3 freqs;
+		uniform vec3 start;
+		uniform float resetFlag;
+		
+		void main() {
 
-    vec3 pos = texture2D( texture, vUv ).xyz;
-	
-    //vec3 tar = pos + curl( pos.x * frequency, pos.y * frequency, pos.z * frequency ) * amplitude;
-    //float d = length( pos-tar ) / maxDistance;
-    //pos = mix( pos, tar, pow( d, 5. ) );
-	
-	float rr = 0.2 * sin(timer * 0.1);
-	vec3 vv = curlNoise(pos * rr);/////koko
-	vv.x *= freqs.x / 255.0 * 10.0 * strength;
-	vv.y *= freqs.y / 255.0 * 10.0 * strength;
-	vv.z *= freqs.z / 255.0 * 10.0 * strength;
-	
-    //pos = pos + vv * 2.5;
-	pos = pos + vv;// * freqByteData[3] / 255.0 * 10.0;
-	
-    //pos.y += hoge.y * 2.1;
-    //pos.z += hoge.z * 2.1;
-	float nn = fract( timer + vLife );
-	
-	
-	if ( nn > 0.95 ) {
-		//if (length(pos) > 500.0) {
-		pos = start + curlNoise( vec3(vLife*10.0,vLife*11.1,vLife*13.3) ) * 10.0;// * 0.01;
-	}
-	
-    gl_FragColor = vec4( pos, 1. );//pos wo hozon
+			vec3 pos = texture2D( texture, vUv ).xyz;
+			
+			//vec3 tar = pos + curl( pos.x * frequency, pos.y * frequency, pos.z * frequency ) * amplitude;
+			//float d = length( pos-tar ) / maxDistance;
+			//pos = mix( pos, tar, pow( d, 5. ) );
+			
+			float rr = 0.2 * sin(timer * 0.1);
+			vec3 vv = curlNoise(pos * rr);/////koko
+			vv.x *= freqs.x / 255.0 * 10.0 * strength;
+			vv.y *= freqs.y / 255.0 * 10.0 * strength;
+			vv.z *= freqs.z / 255.0 * 10.0 * strength;
+			
+			//pos = pos + vv * 2.5;
+			pos = pos + vv;// * freqByteData[3] / 255.0 * 10.0;
+			
+			//pos.y += hoge.y * 2.1;
+			//pos.z += hoge.z * 2.1;
+			float nn = fract( timer + vLife );
+			
+			
+			if ( nn > 0.95 || resetFlag == 1.0 ) {
+				//if (length(pos) > 500.0) {
+				pos = start + curlNoise( vec3(vLife*10.0,vLife*11.1,vLife*13.3) ) * 10.0;// * 0.01;
+			}
+			
+			gl_FragColor = vec4( pos, 1. );//pos wo hozon
 
-}	
+		}	
 	";
 	
 	
 	private var _idx1:Int = 0;
 	private var _idx2:Int = 1;
 	private var _idx3:Int = 2;
-	var _rad:Float =0;
+	private var _rad:Float =0;
+	private var _isReset:Bool = false;
 	
 	
 	public function new(ww:Int, hh:Int) 
@@ -118,7 +121,8 @@ void main() {
 					freqByteData:{type:"fv1",	value:MyAudio.a.freqByteDataAry},//Uint8Array
 					freqs: { type: "v3", value: new Vector3( 0, 1, 2 ) },
 					start: { type: "v3", value: new Vector3( 0, 1, 2 ) },
-					strength: { type: "f", value: 1 }
+					strength: { type: "f", value: 1 },
+					resetFlag: { type: "f", value: 0 }
                 },
                 vertexShader: _vertex,
                 fragmentShader:  _fragment
@@ -153,6 +157,12 @@ void main() {
 		uniforms.start.value.y = amp * Math.cos( _rad*0.79 );
 		uniforms.start.value.z = amp * Math.sin( _rad * 0.90 );
 		
+		if (_isReset) {
+			uniforms.resetFlag.value = 1;
+			_isReset = false;
+		}else {
+			uniforms.resetFlag.value = 0;			
+		}
 	}
 	
 	
@@ -179,6 +189,12 @@ void main() {
             }
             return data;
     }
+	
+	public function reset():Void {
+		
+		//reset = 1 nisuru
+		_isReset = true;
+	}
 	
 	
 	private function getPoint(v:Vector3, size:Float ):Vector3

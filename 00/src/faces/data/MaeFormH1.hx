@@ -47,7 +47,7 @@ class MaeFormH1 extends MaeFormBase
 		_camera.setFOV(35);//
 		
 		var offsetY:Float = 0;
-		var spaceX:Float = 35;
+		var spaceX:Float = 40;
 		var xnum:Int = 20;
 		var ynum:Int = 3;
 		_width = xnum * spaceX;
@@ -56,7 +56,7 @@ class MaeFormH1 extends MaeFormBase
 		
 		var ox:Float = 0;
 		if (_count == 0) {
-			ox = _width*0.7;
+			ox = _width*0.63;
 		}
 		
 		for (i in 0...len) {

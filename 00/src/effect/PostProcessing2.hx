@@ -6,7 +6,6 @@ import effect.shaders.LuminosityShader;
 import effect.shaders.MyTiltShiftShader;
 import effect.shaders.VignetteShader;
 import js.Browser;
-import objects.MySphere;
 import sound.MyAudio;
 import three.ImageUtils;
 import three.Object3D;

@@ -112,19 +112,20 @@ class MaeFaceMesh extends Mesh
 		
 		if (_isFirst) {
 		
-			scale.x = 0;// (0 - scale.x) / 4;
-			scale.y = 0;// (0 - scale.x) / 4;
-			scale.z = 0;// (0 - scale.x) / 4;
+			//scale.x = 0;// (0 - scale.x) / 4;
+			//scale.y = 0;// (0 - scale.x) / 4;
+			//scale.z = 0;// (0 - scale.x) / 4;
 			
 		}else if (lifeRatio == 0) {
 			//scale.set(5, 5, 5);
 			scale.x += (7 - scale.x) / 4;
 			scale.y += (7 - scale.y) / 4;
 			scale.z += (7 - scale.z) / 4;
+			/*
 			rotation.x += (0 - rotation.x) / 4;
 			rotation.y += (0 - rotation.y) / 4;
 			rotation.z += (0 - rotation.z) / 4;
-			
+			*/
 		}else {
 			scale.x += (10 - scale.x) / 4;
 			scale.y += (10 - scale.y) / 4;

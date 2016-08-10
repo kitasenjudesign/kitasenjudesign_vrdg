@@ -112,8 +112,9 @@ class Fbo
        // _mesh = new Mesh( cast _renderGeo, _renderShaderMat );
 	}
 	
+	
 	/**
-	 * 
+	 * next
 	 */
 	public function next():Void {
 		
@@ -162,5 +163,10 @@ class Fbo
 	public function getParticles():Points
 	{
 		return _particles;
+	}
+	
+	public function reset():Void
+	{
+		_simuShaderMat.reset();
 	}
 }

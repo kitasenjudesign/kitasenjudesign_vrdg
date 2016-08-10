@@ -8,6 +8,7 @@ import js.html.audio.MediaElementAudioSourceNode;
 import js.html.audio.MediaStreamAudioSourceNode;
 import js.html.AudioElement;
 import js.html.Uint8Array;
+import tween.TweenMax;
 
 /**
  * ...
@@ -92,7 +93,7 @@ class MyAudio
 		
 		isStart = true;
 		
-		Dat.gui.add(this, "globalVolume", 0.01, 3.00).step(0.01);
+		Dat.gui.add(this, "globalVolume", 0, 3.00).step(0.01).listen();
 		Dat.gui.add(this, "setImpulse" );
 		
 		setImpulse();
@@ -106,10 +107,8 @@ class MyAudio
 		_callback();
 	}
 	
-	//http://jsdo.it/kimmy/iBGe
 	
-
-	// Draw the audio frequencies to screen
+	
 	public function update():Void {
 		
 		if (!isStart) {
@@ -177,6 +176,15 @@ class MyAudio
 			_impulse[i] = 255 * Math.random() * stlength;
 		}		
 		
+	}
+	
+	public function tweenVol(tgt:Float) 
+	{
+		//Browser.window.alert("tweenVol");
+		//this.globalVolume
+		TweenMax.to(this, 0.2, {
+			globalVolume:tgt
+		});
 	}
 	
 	

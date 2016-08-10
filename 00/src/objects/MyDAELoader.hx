@@ -29,7 +29,7 @@ class MyDAELoader extends Object3D
 	
 	public var dae:Object3D;
 	public static var geometry:Geometry;
-	public var material:MyShaderMaterial;
+	//public var material:MyShaderMaterial;
 	public var baseGeo:Array<Vector3>;
 	
 	
@@ -63,7 +63,7 @@ class MyDAELoader extends Object3D
 		//_texture1.minFilter = Three.NearestFilter;
 		//_texture1.magFilter = Three.NearestFilter;
 		
-		material = new MyShaderMaterial();// untyped dae.children[0].children[0].material;
+		//material = new MyShaderMaterial();// untyped dae.children[0].children[0].material;
 	
 		geometry = untyped dae.children[0].children[0].geometry;
 		
@@ -105,11 +105,11 @@ class MyDAELoader extends Object3D
 	/**
 	 * 
 	 */
-	public function update():Void {
+	//public function update():Void {
 		
-		material.update();
+		//material.update();
 		
-	}
+	//}
 	
 	
 	

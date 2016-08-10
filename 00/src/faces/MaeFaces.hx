@@ -1,5 +1,6 @@
 package faces;
 import camera.ExCamera;
+import common.Config;
 import common.Dat;
 import common.Key;
 import faces.data.MaeFormation;
@@ -80,6 +81,8 @@ class MaeFaces extends Object3D
 		
 		
 		Key.board.addEventListener("keydown" , _keyDownFunc);
+		
+		MyAudio.a.globalVolume = 0;
 	}
 	
 	
@@ -89,6 +92,9 @@ class MaeFaces extends Object3D
 		Tracer.log("_keyDownFunc ");
 		
 		switch( Std.parseInt( e.keyCode ) ) {
+			
+			case Dat.SPACE:
+				MyAudio.a.tweenVol(Config.globalVol);
 			
 			case Dat.RIGHT:
 				//nextFormation
