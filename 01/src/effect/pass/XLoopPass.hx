@@ -82,7 +82,7 @@ class XLoopPass extends ShaderPass
 						xx += 0.01 * sin(vUv.y * 2. * 3.14);
 						float yy = vUv.y + 0.05 * sin(vUv.x * 6.0 * 3.14);
 						
-						//float ss = strength;
+							//float ss = strength;
 						float ss = 0.5 + 0.5 * sin(counter * 0.1);
 						ss = ss * strength;
 						xx = mix(vUv.x, xx, ss );
@@ -128,6 +128,9 @@ class XLoopPass extends ShaderPass
 		
 	}
 	
+	
+	
+	
 	/**
 	 * 
 	 * @param	audio
@@ -135,7 +138,8 @@ class XLoopPass extends ShaderPass
 	public function update(audio:MyAudio):Void {
 	
 		if (!enabled) return;
-		uniforms.strength.value = 1;
+		
+		uniforms.strength.value = 0.7 + audio.freqByteData[5] / 255*0.3;
 		uniforms.counter.value += audio.freqByteData[3] / 255 * 0.8;		
 		
 	}

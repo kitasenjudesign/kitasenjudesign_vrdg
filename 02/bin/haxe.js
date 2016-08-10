@@ -1371,6 +1371,7 @@ common.Config.prototype = {
 		common.Config.canvasOffsetY = data.canvasOffsetY;
 		common.Config.globalVol = data.globalVol;
 		common.Config.particleSize = data.particleSize;
+		common.Config.bgLight = data.bgLight;
 		if(this._callback != null) this._callback();
 	}
 	,__class__: common.Config
@@ -1390,12 +1391,15 @@ common.Dat._onInit = function() {
 	window.document.body.appendChild(common.Dat.gui.domElement);
 	common.Dat.gui.domElement.style.position = "absolute";
 	common.Dat.gui.domElement.style.right = "0px";
-	common.Dat.gui.domElement.style.top = "0px";
-	common.Dat.gui.domElement.style.opacity = 0.7;
+	var yy = window.innerHeight / 2 + common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
+	common.Dat.gui.domElement.style.top = yy + "px";
+	common.Dat.gui.domElement.style.opacity = 1;
 	common.Dat.gui.domElement.style.zIndex = 10;
+	common.Dat.gui.domElement.style.transformOrigin = "0 0";
+	common.Dat.gui.domElement.style.transform = "scale(0.8,0.8)";
 	common.Key.init();
 	common.Key.board.addEventListener("keydown",common.Dat._onKeyDown);
-	common.Dat.show();
+	common.Dat.show(false);
 	if(common.Dat._callback != null) common.Dat._callback();
 };
 common.Dat._onKeyDown = function(e) {
@@ -1404,7 +1408,7 @@ common.Dat._onKeyDown = function(e) {
 	case 65:
 		break;
 	case 68:
-		if(common.Dat.gui.domElement.style.display == "block") common.Dat.hide(); else common.Dat.show();
+		if(common.Dat.gui.domElement.style.display == "block") common.Dat.hide(); else common.Dat.show(true);
 		break;
 	case 49:
 		common.StageRef.fadeOut(common.Dat._goURL1);
@@ -1445,12 +1449,16 @@ common.Dat._goURL6 = function() {
 	common.Dat._goURL("../../01/bin/");
 };
 common.Dat._goURL = function(url) {
+	Tracer.log("goURL " + url);
 	window.location.href = url + window.location.hash;
 };
-common.Dat.show = function() {
+common.Dat.show = function(isBorder) {
+	if(isBorder == null) isBorder = false;
+	if(isBorder) common.StageRef.showBorder();
 	common.Dat.gui.domElement.style.display = "block";
 };
 common.Dat.hide = function() {
+	common.StageRef.hideBorder();
 	common.Dat.gui.domElement.style.display = "none";
 };
 common.Dat.prototype = {
@@ -1573,6 +1581,14 @@ common.QueryGetter.prototype = {
 common.StageRef = function() {
 };
 common.StageRef.__name__ = true;
+common.StageRef.showBorder = function() {
+	var dom = window.document.getElementById("webgl");
+	dom.style.border = "solid 1px #cccccc";
+};
+common.StageRef.hideBorder = function() {
+	var dom = window.document.getElementById("webgl");
+	dom.style.border = "solid 0px";
+};
 common.StageRef.fadeIn = function() {
 	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
 	common.StageRef.sheet.fadeIn();
@@ -1582,19 +1598,17 @@ common.StageRef.fadeOut = function(callback) {
 	common.StageRef.sheet.fadeOut(callback);
 };
 common.StageRef.setCenter = function() {
-	if(!common.Dat.bg) {
-		var dom = window.document.getElementById("webgl");
-		var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
-		dom.style.position = "absolute";
-		dom.style.zIndex = "1000";
-		dom.style.top = Math.round(yy) + "px";
-	}
+	var dom = window.document.getElementById("webgl");
+	var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
+	dom.style.position = "absolute";
+	dom.style.zIndex = "1000";
+	dom.style.top = Math.round(yy) + "px";
 };
 common.StageRef.get_stageWidth = function() {
 	return window.innerWidth;
 };
 common.StageRef.get_stageHeight = function() {
-	if(common.Dat.bg) return window.innerHeight;
+	if(common.Dat.bg) return Math.floor(window.innerWidth * 816 / 1920);
 	return Math.floor(window.innerWidth * 576 / 1920);
 };
 common.StageRef.prototype = {
@@ -2855,7 +2869,7 @@ sound.MyAudio.prototype = {
 		}
 		source.connect(this.analyser,0);
 		this.isStart = true;
-		common.Dat.gui.add(this,"globalVolume",0.01,3.00).step(0.01);
+		common.Dat.gui.add(this,"globalVolume",0,3.00).step(0.01).listen();
 		common.Dat.gui.add(this,"setImpulse");
 		this.setImpulse();
 		this.update();
@@ -2923,6 +2937,9 @@ sound.MyAudio.prototype = {
 			var i = _g++;
 			this._impulse[i] = 255 * Math.random() * stlength;
 		}
+	}
+	,tweenVol: function(tgt) {
+		TweenMax.to(this,0.2,{ globalVolume : tgt});
 	}
 	,__class__: sound.MyAudio
 };
@@ -3128,10 +3145,12 @@ canvas.primitives.data.EffectData.BLACK_FALSE = 2;
 common.Config.canvasOffsetY = 0;
 common.Config.globalVol = 1.0;
 common.Config.particleSize = 3000;
+common.Config.bgLight = 0.5;
 common.Dat.UP = 38;
 common.Dat.DOWN = 40;
 common.Dat.LEFT = 37;
 common.Dat.RIGHT = 39;
+common.Dat.SPACE = 32;
 common.Dat.K1 = 49;
 common.Dat.K2 = 50;
 common.Dat.K3 = 51;

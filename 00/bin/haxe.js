@@ -1087,7 +1087,7 @@ faces.MaeGauge.prototype = $extend(THREE.Mesh.prototype,{
 	}
 });
 faces.MaeLines = function() {
-	this.posY = -50;
+	this.posY = -70;
 	this._lineIdx = 0;
 	THREE.Object3D.call(this);
 };
@@ -1114,7 +1114,7 @@ faces.MaeLines.prototype = $extend(THREE.Object3D.prototype,{
 		}
 		this._line = new THREE.LineSegments(geo,new THREE.LineBasicMaterial({ color : 16777215, transparent : true, opacity : 0.5}));
 		this.add(this._line);
-		common.Dat.gui.add(this,"posY").listen();
+		common.Dat.gui.add(this,"posY",-500,500).listen();
 	}
 	,update: function(audio,cam) {
 		this._resetLine();

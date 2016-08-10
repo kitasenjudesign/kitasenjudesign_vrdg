@@ -123,6 +123,12 @@ class PostProcessing2
 		
 	}
 	
+	public function nextTexture():Void {
+		
+		_displacePass.setTexture(false, true);
+		
+	}
+	
 	public function changeColor(data:EffectData):Void{
 		
 		switch ( data.colorType ) {

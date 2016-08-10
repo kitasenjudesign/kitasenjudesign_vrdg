@@ -58,7 +58,7 @@ class ExCamera extends PerspectiveCamera
 		dom.onmousedown 	= this.onMouseDown;
         dom.onmouseup 		= this.onMouseUp;
         dom.onmousemove 	= this.onMouseMove;
-        dom.onmousewheel 	= this.onMouseWheel;
+        Browser.document.body.onmousewheel 	= this.onMouseWheel;
         Browser.window.addEventListener('DOMMouseScroll',this.onMouseWheelFF);
 		//Browser.window.onresize = _onResize;
 		

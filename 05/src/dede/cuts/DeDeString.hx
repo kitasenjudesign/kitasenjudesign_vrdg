@@ -14,12 +14,14 @@ class DeDeString
 	private static var _count:Int = 0;
 	public static var texts:Array<Dynamic> = [
 		{ text:"NIGHTVOICE", font:1, spaceX:50 },
+		{ text:"デデマウス", font:0, spaceX:50 },
 		{ text:"VRDG3DMMVRTHATHRE", font:0, spaceX:50 },
 		{ text:"DEDEMOUSE", font:1, spaceX:30 },
+		{ text:"デデデデデデ", font:0, spaceX:30 },
 		{ text:"DEDE", font:1, spaceX:50 },
 		{ text:"KITASENJUDESIGN", font:1, spaceX:50 },
-		{ text:"デデデデデデ", font:0, spaceX:30 },
-		{ text:"デデマウス", font:0, spaceX:50 }
+		{ text:"デデデデデデ", font:0, spaceX:30 }
+		
 	];
 	
 	public function new(o:Dynamic) 

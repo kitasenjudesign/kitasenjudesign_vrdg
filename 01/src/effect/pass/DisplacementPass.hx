@@ -1,5 +1,7 @@
 package effect.pass;
+import common.Dat;
 import common.Path;
+import data.TexLoader;
 import sound.MyAudio;
 import three.ImageUtils;
 import three.postprocessing.ShaderPass;
@@ -110,19 +112,22 @@ class DisplacementPass extends ShaderPass
 	
 	private var _textures:Array<Texture>;
 	private var _colors:Array<Texture>;
-	
-	
+	private var _index:Int = 0;
+	private var _dispX:Float = 0.3;
+	private var _dispY:Float = 0.75;
 	
 	public function new() 
 	{
 		
 		_textures = [];
 		
-		_textures.push( ImageUtils.loadTexture(Path.assets + "displace/displaceV2.png") );
+		_textures.push( TexLoader.getNearestTexture(Path.assets + "displace/displaceV2.png") );
 		//_textures.push( ImageUtils.loadTexture(Path.assets + "displace/displaceV.png") );
-		_textures.push( ImageUtils.loadTexture(Path.assets + "displace/displaceA.png") );
-		_textures.push( ImageUtils.loadTexture(Path.assets + "displace/displace.png") );
-		
+		_textures.push( TexLoader.getNearestTexture(Path.assets + "displace/displaceA.png") );
+		_textures.push( TexLoader.getNearestTexture(Path.assets + "displace/displace.png") );
+		_textures.push( TexLoader.getNearestTexture(Path.assets + "displace/displaceH.png") );
+
+	
 		/*
 		_textures.push( ImageUtils.loadTexture(Path.assets + "displace/displace1.png") );
 		_textures.push( ImageUtils.loadTexture(Path.assets + "displace/displace2.png") );
@@ -161,6 +166,10 @@ class DisplacementPass extends ShaderPass
 			
 		});
 		
+		Dat.gui.add(this, "_dispX",0,1).step(0.01).listen();
+		Dat.gui.add(this, "_dispY",0,1).step(0.01).listen();
+		
+		
 	}
 	
 	//
@@ -168,8 +177,8 @@ class DisplacementPass extends ShaderPass
 	
 		if (!enabled) return;
 		
-		uniforms.strengthX.value = Math.pow( audio.freqByteData[3] / 255, 4) * 0.75;
-		uniforms.strengthY.value = Math.pow( audio.freqByteData[7] / 255, 4) * 0.75;
+		uniforms.strengthX.value = Math.pow( audio.freqByteData[3] / 255, 4) * _dispX;
+		uniforms.strengthY.value = Math.pow( audio.freqByteData[7] / 255, 4) * _dispY;
 		uniforms.counter.value += audio.freqByteData[3] / 255 * 0.8;		
 		
 	}
@@ -183,8 +192,9 @@ class DisplacementPass extends ShaderPass
 		uniforms.isColor.value = (isColor) ? 1 : 0;
 		uniforms.isDisplace.value = (isDisplace) ? 1 : 0;
 		
-		uniforms.disTexture.value = _textures[ Math.floor( Math.random() * _textures.length ) ];
-		uniforms.colTexture.value = _colors[ Math.floor( Math.random() * _colors.length ) ];
+		uniforms.disTexture.value = _textures[ _index % _textures.length ];
+		uniforms.colTexture.value = _colors[ _index % _colors.length  ];
+		_index++;
 		
 	}
 	

@@ -1,5 +1,6 @@
 package effect.pass;
 import common.Path;
+import data.TexLoader;
 import sound.MyAudio;
 import three.ImageUtils;
 import three.postprocessing.ShaderPass;
@@ -117,8 +118,9 @@ class DisplacementPass extends ShaderPass
 		//for (i in 1...11) {	
 		//	_textures.push( ImageUtils.loadTexture("displace/displace" +(i)+".png") );
 		//}
-		_textures.push( ImageUtils.loadTexture( Path.assets + "displace/displaceA.png") );
-		_textures.push( ImageUtils.loadTexture( Path.assets + "displace/displaceV.png") );
+		_textures.push( TexLoader.getTexture( Path.assets + "displace/displaceA.png") );
+		_textures.push( TexLoader.getTexture( Path.assets + "displace/displaceV.png") );
+		_textures.push( TexLoader.getTexture( Path.assets + "displace/displaceH.png") );
 		
 		_colors = [
 			ImageUtils.loadTexture( Path.assets + "grade/grade.png"),

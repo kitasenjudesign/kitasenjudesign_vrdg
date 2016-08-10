@@ -1,0 +1,5323 @@
+﻿{"frames": [
+
+{
+	"filename": "emo インスタンス 10000",
+	"frame": {"x":0,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10001",
+	"frame": {"x":64,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10002",
+	"frame": {"x":128,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10003",
+	"frame": {"x":192,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10004",
+	"frame": {"x":256,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10005",
+	"frame": {"x":320,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10006",
+	"frame": {"x":384,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10007",
+	"frame": {"x":448,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10008",
+	"frame": {"x":512,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10009",
+	"frame": {"x":576,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10010",
+	"frame": {"x":640,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10011",
+	"frame": {"x":704,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10012",
+	"frame": {"x":768,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10013",
+	"frame": {"x":832,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10014",
+	"frame": {"x":896,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10015",
+	"frame": {"x":960,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10016",
+	"frame": {"x":1024,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10017",
+	"frame": {"x":1088,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10018",
+	"frame": {"x":1152,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10019",
+	"frame": {"x":1216,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10020",
+	"frame": {"x":1280,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10021",
+	"frame": {"x":1344,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10022",
+	"frame": {"x":1408,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10023",
+	"frame": {"x":1472,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10024",
+	"frame": {"x":1536,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10025",
+	"frame": {"x":1600,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10026",
+	"frame": {"x":1664,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10027",
+	"frame": {"x":1728,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10028",
+	"frame": {"x":1792,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10029",
+	"frame": {"x":1856,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10030",
+	"frame": {"x":1920,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10031",
+	"frame": {"x":1984,"y":0,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10032",
+	"frame": {"x":0,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10033",
+	"frame": {"x":64,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10034",
+	"frame": {"x":128,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10035",
+	"frame": {"x":192,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10036",
+	"frame": {"x":256,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10037",
+	"frame": {"x":320,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10038",
+	"frame": {"x":384,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10039",
+	"frame": {"x":448,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10040",
+	"frame": {"x":512,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10041",
+	"frame": {"x":576,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10042",
+	"frame": {"x":640,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10043",
+	"frame": {"x":704,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10044",
+	"frame": {"x":768,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10045",
+	"frame": {"x":832,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10046",
+	"frame": {"x":896,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10047",
+	"frame": {"x":960,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10048",
+	"frame": {"x":1024,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10049",
+	"frame": {"x":1088,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10050",
+	"frame": {"x":1152,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10051",
+	"frame": {"x":1216,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10052",
+	"frame": {"x":1280,"y":64,"w":69,"h":81},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10053",
+	"frame": {"x":1349,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10054",
+	"frame": {"x":1413,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10055",
+	"frame": {"x":1477,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10056",
+	"frame": {"x":1541,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10057",
+	"frame": {"x":1605,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10058",
+	"frame": {"x":1669,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10059",
+	"frame": {"x":1733,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10060",
+	"frame": {"x":1797,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10061",
+	"frame": {"x":1861,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10062",
+	"frame": {"x":1925,"y":64,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10063",
+	"frame": {"x":0,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10064",
+	"frame": {"x":64,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10065",
+	"frame": {"x":128,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10066",
+	"frame": {"x":192,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10067",
+	"frame": {"x":256,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10068",
+	"frame": {"x":320,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10069",
+	"frame": {"x":384,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10070",
+	"frame": {"x":448,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10071",
+	"frame": {"x":512,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10072",
+	"frame": {"x":576,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10073",
+	"frame": {"x":640,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10074",
+	"frame": {"x":704,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10075",
+	"frame": {"x":768,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10076",
+	"frame": {"x":832,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10077",
+	"frame": {"x":896,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10078",
+	"frame": {"x":960,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10079",
+	"frame": {"x":1024,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10080",
+	"frame": {"x":1088,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10081",
+	"frame": {"x":1152,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10082",
+	"frame": {"x":1216,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10083",
+	"frame": {"x":1280,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10084",
+	"frame": {"x":1344,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10085",
+	"frame": {"x":1408,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10086",
+	"frame": {"x":1472,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10087",
+	"frame": {"x":1536,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10088",
+	"frame": {"x":1600,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10089",
+	"frame": {"x":1664,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10090",
+	"frame": {"x":1728,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10091",
+	"frame": {"x":1792,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10092",
+	"frame": {"x":1856,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10093",
+	"frame": {"x":1920,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10094",
+	"frame": {"x":1984,"y":145,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10095",
+	"frame": {"x":0,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10096",
+	"frame": {"x":64,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10097",
+	"frame": {"x":128,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10098",
+	"frame": {"x":192,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10099",
+	"frame": {"x":256,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10100",
+	"frame": {"x":320,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10101",
+	"frame": {"x":384,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10102",
+	"frame": {"x":448,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10103",
+	"frame": {"x":512,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10104",
+	"frame": {"x":576,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10105",
+	"frame": {"x":640,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10106",
+	"frame": {"x":704,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10107",
+	"frame": {"x":768,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10108",
+	"frame": {"x":832,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10109",
+	"frame": {"x":896,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10110",
+	"frame": {"x":960,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10111",
+	"frame": {"x":1024,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10112",
+	"frame": {"x":1088,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10113",
+	"frame": {"x":1152,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10114",
+	"frame": {"x":1216,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10115",
+	"frame": {"x":1280,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10116",
+	"frame": {"x":1344,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10117",
+	"frame": {"x":1408,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10118",
+	"frame": {"x":1472,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10119",
+	"frame": {"x":1536,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10120",
+	"frame": {"x":1600,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10121",
+	"frame": {"x":1664,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10122",
+	"frame": {"x":1728,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10123",
+	"frame": {"x":1792,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10124",
+	"frame": {"x":1856,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10125",
+	"frame": {"x":1920,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10126",
+	"frame": {"x":1984,"y":209,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10127",
+	"frame": {"x":0,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10128",
+	"frame": {"x":64,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10129",
+	"frame": {"x":128,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10130",
+	"frame": {"x":192,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10131",
+	"frame": {"x":256,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10132",
+	"frame": {"x":320,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10133",
+	"frame": {"x":384,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10134",
+	"frame": {"x":448,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10135",
+	"frame": {"x":512,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10136",
+	"frame": {"x":576,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10137",
+	"frame": {"x":640,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10138",
+	"frame": {"x":704,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10139",
+	"frame": {"x":768,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10140",
+	"frame": {"x":832,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10141",
+	"frame": {"x":896,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10142",
+	"frame": {"x":960,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10143",
+	"frame": {"x":1024,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10144",
+	"frame": {"x":1088,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10145",
+	"frame": {"x":1152,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10146",
+	"frame": {"x":1216,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10147",
+	"frame": {"x":1280,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10148",
+	"frame": {"x":1344,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10149",
+	"frame": {"x":1408,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10150",
+	"frame": {"x":1472,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10151",
+	"frame": {"x":1536,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10152",
+	"frame": {"x":1600,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10153",
+	"frame": {"x":1664,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10154",
+	"frame": {"x":1728,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10155",
+	"frame": {"x":1792,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10156",
+	"frame": {"x":1856,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10157",
+	"frame": {"x":1920,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10158",
+	"frame": {"x":1984,"y":273,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10159",
+	"frame": {"x":0,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10160",
+	"frame": {"x":64,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10161",
+	"frame": {"x":128,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10162",
+	"frame": {"x":192,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10163",
+	"frame": {"x":256,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10164",
+	"frame": {"x":320,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10165",
+	"frame": {"x":384,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10166",
+	"frame": {"x":448,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10167",
+	"frame": {"x":512,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10168",
+	"frame": {"x":576,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10169",
+	"frame": {"x":640,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10170",
+	"frame": {"x":704,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10171",
+	"frame": {"x":768,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10172",
+	"frame": {"x":832,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10173",
+	"frame": {"x":896,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10174",
+	"frame": {"x":960,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10175",
+	"frame": {"x":1024,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10176",
+	"frame": {"x":1088,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10177",
+	"frame": {"x":1152,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10178",
+	"frame": {"x":1216,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10179",
+	"frame": {"x":1280,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10180",
+	"frame": {"x":1344,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10181",
+	"frame": {"x":1408,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10182",
+	"frame": {"x":1472,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10183",
+	"frame": {"x":1536,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10184",
+	"frame": {"x":1600,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10185",
+	"frame": {"x":1664,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10186",
+	"frame": {"x":1728,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10187",
+	"frame": {"x":1792,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10188",
+	"frame": {"x":1856,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10189",
+	"frame": {"x":1920,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10190",
+	"frame": {"x":1984,"y":337,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10191",
+	"frame": {"x":0,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10192",
+	"frame": {"x":64,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10193",
+	"frame": {"x":128,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10194",
+	"frame": {"x":192,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10195",
+	"frame": {"x":256,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10196",
+	"frame": {"x":320,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10197",
+	"frame": {"x":384,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10198",
+	"frame": {"x":448,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10199",
+	"frame": {"x":512,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10200",
+	"frame": {"x":576,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10201",
+	"frame": {"x":640,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10202",
+	"frame": {"x":704,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10203",
+	"frame": {"x":768,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10204",
+	"frame": {"x":832,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10205",
+	"frame": {"x":896,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10206",
+	"frame": {"x":960,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10207",
+	"frame": {"x":1024,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10208",
+	"frame": {"x":1088,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10209",
+	"frame": {"x":1152,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10210",
+	"frame": {"x":1216,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10211",
+	"frame": {"x":1280,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10212",
+	"frame": {"x":1344,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10213",
+	"frame": {"x":1408,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10214",
+	"frame": {"x":1472,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10215",
+	"frame": {"x":1536,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10216",
+	"frame": {"x":1600,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10217",
+	"frame": {"x":1664,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10218",
+	"frame": {"x":1728,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10219",
+	"frame": {"x":1792,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10220",
+	"frame": {"x":1856,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10221",
+	"frame": {"x":1920,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10222",
+	"frame": {"x":1984,"y":401,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10223",
+	"frame": {"x":0,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10224",
+	"frame": {"x":64,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10225",
+	"frame": {"x":128,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10226",
+	"frame": {"x":192,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10227",
+	"frame": {"x":256,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10228",
+	"frame": {"x":320,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10229",
+	"frame": {"x":384,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10230",
+	"frame": {"x":448,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10231",
+	"frame": {"x":512,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10232",
+	"frame": {"x":576,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10233",
+	"frame": {"x":640,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10234",
+	"frame": {"x":704,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10235",
+	"frame": {"x":768,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10236",
+	"frame": {"x":832,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10237",
+	"frame": {"x":896,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10238",
+	"frame": {"x":960,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10239",
+	"frame": {"x":1024,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10240",
+	"frame": {"x":1088,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10241",
+	"frame": {"x":1152,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10242",
+	"frame": {"x":1216,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10243",
+	"frame": {"x":1280,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10244",
+	"frame": {"x":1344,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10245",
+	"frame": {"x":1408,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10246",
+	"frame": {"x":1472,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10247",
+	"frame": {"x":1536,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10248",
+	"frame": {"x":1600,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10249",
+	"frame": {"x":1664,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10250",
+	"frame": {"x":1728,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10251",
+	"frame": {"x":1792,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10252",
+	"frame": {"x":1856,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10253",
+	"frame": {"x":1920,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10254",
+	"frame": {"x":1984,"y":465,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10255",
+	"frame": {"x":0,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10256",
+	"frame": {"x":64,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10257",
+	"frame": {"x":128,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10258",
+	"frame": {"x":192,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10259",
+	"frame": {"x":256,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10260",
+	"frame": {"x":320,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10261",
+	"frame": {"x":384,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10262",
+	"frame": {"x":448,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10263",
+	"frame": {"x":512,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10264",
+	"frame": {"x":576,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10265",
+	"frame": {"x":640,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10266",
+	"frame": {"x":704,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10267",
+	"frame": {"x":768,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10268",
+	"frame": {"x":832,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10269",
+	"frame": {"x":896,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10270",
+	"frame": {"x":960,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10271",
+	"frame": {"x":1024,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10272",
+	"frame": {"x":1088,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10273",
+	"frame": {"x":1152,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10274",
+	"frame": {"x":1216,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10275",
+	"frame": {"x":1280,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10276",
+	"frame": {"x":1344,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10277",
+	"frame": {"x":1408,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10278",
+	"frame": {"x":1472,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10279",
+	"frame": {"x":1536,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10280",
+	"frame": {"x":1600,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10281",
+	"frame": {"x":1664,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10282",
+	"frame": {"x":1728,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10283",
+	"frame": {"x":1792,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10284",
+	"frame": {"x":1856,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10285",
+	"frame": {"x":1920,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10286",
+	"frame": {"x":1984,"y":529,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10287",
+	"frame": {"x":0,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10288",
+	"frame": {"x":64,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10289",
+	"frame": {"x":128,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10290",
+	"frame": {"x":192,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10291",
+	"frame": {"x":256,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10292",
+	"frame": {"x":320,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10293",
+	"frame": {"x":384,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10294",
+	"frame": {"x":448,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10295",
+	"frame": {"x":512,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10296",
+	"frame": {"x":576,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10297",
+	"frame": {"x":640,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10298",
+	"frame": {"x":704,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10299",
+	"frame": {"x":768,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10300",
+	"frame": {"x":832,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10301",
+	"frame": {"x":896,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10302",
+	"frame": {"x":960,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10303",
+	"frame": {"x":1024,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10304",
+	"frame": {"x":1088,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10305",
+	"frame": {"x":1152,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10306",
+	"frame": {"x":1216,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10307",
+	"frame": {"x":1280,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10308",
+	"frame": {"x":1344,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10309",
+	"frame": {"x":1408,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10310",
+	"frame": {"x":1472,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10311",
+	"frame": {"x":1536,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10312",
+	"frame": {"x":1600,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10313",
+	"frame": {"x":1664,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10314",
+	"frame": {"x":1728,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10315",
+	"frame": {"x":1792,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10316",
+	"frame": {"x":1856,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10317",
+	"frame": {"x":1920,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10318",
+	"frame": {"x":1984,"y":593,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10319",
+	"frame": {"x":0,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10320",
+	"frame": {"x":64,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10321",
+	"frame": {"x":128,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10322",
+	"frame": {"x":192,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10323",
+	"frame": {"x":256,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10324",
+	"frame": {"x":320,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10325",
+	"frame": {"x":384,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10326",
+	"frame": {"x":448,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10327",
+	"frame": {"x":512,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10328",
+	"frame": {"x":576,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10329",
+	"frame": {"x":640,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10330",
+	"frame": {"x":704,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10331",
+	"frame": {"x":768,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10332",
+	"frame": {"x":832,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10333",
+	"frame": {"x":896,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10334",
+	"frame": {"x":960,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10335",
+	"frame": {"x":1024,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10336",
+	"frame": {"x":1088,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10337",
+	"frame": {"x":1152,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10338",
+	"frame": {"x":1216,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10339",
+	"frame": {"x":1280,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10340",
+	"frame": {"x":1344,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10341",
+	"frame": {"x":1408,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10342",
+	"frame": {"x":1472,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10343",
+	"frame": {"x":1536,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10344",
+	"frame": {"x":1600,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10345",
+	"frame": {"x":1664,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10346",
+	"frame": {"x":1728,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10347",
+	"frame": {"x":1792,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10348",
+	"frame": {"x":1856,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10349",
+	"frame": {"x":1920,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10350",
+	"frame": {"x":1984,"y":657,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10351",
+	"frame": {"x":0,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10352",
+	"frame": {"x":64,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10353",
+	"frame": {"x":128,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10354",
+	"frame": {"x":192,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10355",
+	"frame": {"x":256,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10356",
+	"frame": {"x":320,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10357",
+	"frame": {"x":384,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10358",
+	"frame": {"x":448,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10359",
+	"frame": {"x":512,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10360",
+	"frame": {"x":576,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10361",
+	"frame": {"x":640,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10362",
+	"frame": {"x":704,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10363",
+	"frame": {"x":768,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10364",
+	"frame": {"x":832,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10365",
+	"frame": {"x":896,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10366",
+	"frame": {"x":960,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10367",
+	"frame": {"x":1024,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10368",
+	"frame": {"x":1088,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10369",
+	"frame": {"x":1152,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10370",
+	"frame": {"x":1216,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10371",
+	"frame": {"x":1280,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10372",
+	"frame": {"x":1344,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10373",
+	"frame": {"x":1408,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10374",
+	"frame": {"x":1472,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10375",
+	"frame": {"x":1536,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10376",
+	"frame": {"x":1600,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10377",
+	"frame": {"x":1664,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10378",
+	"frame": {"x":1728,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10379",
+	"frame": {"x":1792,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10380",
+	"frame": {"x":1856,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10381",
+	"frame": {"x":1920,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10382",
+	"frame": {"x":1984,"y":721,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10383",
+	"frame": {"x":0,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10384",
+	"frame": {"x":64,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10385",
+	"frame": {"x":128,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10386",
+	"frame": {"x":192,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10387",
+	"frame": {"x":256,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10388",
+	"frame": {"x":320,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10389",
+	"frame": {"x":384,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10390",
+	"frame": {"x":448,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10391",
+	"frame": {"x":512,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10392",
+	"frame": {"x":576,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10393",
+	"frame": {"x":640,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10394",
+	"frame": {"x":704,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10395",
+	"frame": {"x":768,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10396",
+	"frame": {"x":832,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10397",
+	"frame": {"x":896,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10398",
+	"frame": {"x":960,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10399",
+	"frame": {"x":1024,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10400",
+	"frame": {"x":1088,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10401",
+	"frame": {"x":1152,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10402",
+	"frame": {"x":1216,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10403",
+	"frame": {"x":1280,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10404",
+	"frame": {"x":1344,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10405",
+	"frame": {"x":1408,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10406",
+	"frame": {"x":1472,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10407",
+	"frame": {"x":1536,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10408",
+	"frame": {"x":1600,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10409",
+	"frame": {"x":1664,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10410",
+	"frame": {"x":1728,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10411",
+	"frame": {"x":1792,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10412",
+	"frame": {"x":1856,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10413",
+	"frame": {"x":1920,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10414",
+	"frame": {"x":1984,"y":785,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10415",
+	"frame": {"x":0,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10416",
+	"frame": {"x":64,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10417",
+	"frame": {"x":128,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10418",
+	"frame": {"x":192,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10419",
+	"frame": {"x":256,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10420",
+	"frame": {"x":320,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10421",
+	"frame": {"x":384,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10422",
+	"frame": {"x":448,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10423",
+	"frame": {"x":512,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10424",
+	"frame": {"x":576,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10425",
+	"frame": {"x":640,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10426",
+	"frame": {"x":704,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10427",
+	"frame": {"x":768,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10428",
+	"frame": {"x":832,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10429",
+	"frame": {"x":896,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10430",
+	"frame": {"x":960,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10431",
+	"frame": {"x":1024,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10432",
+	"frame": {"x":1088,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10433",
+	"frame": {"x":1152,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10434",
+	"frame": {"x":1216,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10435",
+	"frame": {"x":1280,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10436",
+	"frame": {"x":1344,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10437",
+	"frame": {"x":1408,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10438",
+	"frame": {"x":1472,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10439",
+	"frame": {"x":1536,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10440",
+	"frame": {"x":1600,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10441",
+	"frame": {"x":1664,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10442",
+	"frame": {"x":1728,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10443",
+	"frame": {"x":1792,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10444",
+	"frame": {"x":1856,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10445",
+	"frame": {"x":1920,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10446",
+	"frame": {"x":1984,"y":849,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10447",
+	"frame": {"x":0,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10448",
+	"frame": {"x":64,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10449",
+	"frame": {"x":128,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10450",
+	"frame": {"x":192,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10451",
+	"frame": {"x":256,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10452",
+	"frame": {"x":320,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10453",
+	"frame": {"x":384,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10454",
+	"frame": {"x":448,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10455",
+	"frame": {"x":512,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10456",
+	"frame": {"x":576,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10457",
+	"frame": {"x":640,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10458",
+	"frame": {"x":704,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10459",
+	"frame": {"x":768,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10460",
+	"frame": {"x":832,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10461",
+	"frame": {"x":896,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10462",
+	"frame": {"x":960,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10463",
+	"frame": {"x":1024,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10464",
+	"frame": {"x":1088,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10465",
+	"frame": {"x":1152,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10466",
+	"frame": {"x":1216,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10467",
+	"frame": {"x":1280,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10468",
+	"frame": {"x":1344,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10469",
+	"frame": {"x":1408,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10470",
+	"frame": {"x":1472,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10471",
+	"frame": {"x":1536,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10472",
+	"frame": {"x":1600,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10473",
+	"frame": {"x":1664,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10474",
+	"frame": {"x":1728,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10475",
+	"frame": {"x":1792,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10476",
+	"frame": {"x":1856,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10477",
+	"frame": {"x":1920,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10478",
+	"frame": {"x":1984,"y":913,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10479",
+	"frame": {"x":0,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10480",
+	"frame": {"x":64,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10481",
+	"frame": {"x":128,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10482",
+	"frame": {"x":192,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10483",
+	"frame": {"x":256,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10484",
+	"frame": {"x":320,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10485",
+	"frame": {"x":384,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10486",
+	"frame": {"x":448,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10487",
+	"frame": {"x":512,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10488",
+	"frame": {"x":576,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10489",
+	"frame": {"x":640,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10490",
+	"frame": {"x":704,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10491",
+	"frame": {"x":768,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10492",
+	"frame": {"x":832,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10493",
+	"frame": {"x":896,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10494",
+	"frame": {"x":960,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10495",
+	"frame": {"x":1024,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10496",
+	"frame": {"x":1088,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10497",
+	"frame": {"x":1152,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10498",
+	"frame": {"x":1216,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10499",
+	"frame": {"x":1280,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10500",
+	"frame": {"x":1344,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10501",
+	"frame": {"x":1408,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10502",
+	"frame": {"x":1472,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10503",
+	"frame": {"x":1536,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10504",
+	"frame": {"x":1600,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10505",
+	"frame": {"x":1664,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10506",
+	"frame": {"x":1728,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10507",
+	"frame": {"x":1792,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10508",
+	"frame": {"x":1856,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10509",
+	"frame": {"x":1920,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10510",
+	"frame": {"x":1984,"y":977,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10511",
+	"frame": {"x":0,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10512",
+	"frame": {"x":64,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10513",
+	"frame": {"x":128,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10514",
+	"frame": {"x":192,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10515",
+	"frame": {"x":256,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10516",
+	"frame": {"x":320,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10517",
+	"frame": {"x":384,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10518",
+	"frame": {"x":448,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10519",
+	"frame": {"x":512,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10520",
+	"frame": {"x":576,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10521",
+	"frame": {"x":640,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10522",
+	"frame": {"x":704,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10523",
+	"frame": {"x":768,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10524",
+	"frame": {"x":832,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10525",
+	"frame": {"x":896,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10526",
+	"frame": {"x":960,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10527",
+	"frame": {"x":1024,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10528",
+	"frame": {"x":1088,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10529",
+	"frame": {"x":1152,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10530",
+	"frame": {"x":1216,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10531",
+	"frame": {"x":1280,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10532",
+	"frame": {"x":1344,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10533",
+	"frame": {"x":1408,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10534",
+	"frame": {"x":1472,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10535",
+	"frame": {"x":1536,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10536",
+	"frame": {"x":1600,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10537",
+	"frame": {"x":1664,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10538",
+	"frame": {"x":1728,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10539",
+	"frame": {"x":1792,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10540",
+	"frame": {"x":1856,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10541",
+	"frame": {"x":1920,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10542",
+	"frame": {"x":1984,"y":1041,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10543",
+	"frame": {"x":0,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10544",
+	"frame": {"x":64,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10545",
+	"frame": {"x":128,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10546",
+	"frame": {"x":192,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10547",
+	"frame": {"x":256,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10548",
+	"frame": {"x":320,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10549",
+	"frame": {"x":384,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10550",
+	"frame": {"x":448,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10551",
+	"frame": {"x":512,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10552",
+	"frame": {"x":576,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10553",
+	"frame": {"x":640,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10554",
+	"frame": {"x":704,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10555",
+	"frame": {"x":768,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10556",
+	"frame": {"x":832,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10557",
+	"frame": {"x":896,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10558",
+	"frame": {"x":960,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10559",
+	"frame": {"x":1024,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10560",
+	"frame": {"x":1088,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10561",
+	"frame": {"x":1152,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10562",
+	"frame": {"x":1216,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10563",
+	"frame": {"x":1216,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10564",
+	"frame": {"x":1280,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10565",
+	"frame": {"x":1344,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10566",
+	"frame": {"x":1408,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10567",
+	"frame": {"x":1472,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10568",
+	"frame": {"x":1536,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10569",
+	"frame": {"x":1600,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10570",
+	"frame": {"x":1664,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10571",
+	"frame": {"x":1728,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10572",
+	"frame": {"x":1792,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10573",
+	"frame": {"x":1856,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10574",
+	"frame": {"x":1920,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10575",
+	"frame": {"x":1984,"y":1105,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10576",
+	"frame": {"x":0,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10577",
+	"frame": {"x":64,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10578",
+	"frame": {"x":128,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10579",
+	"frame": {"x":192,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10580",
+	"frame": {"x":256,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10581",
+	"frame": {"x":320,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10582",
+	"frame": {"x":384,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10583",
+	"frame": {"x":448,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10584",
+	"frame": {"x":512,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10585",
+	"frame": {"x":576,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10586",
+	"frame": {"x":640,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10587",
+	"frame": {"x":704,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10588",
+	"frame": {"x":768,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10589",
+	"frame": {"x":832,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10590",
+	"frame": {"x":896,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10591",
+	"frame": {"x":960,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10592",
+	"frame": {"x":1024,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10593",
+	"frame": {"x":1088,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10594",
+	"frame": {"x":1152,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10595",
+	"frame": {"x":1216,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10596",
+	"frame": {"x":1280,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10597",
+	"frame": {"x":1344,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10598",
+	"frame": {"x":1408,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10599",
+	"frame": {"x":1472,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10600",
+	"frame": {"x":1536,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10601",
+	"frame": {"x":1600,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10602",
+	"frame": {"x":1664,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10603",
+	"frame": {"x":1728,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10604",
+	"frame": {"x":1792,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10605",
+	"frame": {"x":1856,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10606",
+	"frame": {"x":1920,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10607",
+	"frame": {"x":1984,"y":1169,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10608",
+	"frame": {"x":0,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10609",
+	"frame": {"x":64,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10610",
+	"frame": {"x":128,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10611",
+	"frame": {"x":192,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10612",
+	"frame": {"x":256,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10613",
+	"frame": {"x":320,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10614",
+	"frame": {"x":384,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10615",
+	"frame": {"x":448,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10616",
+	"frame": {"x":512,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10617",
+	"frame": {"x":576,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10618",
+	"frame": {"x":640,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10619",
+	"frame": {"x":704,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10620",
+	"frame": {"x":768,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10621",
+	"frame": {"x":832,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10622",
+	"frame": {"x":896,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10623",
+	"frame": {"x":960,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10624",
+	"frame": {"x":1024,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10625",
+	"frame": {"x":1088,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10626",
+	"frame": {"x":1152,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10627",
+	"frame": {"x":1216,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10628",
+	"frame": {"x":1280,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10629",
+	"frame": {"x":1344,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10630",
+	"frame": {"x":1408,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10631",
+	"frame": {"x":1472,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10632",
+	"frame": {"x":1536,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10633",
+	"frame": {"x":1600,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10634",
+	"frame": {"x":1664,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10635",
+	"frame": {"x":1728,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10636",
+	"frame": {"x":1792,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10637",
+	"frame": {"x":1856,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10638",
+	"frame": {"x":1920,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10639",
+	"frame": {"x":1984,"y":1233,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10640",
+	"frame": {"x":0,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10641",
+	"frame": {"x":64,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10642",
+	"frame": {"x":128,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10643",
+	"frame": {"x":192,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10644",
+	"frame": {"x":256,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10645",
+	"frame": {"x":320,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10646",
+	"frame": {"x":384,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10647",
+	"frame": {"x":448,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10648",
+	"frame": {"x":512,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10649",
+	"frame": {"x":576,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10650",
+	"frame": {"x":640,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10651",
+	"frame": {"x":704,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10652",
+	"frame": {"x":768,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10653",
+	"frame": {"x":832,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10654",
+	"frame": {"x":896,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10655",
+	"frame": {"x":960,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10656",
+	"frame": {"x":1024,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10657",
+	"frame": {"x":1088,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10658",
+	"frame": {"x":1152,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10659",
+	"frame": {"x":1216,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10660",
+	"frame": {"x":1280,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10661",
+	"frame": {"x":1344,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10662",
+	"frame": {"x":1408,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}
+,{
+	"filename": "emo インスタンス 10663",
+	"frame": {"x":1472,"y":1297,"w":64,"h":64},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":69,"h":81},
+	"sourceSize": {"w":69,"h":81}
+}],
+"meta": {
+	"app": "Adobe Animate",
+	"version": "15.1.1.13",
+	"image": "emoji.png",
+	"format": "RGBA8888",
+	"size": {"w":2048,"h":2048},
+	"scale": "1"
+}
+}

@@ -103,7 +103,7 @@ class Dat
 		gui.domElement.style.top = yy + "px";//"0px";
 		gui.domElement.style.opacity = 1;
 		gui.domElement.style.zIndex = 10;
-		gui.domElement.style.transformOrigin = "0 0";		
+		gui.domElement.style.transformOrigin = "1 0";		
 		gui.domElement.style.transform = "scale(0.8,0.8)";
 		
 		//StatsGUI.init();

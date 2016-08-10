@@ -15,7 +15,7 @@ import typo.StrokeUtil;
 class DeDeLine extends Object3D
 {
 	
-	public static inline var SPEEDX0:Float = -0.25;
+	public static inline var SPEEDX0:Float = -0.5;
 	public static inline var SPEEDX1:Float = -2;
 	public static inline var WIDTH:Float = 2400;
 	public static inline var SPACE_R:Float = 0.65 * 2;
@@ -138,6 +138,7 @@ class DeDeLine extends Object3D
 	//public function setSpeedX(spdX:Float):Void {
 	//	_speedX = spdX;
 	//}
+	//public function updateData(data:Da
 	
 	public function update(audio:MyAudio):Void {
 		
@@ -168,6 +169,8 @@ class DeDeLine extends Object3D
 			}
 		}
 	}	
+	
+	
 	
 	
 	/**

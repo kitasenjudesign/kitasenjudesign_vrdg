@@ -920,9 +920,12 @@ common.Dat._onInit = function() {
 	window.document.body.appendChild(common.Dat.gui.domElement);
 	common.Dat.gui.domElement.style.position = "absolute";
 	common.Dat.gui.domElement.style.right = "0px";
-	common.Dat.gui.domElement.style.top = "0px";
-	common.Dat.gui.domElement.style.opacity = 0.7;
+	var yy = window.innerHeight / 2 + common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
+	common.Dat.gui.domElement.style.top = yy + "px";
+	common.Dat.gui.domElement.style.opacity = 1;
 	common.Dat.gui.domElement.style.zIndex = 10;
+	common.Dat.gui.domElement.style.transformOrigin = "1 0";
+	common.Dat.gui.domElement.style.transform = "scale(0.8,0.8)";
 	common.Key.init();
 	common.Key.board.addEventListener("keydown",common.Dat._onKeyDown);
 	common.Dat.show(false);
@@ -1940,6 +1943,14 @@ dede.cuts.DeDeCutMultiLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		this._reposThree();
 		this.next();
 	}
+	,_reposOne: function() {
+		this._lines.visible = true;
+		this._lines.setGeoMax(150,[true,false,false]);
+		this._lines.reposition(1,150,0);
+		this._vrdg.visible = false;
+		this._vrdg.setGeoMax(1);
+		this._cam.setZoom(3.1);
+	}
 	,_reposTwo: function() {
 		this._lines.visible = true;
 		this._lines.setGeoMax(150,[true,true,false]);
@@ -1957,8 +1968,7 @@ dede.cuts.DeDeCutMultiLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		this._cam.setZoom(0.85);
 	}
 	,next: function() {
-		this._lineType++;
-		var _g = this._lineType % 2;
+		var _g = this._lineType % 3;
 		switch(_g) {
 		case 0:
 			this._reposThree();
@@ -1966,7 +1976,11 @@ dede.cuts.DeDeCutMultiLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		case 1:
 			this._reposTwo();
 			break;
+		case 2:
+			this._reposOne();
+			break;
 		}
+		this._lineType++;
 		var data = dede.cuts.DeDeParam.getParam();
 		data.speedX = -1;
 		this._lines.changeType(data);
@@ -2002,18 +2016,22 @@ dede.cuts.DeDeCutOneLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		this._lines.reposition(3);
 		this._vrdg.visible = false;
 		this._vrdg.setGeoMax(1);
-		this._cam.setZoom(2);
-		var data = dede.cuts.DeDeParam.getParam();
-		data.txt = "DEDEMOUSE KTSNJDSGN ";
-		data.font = 1;
-		data.speedX = -0.25;
-		data.spaceX = 20;
-		data.startX = 2400 / 2 + 340;
-		data.space = 3;
-		data.startSec = 0;
-		data.sameType = 1;
-		this._lines.changeType(data);
+		this._cam.setZoom(3.1);
+		this.data = dede.cuts.DeDeParam.getParam();
+		this.data.txt = "DEDEMOUSE KTSNJDSGN ";
+		this.data.font = 1;
+		this.data.speedX = -0.5;
+		this.data.spaceX = 20;
+		this.data.startX = 2400 / 2 + 330;
+		this.data.space = 3;
+		this.data.startSec = 0;
+		this.data.sameType = 1;
+		this._lines.changeType(this.data);
+		common.Dat.gui.add(this,"_speedUp");
 		this.next();
+	}
+	,_speedUp: function() {
+		this.data.speedX = -1.;
 	}
 	,next: function() {
 		var isRotate;
@@ -2840,7 +2858,7 @@ sound.MyAudio.prototype = {
 		}
 		source.connect(this.analyser,0);
 		this.isStart = true;
-		common.Dat.gui.add(this,"globalVolume",0.01,3.00).step(0.01);
+		common.Dat.gui.add(this,"globalVolume",0,3.00).step(0.01).listen();
 		common.Dat.gui.add(this,"setImpulse");
 		this.setImpulse();
 		this.update();
@@ -2908,6 +2926,9 @@ sound.MyAudio.prototype = {
 			var i = _g++;
 			this._impulse[i] = 255 * Math.random() * stlength;
 		}
+	}
+	,tweenVol: function(tgt) {
+		TweenMax.to(this,0.2,{ globalVolume : tgt});
 	}
 };
 var three = {};
@@ -3368,6 +3389,7 @@ common.Dat.UP = 38;
 common.Dat.DOWN = 40;
 common.Dat.LEFT = 37;
 common.Dat.RIGHT = 39;
+common.Dat.SPACE = 32;
 common.Dat.K1 = 49;
 common.Dat.K2 = 50;
 common.Dat.K3 = 51;
@@ -3422,7 +3444,7 @@ dede.DeDeDigit.TYPE_LINE_CONTINUE = 3;
 dede.DeDeDigit.TYPE_RANDOM_MONOSPACE = 4;
 dede.DeDeDigit.TYPE_RANDOM_CONTINUE = 5;
 dede.DeDeDigit.NUM_TYPE = 4;
-dede.DeDeLine.SPEEDX0 = -0.25;
+dede.DeDeLine.SPEEDX0 = -0.5;
 dede.DeDeLine.SPEEDX1 = -2;
 dede.DeDeLine.WIDTH = 2400;
 dede.DeDeLine.SPACE_R = 1.3;
@@ -3431,7 +3453,7 @@ dede.cuts.DeDeParam.SAME_ALL = 0;
 dede.cuts.DeDeParam.SAME_LINE = 1;
 dede.cuts.DeDeParam.SAME_DIFF = 2;
 dede.cuts.DeDeString._count = 0;
-dede.cuts.DeDeString.texts = [{ text : "NIGHTVOICE", font : 1, spaceX : 50},{ text : "VRDG3DMMVRTHATHRE", font : 0, spaceX : 50},{ text : "DEDEMOUSE", font : 1, spaceX : 30},{ text : "DEDE", font : 1, spaceX : 50},{ text : "KITASENJUDESIGN", font : 1, spaceX : 50},{ text : "デデデデデデ", font : 0, spaceX : 30},{ text : "デデマウス", font : 0, spaceX : 50}];
+dede.cuts.DeDeString.texts = [{ text : "NIGHTVOICE", font : 1, spaceX : 50},{ text : "デデマウス", font : 0, spaceX : 50},{ text : "VRDG3DMMVRTHATHRE", font : 0, spaceX : 50},{ text : "DEDEMOUSE", font : 1, spaceX : 30},{ text : "デデデデデデ", font : 0, spaceX : 30},{ text : "DEDE", font : 1, spaceX : 50},{ text : "KITASENJUDESIGN", font : 1, spaceX : 50},{ text : "デデデデデデ", font : 0, spaceX : 30}];
 sound.MyAudio.FFTSIZE = 64;
 three._WebGLRenderer.RenderPrecision_Impl_.highp = "highp";
 three._WebGLRenderer.RenderPrecision_Impl_.mediump = "mediump";

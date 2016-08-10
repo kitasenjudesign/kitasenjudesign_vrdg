@@ -85,7 +85,7 @@ class Main3d
 		_pp = new PostProcessing2();
 		_pp.init(_scene, _camera, _renderer,_onLoadDAE0);
 		
-		Dat.gui.add(_camera, "radX").listen();
+		
 		
 	}
 	
@@ -103,7 +103,9 @@ class Main3d
 		dae.load(_onLoadDAE, _cubeCamera);
 		//_scene.add(dae.dae);
 		
-		Dat.gui.add(_camera, "amp").listen();
+		_camera.radX = 0.001;
+		Dat.gui.add(_camera, "amp", 100, 3000).listen();
+		Dat.gui.add(_camera, "radX",0,2*Math.PI).step(0.001).listen();
 		//Dat.gui.add(_pp, "flash");
 		//Dat.gui.add(this, "_change");
 		

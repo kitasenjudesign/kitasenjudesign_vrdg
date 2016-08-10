@@ -115,8 +115,9 @@ class FboMain
 		Dat.gui.add(this, "changeLine");
 		Dat.gui.add(this, "next");
 		Dat.gui.add(this, "reset");
-		Dat.gui.add(this, "_isPP");
-		
+		Dat.gui.add(this, "_isPP").listen();
+		Dat.gui.add(this, "setPP");
+		Dat.gui.add(_camera, "amp", 0, 2000).listen();
 		Key.board.addEventListener(Key.keydown, _onKeyDown);
 		
 		update();
@@ -144,6 +145,9 @@ class FboMain
 				
 			case Dat.L:
 				changeLine();
+				
+			case Dat.R:
+				reset();
 		}
 		
 		
@@ -152,6 +156,12 @@ class FboMain
 	
 	public function next():Void {
 		
+		_camera.amp = 300 + 1000 * Math.random();
+		if (Math.random() < 0.2) {
+			_camera.amp = 100 + 300 * Math.random();
+		}
+		
+		if (_isPP) setPP();
 		_fbo.next();
 		
 	}

@@ -27,7 +27,7 @@ class MaeLines extends Object3D
 	private var _hMesh:Mesh;
 	private var _tgtPlane:Mesh;
 	//public var startY:Float = -150;
-	public var posY:Float = -50;
+	public var posY:Float = -70;
 	
 	public function new() 
 	{
@@ -71,7 +71,7 @@ class MaeLines extends Object3D
 		);
 		add(_line);
 		
-		Dat.gui.add(this, "posY").listen();
+		Dat.gui.add(this, "posY",-500,500).listen();
 		
 		#if debug
 		//_tgtPlane = new Mesh(untyped new PlaneBufferGeometry(100, 100, 1, 1), new MeshBasicMaterial( { color:0xff0000, wireframe:true } ));

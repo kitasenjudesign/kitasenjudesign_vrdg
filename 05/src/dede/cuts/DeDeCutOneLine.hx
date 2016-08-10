@@ -1,4 +1,5 @@
 package dede.cuts;
+import common.Dat;
 import js.Browser;
 import sound.MyAudio;
 import typo.StrokeUtil;
@@ -12,6 +13,7 @@ class DeDeCutOneLine  extends DeDeCutBase
 
 	private var _type:Int = 0;
 	private var _startSec:Float = 0;
+	private var data:DeDeParam;
 	
 	public function new() 
 	{
@@ -30,14 +32,15 @@ class DeDeCutOneLine  extends DeDeCutBase
 		_vrdg.visible = false;
 		_vrdg.setGeoMax(1);
 		
-		_cam.setZoom(2);
+		//_cam.setZoom(2);
+		_cam.setZoom(3.1);
 		
-		var data:DeDeParam = DeDeParam.getParam();
+		data = DeDeParam.getParam();
 		data.txt = "DEDEMOUSE KTSNJDSGN ";
 		data.font = StrokeUtil.FUTURA;
-		data.speedX = DeDeLine.SPEEDX0;
+		data.speedX = DeDeLine.SPEEDX0;///////////////////////////////speedx
 		data.spaceX = 20;
-		data.startX = DeDeLine.WIDTH/2+340;
+		data.startX = DeDeLine.WIDTH/2+330;
 		data.space = 3;// + 7 * Math.random();
 		data.startSec = 0;
 		data.sameType = DeDeParam.SAME_LINE;
@@ -46,8 +49,14 @@ class DeDeCutOneLine  extends DeDeCutBase
 		
 		_lines.changeType( data );
 		
-		
+		Dat.gui.add(this, "_speedUp");
 		next();
+	}
+	
+	private function _speedUp():Void {
+		
+		data.speedX = DeDeLine.SPEEDX0 * 2;
+		
 	}
 	
 	/**
@@ -56,11 +65,9 @@ class DeDeCutOneLine  extends DeDeCutBase
 	override public function next():Void
 	{
 		
-		
 		var isRotate:Bool = _nextCounter%5==4 ? true : false;
 		
 		if (_nextCounter == 0) {
-			//Browser.
 			_lines.setSec(0, false);
 		}else{
 			_lines.setSec(Math.random(), true);			

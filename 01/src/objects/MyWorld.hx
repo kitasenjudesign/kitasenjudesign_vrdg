@@ -84,7 +84,7 @@ class MyWorld extends Object3D
 		
 		Dat.gui.add(this, "effectName").listen();
 		Dat.gui.add(this, "_changeIndex");
-		Dat.gui.add(this, "_idx").listen();
+		//Dat.gui.add(this, "_idx").listen();
 		
 		
 		changeMode1();
@@ -140,9 +140,17 @@ class MyWorld extends Object3D
 				
 			case Dat.LEFT:	
 				_resetEffect();///////////////////////////////
+					
+			case Dat.N:
+				_nextTexture();//next_texture
 
 		}
 		
+	}
+	
+	private function _nextTexture():Void
+	{
+		_pp.nextTexture();
 	}
 	
 	
@@ -204,7 +212,7 @@ class MyWorld extends Object3D
 		
 		var rr:Float = 0;
 		if(data.displaceType == EffectData.DISPLACE_X){
-			if (Math.random() < 0.5) {
+			if (Math.random() < 0.3) {
 				rr = Math.random() < 0.5 ? Math.PI / 2 : -Math.PI / 2;
 			}
 		}
@@ -223,7 +231,7 @@ class MyWorld extends Object3D
 		var rr:Float = 0;
 		for ( i in 0...faces.length) {
 			faces[i].rotateZ( rr );
-			faces[i].updateMaterial(MyFace.MAT_DEPTH,_isWire);
+			faces[i].updateMaterial(MyFace.MAT_DEFAULT,false);
 			faces[i].s = data.strength;
 		}
 		
