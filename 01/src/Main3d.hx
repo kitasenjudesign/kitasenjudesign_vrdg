@@ -105,7 +105,7 @@ class Main3d
 		
 		_camera.radX = 0.001;
 		Dat.gui.add(_camera, "amp", 100, 3000).listen();
-		Dat.gui.add(_camera, "radX",0,2*Math.PI).step(0.001).listen();
+		Dat.gui.add(_camera, "radX",-Math.PI,Math.PI).step(0.001).listen();
 		//Dat.gui.add(_pp, "flash");
 		//Dat.gui.add(this, "_change");
 		

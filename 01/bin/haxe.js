@@ -119,7 +119,7 @@ Main3d.prototype = {
 		this.dae.load($bind(this,this._onLoadDAE),this._cubeCamera);
 		this._camera.radX = 0.001;
 		common.Dat.gui.add(this._camera,"amp",100,3000).listen();
-		common.Dat.gui.add(this._camera,"radX",0,2 * Math.PI).step(0.001).listen();
+		common.Dat.gui.add(this._camera,"radX",-Math.PI,Math.PI).step(0.001).listen();
 		window.onresize = $bind(this,this._onResize);
 		this._onResize(null);
 	}
@@ -1158,7 +1158,7 @@ objects.MySphere = function() {
 	THREE.Object3D.call(this);
 	if(!common.Dat.bg) return;
 	var texture = THREE.ImageUtils.loadTexture("../../assets/" + "bg/m01.jpg");
-	this._textures = [texture,THREE.ImageUtils.loadTexture("../../assets/" + "bg/m02.jpg"),THREE.ImageUtils.loadTexture("../../assets/" + "bg/00.jpg"),THREE.ImageUtils.loadTexture("../../assets/" + "bg/01.jpg"),THREE.ImageUtils.loadTexture("../../assets/" + "bg/02.jpg"),THREE.ImageUtils.loadTexture("../../assets/" + "bg/03.jpg")];
+	this._textures = [texture,THREE.ImageUtils.loadTexture("../../assets/" + "bg/m02.jpg"),THREE.ImageUtils.loadTexture("../../assets/" + "bg/00.jpg"),THREE.ImageUtils.loadTexture("../../assets/" + "bg/01.jpg"),THREE.ImageUtils.loadTexture("../../assets/" + "bg/03.jpg")];
 	this.mate = new THREE.MeshBasicMaterial({ map : texture});
 	this.mate.color.setRGB(common.Config.bgLight,common.Config.bgLight,common.Config.bgLight);
 	var g = new THREE.SphereGeometry(1000,60,30);

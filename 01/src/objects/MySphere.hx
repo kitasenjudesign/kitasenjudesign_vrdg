@@ -59,7 +59,7 @@ class MySphere extends Object3D
 			ImageUtils.loadTexture( Path.assets + 'bg/m02.jpg' ),
 			ImageUtils.loadTexture( Path.assets + 'bg/00.jpg' ),
 			ImageUtils.loadTexture( Path.assets + 'bg/01.jpg' ),
-			ImageUtils.loadTexture( Path.assets + 'bg/02.jpg' ),			
+			//ImageUtils.loadTexture( Path.assets + 'bg/02.jpg' ),			
 			ImageUtils.loadTexture( Path.assets + 'bg/03.jpg' )
 		];
 		
