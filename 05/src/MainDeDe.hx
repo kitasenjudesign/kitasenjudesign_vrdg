@@ -88,6 +88,10 @@ class MainDeDe
 		
 		//
 		StageRef.setCenter();
+		if (Dat.bg) {
+			_oy = 100;
+			StageRef.setCenter(_oy);			
+		}
 		
 		
 		Browser.document.addEventListener("keydown", _onKeyDown);

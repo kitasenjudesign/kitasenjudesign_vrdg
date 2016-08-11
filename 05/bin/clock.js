@@ -146,6 +146,10 @@ MainDeDe.prototype = {
 		this._scene.add(this._bg);
 		if(common.Dat.bg) this._bg.visible = true; else this._bg.visible = false;
 		common.StageRef.setCenter();
+		if(common.Dat.bg) {
+			this._oy = 100;
+			common.StageRef.setCenter(this._oy);
+		}
 		window.document.addEventListener("keydown",$bind(this,this._onKeyDown));
 		common.Dat.gui.add(this._bg,"visible");
 	}
