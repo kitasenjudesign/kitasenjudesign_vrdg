@@ -123,6 +123,7 @@ Main.prototype = {
 	}
 };
 var MainDeDe = function() {
+	this._oy = 0;
 };
 MainDeDe.prototype = {
 	init: function() {
@@ -149,6 +150,16 @@ MainDeDe.prototype = {
 		common.Dat.gui.add(this._bg,"visible");
 	}
 	,_onKeyDown: function(e) {
+		if(common.Dat.bg) {
+			if(Std.parseInt(e.keyCode) == 65) {
+				this._oy += 2;
+				common.StageRef.setCenter(this._oy);
+			}
+			if(Std.parseInt(e.keyCode) == 90) {
+				this._oy -= 2;
+				common.StageRef.setCenter(this._oy);
+			}
+		}
 		if(Std.parseInt(e.keyCode) == 39) {
 		}
 		if(Std.parseInt(e.keyCode) == 79) this._camera.setCamType(0);
@@ -1100,9 +1111,10 @@ common.StageRef.fadeOut = function(callback) {
 	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
 	common.StageRef.sheet.fadeOut(callback);
 };
-common.StageRef.setCenter = function() {
+common.StageRef.setCenter = function(offsetY) {
+	if(offsetY == null) offsetY = 0;
 	var dom = window.document.getElementById("webgl");
-	var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
+	var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY + offsetY;
 	dom.style.position = "absolute";
 	dom.style.zIndex = "1000";
 	dom.style.top = Math.round(yy) + "px";
@@ -2027,11 +2039,12 @@ dede.cuts.DeDeCutOneLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		this.data.startSec = 0;
 		this.data.sameType = 1;
 		this._lines.changeType(this.data);
-		common.Dat.gui.add(this,"_speedUp");
+		common.Key.board.addEventListener("keydown",$bind(this,this._speedUp));
 		this.next();
 	}
-	,_speedUp: function() {
-		this.data.speedX = -1.;
+	,_speedUp: function(e) {
+		var n = Std.parseInt(e.keyCode);
+		if(n == 83) this.data.speedX = -1.;
 	}
 	,next: function() {
 		var isRotate;

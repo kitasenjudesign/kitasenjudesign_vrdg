@@ -39,7 +39,7 @@ class MaeFormH3 extends MaeFormBase
 
 		_camera.setFOV(35);//
 		
-		var offsetY:Float = 10;
+		var offsetY:Float = 0;
 		var spaceX:Float = 45;
 		var spaceY:Float = 45;
 		var xnum:Int = 20;

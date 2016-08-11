@@ -46,11 +46,11 @@ class StageRef
 	}
 	
 	
-	public static function setCenter():Void {
+	public static function setCenter(offsetY:Float=0):Void {
 		
 		var dom:Element = Browser.document.getElementById(name);
 			
-			var yy:Float = (Browser.window.innerHeight / 2 - StageRef.stageHeight / 2) + Config.canvasOffsetY;
+			var yy:Float = (Browser.window.innerHeight / 2 - StageRef.stageHeight / 2) + Config.canvasOffsetY + offsetY;
 			dom.style.position = "absolute";
 			dom.style.zIndex = "1000";
 			dom.style.top = Math.round(yy) + "px";

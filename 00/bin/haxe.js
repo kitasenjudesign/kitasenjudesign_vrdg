@@ -1087,7 +1087,7 @@ faces.MaeGauge.prototype = $extend(THREE.Mesh.prototype,{
 	}
 });
 faces.MaeLines = function() {
-	this.posY = -60;
+	this.posY = -34;
 	this._lineIdx = 0;
 	THREE.Object3D.call(this);
 };
@@ -1369,7 +1369,7 @@ faces.data.MaeFormBase.prototype = {
 	}
 };
 faces.data.MaeFormH1 = function() {
-	this._cams = [new faces.data.CamData(195,0,0),new faces.data.CamData(225,0.87,0.03),new faces.data.CamData(195,0,0),new faces.data.CamData(225,-0.4,0.03)];
+	this._cams = [new faces.data.CamData(195,0,0)];
 	this._count = -1;
 	faces.data.MaeFormBase.call(this);
 };
@@ -1387,7 +1387,7 @@ faces.data.MaeFormH1.prototype = $extend(faces.data.MaeFormBase.prototype,{
 		this._camera.radX = data.radX;
 		this._camera.radY = data.radY;
 		this._camera.setFOV(35);
-		var offsetY = 0;
+		var offsetY = -8;
 		var spaceX = 40;
 		var xnum = 20;
 		var ynum = 3;
@@ -1446,7 +1446,7 @@ faces.data.MaeFormH3.prototype = $extend(faces.data.MaeFormBase.prototype,{
 		this._camera.radX = data.radX;
 		this._camera.radY = data.radY;
 		this._camera.setFOV(35);
-		var offsetY = 10;
+		var offsetY = 0;
 		var spaceX = 45;
 		var spaceY = 45;
 		var xnum = 20;

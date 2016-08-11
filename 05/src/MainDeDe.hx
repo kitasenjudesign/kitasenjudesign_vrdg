@@ -37,7 +37,7 @@ class MainDeDe
 	private var _audio		:MyAudio;
 	private var _bg:BlinkPlane;
 	private var _dummy:DummyBars;
-	
+	private var _oy:Float = 0;
 	
 	public function new() {
 	}	
@@ -88,16 +88,39 @@ class MainDeDe
 		
 		//
 		StageRef.setCenter();
+		
+		
 		Browser.document.addEventListener("keydown", _onKeyDown);
 		
-		Dat.gui.add(_bg,"visible");
+		Dat.gui.add(_bg, "visible");
+		
+		
+		//Dat.gui.add(this, "_oy", -500, 500);
+		//Dat.gui.add(this."_setCenter");
+	
 	}
+	
+	
 	
 	private function _onKeyDown(e):Void {
 
 		//Browser.window.alert("_onKeyDown");
 		
 		//mode wo kaeru
+		if(Dat.bg){
+			if (Std.parseInt(e.keyCode) == Dat.A) {
+				//_bg.flash();
+				_oy += 2;
+				StageRef.setCenter(_oy);
+			}
+			if (Std.parseInt(e.keyCode) == Dat.Z) {
+				//_bg.flash();
+				_oy -= 2;
+				StageRef.setCenter(_oy);
+			}
+		}
+		
+		
 		if (Std.parseInt(e.keyCode) == Dat.RIGHT) {
 			//_bg.flash();
 		}

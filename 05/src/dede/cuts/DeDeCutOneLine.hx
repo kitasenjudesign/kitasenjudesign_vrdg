@@ -1,5 +1,6 @@
 package dede.cuts;
 import common.Dat;
+import common.Key;
 import js.Browser;
 import sound.MyAudio;
 import typo.StrokeUtil;
@@ -49,14 +50,18 @@ class DeDeCutOneLine  extends DeDeCutBase
 		
 		_lines.changeType( data );
 		
-		Dat.gui.add(this, "_speedUp");
+		//Dat.gui.add(this, "_speedUp");
+		Key.board.addEventListener(Key.keydown, _speedUp);
+		
 		next();
 	}
 	
-	private function _speedUp():Void {
+	private function _speedUp(e):Void {
 		
-		data.speedX = DeDeLine.SPEEDX0 * 2;
-		
+		var n:Int = Std.parseInt(e.keyCode);
+		if(n==Dat.S){
+			data.speedX = DeDeLine.SPEEDX0 * 2;
+		}
 	}
 	
 	/**
