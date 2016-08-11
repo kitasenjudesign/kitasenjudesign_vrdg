@@ -78,13 +78,13 @@ class DeDeCutMultiLine  extends DeDeCutBase
 	{
 		
 		
-		switch(_lineType % 3) {
+		switch(_lineType % 2) {
 			case 0:
 				_reposThree();
 			case 1:
 				_reposTwo();
-			case 2:
-				_reposOne();				
+			//case 2:
+			//	_reposOne();				
 		}		
 		_lineType++;
 		

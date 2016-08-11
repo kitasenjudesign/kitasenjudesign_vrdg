@@ -1984,16 +1984,13 @@ dede.cuts.DeDeCutMultiLine.prototype = $extend(dede.cuts.DeDeCutBase.prototype,{
 		this._cam.setZoom(0.85);
 	}
 	,next: function() {
-		var _g = this._lineType % 3;
+		var _g = this._lineType % 2;
 		switch(_g) {
 		case 0:
 			this._reposThree();
 			break;
 		case 1:
 			this._reposTwo();
-			break;
-		case 2:
-			this._reposOne();
 			break;
 		}
 		this._lineType++;
