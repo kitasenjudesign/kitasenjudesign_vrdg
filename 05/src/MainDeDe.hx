@@ -114,12 +114,12 @@ class MainDeDe
 		if(Dat.bg){
 			if (Std.parseInt(e.keyCode) == Dat.A) {
 				//_bg.flash();
-				_oy += 2;
+				_oy += 10;
 				StageRef.setCenter(_oy);
 			}
 			if (Std.parseInt(e.keyCode) == Dat.Z) {
 				//_bg.flash();
-				_oy -= 2;
+				_oy -= 10;
 				StageRef.setCenter(_oy);
 			}
 		}

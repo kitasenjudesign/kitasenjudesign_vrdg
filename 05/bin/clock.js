@@ -156,11 +156,11 @@ MainDeDe.prototype = {
 	,_onKeyDown: function(e) {
 		if(common.Dat.bg) {
 			if(Std.parseInt(e.keyCode) == 65) {
-				this._oy += 2;
+				this._oy += 10;
 				common.StageRef.setCenter(this._oy);
 			}
 			if(Std.parseInt(e.keyCode) == 90) {
-				this._oy -= 2;
+				this._oy -= 10;
 				common.StageRef.setCenter(this._oy);
 			}
 		}
