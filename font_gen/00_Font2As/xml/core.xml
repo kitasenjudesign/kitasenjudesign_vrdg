@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<content>
+		<catalogModel>
+			<presets>
+				<preset>
+					<name><![CDATA[All]]></name>
+					<unicodesSentence>all</unicodesSentence>
+				</preset>
+				<preset>
+					<name><![CDATA[Uppercase]]></name>
+					<unicodesSentence>32,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90</unicodesSentence>
+				</preset>
+				<preset>
+					<name><![CDATA[Lowercase]]></name>
+					<unicodesSentence>32,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122</unicodesSentence>
+				</preset>
+				<preset>
+					<name><![CDATA[Numerals]]></name>
+					<unicodesSentence>46,48,49,50,51,52,53,54,55,56,57</unicodesSentence>
+				</preset>
+			</presets>
+			<templates>
+				<template selected="true">
+					<name><![CDATA[FIVe3D (<font size="6"> </font>AS3 - Flash 10<font size="6"> </font>)]]></name>
+					<method>exportForAS3</method>
+					<filename><![CDATA[%classname%.as]]></filename>
+				</template>
+				<template>
+					<name><![CDATA[FIVe3D (<font size="6"> </font>HaXe - Flash<font size="6"> </font>)]]></name>
+					<method>exportForHaXeFlash</method>
+					<filename><![CDATA[%classname%.hx]]></filename>
+				</template>
+			</templates>
+		</catalogModel>
+		<catalogView>
+			<information>
+				<application><![CDATA[Typographer]]></application>
+				<description><![CDATA[Parse Flash files and extract typographic data.]]></description>
+				<version><![CDATA[Version 1.0.1]]></version>
+				<copyright><![CDATA[Copyright © 2011 Mathieu Badimon]]></copyright>
+			</information>
+			<input>
+				<headline><![CDATA[Upload a SWF file]]></headline>
+				<upload><![CDATA[Upload File]]></upload>
+				<help><![CDATA[No font embedded in this file]]></help>
+			</input>
+			<typography>
+				<headline><![CDATA[Choose an embedded font]]></headline>
+			</typography>
+			<list>
+				<headline><![CDATA[Select glyphs to include]]></headline>
+				<count><![CDATA[%index% of %total%]]></count>
+				<sentence>
+					<label><![CDATA[Glyphs included]]></label>
+					<clean><![CDATA[Clean]]></clean>
+				</sentence>
+			</list>
+			<template>
+				<headline><![CDATA[Choose a template format]]></headline>
+			</template>
+			<source>
+				<headline><![CDATA[Save the source code]]></headline>
+				<classname>
+					<label><![CDATA[Name of the class]]></label>
+				</classname>
+				<save><![CDATA[Save File]]></save>
+			</source>
+		</catalogView>
+	</content>
+	<global>
+		<contextMenu>
+			<item>
+				<caption><![CDATA[Mathieu Badimon | Personal Site]]></caption>
+				<link type="external">http://www.mathieu-badimon.com</link>
+			</item>
+		</contextMenu>
+	</global>
+</root>

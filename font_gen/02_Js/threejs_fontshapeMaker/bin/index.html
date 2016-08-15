@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>FontShapeMaker</title>
+	<meta name="description" content="" />
+	<style type="text/css">
+		body{
+			margin:0;
+			padding:0;
+            overflow: auto;
+		}
+	</style>
+	
+</head>
+<body onload="test();">
+
+	<script src="dat.gui.min.js"></script>
+	<script src="three.js"></script>
+	<script src="FontShapeMaker.js"></script>
+	
+	<script>
+	
+	var meshes=[];
+	var src="hoge";
+	var font;
+	
+	function test(){
+		
+		font = new FontShapeMaker();
+
+		//読み込み
+		//font.init("AOTFProM2.json",function(){
+		font.init("HelveticaBold.json",function(){
+		
+			//datgui生成する
+			var gui = new dat.GUI();
+			gui.add(window, 'src');
+			gui.add(window, 'makeMesh');
+			
+		});
+	}
+	
+	function makeMesh(){
+	
+		//meshがあったら削除
+		for(var i=0;i<meshes.length;i++){
+			font.remove(meshes[i]);
+		}
+		meshes=[];
+		
+		//文字生成
+		for(var i=0;i<src.length;i++){
+			
+			var moji = src.substr(i,1);
+			
+			//geometry取得、第2引数はpivotのセンタリング
+			var shapes = font.getShapes(moji,true);
+			//fontの横幅取得
+			console.log( moji + "_width = " + font.getWidth(moji));
+				
+			var mesh = new THREE.Mesh(
+				//new THREE.ShapeGeometry(shapes, { } ),
+				new THREE.ExtrudeGeometry(shapes, { amount:20,bevelEnabled:false } ),
+				new THREE.MeshLambertMaterial(
+					{
+						color:Math.floor(0xffffff*Math.random()),
+						side:THREE.DoubleSide
+						//wireframe:true
+					}
+				)
+			);
+			mesh.position.set(
+				(i-(src.length-1)/2)*100,0,0
+			);
+			//テスト用の3dステージ生成＆add
+			font.add(mesh);
+			meshes.push(mesh);
+		}
+		
+	}
+	
+	</script>
+</body>
+</html>

@@ -256,9 +256,13 @@ class MyWorld extends Object3D
 	
 	private function _impulese():Void {
 		
-		//_camera.radX = Math.PI  * ( Math.random() - 0.5);
-		//_camera.radY = Math.PI / 6 * (Math.random() - 0.5);
-		_camera.amp = 600 + 500 * Math.random();
+		_camera.radX = Math.PI / 10 * ( Math.random() - 0.5);
+		//_camera.radY = Math.PI / 10 * (Math.random() - 0.5);
+		_camera.amp = 650 + 500 * Math.random();
+		
+		if (Math.random() < 0.1) {
+			_camera.amp = 300;
+		}
 		
 		if (_audio!=null) _audio.setImpulse();
 	}

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	
+	<!-- Register log engines -->
+	<log filterLevel="DEBUG" filterByEquality="false">
+		<engine name="Trace" active="true" />
+		<engine name="AirLogger" active="false" />
+		<engine name="SOSMax" active="false" />
+		<engine name="Firebug" active="false" />
+	</log>
+	
+	<!-- Root paths to assets (end with trailing slash) -->
+	<paths>
+		<path name="xml">xml/</path>
+		<path name="assets">assets/</path>
+		<path name="factories">assets/global/factories/</path>
+	</paths>
+	
+	<!-- FPS meter -->
+	<meter active="false" />
+	
+	<!-- Interactive zone -->
+	<interactiveZone color="0xFF0000" alpha="0" />
+	
+</root>

@@ -541,9 +541,10 @@ common.StageRef.fadeOut = function(callback) {
 	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
 	common.StageRef.sheet.fadeOut(callback);
 };
-common.StageRef.setCenter = function() {
+common.StageRef.setCenter = function(offsetY) {
+	if(offsetY == null) offsetY = 0;
 	var dom = window.document.getElementById("webgl");
-	var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
+	var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY + offsetY;
 	dom.style.position = "absolute";
 	dom.style.zIndex = "1000";
 	dom.style.top = Math.round(yy) + "px";
@@ -1399,7 +1400,9 @@ objects.MyWorld.prototype = $extend(THREE.Object3D.prototype,{
 		this._impulese();
 	}
 	,_impulese: function() {
-		this._camera.amp = 600 + 500 * Math.random();
+		this._camera.radX = Math.PI / 10 * (Math.random() - 0.5);
+		this._camera.amp = 650 + 500 * Math.random();
+		if(Math.random() < 0.1) this._camera.amp = 300;
 		if(this._audio != null) this._audio.setImpulse();
 	}
 	,update: function(audio) {

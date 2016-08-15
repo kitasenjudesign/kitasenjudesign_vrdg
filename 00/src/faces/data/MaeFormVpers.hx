@@ -29,8 +29,6 @@ class MaeFormVpers extends MaeFormBase
 		var rotMode:Int = (_camIndex==0) ? MaeFaceMesh.ROT_MODE_X : MaeFaceMesh.getRandomRot();
 		_setRot(rotMode);
 		
-		_setRot(rotMode);
-		
 		var data:CamData = _cams[_camIndex % _cams.length];
 		_camIndex++;
 		_camera.amp = data.amp;

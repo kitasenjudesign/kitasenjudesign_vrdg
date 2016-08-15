@@ -534,9 +534,10 @@ common.StageRef.fadeOut = function(callback) {
 	if(common.StageRef.sheet == null) common.StageRef.sheet = new common.FadeSheet(window.document.getElementById("webgl"));
 	common.StageRef.sheet.fadeOut(callback);
 };
-common.StageRef.setCenter = function() {
+common.StageRef.setCenter = function(offsetY) {
+	if(offsetY == null) offsetY = 0;
 	var dom = window.document.getElementById("webgl");
-	var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY;
+	var yy = window.innerHeight / 2 - common.StageRef.get_stageHeight() / 2 + common.Config.canvasOffsetY + offsetY;
 	dom.style.position = "absolute";
 	dom.style.zIndex = "1000";
 	dom.style.top = Math.round(yy) + "px";
@@ -1369,16 +1370,17 @@ faces.data.MaeFormBase.prototype = {
 	}
 };
 faces.data.MaeFormH1 = function() {
-	this._cams = [new faces.data.CamData(195,0,0)];
+	this._cams = [new faces.data.CamData(195,0,0),new faces.data.CamData(195,0,0),new faces.data.CamData(195,0,0),new faces.data.CamData(225,0.87,0.03)];
 	this._count = -1;
 	faces.data.MaeFormBase.call(this);
 };
 faces.data.MaeFormH1.__super__ = faces.data.MaeFormBase;
 faces.data.MaeFormH1.prototype = $extend(faces.data.MaeFormBase.prototype,{
-	setFormation: function(faces) {
-		this._faces = faces;
+	setFormation: function(faces1) {
+		this._faces = faces1;
 		this._count++;
 		var rotMode = 0;
+		if(this._camIndex != 0) rotMode = faces.MaeFaceMesh.getRandomRot();
 		this._setRot(rotMode);
 		Tracer.log("_setForm1");
 		var data = this._cams[this._camIndex % this._cams.length];
@@ -1557,7 +1559,6 @@ faces.data.MaeFormVpers.prototype = $extend(faces.data.MaeFormBase.prototype,{
 		this._faces = faces1;
 		var rotMode;
 		if(this._camIndex == 0) rotMode = 0; else rotMode = faces.MaeFaceMesh.getRandomRot();
-		this._setRot(rotMode);
 		this._setRot(rotMode);
 		var data = this._cams[this._camIndex % this._cams.length];
 		this._camIndex++;
