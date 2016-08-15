@@ -6,29 +6,4 @@
 * modeling by buccchi
 
 
-# todo
-## 00 faces
-* フォーメーション深度z方向ルール
-
-## 01 single
-* 横向き loopx 調整、手動で調整できるモードか、違う自動モード
-* 操作をちゃんとできるようにモードをちゃんと分離
-
-## 02 絵文字
-* だいたい完了
-* 数の強弱 
-
-## 03絵文字fbo
-* 出る絵文字の調整
-* 
-
-## 04 typofish
-* だいたいok
-
-
-## 05 dot 文字
-* 1 line 版も加える 1line をでかくしてみる
-* VRDGいらない説
-* もうちょいはやく、最初の動き
-
-## 背景調整
+![](http://67.media.tumblr.com/ecacb20cfdb30777da985f216816c51e/tumblr_obwcsqmvR91t1xi2oo1_1280.jpg)
