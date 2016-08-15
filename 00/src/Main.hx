@@ -1,6 +1,6 @@
 package ;
 
-import js.Browser;
+import js.Browser; 
 import js.Lib;
 /**
  * ...
@@ -20,7 +20,7 @@ class Main
 	static private function _init() 
 	{
 		_main = new Main3d();
-		_main.init();
+		_main.init();	
 	}
 	
 	
