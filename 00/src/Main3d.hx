@@ -47,8 +47,8 @@ class Main3d
 		renderer = new WebGLRenderer( { antialias:true, devicePixelRatio:1/*, preserveDrawingBuffer: true*/ } );
 		renderer.domElement.id = StageRef.name;	
 		Browser.document.body.appendChild(renderer.domElement);
-		 
 		Dat.init(_onInit);
+		
 	}
 	
 	private function _onInit():Void {
