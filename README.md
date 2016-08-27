@@ -12,26 +12,26 @@
 
 
 ##Overview
-###00.FACES
+###00. FACES
 DE DE MOUSE's face appears infinitely.　The face is deformed variously by sound with a parameter respectively.
 ![](http://67.media.tumblr.com/95e4beccd7bbc34fad0aa666813b5a52/tumblr_occrvomU5s1t1xi2oo1_1280.jpg)
 
 
-###01.DE DE FACE
+###01. DE DE FACE
 DE DE MOUSE's face is deformed by sound.
 ![](http://66.media.tumblr.com/c065580f2a9159a4123ba3c89bdd006f/tumblr_occrwieYID1t1xi2oo1_1280.jpg)
 
 
-###02.EMOJI MOSAIC
-![](http://66.media.tumblr.com/58e17b03c0205d0903a8ad81e06fa1ef/tumblr_ockv6p115v1t1xi2oo1_1280.png)
+###02. EMOJI MOSAIC
+![](http://67.media.tumblr.com/73e5d0d64dcdca03f345b312c1298088/tumblr_ockvoth1PG1t1xi2oo1_1280.jpg)
 Mosaic picture made from EMOJI. 
 
 
-###04.TYPO FISH
+###04. TYPO FISH
 VRDG logo swims on screen using boids algorythm.
-![](https://pbs.twimg.com/media/CpwT1tXUMAMA_-Y.jpg)
+![](http://66.media.tumblr.com/474f7a38265f3e0332c554cbd184dea6/tumblr_ocku2gJtsF1t1xi2oo1_1280.jpg)
 
-###05.OUTLINE
+###05. OUTLINE
 A point on the outline of the character is connected by a line and the character of the various expressions is made.
 ![](http://67.media.tumblr.com/f06aea58513b5d0853292ffea766ec9a/tumblr_ockujaL2p81t1xi2oo1_1280.jpg)
 
