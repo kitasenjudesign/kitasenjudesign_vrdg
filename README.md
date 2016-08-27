@@ -1,9 +1,31 @@
-# kitasenjudesign_vj
+# KitasenjuDesign VJ Set of VRDG
+Generative VJ Set of VRDG by Kitasenju Design.
 
-* DE DE MOUSE x KITASENJU DESIGN
-* VRDG+H #3 / 2016.08.11 / DMM VR THEATHER / http://brdg.tokyo/
-* modeling by buccchi
-* made with http://haxe.org/ and http://threejs.org
+
+##Tools
+* chrome
+* threejs http://threejs.org/
+* haxe http://haxe.org/
+* web audio
+* socket.io 
+
+
+##Overview
+###face
+![](http://66.media.tumblr.com/c065580f2a9159a4123ba3c89bdd006f/tumblr_occrwieYID1t1xi2oo1_1280.jpg)
+
+###faces
+http://67.media.tumblr.com/95e4beccd7bbc34fad0aa666813b5a52/tumblr_occrvomU5s1t1xi2oo1_1280.jpg)
+
+
+###emojis
+
+
+###typo fish
+
+
+###dot typo
+
 
 
 ![](http://67.media.tumblr.com/ecacb20cfdb30777da985f216816c51e/tumblr_obwcsqmvR91t1xi2oo1_1280.jpg)
