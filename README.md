@@ -1,6 +1,6 @@
 # KitasenjuDesign VJ Set of VRDG
 * Generative VJ Set of [VRDG](http://brdg.tokyo/) by [Kitasenju Design](https://kitasenjudesign.com). Music by [DE DE MOUSE](http://dedemouse.com/").
-* VRDG is the Audio and Visual Event at [DMM VR THEATHRE](http://vr-theater.dmm.com/en/about/). The stage is comprised of multi-image layers, which are created by pepper's ghost type hologram projection device.
+* [VRDG](http://brdg.tokyo/) is the audio and visual event at [DMM VR THEATHRE](http://vr-theater.dmm.com/en/about/). The stage is comprised of multi-image layers, which are created by pepper's ghost type hologram projection device.
 
 
 ##Tools
