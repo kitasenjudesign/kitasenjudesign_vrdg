@@ -23,8 +23,8 @@ DE DE MOUSE's face is deformed by sound.
 
 
 ###02. EMOJI MOSAIC
-![](http://67.media.tumblr.com/73e5d0d64dcdca03f345b312c1298088/tumblr_ockvoth1PG1t1xi2oo1_1280.jpg)
 Mosaic picture made from EMOJI. 
+![](http://67.media.tumblr.com/73e5d0d64dcdca03f345b312c1298088/tumblr_ockvoth1PG1t1xi2oo1_1280.jpg)
 
 
 ###04. TYPO FISH
